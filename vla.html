@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VLA Pick &amp; Place — 김관희</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav class="back"><a href="index.html">← 포트폴리오 홈</a></nav>
+<header>
+  <p class="muted">대표 프로젝트 · ROKEY 4차 · 26.07.30~26.08.12 · 5인 팀</p>
+  <h1>VLA 기반 자연어 Pick &amp; Place</h1>
+  <p class="lead">마트 계산대에서 사람과 협업해, 물체마다 그리퍼 파지 자세를 스스로 찾아 집어 옮기는 협동로봇 시스템. 단일 GPU·실물 RG2·VLA/FSM 통합.</p>
+  <div class="video"><iframe src="https://www.youtube-nocookie.com/embed/bOec0yE8m94" title="VLA Pick &amp; Place 1분 시연 영상" allowfullscreen></iframe></div>
+  <p class="tags">Doosan M0609 + RG2 그리퍼 + RealSense D435i + NVIDIA RTX 4060 Laptop(8GB)</p>
+</header>
+
+<main>
+<section>
+  <h2>해결하려던 문제와 제약</h2>
+  <p>"사과 바구니에 담아줘" 같은 자연어 지시를 LLM이 해석하고, 협동로봇이 물체의 위치와 형상을 인식해 장애물을 우회하여 집어 옮깁니다. 제약은 세 가지였습니다.</p>
+  <ul>
+    <li><b>GPU 한 대(8GB):</b> 장애물 지도(nvblox)·GPU 경로계획(cuMotion)·물체 분할(YOLO-seg)·파지 후보 생성(GraspGenX)이 노트북 GPU 하나를 나눠 씀.</li>
+    <li><b>모델과 다른 실물 그리퍼:</b> 제공된 RG2는 브라켓 22mm가 끼어 손끝이 모델과 38mm 어긋나고, 힌지 구조라 벌릴수록 손끝이 짧아짐.</li>
+    <li><b>두 개의 제어 주체:</b> 따로 개발된 VLA 시스템이 자체 로봇 제어를 가져, 합치면 VLA와 pick FSM이 동시에 팔에 명령할 수 있는 구조.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>본인 담당과 팀 분담</h2>
+  <p><b>본인 담당:</b> 판단 계층(VLA)·안전 계층(FSM) 통합, GraspGenX↔실물 RG2 정합(실측·보정·규약), GPU 메모리 대응(파지 후보 수 조정·YOLO 노드 누적 정리), 구동 중 정지 후 재계획 연결, 인지 실패 감지 게이트(팀 모션 코드 위에 제안·구현).</p>
+  <p class="muted">VLA와 FSM은 팀원과 분업으로 개발했고, 인지 실패 감지 게이트는 팀 모션 코드 위에 제안·구현했습니다.</p>
+</section>
+
+<section>
+  <h2>핵심 해결 과정</h2>
+  <h3>① GPU 메모리 부족</h3>
+  <ul>
+    <li>상주분만 cuMotion 1.5GB + robot_segmenter 0.7GB + nvblox 0.3GB. GraspGenX 파지 후보 수를 기본 200 → 64로 줄여 출발.</li>
+    <li>재실행마다 YOLO 노드가 컨테이너에 쌓여(10개, VRAM 2.6GB·swap 소진) 마스크가 뒤섞임 → 실행 래퍼 + 중복 실행 방지 락으로 10개 → 1개 정리(래퍼 상태에서 Ctrl-C 종료 전달은 미검증).</li>
+    <li>YOLO는 상주 120MB·추론 6.7ms로 병목이 아님을 실측, 진짜 병목은 GraspGenX였음을 검증.</li>
+  </ul>
+  <h3>② GraspGenX를 실물 RG2에 맞추기</h3>
+  <ul>
+    <li>GraspGenX 모델은 그대로 두고 URDF·그리퍼 코드에서 흡수: 실측 오프셋 반영, 개구폭별 손끝 길이 보정표(충돌 모델 배치·RViz 표시용 추정이며 IK 목표 자체는 바꾸지 않음).</li>
+    <li>grasp 자세를 <code>tool0</code> 기준으로 잘못 해석해 그리퍼가 90° 눕는 문제 → 두 URDF를 회전행렬로 비교해 기준을 <code>rg2_base_link</code>로 확정.</li>
+    <li>닫힘 폭 부호 오류, 드라이버 폭 단위(1/10mm), 기본 파지력 40N이 사과를 으깨는 문제를 규약으로 정리.</li>
+  </ul>
+  <h3>③ VLA 노드와 기존 FSM 통합</h3>
+  <ul>
+    <li>팀과 협의해 VLA의 로봇 제어부(약 3,800줄)를 걷어 내고, VLA는 "어떤 물체를 어디로"만 넘기며 좌표·파지 계산과 이동은 FSM이 전담.</li>
+    <li>카메라를 2대 → 1대 공유로 정리. 잃은 손목 카메라 재파지 기능은 빈 서비스 인터페이스(<code>AcquireTarget.srv</code>)로 복원 지점만 남김.</li>
+  </ul>
+  <img src="images/cobot2_fsm_control_panel.png" alt="pick FSM 상태·제어 rqt 패널: FSM 상태, 타겟, 속도, 중단·즉시정지 버튼" loading="lazy" style="max-width:420px">
+  <p class="muted">pick FSM 상태·제어 패널 (rqt)</p>
+</section>
+
+<section>
+  <h2>결과와 검증 한계</h2>
+  <ul>
+    <li>YOLO 노드 누적 10 → 1 실사용 확인.</li>
+    <li>VLA가 지정한 물체를 실카메라 6~9개 물체 장면에서 GraspGenX 파지 후보까지 연결 확인.</li>
+    <li>OMPL 경로의 구동 중 정지→재계획, 출발 전 장애물 우회를 실기 확인.</li>
+    <li><b>남은 과제:</b> GPU 전 모듈 동시 구동 여유, RG2 보정의 파지 성공률 효과, cuMotion 실행 중 회피, 전체 pick-to-place 실물 검증.</li>
+  </ul>
+  <p><b>회고</b> — "동작 성공"과 "안전한 동작"은 다른 층에서 따로 검증해야 한다.</p>
+</section>
+
+<section>
+  <h2>코드·문서 근거</h2>
+  <ul>
+    <li><a href="https://github.com/gwanhuiGIM/Rokey_cobot2/blob/main/src/pick_fsm/pick_fsm/states.py#L20-L44">24개 동작 상태 pick FSM — states.py</a></li>
+    <li><a href="https://github.com/gwanhuiGIM/Rokey_cobot2/blob/main/src/pick_fsm/pick_fsm/moveit_bridge.py#L218-L224">구동 중 정지 후 재계획 — moveit_bridge.py</a></li>
+    <li><a href="https://github.com/gwanhuiGIM/Rokey_cobot2/blob/main/src/cumotion/cumotion/arm.py#L361-L372">이동 전 ESDF 게이트 — arm.py</a></li>
+    <li><a href="https://github.com/gwanhuiGIM/Rokey_cobot2/blob/main/docs/fsm/context/constraints.md">실측 제약 문서 — constraints.md</a></li>
+    <li>팀 최종 코드 <a href="https://github.com/gwanhuiGIM/Rokey_cobot2">Rokey_cobot2</a> · 개인 개발본 <a href="https://github.com/gwanhuiGIM/Personal_cobot2_ws">Personal_cobot2_ws</a></li>
+  </ul>
+</section>
+</main>
+<footer><a href="index.html">← 포트폴리오 홈</a> · <a href="erp42.html">다음: 자율주행 ERP42 →</a></footer>
+</body>
+</html>
