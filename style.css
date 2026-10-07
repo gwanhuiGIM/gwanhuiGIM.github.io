@@ -29,10 +29,13 @@ img { max-width: 100%; height: auto; border-radius: 10px; display: block; }
 .grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
 .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 20px; }
 .card img { aspect-ratio: 16 / 9; object-fit: cover; margin-bottom: 14px; }
-.card p { margin: 6px 0; }
+.card p { margin: 10px 0; }
 .card.big h3 { font-size: 22px; }
 .role { font-size: 15px; }
 .role b { color: var(--fg); }
+.card .role { margin-bottom: 4px; }
+.card .role-list { padding-left: 18px; margin: 4px 0 10px; font-size: 15px; }
+.card .role-list li { margin: 4px 0; }
 .tags { color: var(--muted); font-size: 14px; }
 
 .placeholder {
@@ -40,7 +43,9 @@ img { max-width: 100%; height: auto; border-radius: 10px; display: block; }
   display: grid; place-items: center; color: var(--muted); text-align: center; padding: 16px;
 }
 section ul { padding-left: 20px; }
-section li { margin: 6px 0; }
+section li { margin: 10px 0; }
+section p, section li { max-width: 68ch; }
+section h3 { margin-top: 28px; }
 table { border-collapse: collapse; width: 100%; font-size: 15px; }
 td { padding: 8px 6px; border-bottom: 1px solid var(--line); vertical-align: top; }
 td:first-child { white-space: nowrap; color: var(--muted); padding-right: 16px; }
