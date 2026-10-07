@@ -52,7 +52,7 @@
     <li>팀과 협의해 VLA의 로봇 제어부(약 3,800줄)를 걷어 내고, VLA는 "어떤 물체를 어디로"만 넘기며 좌표·파지 계산과 이동은 FSM이 전담.</li>
     <li>카메라를 2대 → 1대 공유로 정리. 잃은 손목 카메라 재파지 기능은 빈 서비스 인터페이스(<code>AcquireTarget.srv</code>)로 복원 지점만 남김.</li>
   </ul>
-  <img src="images/cobot2_fsm_control_panel.png" alt="pick FSM 상태·제어 rqt 패널: FSM 상태, 타겟, 속도, 중단·즉시정지 버튼" loading="lazy" style="max-width:420px">
+  <img src="images/cobot2_fsm_control_panel.png" alt="pick FSM 상태·제어 rqt 패널: FSM 상태, 타겟, 속도, 중단·즉시정지 버튼" width="484" height="765" loading="lazy" style="max-width:min(420px,100%)">
   <p class="muted">pick FSM 상태·제어 패널 (rqt)</p>
 </section>
 
@@ -72,9 +72,9 @@
   <ul>
     <li><a href="https://github.com/gwanhuiGIM/Rokey_cobot2/blob/main/src/pick_fsm/pick_fsm/states.py#L20-L44">24개 동작 상태 pick FSM — states.py</a></li>
     <li><a href="https://github.com/gwanhuiGIM/Rokey_cobot2/blob/main/src/pick_fsm/pick_fsm/moveit_bridge.py#L218-L224">구동 중 정지 후 재계획 — moveit_bridge.py</a></li>
-    <li><a href="https://github.com/gwanhuiGIM/Rokey_cobot2/blob/main/src/cumotion/cumotion/arm.py#L361-L372">이동 전 ESDF 게이트 — arm.py</a></li>
+    <li><a href="https://github.com/gwanhuiGIM/Rokey_cobot2/blob/main/src/cumotion/cumotion/dynamic_avoid.py#L149-L158">이동 전 ESDF 게이트 — dynamic_avoid.py</a></li>
     <li><a href="https://github.com/gwanhuiGIM/Rokey_cobot2/blob/main/docs/fsm/context/constraints.md">실측 제약 문서 — constraints.md</a></li>
-    <li>팀 최종 코드 <a href="https://github.com/gwanhuiGIM/Rokey_cobot2">Rokey_cobot2</a> · 개인 개발본 <a href="https://github.com/gwanhuiGIM/Personal_cobot2_ws">Personal_cobot2_ws</a></li>
+    <li>팀 최종 코드 <a href="https://github.com/gwanhuiGIM/Rokey_cobot2#contribution">Rokey_cobot2</a> · 개인 개발본 <a href="https://github.com/gwanhuiGIM/Personal_cobot2_ws">Personal_cobot2_ws</a></li>
   </ul>
 </section>
 </main>
