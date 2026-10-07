@@ -22,10 +22,11 @@
   <h2>해결하려던 문제와 제약</h2>
   <p>예선 10분·본선 15분의 단일 주행으로 도로 경로 주행, 장애물 우회, 신호등 인식, 돌발 장애물 정지 미션을 통과하며 기록을 겨루는 실차 대회입니다.</p>
   <p class="muted"><a href="https://www.youtube.com/watch?v=YCeGdbSMRuc">▶ 대회 진행 방식 참고 영상</a> — 우리 팀 시연이 아니라, 예선(트랙 주행·highway 예선 코스)을 통과한 상위 팀만 참가하는 본선 출전 팀들의 주행 영상입니다.</p>
-  <p class="muted">개발 중 알고리즘 테스트 기록 — 대회 주행 영상이 없어 대신 싣는 팀 내부 테스트 자료입니다. <a href="https://github.com/gwanhuiGIM/Erp42_ws/blob/master/images/11.mp4">▶ waypoint 추종 및 LiDAR 회피 테스트 영상 (25.04)</a></p>
+  <p class="muted">개발 중 알고리즘 테스트 기록 — 대회 주행 영상이 없어 대신 싣는 팀 내부 테스트 자료입니다. <a href="https://github.com/gwanhuiGIM/Erp42_ws/blob/master/assets/erp42_test_waypoint_lidar_avoid.mp4">▶ waypoint 추종 및 LiDAR 회피 테스트 영상 (25.04)</a></p>
+  <p class="muted">참고 문서(팀 MTP가 대회 제출용으로 함께 작성, 개인정보 처리본): <a href="https://github.com/gwanhuiGIM/Erp42_ws/blob/master/assets/erp42_research_plan.pdf">연구계획서</a> · <a href="https://github.com/gwanhuiGIM/Erp42_ws/blob/master/assets/erp42_tech_report.pdf">기술보고서</a></p>
   <div class="test-shots" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px">
-    <figure style="margin:0"><img src="images/erp42/erp42_test_22.jpg" alt="차선 감지 알고리즘 구현용 데이터 수집 (25.07)" width="750" height="1000" loading="lazy"><figcaption class="muted">차선 감지 알고리즘 구현용 데이터 수집 (25.07)</figcaption></figure>
-    <figure style="margin:0"><img src="images/erp42/erp42_test_44.jpg" alt="예선 미션 대비 LiDAR 장애물 트랙 주행 시뮬레이션 (25.07)" width="1000" height="1000" loading="lazy"><figcaption class="muted">예선 미션 대비 LiDAR 장애물 트랙 주행 시뮬레이션 (25.07)</figcaption></figure>
+    <figure style="margin:0"><img src="images/erp42/erp42_test_lane_data_collection.jpg" alt="차선 감지 알고리즘 구현용 데이터 수집 (25.07)" width="750" height="1000" loading="lazy"><figcaption class="muted">차선 감지 알고리즘 구현용 데이터 수집 (25.07)</figcaption></figure>
+    <figure style="margin:0"><img src="images/erp42/erp42_test_lidar_obstacle_track.jpg" alt="예선 미션 대비 LiDAR 장애물 트랙 주행 시뮬레이션 (25.07)" width="1000" height="1000" loading="lazy"><figcaption class="muted">예선 미션 대비 LiDAR 장애물 트랙 주행 시뮬레이션 (25.07)</figcaption></figure>
   </div>
   <ul>
     <li><b>GPS가 불안정한 구간:</b> 120m 안팎의 터널에서는 GPS가 잡히지 않았고 관성센서(IMU)는 시간이 지날수록 오차가 쌓였습니다(drift).</li>
