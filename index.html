@@ -11,10 +11,10 @@
 <header>
   <p class="muted">Robotics Engineer · ROS2 · 협동로봇 · 자율주행</p>
   <h1>김관희<br>사람들이 쉽고 편하게 쓰는 로봇을,<br>실제로 끝까지 동작하게 만듭니다.</h1>
-  <p class="lead">기계공학부를 졸업하고, 아두이노 라인트레이서에서 자율주행 대회 팀장, 두산 협동로봇(M0609)·AMR 프로젝트까지 센서 신호가 제어 동작으로 이어지는 시스템을 만들어 왔습니다.</p>
+  <p class="lead">기계공학을 전공하며 SolidWorks CSWP(3D 설계 전문가 자격)를 취득했습니다. 졸업 프로젝트의 아두이노 제어와 자율주행 경진대회 팀장을 거쳐 두산로보틱스 부트캠프에서 협동로봇(M0609)과 AMR(자율이동로봇) 프로젝트를 수행하며 센서 신호가 실제 제어 동작으로 이어지는 시스템을 만들어 왔습니다.</p>
   <p class="contact"><a href="mailto:gwanhuig01@gmail.com">gwanhuig01@gmail.com</a><a href="https://github.com/gwanhuiGIM">github.com/gwanhuiGIM</a></p>
   <div class="video"><iframe src="https://www.youtube-nocookie.com/embed/bOec0yE8m94" title="VLA Pick &amp; Place 1분 시연 영상" loading="lazy" allowfullscreen></iframe></div>
-  <p class="muted">VLA 기반 자연어 Pick &amp; Place 1분 시연</p>
+  <p class="muted">영상·자연어 판단과 로봇 제어를 연결한 물체 집기(Pick &amp; Place) — 1분 시연</p>
 </header>
 
 <main>
@@ -23,14 +23,14 @@
   <article class="card big">
     <h3><a href="vla.html">VLA 기반 자연어 Pick &amp; Place</a></h3>
     <p class="tags">Doosan M0609 · RG2 · RealSense · RTX 4060 Laptop 8GB · 5인 팀 · 26.07.30~26.08.12</p>
-    <p>"사과 바구니에 담아줘" 같은 자연어 지시를 LLM이 해석하고, 협동로봇이 물체를 인식해 장애물을 우회하여 집어 옮기는 시스템.</p>
-    <p class="role"><b>본인 담당</b> 판단 계층(VLA)·안전 계층(FSM) 통합, GraspGenX↔실물 RG2 정합, GPU 메모리 대응, 구동 중 정지 후 재계획, 인지 실패 감지 게이트</p>
+    <p>"사과 바구니에 담아줘" 같은 자연어 지시를 대규모 언어 모델이 해석하고, 협동로봇이 물체를 인식해 장애물을 피해 집어 옮기는 것을 목표로 한 시스템입니다. 저는 GPU 한 대의 메모리에 맞춰 사용량을 조정하고 판단·실행 계층을 연결했으며, 실물 그리퍼의 치수를 직접 재서 파지 모델과 맞췄습니다. OMPL(경로계획 라이브러리) 경로에서는 이동 중 사람이 손을 넣으면 멈추고 새 경로로 다시 계획하는 동작을 확인했습니다.</p>
+    <p class="role"><b>본인 담당</b> 판단 계층(VLA)·안전 계층(FSM) 통합, GraspGenX↔실물 RG2 정합(실측·보정·규약), GPU 메모리 대응(파지 후보 수 조정·YOLO 노드 누적 정리), 구동 중 정지 후 재계획 연결, 인지 실패 감지 게이트(팀 모션 코드 위에 제안·구현)</p>
     <p><a href="vla.html">문제와 해결 과정 보기 →</a></p>
   </article>
   <article class="card big">
-    <h3><a href="erp42.html">자율주행 ERP42 — 2025 대학생 창작 모빌리티 경진대회</a></h3>
+    <h3><a href="erp42.html">자율주행 ERP42 — 2025 대학생 창작모빌리티 경진대회</a></h3>
     <p class="tags">ERP42 4륜 전기차 · 팀 MTP(충남대) · <b>팀장</b> · 24.08~25.11</p>
-    <p>실제 주행시험장에서 달리는 자율주행 인지·판단·제어 노드를 설계해 무인모빌리티 부문에 출전, 인지 일부가 빠지는 상황에서도 측위·경로추종이 유지돼 실차 대회를 완주.</p>
+    <p>2025 대학생 창작모빌리티 경진대회(한국자동차안전학회 주관) 무인모빌리티 부문에 3인 팀의 팀장으로 출전했습니다. 개발 일정을 세워 공유하고 실습 환경과 인수인계 자료를 맡았으며, 경로추종을 구현하고 명령 중재 판단 노드 프로토타입을 만들었습니다. 팀 회고 기준으로, 인지 모듈 일부가 빠진 상황에서도 측위와 경로추종이 유지되어 대회를 완주했습니다.</p>
     <p class="role"><b>본인 담당</b> 팀장(개발 일정 수립·공유, 실습 환경 구성, 인수인계 문서화) · waypoint 경로추종 · 명령 중재 판단 노드</p>
     <p><a href="erp42.html">문제와 해결 과정 보기 →</a></p>
   </article>
@@ -42,7 +42,7 @@
     <img src="images/grad/hull_interior.jpg" alt="선체를 열어 본 내부: Arduino Uno와 모터 드라이버 배선" width="974" height="1314" loading="lazy">
     <h3>열감지 추적 구명튜브 전달장치 및 발사장치</h3>
     <p class="tags">학사 졸업프로젝트 · Arduino Uno · 3인 팀 · 24.08~25.08</p>
-    <p>익수자에게 스스로 다가가 구명튜브를 전달하는 휴대형 전달장치. 제작비 약 51만 원(상용 대비 약 1/10), 아이디어 최우수상·졸업작품 장려상.</p>
+    <p>익수자에게 스스로 다가가 구명튜브를 전달하는 휴대형 전달장치입니다. 저는 아두이노 회로와 좌우 모터 차동 제어를 맡았고, 팀원들과 함께 열화상 센서·RC 입력·모터 코드를 통합해 열원 방향에 따라 모터 속도를 4단계로 달리하는 자율 추적과 수동 조작을 구현했습니다. 상용 구조 장비가 500만~700만 원대인 데 비해 팀은 제작비 약 51만 원으로 완성했고, 교내 산학연 캡스톤디자인 아이디어 최우수상과 졸업작품 경진대회 장려상을 받았습니다.</p>
     <p class="role"><b>본인 담당</b> 좌우 DC 모터 차동 제어 · 아두이노 회로 구성 · 설계보고서 문서화</p>
     <p><a href="https://github.com/gwanhuiGIM/Grad_proj#contribution">프로젝트 기록</a></p>
   </article>
@@ -50,7 +50,7 @@
     <img src="images/cobot3/web_dashboard.jpg" alt="웹 대시보드: 손추적 영상, 트레이별 도구 상태, 로봇 A/B 상태, 음성 로그, 명령 로그" width="1400" height="793" loading="lazy">
     <h3>VLA 기반 수술도구 집도의 전달 시뮬레이션 (Isaac Sim)</h3>
     <p class="tags">Dual Doosan M0609 · Isaac Sim · 팀 프로젝트 · 26.06.17~26.06.30</p>
-    <p>집도의의 손 동작·음성으로 두 협동로봇이 수술도구를 전달하는 시뮬레이션. 작업 단계·트레이 재고·손추적 영상·로그를 한 화면에서 보는 웹 대시보드.</p>
+    <p>집도의의 손 동작과 음성 명령에 따라 두 대의 협동로봇이 수술도구를 전달하는 시뮬레이션(Isaac Sim)입니다. 저는 작업 단계, 트레이별 도구 재고, 손 추적 영상과 명령 로그를 한 화면에서 보는 웹 대시보드를 만들었습니다. 상태가 바뀔 때만 화면을 다시 그리도록 해 화면 떨림도 막았습니다.</p>
     <p class="role"><b>본인 담당</b> 웹 대시보드 UI·상호작용</p>
     <p><a href="https://youtu.be/EUDn9btPNTw">▶ 1분 시연 영상</a> · <a href="https://github.com/gwanhuiGIM/Rokey_cobot3#contribution">코드</a></p>
   </article>
@@ -58,7 +58,7 @@
     <img src="images/intelli1/fleet_monitor.jpg" alt="관제 웹 화면: 지도 위 로봇·사람 위치, 로봇별 FSM 상태와 출동 로봇 선정 근거(거리·배터리)" width="1400" height="732" loading="lazy">
     <h3>제조업 공장 산업안전 AMR 순찰로봇 및 관제 시스템</h3>
     <p class="tags">AMR 2대 · 천장 웹캠 2대 · 3인 팀 · 26.07.01~26.07.14</p>
-    <p>천장 웹캠이 쓰러짐·안전모 미착용을 감지하면 출동 가능한 AMR을 보내는 관제 시스템. 1초에 5번 뒤집히던 응급 신호를 해제 방향 지연으로 안정화.</p>
+    <p>산업 현장을 모사한 환경에서 천장 카메라가 작업자의 쓰러짐이나 안전모 미착용을 감지하면 가장 가까운 AMR을 출동시키는 안전 관제 시스템입니다. 쓰러지는 순간 응급 상태가 1초에 5번 바뀌던 문제를, 해제 방향에만 지연을 두어 응급 반응 속도는 유지한 채 안정화했습니다.</p>
     <p class="role"><b>본인 담당</b> 관제 FSM(우선순위 선점)·쓰러짐 판정 규칙·메시지 전달 정책 설계와 디버깅</p>
     <p><a href="https://youtu.be/-Q8ITIWgUp4">▶ 1분 시연 영상</a> · <a href="https://github.com/gwanhuiGIM/Rokey_intelli1#contribution">코드</a></p>
   </article>
@@ -66,7 +66,7 @@
     <img src="images/cobot1/workcell_photo.jpg" alt="레고 지그 위 그라인더와 드리퍼가 놓인 핸드드립 작업셀" width="695" height="897" loading="lazy">
     <h3>협동로봇 핸드드립 커피 자동화</h3>
     <p class="tags">Doosan M0609 + OnRobot RG2 · 5인 팀 · 26.07.15~26.07.29</p>
-    <p>비전 센서 없이 원두 계량부터 나선형 드립까지 5단계 공정 자동화. 힘·접점 신호로 "잡았는지 모르는" 순간을 따로 분리해 안전하게 정지(병행 개발본).</p>
+    <p>카메라 없이 협동로봇의 힘 센서와 그리퍼 접점 신호만으로 원두 계량부터 나선형 드립까지 5단계 핸드드립 공정을 자동화했습니다. 그리퍼 신호가 1초 넘게 끊기면 정지를 요청하도록 했습니다. 병행 개발본에서는 잡았는지 판정할 수 없는 순간을 따로 분리해, 물체를 문 채 다시 집기를 시도하지 않도록 했습니다.</p>
     <p class="role"><b>본인 담당</b> 그리퍼 예외 상황 처리 및 정상 공정 복귀 알고리즘(팀 README 역할표 기준)</p>
     <p><a href="https://youtu.be/17UW9-wpsBg">▶ 1분 시연 영상</a> · <a href="https://github.com/gwanhuiGIM/Rokey_cobot1#contribution">코드</a></p>
   </article>
@@ -74,18 +74,18 @@
 
 <h2 id="bring">일하는 방식</h2>
 <div class="grid">
-  <div class="card"><h3>조용한 실패를 쪼개 잡습니다</h3><p>"성공처럼 보이는" 문제를 원인 후보로 나눠 재현합니다. (VLA 인지 게이트, AMR 신호 흔들림, 병행 개발본의 커피 파지 판정)</p></div>
-  <div class="card"><h3>판단과 안전을 분리해 통합합니다</h3><p>제어 권한을 한 곳으로 모으고, 명령이 없거나 낡으면 멈추게 설계합니다. (VLA 계층 통합, ERP42 판단 노드 prototype)</p></div>
-  <div class="card"><h3>실기로 확인하고 기록합니다</h3><p>실측 제약과 실패를 다음 실험·인수인계의 근거로 남깁니다. (GraspGenX↔실물 RG2 실측 정합, ERP42 인수인계 문서화)</p></div>
+  <div class="card"><h3>조용한 실패를 쪼개 잡습니다</h3><p>에러 없이 조용히 잘못 동작하는 문제를 만나면 실험 조건과 실패 원인을 기록하며 원인 후보를 나눠 하나씩 재현하고, 해결 방향을 단계적으로 좁혀 갑니다. VLA의 장애물 인식 누락 감지, AMR의 응급 신호 흔들림, 병행 개발본의 커피 파지 판정 불가 분리가 그렇게 찾은 문제입니다.</p></div>
+  <div class="card"><h3>판단과 안전을 분리해 통합합니다</h3><p>상위 판단 모듈의 명령을 구동부로 바로 보내지 않고 제어 권한을 한 곳에 모아 설계합니다. VLA에서는 판단 계층과 실행 계층의 제어 권한을 분리했고, ERP42 명령 중재 프로토타입에서는 유효한 입력이 없으면 제동하도록 했습니다.</p></div>
+  <div class="card"><h3>실기로 확인하고 기록합니다</h3><p>모델의 값보다 실물에서 잰 값을 기준으로 삼고 그 결과를 다음 사람이 이어받을 수 있게 남깁니다. VLA 프로젝트의 실물 그리퍼 실측 정합과 ERP42 인수인계 문서화가 그 사례입니다.</p></div>
 </div>
 
 <h2 id="profile">프로필</h2>
 <table>
   <tr><td>학력</td><td>충남대학교 기계공학부 학사 졸업 (2020.02~2026.08) · 서천고등학교 졸업 (2017~2020.02)</td></tr>
   <tr><td>교육</td><td>두산로보틱스 ROKEY 부트캠프 8기 — 지능형 로보틱스 엔지니어 (26.02~26.08)</td></tr>
-  <tr><td>수상</td><td>교내 산학연 캡스톤디자인 아이디어 최우수상 (24.11) · 교내 졸업작품 경진대회 장려상 (25.09)</td></tr>
+  <tr><td>수상·대회 실적</td><td>교내 산학연 캡스톤디자인 아이디어 최우수상 (24.11) · 교내 졸업작품 경진대회 장려상 (25.09) · 한국기계학회 설계경진대회 본선 진출 (25.08)</td></tr>
   <tr><td>자격·어학</td><td>SOLIDWORKS CSWP (Design Professional) · 1종 보통 운전면허 · OPIc IH</td></tr>
-  <tr><td>스킬</td><td>Ubuntu · ROS/ROS2 · Python · C++ · SolidWorks · OpenCV · Arduino</td></tr>
+  <tr><td>스킬</td><td>Ubuntu · ROS2 · Python · OpenCV · Git · Docker · PyTorch · SolidWorks · Arduino · C++(학습 중)</td></tr>
 </table>
 </main>
 
