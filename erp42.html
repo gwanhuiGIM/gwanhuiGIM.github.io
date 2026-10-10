@@ -17,9 +17,20 @@
   <p class="tags">ERP42 4륜 전기차 플랫폼 · 팀 MTP(충남대) · 3인 팀(실개발 2~3인) · 한국자동차안전학회 주관</p>
 </header>
 
+<nav class="toc" aria-label="목차">
+<b>목차</b>
+<ul>
+<li><a href="#problem">해결하려던 문제와 제약</a></li>
+<li><a href="#role">본인 담당과 팀 분담</a></li>
+<li><a href="#solving">핵심 해결 과정</a></li>
+<li><a href="#result">결과와 검증 한계</a></li>
+<li><a href="#evidence">코드 근거</a></li>
+</ul>
+</nav>
+
 <main>
 <section>
-  <h2>해결하려던 문제와 제약</h2>
+  <h2 id="problem">해결하려던 문제와 제약</h2>
   <p>예선 10분·본선 15분의 단일 주행으로 도로 경로 주행, 장애물 우회, 신호등 인식, 돌발 장애물 정지 미션을 통과하며 기록을 겨루는 실차 대회입니다.</p>
   <p class="muted"><a href="https://www.youtube.com/watch?v=YCeGdbSMRuc">▶ 대회 진행 방식 참고 영상</a> — 우리 팀 시연이 아니라, 예선(트랙 주행·highway 예선 코스)을 통과한 상위 팀만 참가하는 본선 출전 팀들의 주행 영상입니다.</p>
   <p class="muted">개발 중 알고리즘 테스트 기록 — 대회 주행 영상이 없어 대신 싣는 팀 내부 테스트 자료입니다. <a href="https://github.com/gwanhuiGIM/Erp42_ws/blob/master/assets/erp42_test_waypoint_lidar_avoid.mp4">▶ waypoint 추종 및 LiDAR 회피 테스트 영상 (25.04)</a></p>
@@ -36,7 +47,7 @@
 </section>
 
 <section>
-  <h2>본인 담당과 팀 분담</h2>
+  <h2 id="role">본인 담당과 팀 분담</h2>
   <p><b>본인 담당:</b></p>
   <ul class="role-list">
     <li>팀장(개발 일정 수립·공유, 실습 환경 구성, 인수인계 문서화)</li>
@@ -47,7 +58,7 @@
 </section>
 
 <section>
-  <h2>핵심 해결 과정</h2>
+  <h2 id="solving">핵심 해결 과정</h2>
   <h3>센서 → 측위 <span class="muted">(팀원들과 함께)</span></h3>
   <p>LiDAR(VLP-16)·카메라·IMU·RTK-GPS를 구동하고 바퀴 회전량(휠 오도메트리)을 IMU·GPS와 EKF(여러 센서 값을 결합해 위치를 추정하는 확장 칼만 필터)로 융합해 <strong>GPS 음영구간에 대응</strong>했습니다.</p>
   <h3>경로추종 <span class="muted">(본인)</span></h3>
@@ -59,7 +70,7 @@
 </section>
 
 <section>
-  <h2>결과와 검증 한계</h2>
+  <h2 id="result">결과와 검증 한계</h2>
   <ul>
     <li>인지 모듈 일부가 빠져도 측위와 경로추종이 <strong>유지되어 완주</strong>했습니다(팀 회고 기준).</li>
     <li>주행 로그가 남아 있지 않아 순위·정량 지표는 적지 않았습니다.</li>
@@ -69,7 +80,7 @@
 </section>
 
 <section>
-  <h2>코드 근거</h2>
+  <h2 id="evidence">코드 근거</h2>
   <ul>
     <li>팀 최종 코드 <a href="https://github.com/gwanhuiGIM/Erp42_ws">Erp42_ws</a></li>
     <li>기술 전체(측위·경로계획·판단·인지·차량 I/O)는 <a href="https://github.com/gwanhuiGIM/Erp42_ws">Erp42_ws README</a> 참고.</li>

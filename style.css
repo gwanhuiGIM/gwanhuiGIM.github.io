@@ -13,7 +13,7 @@ body {
 }
 a { color: var(--accent); }
 a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-main, header, footer, nav.back { max-width: 960px; margin: 0 auto; padding: 0 16px; }
+main, header, footer, nav.back, nav.toc { max-width: 960px; margin: 0 auto; padding: 0 16px; }
 header { padding-top: 72px; padding-bottom: 40px; }
 h1 { font-size: clamp(28px, 5vw, 44px); line-height: 1.25; margin: 0 0 12px; }
 h2 { font-size: 24px; margin: 64px 0 20px; }
@@ -87,3 +87,6 @@ section > .fig-pair { margin: 24px 0; }
   .table-wrap table { font-size: 14px; }
   .arch-layer { padding: 10px 10px 12px; }
 }
+
+nav.toc { margin-top: 16px; max-width: min(960px, calc(100% - 24px)); padding: 12px 16px; background: var(--card); border: 1px solid var(--line); border-radius: 10px; }
+nav.toc ul { margin: 6px 0 0; padding-left: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 4px 16px; }
