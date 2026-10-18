@@ -26,8 +26,8 @@ h3 { font-size: 19px; margin: 0 0 6px; }
 .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 img { max-width: 100%; height: auto; border-radius: 10px; display: block; }
 
-.grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
-.card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 20px; }
+.grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr)); }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 20px; font-size: 16px; line-height: 1.6; }
 .card img { aspect-ratio: 16 / 9; object-fit: cover; margin-bottom: 14px; }
 .card p { margin: 10px 0; }
 .card.big h3 { font-size: 22px; }
@@ -90,3 +90,23 @@ section > .fig-pair { margin: 24px 0; }
 
 nav.toc { margin-top: 16px; max-width: min(960px, calc(100% - 24px)); padding: 12px 16px; background: var(--card); border: 1px solid var(--line); border-radius: 10px; }
 nav.toc ul { margin: 6px 0 0; padding-left: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 4px 16px; }
+
+/* 키워드: <ul> 안에 <li>를 넣으면 칩으로 표시, 비어 있으면 숨김 */
+.keywords { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin: 8px 0; font-size: 14px; }
+.keywords:has(ul:empty) { display: none; }
+.keywords b { color: var(--muted); }
+.keywords ul { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.keywords li { margin: 0; padding: 2px 10px; border: 1px solid var(--line); border-radius: 999px; background: var(--card); }
+
+/* 색 강조: 섹션 제목 막대, 대표 카드 상단선, 본인 담당 박스, 키워드 칩, 핵심역량 박스 */
+:root { --accent-soft: #eaf1fb; --chip: #f1f1ed; }
+@media (prefers-color-scheme: dark) { :root { --accent-soft: #1b2636; --chip: #26262b; } }
+h2 { padding-left: 12px; border-left: 4px solid var(--accent); }
+.card.big { border-top: 4px solid var(--accent); }
+.card .role { background: var(--accent-soft); padding: 8px 12px; border-radius: 8px; }
+.card .role:has(+ .role-list) { border-radius: 8px 8px 0 0; margin-bottom: 0; padding-bottom: 2px; }
+.card .role-list { background: var(--accent-soft); border-radius: 0 0 8px 8px; margin-top: 0; padding: 2px 12px 8px 30px; }
+.keywords li { background: var(--chip); border-color: transparent; }
+.keywords b { display: none; }
+main > ul { list-style: none; padding: 0; display: grid; gap: 12px; }
+main > ul li { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 10px; padding: 12px 16px; }

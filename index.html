@@ -11,7 +11,7 @@
 <header>
   <p class="muted">Robotics Engineer · ROS2 · 협동로봇 · 자율주행</p>
   <h1>김관희<br>사람들이 쉽고 편하게 쓰는 로봇을 만들기 위해,<br>실제로 끝까지 동작하게 만듭니다.</h1>
-  <p class="lead">진정한 기술의 가치는 사용자에게 실질적인 편리함을 제공할 때 빛난다고 믿습니다. 스마트 기기 간의 연결이 사람의 생활을 더 편리하게 바꾸어가는 과정에서 품었던 공학의 흥미에서 출발하여, 이제는 로봇 솔루션이 사용자의 환경과 의도를 이해하고 최적의 도움을 주도록 설계하는 엔지니어를 꿈꿉니다.</p>
+  <p class="lead">진정한 기술의 가치는 사용자에게 실질적인 편리함을 제공할 때 빛난다고 믿습니다. 스마트 기기 간의 연결이 사람의 생활을 더 편리하게 바꾸어가는 과정에서 공학의 근본을 느꼈고, 이제는 로봇 솔루션이 사용자의 환경과 의도를 이해하고 최적의 도움을 주도록 설계하는 엔지니어를 꿈꿉니다.</p>
   <p class="lead">기계공학 전공을 통해 탄탄한 역학적 기반과 3D 설계 역량(SolidWorks CSWP)을 다졌으며, 자율주행 경진대회 팀장 경험과 두산로보틱스 부트캠프를 거치며 협동로봇(M0609) 및 AMR 기반 프로젝트를 성공적으로 수행했습니다. 하드웨어에 대한 이해를 바탕으로, 센서 신호 수집부터 실제 구동 제어까지 빈틈없이 연결되는 로봇 시스템을 만들어 보았습니다.</p>
   <p class="contact"><a href="mailto:gwanhuig01@gmail.com">gwanhuig01@gmail.com</a><a href="https://github.com/gwanhuiGIM">github.com/gwanhuiGIM</a></p>
   <div class="video"><iframe src="https://www.youtube-nocookie.com/embed/bOec0yE8m94" title="VLA Pick &amp; Place 1분 시연 영상" loading="lazy" allowfullscreen></iframe></div>
@@ -34,8 +34,10 @@
   <article class="card big">
     <h3><a href="vla.html">VLA 기반 자연어 장애물 우회 Pick &amp; Place</a></h3>
     <p class="tags">Doosan M0609 · RG2 · RealSense · RTX 4060 Laptop 8GB · 5인 팀 · 26.07.30~26.08.12</p>
-    <p>마트 계산대 환경에서 사람이 "사과 바구니에 담아줘" 같은 자연어 지시를 대규모 언어 모델이 해석하고, 협동로봇이 물체를 인식해 <strong>장애물을 피해 집어 옮기는 것</strong>을 목표로 한 시스템입니다.</p>
-    <p>GPU Laptop 한 대의 메모리에 맞춰 각 기능 노드의 사용량을 조정하고 판단·실행 계층을 연결했으며, 실물 그리퍼의 <strong>치수를 직접 재서</strong> 파지 모델과 맞췄습니다. OMPL(경로계획 라이브러리) 경로에서는 이동 중 사람이 손을 넣으면 멈추고 새 경로로 다시 계획하는 동작을 확인했습니다.</p>
+    <div class="keywords"><b>키워드</b><ul><li>LLM 자연어 명령</li><li>판단·안전 계층 분리</li><li>FSM</li><li>MoveIt</li><li>OMPL 구동 중 정지·재계획</li><li>GraspGenX</li><li>실물 그리퍼 실측 보정</li><li>GPU 8GB 메모리 최적화</li><li>YOLO-seg</li><li>Docker</li></ul></div>
+    <p>마트 계산대 환경에서 자연어 지시를 해석해 협동로봇이 <strong>장애물을 피해 물체를 집어 옮기는 것</strong>을 목표로 한 시스템입니다.</p>
+    <p>노트북 GPU 메모리에 맞춰 노드 사용량을 조정하고, 실물 그리퍼 치수를 직접 재서 파지 모델과 맞췄습니다.<br>
+    OMPL(경로계획 라이브러리) 경로에서 이동 중 사람이 손을 넣으면 <strong>멈추고 다시 계획</strong>하는 동작을 확인했습니다.</p>
     <p class="role"><b>본인 담당</b></p>
     <ul class="role-list">
       <li>판단 계층(VLA)·안전 계층(FSM) 통합</li>
@@ -50,9 +52,9 @@
   <article class="card big">
     <h3><a href="erp42.html">자율주행 ERP42 — 2025 대학생 창작모빌리티 경진대회</a></h3>
     <p class="tags">ERP42 4륜 전기차 · 팀 MTP(충남대) · <b>팀장</b> · 24.08~25.11</p>
-    <p>2025 대학생 창작모빌리티 경진대회(한국자동차안전학회 주관) 무인모빌리티 부문에 <strong>3인 팀의 팀장으로 출전</strong>했습니다.</p>
-    <p>개발 일정을 세워 공유하고 실습 환경과 인수인계 자료를 맡았으며, 경로추종을 구현하고 명령 중재 판단 노드 프로토타입을 만들었습니다. 야외 도로 환경에서 측위(Odometry, GPS, IMU, KF), 판단
-    또한 인지 모듈 일부가 빠진 미션상황에 대비하고자 측위와 경로추종이 유지되는 알고리즘을 작성해보았습니다.</p>
+    <div class="keywords"><b>키워드</b><ul><li>팀장</li><li>실차 대회 완주(팀 회고 기준)</li><li>waypoint 경로추종</li><li>명령 중재 프로토타입</li><li>EKF 센서퓨전</li><li>GPS 음영구간 대응 설계</li><li>LiDAR·RTK-GPS·IMU</li><li>rosbag</li></ul></div>
+    <p>2025 대학생 창작모빌리티 경진대회 무인모빌리티 부문에 <strong>3인 팀의 팀장</strong>으로 출전했습니다.</p>
+    <p>인지 모듈 일부가 빠진 미션 상황에서도 측위와 waypoint(경로점) 추종이 유지되는 알고리즘을 작성했습니다.</p>
     <p class="role"><b>본인 담당</b></p>
     <ul class="role-list">
       <li>팀장(개발 일정 수립·공유, 실습 환경 구성, 인수인계 문서화)</li>
@@ -69,8 +71,10 @@
     <img src="images/grad/hull_interior.jpg" alt="선체를 열어 본 내부: Arduino Uno와 모터 드라이버 배선" width="974" height="1314" loading="lazy">
     <h3>열감지 추적 구명튜브 전달장치 및 발사장치</h3>
     <p class="tags">학사 졸업프로젝트 · Arduino Uno · 3인 팀 · 24.08~25.08</p>
-    <p>익수자에게 <strong>스스로 다가가</strong> 구명튜브를 전달하는 휴대형 전달장치입니다.</p>
-    <p>아두이노 회로와 좌우 모터 차동 제어를 맡았고, 팀원들과 열화상 센서·RC 입력·모터 코드를 통합해 열원 방향에 따라 모터 속도를 달리하는 자율 추적과 수동 조작을 구현했습니다. 상용 구조 장비가 500만~700만 원대인 데 비해 팀은 <strong>제작비 약 51만 원</strong>으로 완성했고, 교내 산학연 캡스톤디자인 아이디어 최우수상과 졸업작품 경진대회 장려상을 받았습니다.</p>
+    <div class="keywords"><b>키워드</b><ul><li>Arduino</li><li>DC 모터 차동 제어</li><li>열화상 센서 추적</li><li>자율·RC 수동 전환</li><li>제작비 약 51만 원</li><li>교내 캡스톤 아이디어 최우수상</li></ul></div>
+    <p>익수자에게 <strong>스스로 다가가</strong> 구명튜브를 전달하는 휴대형 인명구조 장치입니다.</p>
+    <p>팀원들과 열화상 센서·RC 입력·모터 코드를 통합해 열원 방향에 따라 모터 속도를 달리하는 자율 추적을 구현했습니다.<br>
+    팀은 <strong>제작비 약 51만 원</strong>으로 완성했고, 교내 산학연 캡스톤디자인 아이디어 최우수상을 받았습니다.</p>
     <p class="role"><b>본인 담당</b></p>
     <ul class="role-list">
       <li>좌우 DC 모터 차동 제어</li>
@@ -83,26 +87,29 @@
     <img src="images/cobot3/web_dashboard.jpg" alt="웹 대시보드: 손추적 영상, 트레이별 도구 상태, 로봇 A/B 상태, 음성 로그, 명령 로그" width="1400" height="793" loading="lazy">
     <h3>VLA 기반 수술도구 집도의 전달 시뮬레이션 (Isaac Sim)</h3>
     <p class="tags">Dual Doosan M0609 · Isaac Sim · 팀 프로젝트 · 26.06.17~26.06.30</p>
+    <div class="keywords"><b>키워드</b><ul><li>Isaac Sim</li><li>듀얼 협동로봇</li><li>손 추적·음성 명령</li><li>Replicator 합성 데이터</li><li>YOLO 도구 인식</li></ul></div>
     <p>집도의의 손 동작과 음성 명령에 따라 두 대의 협동로봇이 <strong>수술도구를 전달</strong>하는 시뮬레이션(Isaac Sim)입니다.</p>
-    <p>작업 단계, 트레이별 도구 재고, 손 추적 영상과 명령 로그를 <strong>한 화면에서 보는 웹 대시보드</strong>를 만들었습니다. 상태가 바뀔 때만 화면을 다시 그리도록 해 화면 떨림도 막았습니다.</p>
-    <p class="role"><b>본인 담당</b> 웹 대시보드 UI·상호작용</p>
+    <p>오픈소스 실물 이미지로는 학습이 실패해, Isaac Sim Replicator(학습용 이미지 자동 생성 도구)로 도구 3D 모델과 트레이 환경에 맞춘 <strong>합성 데이터를 생성</strong>해 도구 인식 YOLO(물체 검출 모델)를 학습시켰습니다.</p>
+    <p class="role"><b>본인 담당</b> Isaac Sim Replicator 기반 합성 데이터 생성·도구 인식 YOLO 학습</p>
     <p><a href="https://youtu.be/EUDn9btPNTw">▶ 1분 시연 영상</a> · <a href="https://github.com/gwanhuiGIM/Rokey_cobot3">코드</a></p>
   </article>
   <article class="card">
     <img src="images/intelli1/fleet_monitor.jpg" alt="관제 웹 화면: 지도 위 로봇·사람 위치, 로봇별 FSM 상태와 출동 로봇 선정 근거(거리·배터리)" width="1400" height="732" loading="lazy">
     <h3>제조업 공장 산업안전 AMR 순찰로봇 및 관제 시스템</h3>
     <p class="tags">AMR 2대 · 천장 웹캠 2대 · 3인 팀 · 26.07.01~26.07.14</p>
-    <p>산업 현장을 모사한 환경에서 천장 카메라가 작업자의 쓰러짐이나 안전모 미착용을 감지하면 <strong>가장 가까운 AMR을 출동</strong>시키는 안전 관제 시스템입니다.</p>
-    <p>쓰러지는 순간 응급 상태가 1초에 5번 바뀌던 문제를, <strong>해제 방향에만 지연을 두어</strong> 응급 반응 속도는 유지한 채 안정화했습니다.</p>
-    <p class="role"><b>본인 담당</b> 관제 FSM(우선순위 선점)·쓰러짐 판정 규칙·메시지 전달 정책 설계와 디버깅, 실기 튜닝 파라미터의 launch→yaml 분리</p>
+    <div class="keywords"><b>키워드</b><ul><li>AMR 2대</li><li>관제 FSM</li><li>우선순위 선점</li><li>최근접 로봇 출동</li><li>쓰러짐·안전모 감지</li><li>해제 지연(히스테리시스)</li><li>실기 튜닝값 YAML 분리</li></ul></div>
+    <p>천장 카메라가 쓰러짐·안전모 미착용을 감지하면 <strong>가장 가까운 AMR을 출동</strong>시키는 관제 시스템입니다.</p>
+    <p>로봇 상태 메시지 수신을 heartbeat(연결 유지 확인 신호)로 삼아 로봇별 <strong>오프라인·대기·출동·충전 상태를 관리</strong>하는 관제 FSM(상태 전환 로직)을 구현하고, 위치 정보나 Nav2(자율주행 소프트웨어) 필수 노드가 확인되지 않는 로봇은 출동 후보에서 뺐습니다.</p>
+    <p class="role"><b>본인 담당</b> 관제 FSM(heartbeat 기반 로봇 상태 관리·우선순위 선점)·쓰러짐 판정 규칙·메시지 전달 정책 설계와 디버깅, 실기 튜닝 파라미터의 launch→yaml 분리</p>
     <p><a href="https://youtu.be/-Q8ITIWgUp4">▶ 1분 시연 영상</a> · <a href="https://github.com/gwanhuiGIM/Rokey_intelli1">코드</a></p>
   </article>
   <article class="card">
     <img src="images/cobot1/workcell_photo.jpg" alt="레고 지그 위 그라인더와 드리퍼가 놓인 핸드드립 작업셀" width="695" height="897" loading="lazy">
     <h3>협동로봇 핸드드립 커피 자동화</h3>
     <p class="tags">Doosan M0609 + OnRobot RG2 · 5인 팀 · 26.07.15~26.07.29</p>
+    <div class="keywords"><b>키워드</b><ul><li>Doosan M0609</li><li>카메라 없는 공정</li><li>힘 센서·그리퍼 접점 신호</li><li>5단계 핸드드립 자동화</li><li>그리퍼 예외 처리</li><li>실패 단계 재실행 복구</li></ul></div>
     <p>카메라 없이 협동로봇의 힘 센서와 그리퍼 접점 신호만으로 원두 계량부터 나선형 드립까지 <strong>5단계 핸드드립 공정을 자동화</strong>했습니다.</p>
-    <p>그리퍼 신호가 1초 넘게 끊기면 정지를 요청하도록 했습니다. 병행 개발본에서는 잡았는지 <strong>판정할 수 없는 순간</strong>을 따로 분리해, 물체를 문 채 다시 집기를 시도하지 않도록 했습니다.</p>
+    <p>그리퍼 신호가 1초 넘게 끊기면 정지를 요청하도록 했고, 병행 개발본에서는 잡았는지 <strong>판정할 수 없는 순간</strong>을 따로 분리해 물체를 문 채 다시 집지 않도록 했습니다.</p>
     <p class="role"><b>본인 담당</b> 그리퍼 예외 상황 처리 및 정상 공정 복귀 알고리즘(팀 README 역할표 기준)</p>
     <p><a href="https://youtu.be/17UW9-wpsBg">▶ 1분 시연 영상</a> · <a href="https://github.com/gwanhuiGIM/Rokey_cobot1">코드</a></p>
   </article>
