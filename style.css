@@ -110,3 +110,14 @@ h2 { padding-left: 12px; border-left: 4px solid var(--accent); }
 .keywords b { display: none; }
 main > ul { list-style: none; padding: 0; display: grid; gap: 12px; }
 main > ul li { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 10px; padding: 12px 16px; }
+
+/* 타임라인(세로형) */
+.vt { border-left: 2px solid var(--line); }
+.vt li { position: relative; margin-left: 18px; }
+.vt li::before { content: ""; position: absolute; left: -27px; top: 16px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+.vt li.now::before { background: var(--bg); border: 2px solid var(--accent); }
+.vt time { display: block; font-size: 13px; color: var(--muted); }
+.vt .muted { display: block; font-size: 14px; }
+.vt p { margin: 6px 0 0; font-size: 15px; }
+.vt li:not(.now) { background: none; border: 0; padding: 2px 16px; }
+.vt li:not(.now)::before { left: -23px; top: 7px; }
