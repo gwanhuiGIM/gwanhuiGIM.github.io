@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>VLA Pick &amp; Place — 김관희</title>
+<meta name="description" content="자연어 지시로 장애물을 피해 물체를 집어 옮기는 것을 목표로 한 협동로봇 5인 팀 프로젝트에서 맡은 GPU 메모리 조정, 실물 그리퍼 실측 보정, 판단·안전 계층 통합 과정을 정리했습니다.">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,10 +12,10 @@
 <header>
   <p class="muted">대표 프로젝트 · 두산로보틱스 ROKEY 부트캠프 4차 · 26.07.30~26.08.12 · 5인 팀</p>
   <h1>VLA 기반 자연어 장애물 우회 Pick &amp; Place</h1>
-  <p class="lead">마트 계산대에서 사람과 협업해 물체마다 그리퍼로 집을 자세를 스스로 찾아 옮기는 것을 목표로 한 협동로봇 시스템입니다. 저는 GPU 한 대의 메모리를 나눠 쓰도록 조정하고, 파지 모델과 다른 실물 그리퍼를 실측해 맞췄습니다. 판단 계층(VLA)과 안전 상태머신(FSM, 로봇 작업을 단계별 상태로 나눠 관리하는 제어 구조)의 제어 권한도 하나로 모았습니다.</p>
-  <p class="muted">ERP42 자율주행과 부트캠프 ROS 2 프로젝트 3개를 거쳐 판단·인식·모션·안전을 <strong>하나로 통합한 마지막 프로젝트</strong>입니다.</p>
-  <div class="video"><iframe src="https://www.youtube-nocookie.com/embed/bOec0yE8m94" title="VLA Pick &amp; Place 1분 시연 영상" allowfullscreen></iframe></div>
-  <p class="tags">Doosan M0609 + RG2 그리퍼 + RealSense D435i + NVIDIA RTX 4060 Laptop(8GB)</p>
+  <p class="lead">마트 계산대에서 사람과 협업해 자연어 지시를 해석하고 장애물을 피해 물체를 집어 옮기는 것을 목표로 한 협동로봇 시스템입니다. 저는 GPU 한 대의 메모리를 나눠 쓰도록 조정하고, 파지 모델과 다른 실물 그리퍼를 실측해 맞췄습니다. 판단 계층(VLA)과 안전 상태머신(FSM, 로봇 작업을 단계별 상태로 나눠 관리하는 제어 구조)의 제어 권한도 하나로 모았습니다.</p>
+  <p class="muted">ERP42 자율주행과 부트캠프 ROS2 프로젝트 3개를 거쳐 판단·인식·모션·안전을 <strong>하나로 통합한 마지막 프로젝트</strong>입니다.</p>
+  <div class="video"><iframe src="https://www.youtube-nocookie.com/embed/bOec0yE8m94" title="VLA Pick &amp; Place 1분 시연 영상" loading="lazy" allowfullscreen></iframe></div>
+  <p class="tags">Doosan M0609 + OnRobot RG2 그리퍼 + RealSense D435i + NVIDIA RTX 4060 Laptop(8GB)</p>
   <div class="keywords"><b>키워드</b><ul><li>LLM 자연어 명령</li><li>판단·안전 계층 분리</li><li>FSM</li><li>MoveIt</li><li>OMPL 구동 중 정지·재계획</li><li>GraspGenX</li><li>실물 그리퍼 실측 보정</li><li>GPU 8GB 메모리 최적화</li><li>YOLO-seg</li><li>Docker</li></ul></div>
 </header>
 
@@ -36,7 +37,7 @@
 <main>
 <section>
   <h2 id="glance">한눈에 보기</h2>
-  <p>팀 시스템은 판단(LLM)과 실행·안전(FSM)을 서로 다른 노드와 패키지로 나눈 구조이고 두 계층은 명령·결과·상태를 <strong>JSON 채널로만</strong> 주고받습니다. 모션 취소, 그리퍼 개폐, 물체 보유 상태, 충돌 씬 관리는 FSM(작업을 단계별 상태로 나눠 관리하는 상태머신) 쪽에만 있습니다. 그래서 언어 모델의 응답이 늦거나 틀려도 정지와 그리퍼 판단은 FSM 규칙을 따릅니다.</p>
+  <p>팀 시스템은 판단(LLM)과 실행·안전(FSM)을 서로 다른 노드와 패키지로 나눈 구조이고 두 계층은 명령·결과·상태를 <strong>JSON 채널로만</strong> 주고받습니다. 모션 취소, 그리퍼 개폐, 물체 보유 상태, 충돌 씬 관리는 FSM 쪽에만 있습니다. 그래서 언어 모델의 응답이 늦거나 틀려도 정지와 그리퍼 판단은 FSM 규칙을 따릅니다.</p>
   <p>정지는 <strong>언어 모델을 거치지 않습니다</strong>. 화면의 정지 버튼은 음성 인식·언어 모델을 기다리지 않고 bridge(두 계층 사이 명령을 중계하는 노드)로 바로 보냅니다. 음성으로 말한 "멈춰"는 음성 인식으로 글자가 된 뒤 언어 모델 없이 정지 명령이 되어 FSM을 일시정지(PAUSED) 상태로 전환합니다.</p>
 
   <div class="arch" role="figure" aria-label="계층 구조도: 판단 계층과 실행·안전 계층이 /vla/pick_command JSON 채널로만 연결된다">
@@ -103,7 +104,7 @@
 
 <section>
   <h2 id="system">시스템 구성</h2>
-  <p><b>인식</b> — 작업대 옆에 고정한 RealSense D435i 카메라 1대(eye-to-hand, 로봇 팔이 아니라 바깥에 고정한 카메라)와 YOLO-seg(영상에서 물체 영역을 픽셀 단위로 나누는 모델)로 대상을 찾습니다. 카메라 좌표는 eye-to-hand 캘리브레이션 결과로 로봇 기준 좌표로 바꿉니다. <code>graspgenx_perception</code>은 컨테이너 안의 GraspGen(물체 형상을 보고 집을 수 있는 자세 후보를 만드는 모델)에서 파지 후보 64개를 받아 <strong>점수·도달 반경·접근축 조건으로</strong> 걸러 하나를 고릅니다. 기본 설정에서는 그리퍼 폭을 상수로 쓰고 물체별 폭까지 받으려면 별도 서비스 경로를 씁니다.</p>
+  <p><b>인식</b> — 작업대 옆에 고정한 RealSense D435i 카메라 1대(eye-to-hand, 로봇 팔이 아니라 바깥에 고정한 카메라)와 YOLO-seg(영상에서 물체 영역을 픽셀 단위로 나누는 모델)로 대상을 찾습니다. 카메라 좌표는 eye-to-hand 캘리브레이션 결과로 로봇 기준 좌표로 바꿉니다. <code>graspgenx_perception</code>은 GraspGenX 컨테이너 안의 GraspGen(물체 형상을 보고 집을 수 있는 자세 후보를 만드는 모델)에서 파지 후보 64개를 받아 <strong>점수·도달 반경·접근축 조건으로</strong> 걸러 하나를 고릅니다. 기본 설정에서는 그리퍼 폭을 상수로 쓰고 물체별 폭까지 받으려면 별도 서비스 경로를 씁니다.</p>
   <p><b>판단</b> — <code>vla_system</code>의 에이전트 노드는 단순한 지시를 미리 정한 규칙(Tier 1, 언어 모델 없이)으로 바로 처리하고 맥락이 필요한 지시는 gpt-5-mini와 카메라 사진(Tier 2)으로 해석합니다. 판단 결과는 bridge 노드만 JSON 명령으로 바꿔 내보내며 이 노드는 <strong>팔을 직접 움직이지 않습니다</strong>. bridge는 실행 설정의 기본값이 꺼짐이라 화면(GUI)에서 켜야 FSM 쪽으로 명령이 갑니다.</p>
   <p><b>경계</b> — <code>voice_processing</code>의 <code>vla_command_node</code>가 JSON 명령을 FSM 서비스 호출로 바꿉니다. 대상 물체는 FSM이 듣기 상태(<code>LISTENING</code>)에서 키워드를 요청할 때 이 노드가 <strong>응답하는 방식(pull)</strong>으로 전달됩니다.</p>
   <p><b>실행·안전</b> — <code>task_manager</code>가 작업을 상태로 나눠 인식 → 계획 → 실행 순서를 조율하고 <code>moveit_bridge</code>가 move_group(MoveIt에서 충돌 검사와 경로 계획을 맡는 핵심 노드)에 계획과 실행을 맡깁니다. <code>robot_safety_node</code>는 FSM과 <strong>별도 프로세스로</strong> Doosan 안전 서비스(정지, 손으로 팔을 밀 수 있는 backdrive 모드 진입·해제)를 감쌉니다. FSM이 멈춰도 이 서비스는 따로 부를 수 있습니다. 서비스는 결과를 기다리지 않고 바로 응답하므로 실제 결과는 상태 토픽으로 확인합니다.</p>
@@ -141,8 +142,10 @@
     <li><b>I11:</b> 일시정지(<code>PAUSED</code>) 중에는 시간이 지나도 <strong>스스로 재개하거나</strong> 물체를 놓지 않습니다.</li>
     <li><b>I13:</b> 그리퍼는 <strong>팔이 멈춘 상태에서만</strong> 엽니다.</li>
   </ul>
-  <img src="images/cobot2_fsm_control_panel.png" alt="pick FSM 상태·제어 rqt 패널: FSM 상태, 타겟, 속도, 중단·즉시정지 버튼" width="484" height="765" loading="lazy" style="max-width:min(420px,100%)">
-  <p class="muted">pick FSM 상태·제어 패널 (rqt)</p>
+  <figure class="fig">
+    <img src="images/cobot2/fsm_control_panel.png" alt="pick FSM 상태·제어 rqt 패널: FSM 상태, 타겟, 속도, 중단·즉시정지 버튼" width="484" height="765" loading="lazy" class="narrow">
+    <figcaption class="muted">pick FSM 상태·제어 패널 (rqt)</figcaption>
+  </figure>
 </section>
 
 <section>
@@ -160,13 +163,13 @@
   <p><b>본인 담당:</b></p>
   <ul class="role-list">
     <li>판단 계층(VLA)·안전 계층(FSM) 통합</li>
-    <li>GraspGenX↔실물 RG2 정합(실측·보정·규약)</li>
-    <li>GPU 메모리 대응(파지 후보 수 조정·YOLO 노드 누적 정리)</li>
+    <li>GraspGenX↔실물 RG2 정합(실측·보정·Offset)</li>
+    <li>GPU 메모리 대응(GraspGenX 후보 수 조정·YOLO 노드 누적 정리)</li>
     <li>구동 중 정지 후 재계획 연결</li>
     <li>인지 실패 감지 게이트(팀 모션 코드 위에 제안·구현)</li>
     <li>실기 파라미터 yaml 정본화·launch 인자 분리</li>
   </ul>
-  <p class="muted">VLA와 FSM은 팀원과 분업으로 개발했고, 인지 실패 감지 게이트는 팀 모션 코드 위에 제안·구현했습니다.</p>
+  <p class="muted">VLA와 FSM은 팀원과 분업으로 개발했습니다.</p>
 </section>
 
 <section>
@@ -203,7 +206,7 @@
     <li>YOLO 노드 누적을 <strong>10개에서 1개</strong>로 줄인 것을 실사용에서 확인했습니다.</li>
     <li>실제 카메라로 찍은 6~9개 물체 장면에서 VLA가 지정한 물체가 <strong>GraspGenX 파지 후보까지</strong> 이어지는 것을 확인했습니다.</li>
     <li>OMPL(경로계획 라이브러리) 경로를 따라 움직이는 중 사람이 작업영역에 손을 넣으면 <strong>멈추고 새 경로로 다시 계획</strong>하는 동작과, 출발 전 장애물 우회를 실기로 확인했습니다.</li>
-    <li>테스트(pytest 79건·246건 통과)는 제출 당시 README에 남은 기록이고 <strong>다시 실행하지 않았습니다</strong>. 로봇·카메라·API 키 없이 규칙과 JSON 처리 로직을 검사하는 테스트이며 실기 성능 검증은 하지 않았습니다.</li>
+    <li>테스트(pytest — FSM·음성 79건, VLA 판단 246건 통과)는 제출 당시 README에 남은 기록이고 <strong>다시 실행하지 않았습니다</strong>. 로봇·카메라·API 키 없이 규칙과 JSON 처리 로직을 검사하는 테스트이며 실기 성능 검증은 하지 않았습니다.</li>
     <li><b>남은 과제:</b> GPU 전 모듈 동시 구동 여유, RG2 보정이 파지 성공률에 준 효과, cuMotion 실행 중 회피, 전체 pick-to-place 실물 검증.</li>
   </ul>
   <p><b>회고</b> — "동작이 성공하는 것"과 "예외 상황에서 안전하게 멈추는 것"은 서로 다른 계층에서 따로 설계하고 검증해야 한다는 것을 배웠습니다.</p>
@@ -214,7 +217,7 @@
   <ul>
     <li><a href="https://github.com/gwanhuiGIM/Rokey_cobot2/blob/main/src/pick_fsm/pick_fsm/states.py#L20-L44">pick FSM 상태 정의(인식·계획·파지·운반·안전) — states.py</a></li>
     <li><a href="https://github.com/gwanhuiGIM/Rokey_cobot2/blob/main/src/pick_fsm/pick_fsm/moveit_bridge.py#L218-L224">구동 중 정지 후 재계획 — moveit_bridge.py</a></li>
-    <li><a href="https://github.com/gwanhuiGIM/Rokey_cobot2/blob/main/src/cumotion/cumotion/dynamic_avoid.py#L149-L158">이동 전 ESDF 게이트 — dynamic_avoid.py</a></li>
+    <li><a href="https://github.com/gwanhuiGIM/Rokey_cobot2/blob/main/src/cumotion/cumotion/dynamic_avoid.py#L149-L158">이동 전 장애물 지도 점검 게이트 — dynamic_avoid.py</a></li>
     <li><a href="https://github.com/gwanhuiGIM/Rokey_cobot2/blob/main/docs/fsm/context/constraints.md">실측 제약 문서 — constraints.md</a></li>
     <li><a href="https://github.com/gwanhuiGIM/Rokey_cobot2/blob/main/docs/fsm/vla-bridge-contract.md">두 계층 JSON 계약 — vla-bridge-contract.md</a></li>
     <li><a href="https://github.com/gwanhuiGIM/Rokey_cobot2/blob/main/src/PACKAGES.md">패키지별 상세·FSM 상태도 — PACKAGES.md</a></li>

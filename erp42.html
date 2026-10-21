@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>자율주행 ERP42 — 김관희</title>
+<meta name="description" content="2025 대학생 창작모빌리티 경진대회 무인모빌리티 부문에 팀장으로 출전해, 인지 일부가 빠지는 상황에서도 측위(차량 위치 추정)와 경로추종을 유지하며 팀이 실차 대회를 완주한 과정입니다(팀 회고 기준).">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,8 +13,8 @@
   <p class="muted">대표 프로젝트 · 2025 대학생 창작모빌리티 경진대회 (무인모빌리티 부문) · 24.08~25.11 · 팀장</p>
   <h1>자율주행 ERP42</h1>
   <p class="lead">실제 주행시험장을 달리는 자율주행 인지·판단·제어 노드를 팀으로 만들어, 인지 일부가 빠지는 상황에서도 측위·경로추종을 유지해 실차 대회를 완주했습니다(팀 회고 기준).</p>
-  <img src="images/erp42/erp42_platform.jpg" alt="센서와 알루미늄 프레임을 얹은 ERP42 차량" width="524" height="601" loading="lazy" style="max-width:min(420px,100%)">
-  <img src="images/erp42/erp42_gps_mount.jpg" alt="ERP42 프레임에 장착한 u-blox GPS 모듈과 안테나" width="910" height="397" loading="lazy" style="margin-top:12px">
+  <img src="images/erp42/erp42_platform.jpg" alt="센서와 알루미늄 프레임을 얹은 ERP42 차량" width="524" height="601" loading="lazy" class="narrow">
+  <img src="images/erp42/erp42_gps_mount.jpg" alt="ERP42 프레임에 장착한 u-blox GPS 모듈과 안테나" width="910" height="397" loading="lazy">
   <p class="tags">ERP42 4륜 전기차 플랫폼 · 팀 MTP(충남대) · 3인 팀(실개발 2~3인) · 한국자동차안전학회 주관</p>
   <div class="keywords"><b>키워드</b><ul><li>팀장</li><li>실차 대회 완주(팀 회고 기준)</li><li>waypoint 경로추종</li><li>명령 중재 프로토타입</li><li>EKF 센서퓨전</li><li>GPS 음영구간 대응 설계</li><li>LiDAR·RTK-GPS·IMU</li><li>rosbag</li></ul></div>
 </header>
@@ -36,9 +37,9 @@
   <p class="muted"><a href="https://www.youtube.com/watch?v=YCeGdbSMRuc">▶ 대회 진행 방식 참고 영상</a> — 우리 팀 시연이 아니라, 예선(트랙 주행·highway 예선 코스)을 통과한 상위 팀만 참가하는 본선 출전 팀들의 주행 영상입니다.</p>
   <p class="muted">개발 중 알고리즘 테스트 기록 — 대회 주행 영상이 없어 대신 싣는 팀 내부 테스트 자료입니다. <a href="https://github.com/gwanhuiGIM/Erp42_ws/blob/master/assets/erp42_test_waypoint_lidar_avoid.mp4">▶ waypoint 추종 및 LiDAR 회피 테스트 영상 (25.04)</a></p>
   <p class="muted">참고 문서(팀 MTP가 대회 제출용으로 함께 작성, 개인정보 처리본): <a href="https://github.com/gwanhuiGIM/Erp42_ws/blob/master/assets/erp42_research_plan.pdf">연구계획서</a> · <a href="https://github.com/gwanhuiGIM/Erp42_ws/blob/master/assets/erp42_tech_report.pdf">기술보고서</a></p>
-  <div class="test-shots" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px">
-    <figure style="margin:0"><img src="images/erp42/erp42_test_lane_data_collection.jpg" alt="차선 감지 알고리즘 구현용 데이터 수집 (25.07)" width="750" height="1000" loading="lazy"><figcaption class="muted">차선 감지 알고리즘 구현용 데이터 수집 (25.07)</figcaption></figure>
-    <figure style="margin:0"><img src="images/erp42/erp42_test_lidar_obstacle_track.jpg" alt="예선 미션 대비 LiDAR 장애물 트랙 주행 시뮬레이션 (25.07)" width="1000" height="1000" loading="lazy"><figcaption class="muted">예선 미션 대비 LiDAR 장애물 트랙 주행 시뮬레이션 (25.07)</figcaption></figure>
+  <div class="test-shots">
+    <figure><img src="images/erp42/erp42_test_lane_data_collection.jpg" alt="차선 감지 알고리즘 구현용 데이터 수집 (25.07)" width="750" height="1000" loading="lazy"><figcaption class="muted">차선 감지 알고리즘 구현용 데이터 수집 (25.07)</figcaption></figure>
+    <figure><img src="images/erp42/erp42_test_lidar_obstacle_track.jpg" alt="예선 미션 대비 LiDAR 장애물 트랙 주행 시뮬레이션 (25.07)" width="1000" height="1000" loading="lazy"><figcaption class="muted">예선 미션 대비 LiDAR 장애물 트랙 주행 시뮬레이션 (25.07)</figcaption></figure>
   </div>
   <ul>
     <li><b>GPS가 불안정한 구간:</b> 120m 안팎의 터널에서는 GPS가 잡히지 않았고 관성센서(IMU)는 시간이 지날수록 오차가 쌓였습니다(drift).</li>
@@ -83,8 +84,7 @@
 <section>
   <h2 id="evidence">코드 근거</h2>
   <ul>
-    <li>팀 최종 코드 <a href="https://github.com/gwanhuiGIM/Erp42_ws">Erp42_ws</a></li>
-    <li>기술 전체(측위·경로계획·판단·인지·차량 I/O)는 <a href="https://github.com/gwanhuiGIM/Erp42_ws">Erp42_ws README</a> 참고.</li>
+    <li>팀 최종 코드 <a href="https://github.com/gwanhuiGIM/Erp42_ws">Erp42_ws</a> — 기술 전체(측위·경로계획·판단·인지·차량 I/O)는 README 참고.</li>
   </ul>
 </section>
 </main>
