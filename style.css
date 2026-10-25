@@ -127,3 +127,9 @@ main > ul li { background: var(--card); border: 1px solid var(--line); border-le
 .vt p { margin: 6px 0 0; font-size: 15px; }
 .vt li:not(.now) { background: none; border: 0; padding: 2px 16px; }
 .vt li:not(.now)::before { left: -23px; top: 7px; }
+
+/* 카드 진행 흐름(3단계)·기술 상세 접기 */
+.card .flow { margin: 8px 0; padding-left: 22px; font-size: 15px; color: var(--muted); }
+.card .flow li { margin: 2px 0; }
+.card details.tech { margin: 10px 0; font-size: 15px; }
+.card details.tech summary { cursor: pointer; color: var(--accent); }
