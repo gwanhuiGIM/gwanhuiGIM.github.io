@@ -133,3 +133,11 @@ main > ul li { background: var(--card); border: 1px solid var(--line); border-le
 .card .flow li { margin: 2px 0; }
 .card details.tech { margin: 10px 0; font-size: 15px; }
 .card details.tech summary { cursor: pointer; color: var(--accent); }
+
+/* 상세 페이지 기술 상세 접기 */
+section > details.tech { border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; background: var(--card); }
+section > details.tech > summary { cursor: pointer; color: var(--accent); font-weight: 600; }
+section > details.tech[open] > summary { margin-bottom: 8px; }
+section h4 { font-size: 17px; margin: 24px 0 6px; }
+ol.steps { padding-left: 22px; }
+ol.steps li { margin: 8px 0; }

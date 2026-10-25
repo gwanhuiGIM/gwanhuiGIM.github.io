@@ -22,34 +22,68 @@
 <nav class="toc" aria-label="목차">
 <b>목차</b>
 <ul>
-<li><a href="#problem">해결하려던 문제와 제약</a></li>
-<li><a href="#role">본인 담당과 팀 분담</a></li>
-<li><a href="#solving">핵심 해결 과정</a></li>
+<li><a href="#glance">한눈에 보기</a></li>
+<li><a href="#problem">주제와 제약</a></li>
+<li><a href="#flow">진행 흐름</a></li>
+<li><a href="#solving">막힌 지점과 판단</a></li>
+<li><a href="#team">팀에서 일한 방식</a></li>
 <li><a href="#result">결과와 검증 한계</a></li>
+<li><a href="#learned">배운 점</a></li>
+<li><a href="#tech">기술 상세</a></li>
 <li><a href="#evidence">코드 근거</a></li>
 </ul>
 </nav>
 
 <main>
 <section>
-  <h2 id="problem">해결하려던 문제와 제약</h2>
-  <p>예선 10분·본선 15분의 단일 주행으로 도로 경로 주행, 장애물 우회, 신호등 인식, 돌발 장애물 정지 미션을 통과하며 기록을 겨루는 실차 대회입니다.</p>
+  <h2 id="glance">한눈에 보기</h2>
   <p class="muted"><a href="https://www.youtube.com/watch?v=YCeGdbSMRuc">▶ 대회 진행 방식 참고 영상</a> — 우리 팀 시연이 아니라, 예선(트랙 주행·highway 예선 코스)을 통과한 상위 팀만 참가하는 본선 출전 팀들의 주행 영상입니다.</p>
   <p class="muted">개발 중 알고리즘 테스트 기록 — 대회 주행 영상이 없어 대신 싣는 팀 내부 테스트 자료입니다. <a href="https://github.com/gwanhuiGIM/Erp42_ws/blob/master/assets/erp42_test_waypoint_lidar_avoid.mp4">▶ waypoint 추종 및 LiDAR 회피 테스트 영상 (25.04)</a></p>
-  <p class="muted">참고 문서(팀 MTP가 대회 제출용으로 함께 작성, 개인정보 처리본): <a href="https://github.com/gwanhuiGIM/Erp42_ws/blob/master/assets/erp42_research_plan.pdf">연구계획서</a> · <a href="https://github.com/gwanhuiGIM/Erp42_ws/blob/master/assets/erp42_tech_report.pdf">기술보고서</a></p>
   <div class="test-shots">
     <figure><img src="images/erp42/erp42_test_lane_data_collection.jpg" alt="차선 감지 알고리즘 구현용 데이터 수집 (25.07)" width="750" height="1000" loading="lazy"><figcaption class="muted">차선 감지 알고리즘 구현용 데이터 수집 (25.07)</figcaption></figure>
     <figure><img src="images/erp42/erp42_test_lidar_obstacle_track.jpg" alt="예선 미션 대비 LiDAR 장애물 트랙 주행 시뮬레이션 (25.07)" width="1000" height="1000" loading="lazy"><figcaption class="muted">예선 미션 대비 LiDAR 장애물 트랙 주행 시뮬레이션 (25.07)</figcaption></figure>
   </div>
+</section>
+
+<section>
+  <h2 id="problem">주제와 제약</h2>
+  <p>주행 중 인지 모듈 일부가 빠지더라도 차량이 멈추지 않고 경로를 유지해 완주하는 자율주행 시스템을 목표로 삼았습니다. 3인 팀의 팀장으로 ERP42 4륜 전기차와 LiDAR(레이저로 주변 거리를 재는 센서)·RTK-GPS(보정 신호로 오차를 줄인 GPS)·IMU(기울기·가속도 센서)를 처음 다루며, 바퀴 회전량 계산부터 경로추종과 명령 중재까지 주행 기반을 단계적으로 쌓았습니다.</p>
+  <p>예선 10분·본선 15분의 단일 주행으로 도로 경로 주행, 장애물 우회, 신호등 인식, 돌발 장애물 정지 미션을 통과하며 기록을 겨루는 실차 대회입니다.</p>
   <ul>
     <li><b>GPS가 불안정한 구간:</b> 120m 안팎의 터널에서는 GPS가 잡히지 않았고 관성센서(IMU)는 시간이 지날수록 오차가 쌓였습니다(drift).</li>
     <li><b>통제 지점 없는 명령:</b> 인지 모듈마다 제각각 조향·속도 명령을 내는데, 이를 조율할 지점이 없었습니다.</li>
-    <li><b>실차 문제:</b> 카메라 프레임 누락, 전력 부족, 진동에 따른 카메라·IMU 자세 변화, 브레이크 오일 누유, GNSS·ROS2 통신 끊김이 이어졌습니다.</li>
   </ul>
 </section>
 
 <section>
-  <h2 id="role">본인 담당과 팀 분담</h2>
+  <h2 id="flow">진행 흐름</h2>
+  <ol class="steps">
+    <li><b>센서 연결</b> — USB 카메라·IMU·RTK-GPS·3D LiDAR를 차례로 구동하고 네트워크와 센서 인터페이스를 점검했습니다.</li>
+    <li><b>25.02</b> — 바퀴 인코더 신호로 이동거리와 회전각을 계산하는 휠 오도메트리 노드를 팀에서 직접 구현했습니다.</li>
+    <li><b>25.03</b> — 경로추종 기법인 Pure Pursuit(앞쪽 목표점을 향해 조향하는 방식)과 Stanley(경로와의 거리·각도 오차를 함께 줄이는 방식)를 학습했습니다.</li>
+    <li><b>경로추종 설계</b> — 연구계획서에서 waypoint(경로점) 추종의 조향을 경로와의 방향 오차에 비례해 정하고 저역통과 처리로 흔들림을 줄이는 방식으로 설계했습니다.</li>
+    <li><b>25.04</b> — waypoint 추종과 LiDAR 장애물 회피를 테스트 주행으로 확인했습니다.</li>
+    <li><b>25.07</b> — 측위·경로추종·차선 인식을 실도로에서 함께 돌리며 전력·진동·통신 끊김 같은 문제의 대응 필요성을 확인하고 포트·주행 설정값을 조정했습니다.</li>
+    <li><b>이후</b> — LiDAR 장애물 회피를 2D 스캔 기반에서 3D 점군 클러스터링(가까운 점끼리 묶어 장애물로 보는 처리) 실험으로 넓혔습니다.</li>
+  </ol>
+</section>
+
+<section>
+  <h2 id="solving">막힌 지점과 판단</h2>
+  <h3>GPS 음영구간 → 센서 융합 측위 <span class="muted">(팀원들과 함께)</span></h3>
+  <p>LiDAR(VLP-16)·카메라·IMU·RTK-GPS를 구동하고 바퀴 회전량(휠 오도메트리)을 IMU·GPS와 EKF(여러 센서 값을 결합해 위치를 추정하는 확장 칼만 필터)로 융합해 <strong>GPS 음영구간에 대응</strong>했습니다.</p>
+  <h3>곡선에서 튀는 조향 → 경로추종 <span class="muted">(본인)</span></h3>
+  <p>경로추종 방식인 Pure Pursuit·Stanley를 검토한 뒤, 경로와의 방향 오차에 비례해 조향하고 직전 값과 부드럽게 섞는 저역통과 처리로 곡선에서 <strong>조향이 튀는 것</strong>을 줄였습니다.</p>
+  <h3>통제 지점 없는 명령 → 명령 중재 <span class="muted">(본인)</span></h3>
+  <p>차선·경로 채널을 우선순위와 유효시간으로 중재하고 유효한 입력이 없으면 <strong>완전 제동(full-brake)</strong>하는 판단 노드 프로토타입을 만들었습니다.</p>
+  <h3>실차에서 드러난 문제 → 실차 대응</h3>
+  <p>카메라 프레임 누락, 전력 부족, 진동에 따른 카메라·IMU 자세 변화, 브레이크 오일 누유, GNSS·ROS2 통신 끊김이 이어졌습니다.</p>
+  <p>튜닝, 테스트 주행, rosbag(센서·제어 메시지 기록 도구) 로깅, 분석을 반복하며 포트·RTK·속도·브레이크 값을 조정했습니다. 전력 부족은 <strong>보조배터리로 보강</strong>했습니다.</p>
+</section>
+
+<section>
+  <h2 id="team">팀에서 일한 방식</h2>
+  <p>실개발 2~3인의 3인 팀에서 팀장으로 개발 일정을 수립해 공유하고, 팀원들이 함께 작업할 실습 환경을 구성했으며, 인수인계 문서를 작성했습니다.</p>
   <p><b>본인 담당:</b></p>
   <ul class="role-list">
     <li>팀장(개발 일정 수립·공유, 실습 환경 구성, 인수인계 문서화)</li>
@@ -60,25 +94,25 @@
 </section>
 
 <section>
-  <h2 id="solving">핵심 해결 과정</h2>
-  <h3>센서 → 측위 <span class="muted">(팀원들과 함께)</span></h3>
-  <p>LiDAR(VLP-16)·카메라·IMU·RTK-GPS를 구동하고 바퀴 회전량(휠 오도메트리)을 IMU·GPS와 EKF(여러 센서 값을 결합해 위치를 추정하는 확장 칼만 필터)로 융합해 <strong>GPS 음영구간에 대응</strong>했습니다.</p>
-  <h3>경로추종 <span class="muted">(본인)</span></h3>
-  <p>경로추종 방식인 Pure Pursuit·Stanley를 검토한 뒤, 경로와의 방향 오차에 비례해 조향하고 직전 값과 부드럽게 섞는 저역통과 처리로 곡선에서 <strong>조향이 튀는 것</strong>을 줄였습니다.</p>
-  <h3>명령 중재 <span class="muted">(본인)</span></h3>
-  <p>차선·경로 채널을 우선순위와 유효시간으로 중재하고 유효한 입력이 없으면 <strong>완전 제동(full-brake)</strong>하는 판단 노드 프로토타입을 만들었습니다.</p>
-  <h3>실차 대응</h3>
-  <p>튜닝, 테스트 주행, rosbag(센서·제어 메시지 기록 도구) 로깅, 분석을 반복하며 포트·RTK·속도·브레이크 값을 조정했습니다. 전력 부족은 <strong>보조배터리로 보강</strong>했습니다.</p>
-</section>
-
-<section>
   <h2 id="result">결과와 검증 한계</h2>
   <ul>
     <li>인지 모듈 일부가 빠져도 측위와 경로추종이 <strong>유지되어 완주</strong>했습니다(팀 회고 기준).</li>
     <li>주행 로그가 남아 있지 않아 순위·정량 지표는 적지 않았습니다.</li>
     <li>명령 중재 판단 노드는 소스 코드 수준의 프로토타입입니다.</li>
   </ul>
-  <p><b>회고</b> — "무엇이 빠져도 버티는가"를 먼저 설계하고 성능은 튜닝·테스트·로깅을 반복하며 끌어올린다는 것을 배웠습니다.</p>
+</section>
+
+<section>
+  <h2 id="learned">배운 점</h2>
+  <p>"무엇이 빠져도 버티는가"를 먼저 설계하고 성능은 튜닝·테스트·로깅을 반복하며 끌어올린다는 것을 배웠습니다. 복잡한 인지 기능을 더하기 전에 측위와 경로추종이라는 최소 기반부터 실차에서 다져야 상위 모듈이 빠져도 주행이 이어진다는 점은, 인지 일부가 빠진 채 완주한 경험(팀 회고 기준)으로 확인했습니다.</p>
+</section>
+
+<section>
+  <h2 id="tech">기술 상세</h2>
+  <details class="tech">
+  <summary>참고 문서 펼쳐 보기</summary>
+  <p class="muted">참고 문서(팀 MTP가 대회 제출용으로 함께 작성, 개인정보 처리본): <a href="https://github.com/gwanhuiGIM/Erp42_ws/blob/master/assets/erp42_research_plan.pdf">연구계획서</a> · <a href="https://github.com/gwanhuiGIM/Erp42_ws/blob/master/assets/erp42_tech_report.pdf">기술보고서</a></p>
+  </details>
 </section>
 
 <section>
