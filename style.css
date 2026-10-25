@@ -1,3 +1,4 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
 :root {
   --bg: #fafaf8; --fg: #1d1d1f; --muted: #5f6368; --line: #e3e3e0;
   --card: #ffffff; --accent: #1f5fbf;
@@ -141,3 +142,66 @@ section > details.tech[open] > summary { margin-bottom: 8px; }
 section h4 { font-size: 17px; margin: 24px 0 6px; }
 ol.steps { padding-left: 22px; }
 ol.steps li { margin: 8px 0; }
+
+/* 2026-10 레이아웃: 그라데이션 히어로·카드(시안 B) + 좌측 고정 목차·사각 마커 타임라인(시안 A) */
+:root { --bg: #f4f6fb; --fg: #0f172a; --muted: #475569; --line: #e2e8f0; --card: #ffffff; --accent: #4f46e5; --accent-soft: #eef2ff; --chip: #eef2ff; }
+@media (prefers-color-scheme: dark) { :root { --bg: #0b1020; --fg: #e2e8f0; --muted: #94a3b8; --line: #1e293b; --card: #111831; --accent: #a5b4fc; --accent-soft: #1b2145; --chip: #1b2145; } }
+
+/* 히어로: 전 페이지 공통 그라데이션, 영상이 있는 홈만 2열 */
+header { max-width: none; margin: 0; padding: 88px max(16px, calc((100% - 1160px) / 2)) 72px; color: #fff;
+  background: radial-gradient(circle at 85% 20%, #7c3aed 0, transparent 45%), linear-gradient(135deg, #1e1b4b 0%, #312e81 45%, #1d4ed8 100%); }
+header a { color: #c7d2fe; }
+header a:focus-visible { outline-color: #fff; }
+header .muted, header .lead, header .tags { color: rgba(255,255,255,.8); }
+header > p.muted:first-child { display: inline-block; padding: 4px 12px; border: 1px solid rgba(255,255,255,.3); border-radius: 999px; font-size: 13px; }
+header h1 { font-size: clamp(30px, 4.6vw, 52px); font-weight: 800; letter-spacing: -0.03em; }
+header .lead { font-size: 17px; }
+@media (min-width: 1000px) {
+  header:has(> .video) { display: grid; grid-template-columns: 1.1fr .9fr; column-gap: 48px; }
+  header:has(> .video) > * { grid-column: 1; }
+  header:has(> .video) > .video { grid-column: 2; grid-row: 1 / span 5; align-self: center; border-radius: 18px; box-shadow: 0 30px 60px rgba(0,0,0,.45); }
+  header:has(> .video) > p.muted:last-child { grid-column: 2; grid-row: 6; text-align: center; }
+}
+
+/* 목차: 넓은 화면은 좌측 고정, 좁으면 본문 위 상자 */
+main, footer, nav.back { max-width: 1192px; }
+nav.toc { margin: 16px auto 0; max-width: min(1192px, calc(100% - 24px)); }
+nav.toc a { color: var(--fg); text-decoration: none; }
+nav.toc a:hover { color: var(--accent); }
+@media (min-width: 1160px) {
+  body { display: grid; grid-template-columns: 1fr 200px minmax(0, 920px) 1fr; column-gap: 40px; }
+  header { grid-column: 1 / -1; }
+  nav.back { grid-column: 2 / 4; max-width: none; margin: 0; padding: 24px 0 0; }
+  nav.toc { grid-column: 2; align-self: start; position: sticky; top: 32px; margin: 64px 0 0; max-width: none; background: none; border: 0; border-top: 3px solid var(--fg); border-radius: 0; padding: 14px 0; }
+  nav.toc ul { flex-direction: column; gap: 10px; }
+  main { grid-column: 3; max-width: none; padding: 0; }
+  footer { grid-column: 2 / 4; max-width: none; padding: 48px 0 64px; }
+}
+
+h2 { border-left: 0; padding-left: 0; font-size: 30px; font-weight: 800; letter-spacing: -0.02em; }
+h2::before { content: ""; display: block; width: 40px; height: 4px; border-radius: 4px; margin-bottom: 14px; background: linear-gradient(90deg, #4f46e5, #06b6d4); }
+
+/* 진행 방식·핵심역량: 카드 그리드 (타임라인 ul.vt 제외) */
+main > ul:not(.vt) { grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 16px; }
+main > ul:not(.vt) li { border: 1px solid var(--line); border-radius: 18px; padding: 22px; box-shadow: 0 1px 2px rgba(15,23,42,.04); }
+main > ul:not(.vt) li b { display: block; font-size: 18px; margin-bottom: 6px; color: var(--accent); }
+main > ul:not(.vt) li br { display: none; }
+
+/* 프로젝트 카드 */
+.card { border-radius: 22px; padding: 26px; box-shadow: 0 1px 2px rgba(15,23,42,.05), 0 12px 32px rgba(15,23,42,.06); transition: transform .2s, box-shadow .2s; overflow: hidden; }
+.card:hover { transform: translateY(-3px); box-shadow: 0 20px 40px rgba(15,23,42,.12); }
+.card.big { background: linear-gradient(var(--card), var(--card)) padding-box, linear-gradient(135deg, #4f46e5, #06b6d4) border-box; border: 2px solid transparent; }
+.card > img:first-child { margin: -26px -26px 18px; width: calc(100% + 52px); max-width: none; border-radius: 0; aspect-ratio: 16 / 9; }
+.card .flow { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; counter-reset: s; }
+.card .flow li { counter-increment: s; background: var(--accent-soft); color: var(--fg); border-radius: 10px; padding: 6px 10px; font-size: 14px; }
+.card .flow li::before { content: counter(s); display: inline-grid; place-items: center; width: 20px; height: 20px; margin-right: 6px; border-radius: 50%; background: var(--accent); color: var(--card); font-size: 12px; font-weight: 700; }
+.keywords li { background: var(--chip); color: var(--accent); font-weight: 600; }
+
+/* 타임라인: 한 줄 세로 목록 + 사각 마커 */
+main > ul.vt { display: block; }
+.vt li::before { background: var(--accent); border-radius: 0; }
+.vt li.now::before { background: var(--bg); }
+.vt li.now { border: 0; border-bottom: 1px solid var(--line); border-radius: 0; background: none; padding: 18px 16px; }
+.vt li.now b { font-size: 18px; }
+
+@media (prefers-reduced-motion: reduce) { .card { transition: none; } .card:hover { transform: none; } }
