@@ -33,7 +33,7 @@ img { max-width: 100%; height: auto; border-radius: 10px; display: block; }
 .card img { aspect-ratio: 16 / 9; object-fit: cover; margin-bottom: 14px; }
 .card img.pos-top { object-position: center 15%; } /* 세로 사진: 위쪽 대상이 잘리지 않게 */
 img.narrow { max-width: min(420px, 100%); }
-header img + img { margin-top: 12px; }
+header img + img, section > img + img { margin-top: 12px; }
 .test-shots { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 8px; }
 .test-shots figure { margin: 0; }
 .card p { margin: 10px 0; }
