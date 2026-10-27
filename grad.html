@@ -19,6 +19,7 @@
 <b>목차</b>
 <ul>
 <li><a href="#overview">한눈에 보기</a></li>
+<li><a href="#built">무엇을 만들었나</a></li>
 <li><a href="#process">진행 과정</a></li>
 <li><a href="#team">팀에서 일한 방식</a></li>
 <li><a href="#learned">배운 점</a></li>
@@ -35,13 +36,54 @@
     <li>3인 팀에서 저는 차동 제어(좌우 DC 모터의 출력을 달리해 방향을 트는 제어), 아두이노(센서와 모터를 제어하는 보드) 회로 구성, 설계보고서 문서화를 맡았습니다. 두 번째 학기에는 PM(프로젝트 진행 관리)도 맡았습니다.</li>
     <li>졸업 프로젝트로, 창의적종합설계와 심화종합설계 두 학기에 걸쳐 진행했습니다.</li>
   </ul>
+  <figure class="fig">
+    <video controls muted loop playsinline preload="none" poster="images/grad/grad_proj_boat_poster.jpg" width="300" height="527" aria-label="물을 채운 수조에 보트를 띄워 움직임을 시험하는 영상">
+      <source src="images/grad/grad_proj_boat.mp4" type="video/mp4">
+    </video>
+    <figcaption class="muted">수조 시험: 물을 채운 통에 보트를 띄워 물 위에서 움직이는지 확인했습니다 (무음, 약 15초)</figcaption>
+  </figure>
+</section>
+
+<section>
+  <h2 id="built">무엇을 만들었나</h2>
+
+  <h3>① 열원 쪽으로 스스로 방향을 튼다</h3>
+  <p>팀은 열화상 센서(8×8 격자로 온도를 재는 센서)가 읽은 값에서 가장 뜨거운 쪽이 왼쪽인지 오른쪽인지 찾도록 처리했습니다.</p>
+  <p>저는 이 방향에 맞춰 좌우 모터의 출력을 다르게 줘, 보트가 열원 쪽으로 머리를 돌리며 나아가도록 했습니다.</p>
+  <figure class="fig">
+    <img class="narrow" src="images/grad/heat_tracking_test.jpg" alt="실내 바닥에서 사람이 보트를 손에 들고 켜진 전기히터 쪽으로 향하게 한 모습" width="1054" height="1684" loading="lazy">
+    <figcaption class="muted">열원 추적 시험(지상): 보트를 손에 들고 켜진 전기히터 쪽으로 향하게 한 장면입니다</figcaption>
+  </figure>
+
+  <h3>② 조종기로 직접 몰 수 있다</h3>
+  <p>저는 무선 조종기(RC)의 신호로 좌우 모터를 움직여, 사람이 보트를 직접 몰 수 있는 수동 조종 부분을 맡았습니다.</p>
+  <p>조종기 신호가 하나라도 들어오면 사람이 모는 수동 조종으로 움직이고, 신호가 없으면 스스로 열원을 찾는 자율 추적으로 넘어갑니다.</p>
+  <figure class="fig">
+    <img src="images/grad/circuit_fritzing.jpg" alt="구명튜브를 기어모터로 펼치던 방식의 회로 구성도: 아두이노 보드에 열화상 센서, RC 수신기, 좌우 DC 모터와 모터 드라이버, 구명튜브용 기어모터와 드라이버, 7.4V 배터리가 연결됨" width="1200" height="752" loading="lazy">
+    <figcaption class="muted">회로 구성도(구명튜브를 기어모터로 펼치던 방식 기준): 아두이노 보드 하나에 열화상 센서, 조종 신호 수신기, 좌우 모터와 모터 드라이버(보드 신호를 받아 모터에 전기를 보내는 부품), 구명튜브용 모터, 배터리가 연결됩니다</figcaption>
+  </figure>
+
+  <h3>③ 발사장치로 물에 던져 넣는다</h3>
+  <p>팀은 사람이 들고 방아쇠로 쏘는 발사장치를 만들어, 보트를 익수자 근처 물 위로 날려 보내도록 했습니다.</p>
+  <p>두 번째 학기에는 자동 팽창 밸브를 넣어, 보트가 물에 떨어지면 구명튜브가 펼쳐지도록 바꿨습니다.</p>
+  <figure class="fig">
+    <video controls muted loop playsinline preload="none" poster="images/grad/grad_launch_poster.jpg" width="710" height="402" aria-label="야외에서 사람이 발사장치를 들고 보트를 쏘는 시험 영상">
+      <source src="images/grad/grad_launch.mp4" type="video/mp4">
+    </video>
+    <figcaption class="muted">발사 시험: 야외에서 발사장치를 들고 보트를 쏘는 장면입니다 (무음, 약 9초)</figcaption>
+  </figure>
 </section>
 
 <section>
   <h2 id="process">진행 과정</h2>
   <p>상용 수난 구조장비는 비싸고 조작 숙련이 필요해 비전문가가 바로 쓰기 어렵다는 문제에서 출발했습니다.</p>
-  <p>첫 학기에는 부품별로 따로 짠 열화상 센서(8×8 격자로 온도를 재는 센서)·RC(무선 조종)·모터 코드를 아두이노 하나로 합치다 막혀, 팀은 정기 회의 외에 회의를 하나 더 잡았습니다.</p>
+  <p>첫 학기에는 부품별로 따로 짠 열화상 센서·RC(무선 조종)·모터 코드를 아두이노 하나로 합치다 막혀, 팀은 정기 회의 외에 회의를 하나 더 잡았습니다.</p>
   <p>모터 제어를 맡은 저는 기존 RC·모터 코드의 동작부터 다시 점검했습니다. 팀은 센서 신호를 시리얼 통신(보드의 값을 PC 화면으로 받아 보는 통신)으로 먼저 확인한 뒤 모터 코드와 합쳐, 바로 앞의 열원을 찾는 것까지 확인했습니다.</p>
+  <p>아두이노와 모터를 잇는 회로 구성 역시 제가 맡아, 보드와 모터 드라이버가 좁은 선체 안에 들어가도록 꾸렸습니다.</p>
+  <figure class="fig">
+    <img class="narrow" src="images/grad/hull_interior.jpg" alt="선체 상판을 열어 본 내부: 아두이노 보드와 모터 드라이버, 배선" width="974" height="1314" loading="lazy">
+    <figcaption class="muted">선체 내부: 상판을 열면 아두이노 보드와 모터 드라이버, 배선이 선체 안에 들어가 있습니다</figcaption>
+  </figure>
   <p>첫 학기 시제품에는 이런 한계가 있었습니다.</p>
   <ul>
     <li>전원 스위치가 없어 상시 전원으로 빨리 방전됐습니다.</li>
@@ -79,6 +121,10 @@
   <details class="tech">
   <summary>열 추적·모터 제어 흐름 펼쳐 보기</summary>
   <p>열화상 센서의 8×8 온도값을 열별 최댓값 8개로 줄여 가장 뜨거운 열의 위치로 좌우 방향을 정하고, 방향마다 좌우 모터 출력을 다르게 줘 방향을 틉니다. RC 신호가 들어오면 수동 조종으로, 없으면 자율 추적으로 넘어갑니다.</p>
+  <figure class="fig">
+    <img src="images/grad/ir_8x8_to_1x8.png" alt="8×8 열화상 격자에서 열마다 가장 높은 온도 칸을 골라 1×8 한 줄로 줄이는 도식" width="1200" height="384" loading="lazy">
+    <figcaption class="muted">8×8 온도값에서 열마다 가장 높은 온도 칸(노란 칸)만 남겨 좌우 한 줄(1×8)로 줄이는 과정 (숫자는 칸 번호)</figcaption>
+  </figure>
   </details>
 </section>
 
