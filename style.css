@@ -157,10 +157,8 @@ header > p.muted:first-child { display: inline-block; padding: 4px 12px; border:
 header h1 { font-size: clamp(30px, 4.6vw, 52px); font-weight: 800; letter-spacing: -0.03em; }
 header .lead { font-size: 17px; }
 @media (min-width: 1000px) {
-  header:has(> .video) { display: grid; grid-template-columns: 1.1fr .9fr; column-gap: 48px; }
-  header:has(> .video) > * { grid-column: 1; }
-  header:has(> .video) > .video { grid-column: 2; grid-row: 1 / span 5; align-self: center; border-radius: 18px; box-shadow: 0 30px 60px rgba(0,0,0,.45); }
-  header:has(> .video) > p.muted:last-child { grid-column: 2; grid-row: 6; text-align: center; }
+  header:has(> .video) > .video { max-width: 960px; margin: 32px auto 8px; border-radius: 18px; box-shadow: 0 30px 60px rgba(0,0,0,.45); }
+  header:has(> .video) > p.muted:last-child { text-align: center; }
 }
 
 /* 목차: 넓은 화면은 좌측 고정, 좁으면 본문 위 상자 */
