@@ -19,6 +19,7 @@
 <b>목차</b>
 <ul>
 <li><a href="#overview">한눈에 보기</a></li>
+<li><a href="#built">무엇을 만들었나</a></li>
 <li><a href="#process">진행 과정</a></li>
 <li><a href="#team">팀에서 일한 방식</a></li>
 <li><a href="#learned">배운 점</a></li>
@@ -42,7 +43,43 @@
     </li>
     <li>두산로보틱스 ROKEY 부트캠프 팀 프로젝트(26.06.17~26.06.30, 주말 포함 14일)이며, 실물 장비 없이 시뮬레이터에서만 진행했습니다.</li>
   </ul>
-  <p><a href="https://youtu.be/EUDn9btPNTw">▶ 1분 시연 영상</a></p>
+  <div class="video"><iframe src="https://www.youtube-nocookie.com/embed/EUDn9btPNTw" title="수술도구 전달 시뮬레이션 1분 시연 영상" loading="lazy" allowfullscreen></iframe></div>
+  <p class="muted">1분 시연 영상</p>
+</section>
+
+<section>
+  <h2 id="built">무엇을 만들었나</h2>
+  <p>아래 ①②는 팀이 함께 만든 기능이고(손 추적·음성 명령·웹 대시보드는 팀원 담당), 제 몫은 ③ 도구 인식입니다.</p>
+
+  <h3>① 가상 수술실에서 두 로봇이 도구를 집어 전달</h3>
+  <p>가상 수술실 테이블 위 트레이 6칸에 수술도구를 놓고, 협동로봇 두 대가 요청받은 도구를 집어 집도의 손 쪽으로 가져가거나 트레이에 돌려놓도록 했습니다.</p>
+  <p>요청이 들어오면 작업 관리 프로그램이 도구가 있는 트레이를 찾아 두 로봇 중 하나에 작업을 맡기고, 한 로봇이 두 로봇의 공유 트레이 구역을 쓰는 동안 들어온 새 집기 요청은 받지 않습니다.</p>
+  <figure class="fig">
+    <img src="images/cobot3/isaac_operating_room_scene.jpg" alt="Isaac Sim 가상 수술실: 수술대 옆 테이블 위 초록 트레이 6칸과 그 양쪽의 흰색 협동로봇 두 대" width="1163" height="642" loading="lazy">
+    <figcaption class="muted">가상 수술실(Isaac Sim) 장면: 수술대 옆 테이블의 트레이 6칸과 협동로봇 두 대</figcaption>
+  </figure>
+
+  <h3>② 손 동작·음성·화면 클릭으로 요청</h3>
+  <p>집도의 역할을 맡은 사람은 마이크에 도구 이름을 말하거나 웹 화면에서 트레이를 눌러 도구를 요청하고 반납합니다.</p>
+  <p>도구를 든 로봇은 웹캠으로 추적한 손 위치를 따라오고, 손 모양을 바꾸면 도구를 트레이로 돌려놓습니다. 로봇·트레이 상태와 명령 처리 결과는 웹 대시보드에 함께 표시됩니다.</p>
+  <div class="fig-pair">
+    <figure class="fig">
+      <img src="images/cobot3/hand_tracking_follow.jpg" alt="손 추적 화면: 웹캠에 비친 주먹 쥔 손 위에 손 관절 선이 그려지고, 손 위치와 로봇 목표 위치 수치가 표시됨" width="1200" height="818" loading="lazy">
+      <figcaption class="muted">손 추적 화면: 웹캠 영상에서 손 관절을 찾아 손 위치와 로봇이 따라갈 목표 위치를 계산합니다 (팀 화면)</figcaption>
+    </figure>
+    <figure class="fig">
+      <img src="images/cobot3/web_dashboard.jpg" alt="웹 대시보드: 손 추적 영상, 트레이별 도구 상태, 로봇 A/B 상태, 음성 명령 로그, 명령 처리 로그" width="1200" height="680" loading="lazy">
+      <figcaption class="muted">웹 대시보드: 손 추적 영상, 트레이별 도구 상태, 로봇 A/B 상태, 음성·명령 처리 기록을 한 화면에 보여 줍니다 (팀 화면)</figcaption>
+    </figure>
+  </div>
+
+  <h3>③ 트레이별 도구 인식</h3>
+  <p>시뮬레이터 카메라 영상에서 도구 인식 모델(YOLO)이 도구를 찾고, 미리 지정한 트레이 구역 6칸에 하나씩 배정해 어느 칸에 어떤 도구가 있는지 ROS 2 메시지로 보냅니다. 이 정보는 웹 대시보드의 트레이별 도구 상태로 표시됩니다.</p>
+  <p>저는 이 인식 부분을 설계하고, 사전학습된 YOLO 모델을 시뮬레이터 장면으로 만든 합성 데이터로 파인튜닝(이미 학습된 모델을 새 이미지로 추가 학습)했습니다.</p>
+  <figure class="fig">
+    <img src="images/cobot3/yolo_tray_detection.jpg" alt="왼쪽: Isaac Sim 수술실 장면, 오른쪽: 시뮬레이터 카메라 영상에서 트레이 0~5마다 찾은 도구를 이름과 상자로 표시한 결과" width="1200" height="546" loading="lazy">
+    <figcaption class="muted">왼쪽은 시뮬레이터 장면, 오른쪽은 시뮬레이터 카메라 영상에서 인식 모델이 트레이 6칸의 도구를 찾아 이름과 상자로 표시한 결과입니다</figcaption>
+  </figure>
 </section>
 
 <section>
