@@ -88,7 +88,7 @@
     <li>브레이크 오일 누유</li>
     <li>GNSS(위성 측위 수신기)·ROS2(로봇 프로그램 간 통신 체계) 연결 끊김</li>
   </ul>
-  <p>팀원들과 튜닝·테스트 주행·rosbag(센서·제어 메시지 기록 도구) 로깅·분석을 반복하며 통신 포트·속도·브레이크 등 설정값을 조정했습니다.</p>
+  <p>팀원들과 튜닝·테스트 주행·rosbag(센서·제어 메시지 기록 도구) 로깅·분석을 반복했고, 통신 포트·속도·브레이크 등 실차 설정값 조정은 제가 맡았습니다.</p>
   <div class="test-shots">
     <figure><img src="images/erp42/erp42_test_lane_data_collection.jpg" alt="차선 감지 알고리즘 구현용 데이터 수집 (25.07)" width="750" height="1000" loading="lazy"><figcaption class="muted">차선 감지 알고리즘 구현용 데이터 수집 (25.07)</figcaption></figure>
     <figure><img src="images/erp42/erp42_test_lidar_obstacle_track.jpg" alt="예선 미션 대비 LiDAR 장애물 트랙 주행 시뮬레이션 (25.07)" width="1000" height="1000" loading="lazy"><figcaption class="muted">예선 미션 대비 LiDAR 장애물 트랙 주행 시뮬레이션 (25.07)</figcaption></figure>
@@ -104,6 +104,7 @@
     <li>팀장(개발 일정 수립·공유, 팀원과 함께 쓸 실습 환경 구성, 인수인계 문서화)</li>
     <li>waypoint 경로추종</li>
     <li>명령 중재 판단 노드</li>
+    <li>실차 설정 조정(카메라·IMU 포트·속도·제동 값, 전륜 정렬이 틀어져 직진 명령에도 한쪽으로 휘던 문제 조정)</li>
   </ul>
   <p><b>팀원들과 함께:</b></p>
   <ul class="role-list">
@@ -127,14 +128,14 @@
   <ol class="steps">
     <li><b>센서 연결</b> — USB 카메라·IMU·RTK-GPS·3D LiDAR를 차례로 구동하고 네트워크와 센서 인터페이스를 점검했습니다.</li>
     <li><b>25.02</b> — 바퀴 인코더 신호로 이동거리와 회전각을 계산하는 휠 오도메트리 노드를 팀에서 직접 구현했습니다.</li>
-    <li><b>25.03</b> — 경로추종 기법인 Pure Pursuit(앞쪽 목표점을 향해 조향하는 방식)과 Stanley(경로와의 거리·각도 오차를 함께 줄이는 방식)를 학습했습니다.</li>
+    <li><b>25.03</b> — 경로추종 기법인 Pure Pursuit(앞쪽 목표점을 향해 조향하는 방식)과 Stanley(경로와의 거리·각도 오차를 함께 줄이는 방식)를 팀원들과 함께 학습했습니다.</li>
     <li><b>경로추종 설계</b> — 연구계획서에서 waypoint(경로점) 추종의 조향을 경로와의 방향 오차에 비례해 정하고 저역통과 처리로 흔들림을 줄이는 방식으로 설계했습니다.</li>
     <li><b>25.04</b> — waypoint 추종과 LiDAR 장애물 회피를 테스트 주행으로 확인했습니다.</li>
     <li><b>25.07</b> — 측위·경로추종·차선 인식을 실도로에서 함께 돌리며 전력·진동·통신 끊김 같은 문제의 대응 필요성을 확인하고 포트·주행 설정값을 조정했습니다.</li>
     <li><b>이후</b> — LiDAR 장애물 회피를 2D 스캔 기반에서 3D 점군 클러스터링(가까운 점끼리 묶어 장애물로 보는 처리) 실험으로 넓혔습니다.</li>
   </ol>
   <h3>곡선에서 튀는 조향 → 경로추종 <span class="muted">(본인)</span></h3>
-  <p>경로추종 방식인 Pure Pursuit·Stanley를 검토한 뒤, 경로와의 방향 오차에 비례해 조향하고 직전 값과 부드럽게 섞는 저역통과 처리로 곡선에서 <strong>조향이 튀는 것</strong>을 줄였습니다.</p>
+  <p>경로추종 방식인 Pure Pursuit·Stanley를 팀원들과 함께 검토한 뒤, 경로와의 방향 오차에 비례해 조향하고 직전 값과 부드럽게 섞는 저역통과 처리로 곡선에서 <strong>조향이 튀는 것</strong>을 줄였습니다.</p>
   <p>명령 중재 판단 노드는 소스 코드 수준의 프로토타입입니다.</p>
   <h3>참고 문서</h3>
   <p class="muted">참고 문서(팀 MTP가 대회 제출용으로 함께 작성, 개인정보 처리본): <a href="https://github.com/gwanhuiGIM/Erp42_ws/blob/master/assets/erp42_research_plan.pdf">연구계획서</a> · <a href="https://github.com/gwanhuiGIM/Erp42_ws/blob/master/assets/erp42_tech_report.pdf">기술보고서</a></p>

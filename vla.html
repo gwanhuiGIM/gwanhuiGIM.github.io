@@ -85,7 +85,7 @@
     <li><b>모델과 다른 실물 그리퍼:</b> 현장의 RG2 그리퍼는 로봇 팔과의 사이에 브라켓(22mm)이 끼어 있었고, 손끝 길이도 다물었을 때 파지 모델보다 38mm 길었습니다. 힌지 구조라 그리퍼를 벌릴수록 손끝까지의 길이가 짧아졌습니다.</li>
   </ul>
   <p>저는 GPU 메모리를 아끼려고 GraspGenX의 파지 후보 수를 기본 <strong>200개에서 64개로</strong> 줄여 시작했습니다.</p>
-  <p>그리퍼 차이는 GraspGenX 모델을 그대로 두고, 실측값과 벌림 폭별 손끝 길이 보정표를 로봇 모델 파일(URDF)과 그리퍼 코드에 넣어 <strong>맞췄습니다</strong>.</p>
+  <p>그리퍼 차이는 GraspGenX 모델을 그대로 두고, 실측값과 벌림 폭별 손끝 길이 보정표를 그리퍼 코드에 넣어 <strong>맞췄습니다</strong>.</p>
   <p>이 보정은 충돌 검사용 그리퍼 모양과 RViz(로봇 상태 시각화 도구) 표시에 반영했고, 파지 성공률에 준 효과는 미검증입니다.</p>
   <figure class="fig">
     <img src="images/cobot2/rg2_grasp.jpg" alt="OnRobot RG2 그리퍼가 작업대 위 오렌지를 집는 근접 사진" width="546" height="580" loading="lazy" class="narrow">
