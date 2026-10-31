@@ -113,6 +113,8 @@
   <details class="tech">
   <summary>시스템 흐름 펼쳐 보기</summary>
   <p>팀 시스템은 손 추적(MediaPipe, 카메라 영상에서 손 관절 위치를 찾는 라이브러리)과 음성 명령(음성 인식 결과를 LLM(대규모 언어 모델)이 명령으로 해석)을 입력으로 받아, 작업 관리자가 두 로봇에 도구 집기·반납 작업을 나눠 주고 상태를 관리합니다. 도구 인식 프로그램(노드)은 카메라 영상에서 YOLO로 도구를 찾아 미리 지정한 트레이 구역에 배정하고, 어느 트레이에 어떤 도구가 있는지를 ROS 2 메시지로 보냅니다. 손 추적·음성 명령·웹 대시보드는 팀원이 맡은 부분입니다.</p>
+  <h3>참고 문서</h3>
+  <p class="muted">팀 발표 자료(세부 기술): <a href="https://github.com/gwanhuiGIM/Rokey_cobot3/releases/download/presentation/cobot3_presentation.pdf">발표 자료(PDF, 66쪽)</a></p>
   </details>
 </section>
 
