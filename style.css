@@ -224,3 +224,14 @@ main figure a { cursor: zoom-in; }
 #lightbox::backdrop { background: rgba(0, 0, 0, .85); }
 #lightbox img { max-width: 96vw; max-height: 88vh; width: auto; margin: 0 auto; background: #fff; cursor: zoom-out; }
 #lightbox p { color: #ddd; margin: 8px 0 0; font-size: 14px; }
+
+/* cobot1 상세 페이지 전용(2026-11-02, 사용자 요청 "cobot1페이지 한해서 … 명확한 섹션 구분", 후보 C 선택) — 카드 없이 구분선·번호 여백, 익힌 것은 왼쪽 막대 인용, 파란색 미사용 */
+main.cobot1 section p { margin: 0 0 14px; }
+main.cobot1 { counter-reset: case; }
+main.cobot1 .case { counter-increment: case; position: relative; border-top: 1px solid var(--line); padding: 24px 0 4px 64px; margin: 8px 0; }
+main.cobot1 .case > h3 { margin-top: 0; font-size: 20px; }
+main.cobot1 .case > h3::before { content: counter(case, decimal-leading-zero); position: absolute; left: 0; top: 18px; color: var(--muted); font-size: 30px; font-weight: 800; }
+main.cobot1 .case .fig { margin: 16px 0; }
+main.cobot1 .takeaway { border-left: 3px solid var(--fg); padding: 2px 0 2px 16px; font-size: 18px; }
+main.cobot1 .takeaway strong { font-weight: 700; color: var(--fg); }
+@media (max-width: 600px) { main.cobot1 .case { padding-left: 0; } main.cobot1 .case > h3::before { position: static; font-size: 20px; margin-right: 8px; } }
