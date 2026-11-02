@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>기계공학 전공 학습 — 김관희</title>
-<meta name="description" content="충남대학교 기계공학부에서 과목마다 직접 수행한 실험·실습·과제와 그 과정에서 익힌 내용을 기계공학 분야별로 정리했습니다.">
+<meta name="description" content="충남대학교 기계공학부에서 과목마다 직접 수행한 실험·실습·과제와 그 과정에서 익힌 내용을 최근 학기부터 정리했습니다.">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,83 +12,148 @@
 <header>
   <p class="muted">충남대학교 기계공학부 · 과목별 학습 정리</p>
   <h1>기계공학 전공 학습</h1>
-  <p class="lead">충남대학교 기계공학부에서 과목마다 직접 해 본 실험·실습·과제와, 그 과정에서 익힌 것을 기계공학 분야별로 정리했습니다.</p>
+  <p class="lead">충남대학교 기계공학부에서 과목마다 직접 해 본 실험·실습·과제와, 그 과정에서 익힌 것을 최근 학기부터 정리했습니다.</p>
 </header>
 
 <nav class="toc" aria-label="목차">
 <b>목차</b>
 <ul>
-<li><a href="#materials">재료·역학</a></li>
-<li><a href="#design">설계·형상</a></li>
-<li><a href="#manufacturing">제조·생산·품질</a></li>
-<li><a href="#thermal">열·공조</a></li>
-<li><a href="#control">계측·제어</a></li>
-<li><a href="#ai">데이터·AI</a></li>
-<li><a href="#capstone">종합설계</a></li>
+<li><a href="#major">주요 과목</a></li>
+<li><a href="#s25-2">25-2학기</a></li>
+<li><a href="#s25-1">25-1학기</a></li>
+<li><a href="#s24-2">24-2학기</a></li>
+<li><a href="#s24-1">24-1학기</a></li>
+<li><a href="#s23-2">23-2학기</a></li>
 </ul>
 </nav>
 
-<main>
+<main class="major">
 <section>
-  <h2 id="materials">재료·역학</h2>
-  <h3>재료및역학실험 <span class="muted">(24-2학기)</span></h3>
-  <p>인장·굽힘·파괴인성(균열이 있는 재료가 버티는 정도)·경도·피로(반복 하중에 의한 파손) 시험에 참여해, 시험기에서 나온 원시 데이터를 Octave·Matlab(수치 계산 프로그램) 스크립트로 직접 그래프로 그리고 물성을 계산해 시험마다 개인 보고서를 썼습니다.</p>
-  <p>재료역학 이론이 실제 시험에서 어떻게 나타나는지 확인했고, 국제 시험 규격(ASTM)을 참조해 시험 조건과 결과가 유효한지 따지며, 조건을 맞추지 못한 결과도 버리지 않고 이유와 한계를 보고서에 남기는 법을 익혔습니다.</p>
-  <h3>기계재료학 <span class="muted">(25-1학기)</span></h3>
-  <p>졸업 프로젝트에서 직접 사서 가공한 탄소강을 리포트 주제로 골라, 규격과 물성표를 찾아 성분·열처리에 따른 특성, 가공성과 비용, 부식·용접 면의 한계를 조사했습니다.</p>
-  <p>강도·경도뿐 아니라 가공성·비용·부식·접합까지 따져 재료를 고를 때 살펴볼 항목을 정리해 봤고, 설계에 실제로 쓴 재료를 수업에서 다시 공부했습니다.</p>
-</section>
-
-<section>
-  <h2 id="design">설계·형상</h2>
-  <h3>CAD응용 <span class="muted">(24-2학기)</span></h3>
-  <p>CAD 프로그램이 도형을 옮기고 돌리거나 곡선·곡면을 그릴 때 쓰는 수학을 Octave로 직접 구현하는 과제를 이어서 하며, 동차좌표(이동과 회전을 행렬 곱 하나로 다루는 좌표 표현)로 도형을 이동·회전하고 베지어 곡선(조정점 몇 개로 매끄러운 곡선을 정하는 방식)과 곡면을 그렸습니다.</p>
-  <p>좌표계를 바꾸는 원리와 조정점·접선 벡터로 곡선·곡면의 형상이 정해지는 원리를 코드로 확인하며, 평소 쓰던 SolidWorks의 기능이 어떤 원리로 돌아가는지 생각해 봤습니다.</p>
-  <h3>자동차공학 <span class="muted">(24-2학기)</span></h3>
-  <p>엔진·변속기 같은 자동차 기계요소의 원리와 실제 쓰임을 배우고, 과제로 차량 한 종의 엔진·변속기·차체·성능 제원을 항목별로 나눠 정리했습니다.</p>
-</section>
-
-<section>
-  <h2 id="manufacturing">제조·생산·품질</h2>
-  <h3>기계공작실습</h3>
-  <p>2인 조로 밀링(회전하는 공구로 평면·홈·구멍을 깎는 가공)·용접·선반(공작물을 돌리며 원통 형상을 깎는 가공) 실습을 하며, 도면을 해석해 가공 순서를 세우고 금속을 직접 깎고 이어 붙여 주차마다 보고서를 썼습니다.</p>
-  <p>측정기구 영점과 측정 자세, 절삭유·칩 정리처럼 정밀도와 안전을 지키는 현장 습관을 익혔고, 공차(허용되는 치수 오차 범위) 안으로 가공하도록 목표 치수를 잡는 법과 용접 상태를 보고 전류 세기를 조절하는 법을 보고서에 정리했습니다.</p>
-  <h3>기계공작법 <span class="muted">(25-1학기)</span></h3>
-  <p>가공 공정 전반을 배우고, 과제로 빛의 간섭으로 표면 높이를 재는 측정 기법(백색광 주사 간섭계)과 반도체 공정의 레이저 어닐링(레이저로 순간 가열하는 열처리)을 원리부터 산업 적용까지 조사해 정리했습니다.</p>
-  <h3>생산품질공학 <span class="muted">(25-1학기)</span></h3>
-  <p>관리도(공정이 안정적인지 통계로 감시하는 도표)·PDCA(계획-실행-확인-개선을 반복하는 품질 관리 순환) 같은 품질 개념과 통계 기초를 배우고, 과제로 실제 생산품질 직무 채용공고를 골라 요구 역량을 분석했습니다.</p>
-  <p>생산·품질 개념이 실제 직무에서 어떻게 쓰이는지, 제 경험과 맞춰 보며 연결해 봤습니다.</p>
-</section>
-
-<section>
-  <h2 id="thermal">열·공조</h2>
-  <h3>냉동공조 <span class="muted">(25-1학기)</span></h3>
-  <p>열역학과 유체역학을 바탕으로 공기조화 이론과 냉동 사이클을 배우며, 실생활의 에어컨이 어떻게 가동되는지 그 원리를 학습했습니다.</p>
-</section>
-
-<section>
-  <h2 id="control">계측·제어</h2>
-  <h3>마이크로프로세서응용 <span class="muted">(24-1학기)</span></h3>
-  <p>2인 팀 과제에서 저는 강의 예제 코드를 응용·수정하는 소스코드 작성을 맡아, Arduino(소형 제어 보드)로 가속도 센서 값으로 충격 방향을 표시하는 장치, 기울기에 맞춰 스텝모터로 각도를 유지하는 장치, 적외선 센서로 선을 따라가는 라인트레이서를 구현했습니다.</p>
-  <p>센서의 아날로그 값을 디지털 값으로 바꿔 읽고 PWM(전압을 켜고 끄는 비율로 모터 세기를 조절하는 신호)으로 모터를 구동하는 법을 익혔고, 엔코더(모터 회전을 재는 센서)로 잰 속도를 목표와 비교해 계속 보정하는 폐루프 제어를 강의 예제로 확인해 봤습니다.</p>
-  <h3>계측공학 <span class="muted">(25-2학기)</span></h3>
-  <p>3인 조 발표에서 제가 맡은 변형률·응력(원래 길이에 대해 늘어난 비율과, 단면 넓이당 재료 내부에 걸리는 힘) 계측 파트를 정리해 발표하며, 재료역학 이론을 '무엇을 왜 재는가'라는 계측의 목적과 이어서 설명해 봤습니다.</p>
-</section>
-
-<section>
-  <h2 id="ai">데이터·AI</h2>
-  <h3>인공지능 <span class="muted">(25-2학기)</span></h3>
-  <p>실습으로 회귀·분류 모델을 학습시키고 평가 지표로 비교해 봤고, 기말 개인 발표에서는 수업 과제로 경진대회 주행 데이터를 써서 차선 인식 모델 3종을 비교했습니다.</p>
-  <p>공학 문제를 물리 모델과 데이터 기반 모델 두 관점에서 보는 법을 배웠고, 데이터 수집부터 라벨링(정답 표시)·학습·평가까지 한 번 끝까지 거쳐 보며 모델 구조에 따라 결과가 어떻게 달라지는지 비교해 봤습니다.</p>
-  <p><a href="erp42.html">ERP42 프로젝트 보기 →</a></p>
-</section>
-
-<section>
-  <h2 id="capstone">종합설계 <span class="muted">(졸업 프로젝트)</span></h2>
+  <h2 id="major">주요 과목</h2>
+  <h3>종합설계 <span class="muted">졸업 프로젝트</span></h3>
   <p>3인 팀 졸업 프로젝트에서는 기획·설계·제품 구매·구현·테스트·발표까지 실제 제작을 거쳤습니다. 저는 마이크로프로세서응용에서 익힌 센서 입력과 모터 구동 신호를 바탕으로 장치의 좌우 모터 제어와 회로 구성을 맡았고, 장치에 쓴 탄소강은 기계재료학에서 규격과 물성으로 다시 확인했습니다.</p>
   <p><a href="index.html#grad">졸업 프로젝트 보기 →</a></p>
+  <h3>재료및역학실험 <span class="muted">24-2학기</span></h3>
+  <p>인장·굽힘·파괴인성·경도·피로 시험의 원시 데이터(시험기가 기록한 측정값 그대로)를 직접 코드로 처리하고, 국제 시험 규격(ASTM)에 비춰 결과가 유효한지 따져 본 과목입니다.</p>
+  <p><a href="#mechlab">재료및역학실험 보기 ↓</a></p>
+</section>
+
+<section>
+  <h2 id="s25-2">25-2학기</h2>
+  <h3>인공지능 <span class="muted">데이터·AI</span></h3>
+  <p>기말 개인 발표에서 수업 과제로 경진대회 주행 데이터를 써서 차선 인식 모델 3종을 비교했습니다.</p>
+  <p>공학 문제를 물리 모델과 데이터 기반 모델 두 관점에서 보는 법을 배웠고, 데이터 수집부터 라벨링(정답 표시)·학습·평가까지 한 번 끝까지 거쳐 보며 모델 구조에 따라 결과가 어떻게 달라지는지 비교해 봤습니다.</p>
+  <div class="shots">
+    <figure><a href="images/major/major_ai_1_lane_label.png"><img src="images/major/major_ai_1_lane_label.png" alt="차량 앞 도로 영상에 좌우 차선이 노란 선으로 표시된 이미지" width="716" height="721" loading="lazy"></a><figcaption class="muted">차선 라벨링: 교내에서 경진대회 차량을 몰며 녹화한 영상에 차선 영역을 다각형으로 표시한 학습 데이터입니다</figcaption></figure>
+    <figure><a href="images/major/major_ai_2_ros2_inference.jpg"><img src="images/major/major_ai_2_ros2_inference.jpg" alt="터미널 창들 아래 도로 영상 두 개, 오른쪽 영상에 초록색 차선이 겹쳐진 화면" width="1600" height="1013" loading="lazy"></a><figcaption class="muted">수업 발표용 비교: 학습한 차선 분할 모델을 ROS2(로봇 소프트웨어 프레임워크)에서 카메라 영상에 돌린 화면으로, 오른쪽이 차선 출력입니다</figcaption></figure>
+  </div>
+  <p><a href="erp42.html">ERP42 프로젝트 보기 →</a></p>
+
+  <h3>계측공학 <span class="muted">계측·제어</span></h3>
+  <p>3인 조 발표에서 제가 맡은 변형률·응력(원래 길이에 대해 늘어난 비율과, 단면 넓이당 재료 내부에 걸리는 힘) 계측 파트를 정리해 발표하며, 재료역학 이론을 '무엇을 왜 재는가'라는 계측의 목적과 이어서 설명해 봤습니다.</p>
+  <p>과제로는 LabVIEW(블록을 이어 계측·제어 프로그램을 만드는 그래픽 도구)로, 스위치에 따라 직접 입력한 값과 난수를 바꿔 가며 실시간 차트에 그리는 연습 프로그램을 만들었습니다.</p>
+  <div class="fig-pair">
+    <figure class="fig"><a href="images/major/major_measurement_2_labview_panel.png"><img src="images/major/major_measurement_2_labview_panel.png" alt="파형 차트, 숫자 입력 칸, 세로 토글 스위치, 정지 버튼이 배치된 화면 구성도" width="1410" height="1388" loading="lazy"></a><figcaption class="muted">LabVIEW 과제의 화면 구성: 차트·숫자 입력·전환 스위치·정지 버튼(과제 파일의 저장 정보로 다시 그린 그림, 실제 화면 캡처 아님)</figcaption></figure>
+    <figure class="fig"><a href="images/major/major_measurement_3_labview_diagram.png"><img src="images/major/major_measurement_3_labview_diagram.png" alt="반복 루프 안에 10ms 대기 블록, 스위치에 이어진 조건 분기, 그 안의 숫자 입력에서 차트로 이어진 선, 정지 버튼이 놓인 블록 다이어그램" width="1106" height="675" loading="lazy"></a><figcaption class="muted">같은 과제의 블록 다이어그램(스위치를 켰을 때): 반복 루프가 10ms씩 기다리며 입력값을 차트로 보내고, 정지 버튼으로 끝납니다(과제 파일로 다시 그린 그림)</figcaption></figure>
+  </div>
+</section>
+
+<section>
+  <h2 id="s25-1">25-1학기</h2>
+  <h3>기계재료학 <span class="muted">재료·역학</span></h3>
+  <p>졸업 프로젝트에서 직접 가공해 쓴 탄소강을 리포트 주제로 골라, 규격과 물성표를 찾아 성분·열처리에 따른 특성, 가공성과 비용, 부식·용접 면의 한계를 조사했습니다.</p>
+  <p>강도·경도뿐 아니라 가공성·비용·부식·접합까지 따져 재료를 고를 때 살펴볼 항목을 정리해 봤고, 설계에 실제로 쓴 재료를 수업에서 다시 공부했습니다.</p>
+  <details class="tech">
+  <summary>제출한 리포트 펼쳐 보기</summary>
+  <div class="fig-pair">
+    <figure class="fig"><a href="images/major/major_material_1_s50c_selection.png"><img src="images/major/major_material_1_s50c_selection.png" alt="재료선정 S50C 탄소강 제목의 리포트 쪽, 규격 목록과 강재 사진 두 장" width="1400" height="788" loading="lazy"></a><figcaption class="muted">리포트 2쪽: S50C 탄소강을 주제로 고른 이유와 나라별 규격을 정리했습니다. 위쪽 강봉 사진은 출처를 밝힌 외부 자료이고, 아래쪽은 종합설계 때 쓴 금속블록입니다</figcaption></figure>
+    <figure class="fig"><a href="images/major/major_material_2_s50c_launcher_part.png"><img src="images/major/major_material_2_s50c_launcher_part.png" alt="재료의 일반적인 장점 제목의 리포트 쪽, 발사장치와 가공한 금속 부품 사진" width="1400" height="788" loading="lazy"></a><figcaption class="muted">리포트 6쪽: 가공성을 설명하며, 졸업 프로젝트 발사장치의 지지 부품에 S50C를 써서 가공한 사진을 함께 실었습니다</figcaption></figure>
+  </div>
+  </details>
+
+  <h3>냉동공조 <span class="muted">열·공조</span></h3>
+  <p>열역학과 유체역학을 바탕으로 공기조화 이론과 냉동 사이클을 배우며, 실생활의 에어컨이 어떻게 가동되는지 그 원리를 학습했습니다.</p>
+
+  <h3>생산품질공학 <span class="muted">생산·품질</span></h3>
+  <p>관리도(공정이 안정적인지 통계로 감시하는 도표)·PDCA(계획-실행-확인-개선을 반복하는 품질 관리 순환) 같은 품질 개념과 통계 기초를 배웠습니다.</p>
+</section>
+
+<section>
+  <h2 id="s24-2">24-2학기</h2>
+  <h3 id="mechlab">재료및역학실험 <span class="muted">재료·역학</span></h3>
+  <p>인장·굽힘·파괴인성(균열이 있는 재료가 버티는 정도)·경도·피로(반복 하중에 의한 파손) 시험에 참여해, 시험기에서 나온 원시 데이터를 Octave·Matlab(수치 계산 프로그램) 스크립트로 직접 그래프로 그리고 물성을 계산해 시험마다 개인 보고서를 썼습니다.</p>
+  <p>재료역학 이론이 실제 시험에서 어떻게 나타나는지 확인했고, 국제 시험 규격(ASTM)을 참조해 시험 조건과 결과가 유효한지 따지며, 조건을 맞추지 못한 결과도 버리지 않고 이유와 한계를 보고서에 남기는 법을 익혔습니다.</p>
+  <div class="shots">
+    <figure><a href="images/major/major_materials_1_bending_specimen.jpg"><img src="images/major/major_materials_1_bending_specimen.jpg" alt="벌집 모양 심재가 보이는 샌드위치 패널 시편이 위쪽 가운데와 아래 양쪽 지그 사이에 가로로 놓인 사진" width="1200" height="1600" loading="lazy"></a><figcaption class="muted">굽힘 시험: 샌드위치 패널(두 판 사이에 벌집 모양 심재를 넣은 판) 시편을 3점 굽힘 지그에 물린 모습입니다</figcaption></figure>
+    <figure><a href="images/major/major_materials_2_tensile_octave.png"><img src="images/major/major_materials_2_tensile_octave.png" alt="하중-변위, 응력-변형률 곡선 등 인장 시험 그래프 다섯 개" width="1296" height="695" loading="lazy"></a><figcaption class="muted">인장 시험: 시험기 원시 데이터를 Octave로 처리해 그린 하중-변위·응력-변형률 선도들입니다</figcaption></figure>
+    <figure><a href="images/major/major_materials_3_fracture_graph.png"><img src="images/major/major_materials_3_fracture_graph.png" alt="하중이 오르다 급격히 떨어지는 파괴 시험 하중-변위 그래프" width="476" height="396" loading="lazy"></a><figcaption class="muted">파괴인성 시험: Octave로 그린 하중-변위 그래프입니다. 규격의 유효성 조건을 못 맞춘 결과도 이유와 함께 보고서에 남겼습니다</figcaption></figure>
+    <figure><a href="images/major/major_materials_4_hardness_indent.jpg"><img src="images/major/major_materials_4_hardness_indent.jpg" alt="현미경으로 본 금속 표면 가운데의 마름모꼴 압입 자국" width="1154" height="764" loading="lazy"></a><figcaption class="muted">경도 시험: 현미경으로 본 비커스 압입 자국(다이아몬드 침을 눌러 생긴 자국)으로, 대각선 길이를 재 경도를 구합니다</figcaption></figure>
+    <figure><a href="images/major/major_materials_5_fatigue_surface.png"><img src="images/major/major_materials_5_fatigue_surface.png" alt="현미경으로 본 원형 시편 단면, 물결 모양 무늬가 보이는 파단면" width="459" height="283" loading="lazy"></a><figcaption class="muted">피로 시험: 반복 하중으로 끊어진 시편의 파단면을 현미경으로 관찰한 사진입니다</figcaption></figure>
+  </div>
+  <p class="muted">시험 데이터·코드와 보고서에 실은 규격 그림</p>
+  <div class="shots">
+    <figure><a href="images/major/major_materials_7_data_sample.png"><img src="images/major/major_materials_7_data_sample.png" alt="시간, 하중, 변위 숫자가 세 열로 나열된 시험기 데이터 파일 앞부분" width="1362" height="488" loading="lazy"></a><figcaption class="muted">시험기가 남긴 원시 데이터(.dat): 시간(초)·하중(kN)·변위(mm)가 한 줄씩 기록된 텍스트 파일로, 이를 Octave로 불러와 처리했습니다(복합재 인장 시험 앞부분)</figcaption></figure>
+    <figure><a href="images/major/major_materials_6_fracture_code.png"><img src="images/major/major_materials_6_fracture_code.png" alt="시편 치수와 하중값을 넣고 계수와 유효성 조건을 계산하는 Octave 코드" width="672" height="303" loading="lazy"></a><figcaption class="muted">파괴인성 보고서의 Octave 코드: 시편 치수와 하중값으로 응력확대계수(균열 끝에 걸리는 응력의 세기)를 계산하고 ASTM E399의 유효성 조건을 검사합니다</figcaption></figure>
+    <figure><a href="images/major/major_materials_8_astm_bending.png"><img src="images/major/major_materials_8_astm_bending.png" alt="두 받침점 가운데에 하중이 걸리는 보 그림" width="181" height="127" loading="lazy"></a><figcaption class="muted">굽힘 보고서에 실은 3점 굽힘 하중 방식 그림(샌드위치 패널 굽힘 시험 규격 ASTM C393 기준)</figcaption></figure>
+    <figure><a href="images/major/major_materials_9_astm_fracture_specimen.png"><img src="images/major/major_materials_9_astm_fracture_specimen.png" alt="한쪽에 홈이 난 직사각형 막대의 양끝에 아래 방향 화살표, 홈 아래 가운데에 위 방향 하중 P가 표시된 그림" width="280" height="105" loading="lazy"></a><figcaption class="muted">파괴인성 보고서에 실은 시편 그림: 한쪽에 홈을 낸 막대를 3점으로 누르는 ASTM E399의 시편 형태입니다</figcaption></figure>
+  </div>
+
+  <h3>CAD응용 <span class="muted">설계·형상</span></h3>
+  <p>CAD 프로그램이 도형을 옮기고 돌리거나 곡선·곡면을 그릴 때 쓰는 수학을 Octave로 직접 구현하는 과제를 이어서 하며, 동차좌표(이동과 회전을 행렬 곱 하나로 다루는 좌표 표현)로 도형을 이동·회전하고 베지어 곡선(조정점 몇 개로 매끄러운 곡선을 정하는 방식)과 곡면을 그렸습니다.</p>
+  <p>좌표계를 바꾸는 원리와 조정점·접선 벡터로 곡선·곡면의 형상이 정해지는 원리를 코드로 확인하며, 평소 쓰던 SolidWorks의 기능이 어떤 원리로 돌아가는지 생각해 봤습니다.</p>
+  <div class="shots">
+    <figure><a href="images/major/major_cad_1_polygon.png"><img src="images/major/major_cad_1_polygon.png" alt="육각형 안에 색칠한 삼각형과 사각형이 맞붙은 도형 그래프" width="545" height="419" loading="lazy"></a><figcaption class="muted">과제 1: 꼭짓점 좌표를 행렬로 두고 Octave로 그린 다각형입니다</figcaption></figure>
+    <figure><a href="images/major/major_cad_2_nanotube.png"><img src="images/major/major_cad_2_nanotube.png" alt="육각형들이 원통 모양으로 이어진 3차원 그래프" width="498" height="370" loading="lazy"></a><figcaption class="muted">과제 2: 정육각형을 회전·이동하는 변환을 되풀이해 탄소나노튜브 모양을 그렸습니다</figcaption></figure>
+    <figure><a href="images/major/major_cad_3_hermite.png"><img src="images/major/major_cad_3_hermite.png" alt="3차원 공간의 타원과, 타원에 이어지는 여러 곡선" width="548" height="410" loading="lazy"></a><figcaption class="muted">과제 3: 타원에 매끄럽게 이어지는 허밋 곡선(양 끝의 점과 접선 방향으로 정하는 곡선)을 그려, 접선 크기에 따라 모양이 바뀌는 것을 확인했습니다</figcaption></figure>
+    <figure><a href="images/major/major_cad_4_bezier_surface.png"><img src="images/major/major_cad_4_bezier_surface.png" alt="원호 곡선, 도넛 모양 곡면, 조정점이 표시된 곡면 등 그래프 여러 개" width="1219" height="703" loading="lazy"></a><figcaption class="muted">과제 5: 원호를 나타내는 유리 베지어 곡선(점마다 가중치를 둬 원호까지 정확히 그리는 베지어 곡선)과, 조정점으로 모양을 정한 베지어 곡면을 Octave로 그린 결과입니다</figcaption></figure>
+    <figure><a href="images/major/major_cad_5_bezier_code.png"><img src="images/major/major_cad_5_bezier_code.png" alt="조정점과 기저 행렬로 곡면 좌표를 계산하는 Octave 코드" width="302" height="253" loading="lazy"></a><figcaption class="muted">과제 5 코드 일부: 조정점 좌표와 3차 베지어 기저 행렬을 곱해 곡면 좌표를 계산합니다</figcaption></figure>
+  </div>
+
+  <h3>자동차공학 <span class="muted">설계·형상</span></h3>
+  <p>엔진 구조와 연료 분사·과급(터보차저처럼 공기를 눌러 넣어 출력을 높이는 장치), 시동·충전·점화 같은 전기 장치, 클러치·변속기·구동축으로 이어지는 동력 전달 장치, 현가(노면 충격을 흡수하는 장치)·조향·제동 장치, 배출가스 제어와 하이브리드·전기·수소 자동차까지 자동차를 이루는 장치를 계통별로 배웠습니다.</p>
+  <p>과제로는 차량 한 종을 골라 차체·엔진·동력 전달·성능 제원을 항목별로 나눠 정리했습니다.</p>
+</section>
+
+<section>
+  <h2 id="s24-1">24-1학기</h2>
+  <h3>마이크로프로세서응용 <span class="muted">계측·제어</span></h3>
+  <p>2인 팀 과제에서 저는 강의 예제 코드를 응용·수정하는 소스코드 작성을 맡아, Arduino(소형 제어 보드)로 가속도 센서 값으로 충격 방향을 표시하는 장치, 기울기에 맞춰 스텝모터로 각도를 유지하는 장치, 적외선 센서로 선을 따라가는 라인트레이서를 구현했습니다.</p>
+  <p>센서의 아날로그 값을 디지털 값으로 바꿔 읽고 PWM(전압을 켜고 끄는 비율로 모터 세기를 조절하는 신호)으로 모터를 구동하는 법을 익혔고, 엔코더(모터 회전을 재는 센서)로 잰 속도를 목표와 비교해 계속 보정하는 폐루프 제어를 강의 예제로 확인해 봤습니다.</p>
+  <div class="shots">
+    <figure><a href="images/major/major_microprocessor_1_airbag_demo.jpg"><img src="images/major/major_microprocessor_1_airbag_demo.jpg" alt="브레드보드 회로가 PC 모니터 앞에 놓여 있고 화면에 코드 창이 떠 있는 장면" width="1280" height="720" loading="lazy"></a><figcaption class="muted">과제 2 시연: 가속도 센서·LED 회로를 PC에 연결해 충격 방향 표시 장치를 시험하는 장면입니다</figcaption></figure>
+    <figure><a href="images/major/major_microprocessor_2_airbag_circuit.png"><img src="images/major/major_microprocessor_2_airbag_circuit.png" alt="Arduino 보드에 가속도 센서 모듈과 LED 네 개가 배선된 회로 그림" width="960" height="621" loading="lazy"></a><figcaption class="muted">과제 2 회로 구성도: 보드에 가속도 센서와 방향 표시용 LED 4개를 연결했습니다(회로 제작은 팀원, 코드는 제가 맡음)</figcaption></figure>
+    <figure><a href="images/major/major_microprocessor_3_angle_hold.jpg"><img src="images/major/major_microprocessor_3_angle_hold.jpg" alt="손에 든 회로판과 노란 날개가 달린 스텝모터 장치" width="720" height="1280" loading="lazy"></a><figcaption class="muted">과제 3 시연: 장치를 기울이면 스텝모터가 돌아 한 면이 계속 위를 향하도록 각도를 맞춥니다</figcaption></figure>
+    <figure><a href="images/major/major_microprocessor_4_encoder_motor.jpg"><img src="images/major/major_microprocessor_4_encoder_motor.jpg" alt="손에 든 DC모터와 막대, 뒤로 숫자가 출력되는 PC 화면" width="720" height="1280" loading="lazy"></a><figcaption class="muted">과제 4: 엔코더가 달린 DC모터를 돌리며 PC 화면으로 회전 값을 확인하는 실습 장면입니다</figcaption></figure>
+    <figure><a href="images/major/major_microprocessor_5_hw3_code.png"><img src="images/major/major_microprocessor_5_hw3_code.png" alt="가속도 센서 값을 읽고 보정해 각도를 구하는 Arduino 코드" width="988" height="808" loading="lazy"></a><figcaption class="muted">과제 3 코드 일부(Arduino): 가속도 센서 값을 읽어 가속도로 바꾸고, 오차를 보정한 뒤 arctan으로 각도를 구합니다(코드 작성은 제가 맡음)</figcaption></figure>
+  </div>
+</section>
+
+<section>
+  <h2 id="s23-2">23-2학기</h2>
+  <h3>기계공작실습 <span class="muted">제조·생산 · 기계공작법·기계재료학과 연계</span></h3>
+  <p>2인 조로 밀링(회전하는 공구로 평면·홈·구멍을 깎는 가공)·용접·선반(공작물을 돌리며 원통 형상을 깎는 가공) 실습을 하며, 도면을 해석해 가공 순서를 세우고 금속을 직접 깎고 이어 붙여 주차마다 보고서를 썼습니다.</p>
+  <p>측정기구 영점과 측정 자세, 절삭유(가공 중 공구를 식히고 마찰을 줄이는 기름)·칩(깎여 나온 금속 부스러기) 정리처럼 정밀도와 안전을 지키는 현장 습관을 익혔고, 공차(허용되는 치수 오차 범위) 안으로 가공하도록 목표 치수를 잡는 법과 용접 상태를 보고 전류 세기를 조절하는 법을 보고서에 정리했습니다.</p>
+  <p>기계공작법·기계재료학에서 배운 가공 공정과 금속 재료의 원리가 이 실습의 바탕이 됐습니다.</p>
+  <figure class="fig"><a href="images/major/major_machining_1_report_week7.png"><img class="narrow" src="images/major/major_machining_1_report_week7.png" alt="실습 요약, 주의사항, 사용 공구, 실습 과정이 표로 정리된 선반 실습 보고서 쪽" width="990" height="1400" loading="lazy"></a><figcaption class="muted">선반 실습 보고서의 한 쪽: 실습 요약·주의사항·사용 공구와 작업 준비부터 가공 순서까지 표로 정리했습니다(조원 이름은 가림)</figcaption></figure>
 </section>
 </main>
 <footer><a href="index.html">← 포트폴리오 홈</a></footer>
+
+<dialog id="lightbox" aria-label="크게 보기">
+  <img alt="">
+  <p class="muted">아무 곳이나 누르거나 Esc를 누르면 닫힙니다</p>
+</dialog>
+<script>
+// 그림을 누르면 새 페이지로 가지 않고 같은 화면 위에 크게 띄운다(스크립트가 꺼져 있으면 원본 이미지로 이동)
+const box = document.getElementById('lightbox');
+const boxImg = box.querySelector('img');
+document.querySelectorAll('main figure a').forEach(a => a.addEventListener('click', e => {
+  e.preventDefault();
+  boxImg.src = a.href;
+  boxImg.alt = a.querySelector('img').alt;
+  box.showModal();
+}));
+box.addEventListener('click', () => box.close());
+</script>
 </body>
 </html>

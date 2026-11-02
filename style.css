@@ -210,3 +210,17 @@ main .grid { align-items: start; }
 .card details.more { margin: 10px 0; }
 .card details.more > summary { cursor: pointer; color: var(--accent); font-size: 15px; font-weight: 600; }
 .card details.more[open] > summary { margin-bottom: 4px; }
+
+/* major.html 과목별 그림 격자: 가로·세로·그래프가 섞여도 칸 높이를 맞추고 잘리지 않게 */
+.shots { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr)); margin: 20px 0; }
+.shots figure { margin: 0; }
+.shots a { display: block; }
+.shots img { width: 100%; aspect-ratio: 4 / 3; object-fit: contain; background: #fff; border: 1px solid var(--line); }
+.shots figcaption { margin-top: 6px; font-size: 14px; line-height: 1.5; }
+main.major section > details.tech { margin: 16px 0; }
+main.major details.tech .fig-pair, main.major details.tech .fig { margin: 12px 0 4px; }
+main figure a { cursor: zoom-in; }
+#lightbox { max-width: 96vw; max-height: 96vh; padding: 0; border: 0; background: transparent; text-align: center; }
+#lightbox::backdrop { background: rgba(0, 0, 0, .85); }
+#lightbox img { max-width: 96vw; max-height: 88vh; width: auto; margin: 0 auto; background: #fff; cursor: zoom-out; }
+#lightbox p { color: #ddd; margin: 8px 0 0; font-size: 14px; }
