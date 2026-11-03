@@ -62,14 +62,40 @@
   <h3>물체를 찾아 집을 자세 고르기</h3>
   <p>카메라가 찾은 물체의 형상으로 집을 자세 후보를 만들고 하나를 고릅니다.</p>
   <figure class="fig">
-    <img src="images/cobot2/grasp_candidates.jpg" alt="작업대를 찍은 3차원 점구름 위, 한 물체 둘레에 그려진 여러 파지 후보 선" width="710" height="658" loading="lazy" class="narrow">
-    <figcaption class="muted">작업대를 찍은 3차원 점구름(카메라가 잰 표면 점들) 위에 한 물체의 파지 후보를 그린 화면</figcaption>
+    <img src="images/cobot2/grasp_candidates_graspgenx.jpg" alt="3차원 점구름 위 한 물체 둘레에 그려진 여러 파지 후보 선과 그리퍼 모형" width="877" height="607" loading="lazy" class="narrow">
+    <figcaption class="muted">GraspGenX가 점구름(카메라가 잰 표면 점들) 위 한 물체 둘레에 만든 파지 후보(선)와, 후보 하나에 맞춰 놓은 그리퍼 모형</figcaption>
+  </figure>
+  <figure class="fig">
+    <video controls muted loop playsinline preload="none" poster="images/cobot2/graspgenx_plan_poster.jpg" width="1280" height="688" aria-label="왼쪽은 3차원 칸으로 표시한 장애물 지도 위 로봇 경로 계획 화면, 오른쪽은 카메라 점구름 위에 파지 후보를 만드는 화면. 중간에 오른쪽 장면이 한 번 바뀐다">
+      <source src="images/cobot2/graspgenx_plan.mp4" type="video/mp4">
+    </video>
+    <figcaption class="muted">왼쪽은 장애물 지도(주변 물체를 3차원 칸으로 표시) 위 로봇 경로 계획, 오른쪽은 카메라 점구름 위 파지 후보 생성 화면 — 파지 계산마다 카메라 프레임 여러 장을 모아, 깊이는 합쳐서 튀는 값을 줄이고 물체 영역은 가장 잘 잡힌 한 장을 썼습니다. 오른쪽 장면이 중간에 바뀌는 것은 장면을 다시 찍어 계산한 결과와 비교한 것입니다</figcaption>
+  </figure>
+  <p>콜라병처럼 형태가 다른 여러 물체로 넓혀 보려 했지만, 물체의 점구름이 바닥(테이블)과 뭉개져 형상을 구분하기 어려웠고 이런 물체들은 집지 못했습니다. 깊이까지 재는 카메라(RGB-D)의 해상도를 올려 점구름을 촘촘하게 만들면 나아질 수 있었지만, 노트북 성능상 진행할 수 없었습니다. 파지 모델은 1280×720 해상도를 요구했으나 깊이 영상을 그 해상도로 올리면 카메라 프레임이 끊겨(USB 대역폭 초과로 추정) 쓸 수 없었고, 해상도를 올리면 장애물 지도 갱신(CPU 계산) 부하도 크게 늘어 낮은 해상도를 유지했습니다. 당시 GPU 메모리는 이미 8,188MiB 중 6,752MiB가 쓰이고 있었고, CPU도 대부분 80% 이상으로 돌고 있었습니다.</p>
+  <div class="fig-pair">
+    <figure class="fig">
+      <img src="images/cobot2/pointcloud_front.jpg" alt="작업대 장면을 정면에서 본 점구름: 콜라병·오렌지·사과가 사진처럼 보이는 모습" width="606" height="366" loading="lazy">
+      <figcaption class="muted">점구름을 정면에서 본 화면 — 정면에서는 물체가 구분돼 보인다</figcaption>
+    </figure>
+    <figure class="fig">
+      <img src="images/cobot2/pointcloud_side.jpg" alt="같은 작업대 장면을 측면에서 본 점구름: 물체와 바닥면의 점이 섞여 형상이 구분되지 않는 모습" width="606" height="366" loading="lazy">
+      <figcaption class="muted">같은 장면을 옆에서 본 화면 — 물체의 점들이 바닥(테이블)과 이어져 형상이 뭉개진다</figcaption>
+    </figure>
+  </div>
+  <figure class="fig">
+    <a href="images/cobot2/gpu_usage.jpg"><img src="images/cobot2/gpu_usage.jpg" alt="시스템 모니터의 CPU 16스레드 사용률 87~97%와 메모리 18.0GB/33.3GB, nvidia-smi의 GPU 메모리 6752MiB/8188MiB 사용 화면" width="1740" height="720" loading="lazy"></a>
+    <figcaption class="muted">시스템을 띄운 상태의 자원 사용 실측(08-11) — CPU 16스레드 87~97%, 메모리 18.0/33.3GB, GPU 메모리 6,752/8,188MiB (누르면 원본 크기)</figcaption>
   </figure>
   <p>파지 모델 도입 건의와 인식·모델 연결, 실물 그리퍼 보정 등 제가 맡은 진행 과정은 아래 사례에서 다룹니다.</p>
 
   <h3>단계별로 움직이고 멈추는 작업 제어(FSM)</h3>
   <p>저는 로봇 구동 파트에서 작업을 인식 → 계획 → 집기 → 옮겨 놓기 단계로 나눠 순서를 정하는 상태머신(FSM)을 맡았습니다. 판단 계층은 무엇을 어디로 옮길지 같은 지시만 넘기고, 로봇 팔은 이 FSM만 움직입니다.</p>
   <p>정지와 그리퍼 판단은 팀이 정한 안전 규칙을 따릅니다. 예를 들어 "멈춰"는 언어 모델을 거치지 않고 바로 일시정지로 이어지고, 물체를 든 채 멈추면 그리퍼를 자동으로 열지 않습니다.</p>
+  <p>개발 중의 FSM에는 승인 대기 단계가 있었습니다. 계산한 집는 자세가 안전한지 사람이 화면으로 확인하고 승인해야 로봇이 움직이는 단계입니다. 작업 제어 프로그램의 구현을 마무리했다고 판단한 뒤에는 승인을 자동으로 넘기도록 바꾼 것으로 기억하며, 이후 판단·인식 쪽 프로그램과 결합하는 단계로 넘어갔습니다.</p>
+  <figure class="fig">
+    <img src="images/cobot2/grasp_pose_rviz.jpg" alt="3차원 칸으로 표시한 장애물 지도 위, 로봇 손 끝에 파지 자세가 여러 개의 화살표로 표시된 화면" width="793" height="860" loading="lazy" class="narrow">
+    <figcaption class="muted">개발 중 승인 대기 단계의 화면(08-07) — 장애물 지도 위 로봇 손 끝에 계산한 파지 자세가 화살표로 표시된다</figcaption>
+  </figure>
   <figure class="fig">
     <img src="images/cobot2/demo_path_planning_1200.jpg" alt="시연 장면: 오른쪽은 오렌지를 집어 든 협동로봇, 왼쪽 위는 3차원 칸으로 표시한 장애물 지도 위 경로 계획, 왼쪽 아래는 FSM 상태 LIFT·타겟 ORANGE·위치 BASKET" width="1200" height="676" loading="lazy">
     <figcaption class="muted">오렌지를 들어 올린 로봇(오른쪽)과 함께 띄운 화면(왼쪽) — 위는 주변 장애물을 3차원 칸으로 표시한 지도 위 경로 계획, 아래는 현재 단계(LIFT, 들어 올리기)·대상·목적지</figcaption>
@@ -107,6 +133,18 @@
     <p>벌림 폭별 손끝 길이 보정은 충돌 검사용 그리퍼 모양과 RViz(로봇 상태 시각화 도구) 표시에 반영했고, 로봇이 도달할 목표 자세(IK 목표) 자체는 바꾸지 않았습니다. 파지 성공률에 준 효과는 미검증입니다. 시뮬레이션에서 정상으로 검증된 모델이라도 실물에서는 그리퍼의 실제 치수와 기준을 다시 재서 맞춰야 한다는 점을 익혔습니다.</p>
   </details>
 
+  <details class="case"><summary><h3 id="case-3dmap">작업 환경 3D 데이터 확인</h3></summary>
+    <p>작업 환경 주변의 3차원 데이터가 장애물 지도에 어떻게 반영되는지 확인하는 작업을 했습니다. 프로젝트에는 장애물 지도가 두 가지 있었습니다. 경로계획 도구(MoveIt)가 CPU로 계산하는 octomap(공간을 작은 큐브 칸으로 나눠 물체가 있는 칸을 채우는 지도)과, GPU로 계산하는 nvblox(3차원 장애물 지도)입니다.</p>
+    <p>저는 평평한 노트북 케이스를 작업 영역에 넣었다 빼면서, 두 지도의 반응을 같은 화면(RViz, 로봇 상태 시각화 도구)에서 나란히 비교했습니다. nvblox 쪽이 먼저 반응했고, 케이스를 뺀 뒤에도 더 빨리 사라졌습니다. 반응 시간을 수치로 재지는 않았습니다.</p>
+    <figure class="fig">
+      <video controls muted loop playsinline preload="none" poster="images/cobot2/octomap_nvblox_poster.jpg" width="960" height="776" aria-label="평평한 노트북 케이스를 작업 영역에 넣었다 뺄 때, 큐브 칸으로 표시되는 octomap과 빨간 덩어리로 표시되는 nvblox가 함께 반응하는 화면">
+        <source src="images/cobot2/octomap_nvblox.mp4" type="video/mp4">
+      </video>
+      <figcaption class="muted">평평한 노트북 케이스를 넣었다 뺄 때 두 장애물 지도의 반응(08-11) — 큐브 칸이 octomap, 빨간 덩어리가 nvblox</figcaption>
+    </figure>
+    <p>엄밀한 비교는 아니었지만, 같은 공간 정보 매핑을 CPU로 계산하는 방식과 GPU로 계산하는 방식이 실제 장면에서 어떻게 다르게 반응하는지 직접 확인한 예시가 되었습니다.</p>
+  </details>
+
   <details class="case"><summary><h3 id="case-gpu">단일 GPU 메모리 조정</h3></summary>
     <p>3차원 장애물 지도(nvblox)·GPU 경로계획(cuMotion)·물체 영역 분할(YOLO-seg)·파지 후보 생성(GraspGenX) 모듈이 노트북 GPU 하나(8GB)를 나눠 써야 했습니다. 저는 한정된 메모리 안에서 안정적으로 구동하기 위해 무엇이 메모리를 잡는지부터 실측했고, 물체 인식 모델은 병목이 아니며 <strong>실제 병목은 파지 후보 생성 모델</strong>이라는 것을 확인했습니다. 그래서 물체 인식 모델을 더 빠른 실행 형식으로 바꾸는 최적화는, 변환하는 동안 GPU를 점유해 다른 모듈과 겹치는 등 비용이 커 하지 않기로 했습니다.</p>
     <p>또한 프로그램을 다시 실행할 때마다 컨테이너 안에 물체 인식 노드가 쌓여 GPU 메모리를 차지하고 마스크(물체 영역)가 뒤섞이던 문제를 확인했습니다. 실행 래퍼와 중복 실행 방지 락(lock, 이미 떠 있으면 새로 띄우지 않게 막는 장치)을 만들어 노드를 1개로 정리했습니다. 파지 실패를 재현하는 과정에서는 이미 떠 있던 파지 워커와 중복 로드되어 메모리가 부족해지던 원인도 확인했습니다.</p>
@@ -120,6 +158,12 @@
       <figcaption class="muted">예시: 프로젝트의 노드 구성도 — 지시 입력이 상태머신(FSM)을 거쳐 모션계획·실행으로 이어지는 연결</figcaption>
     </figure>
     <p>이어 판단 계층의 명령을 FSM 요청으로 바꿔 전달하는 노드와 인식 및 FSM 간의 연결을 구축했습니다(공동작업). 08-11에 판단(VLA)·작업 제어(FSM)·인식 세 패키지가 실제 카메라 장면에서 이어지는 것을 확인했습니다. 앞서 5일차쯤에는 팀원들과 함께 OMPL(경로계획 라이브러리) 경로로 움직이는 중 사람이 작업영역에 손을 넣으면 멈추고 새 경로로 다시 계획하는 동작을 실기로 확인했습니다.</p>
+    <figure class="fig">
+      <video controls muted loop playsinline preload="none" poster="images/cobot2/vla_fsm_link_poster.jpg" width="1280" height="636" aria-label="왼쪽은 판단 계층 콘솔로 카메라 인식 화면, 인식된 물체 목록, 대화 기록이 보이고, 오른쪽은 작업 제어 패널로 현재 단계가 표시된다. '오렌지 집어줘' 지시 뒤 단계가 차례로 넘어가고 로봇이 오렌지를 집어 들어 올리다 안전정지로 멈춘다">
+        <source src="images/cobot2/vla_fsm_link.mp4" type="video/mp4">
+      </video>
+      <figcaption class="muted">판단·작업 제어·인식이 이어진 화면(08-11) — 왼쪽 카메라 인식 화면과 물체 목록을 보고 집을 대상을 골라 "오렌지 집어줘"를 지시하면, 오른쪽 작업 제어 단계가 인식 → 계획 → 접근 → 집기 → 들어 올리기로 넘어가고 로봇이 오렌지를 집습니다. 이 시도는 들어 올리던 중 로봇 안전정지로 중단됐습니다(특정 관절 속도가 순간적으로 과해진 오류로 추정하지만, 정확한 원인은 분석하지 못했습니다). 아래 문단의 집어 옮기기 완료와는 다른 시도입니다.</figcaption>
+    </figure>
     <p>08-11에는 지시한 물체를 실물로 집어 목적지에 놓고 홈 위치로 돌아오는 전체 과정(pick-to-place)까지 이어지는 것을 확인했지만, 성공률은 재지 않았습니다. 여러 시스템을 통합할 때는 로봇을 움직이는 주체부터 하나로 명확히 정해야 하며, 구조를 정리하며 잃는 기능은 인터페이스 계약으로 복원 지점을 남겨야 한다는 점을 배웠습니다.</p>
   </details>
 </section>
