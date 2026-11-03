@@ -229,9 +229,20 @@ main figure a { cursor: zoom-in; }
 main.cobot1 section p { margin: 0 0 14px; }
 main.cobot1 { counter-reset: case; }
 main.cobot1 .case { counter-increment: case; position: relative; border-top: 1px solid var(--line); padding: 24px 0 4px 64px; margin: 8px 0; }
-main.cobot1 .case > h3 { margin-top: 0; font-size: 20px; }
-main.cobot1 .case > h3::before { content: counter(case, decimal-leading-zero); position: absolute; left: 0; top: 18px; color: var(--muted); font-size: 30px; font-weight: 800; }
+main.cobot1 .case > h3, main.cobot1 .case > summary > h3 { margin-top: 0; font-size: 20px; }
+main.cobot1 .case > h3::before, main.cobot1 .case > summary > h3::before { content: counter(case, decimal-leading-zero); position: absolute; left: 0; top: 18px; color: var(--muted); font-size: 30px; font-weight: 800; }
 main.cobot1 .case .fig { margin: 16px 0; }
 main.cobot1 .takeaway { border-left: 3px solid var(--fg); padding: 2px 0 2px 16px; font-size: 18px; }
 main.cobot1 .takeaway strong { font-weight: 700; color: var(--fg); }
-@media (max-width: 600px) { main.cobot1 .case { padding-left: 0; } main.cobot1 .case > h3::before { position: static; font-size: 20px; margin-right: 8px; } }
+@media (max-width: 600px) { main.cobot1 .case { padding-left: 0; } main.cobot1 .case > h3::before, main.cobot1 .case > summary > h3::before { position: static; font-size: 20px; margin-right: 8px; } }
+
+/* 상세 페이지 진행 과정 사례 접기(2026-11-03 Phase 4) — 확정 아님, 추후 수정 가능(사용자 q2o "확정아님으로 명시, 추후 수정가능성"). 사례 하나 = <details class="case"><summary><h3 id="case-…">제목</h3></summary> … </details> */
+section > details.case { margin-top: 28px; }
+details.case > summary { display: block; cursor: pointer; list-style: none; }
+details.case > summary::-webkit-details-marker { display: none; }
+details.case > summary > h3 { display: inline; }
+details.case > summary > h3::after { content: " ▸"; color: var(--muted); font-weight: 400; }
+details.case[open] > summary > h3::after { content: " ▾"; }
+details.case[open] > summary { margin-bottom: 8px; }
+details.case > .fig-pair { margin: 24px 0; }
+section > details.case + p { margin-top: 28px; }
