@@ -78,6 +78,18 @@
   <details class="case">
   <summary><h3 id="case-drive">구동 방식 결정과 좌우 모터 차동 제어</h3></summary>
     <p>보트는 발사장치로 물에 던져 넣으므로 착수 충격에 견뎌야 했고, 아두이노(센서와 모터를 제어하는 보드)로 제어하기 쉬우며 해상 구조에 충분한 추진과 조향이 필요했습니다. 팀은 구동 방식을 토의해 정했습니다. 프로펠러 하나에 방향타(키)를 다는 방식은 착수 충격에 키가 부서질 위험이 있었습니다. 또한 고성능 모터(BLDC 모터)는 아두이노로 제어하기 어렵고 구조용 보트에 고성능까지는 필요 없었으며, 방수 모터는 추진 성능이 떨어졌습니다. 이에 팀은 일반 DC 모터 2개를 좌우에 두고 출력 차이로 방향을 트는 차동 방식을 택했습니다.</p>
+    <figure class="fig">
+      <img src="images/grad/boat-module-model.jpg" alt="보트 3D 모델 분해도: 노즈콘 및 IR카메라, 센서 케이스, 배터리 및 모터 지지대, 모터, 케이스 상단·하단, 구명튜브 고정장치" width="810" height="720" loading="lazy">
+      <figcaption class="muted">예시: 팀의 보트 3D 모델 분해도(배터리 및 모터 지지대, 모터, 센서 케이스, 노즈콘, 케이스 상단·하단)</figcaption>
+    </figure>
+    <div class="fig-pair">
+      <figure class="fig"><img src="images/grad/motor-bracket-model.jpg" alt="배터리와 모터를 고정하는 지지대 3D 모델" width="566" height="440" loading="lazy"><figcaption class="muted">예시: 팀의 배터리 및 모터 지지대 3D 모델</figcaption></figure>
+      <figure class="fig"><img src="images/grad/sensor-housing-model.jpg" alt="센서 케이스 3D 모델" width="326" height="385" loading="lazy"><figcaption class="muted">예시: 팀의 센서 케이스 3D 모델</figcaption></figure>
+    </div>
+    <div class="fig-pair">
+      <figure class="fig"><img src="images/grad/boat-assembled-model.jpg" alt="조립된 보트 선체 3D 모델" width="1264" height="534" loading="lazy"><figcaption class="muted">예시: 팀의 보트 3D 모델(조립)</figcaption></figure>
+      <figure class="fig"><img src="images/grad/boat-with-tube-model.jpg" alt="구명튜브가 펼쳐진 상태의 보트 3D 모델" width="1227" height="682" loading="lazy"><figcaption class="muted">예시: 팀의 구명튜브를 단 보트 3D 모델</figcaption></figure>
+    </div>
     <p>저는 열원 방향에 맞춰 좌우 모터의 출력을 다르게 주는 제어를 맡았습니다. 방향에 따라 좌우 출력 배분을 달리해 크게 꺾기, 완만히 꺾기, 직진을 구분했습니다. 아울러 무선 조종기(RC)의 신호로 보트를 직접 몰 수 있는 수동 조종도 함께 구현했습니다. 보트는 조종기 신호가 들어오면 수동 조종으로, 신호가 없으면 자율 추적으로 넘어가, 별도 스위치 없이 조종기 하나로 운용합니다.</p>
     <p>팀은 지상에서 보트를 손에 들고 켜진 전기히터 쪽으로 향하게 하며 열원 추적 동작을 점검했습니다. 이 과정에서 장치가 실제로 쓰이는 환경의 충격이나 보드의 제어 성능처럼 실물 운용 조건을 기준으로 삼아야 부품이 견디고 다룰 수 있는 방식을 고를 수 있다는 점을 배웠습니다.</p>
   </details>
@@ -85,6 +97,8 @@
   <details class="case">
   <summary><h3 id="case-merge">부품별 코드 점검과 회로의 단일 보드 통합</h3></summary>
     <p>첫 학기에는 부품별로 따로 짠 열화상 센서·무선 조종(RC)·모터 코드를 아두이노 하나에서 돌리려고 합치다 막혀, 팀은 정기 회의 외에 회의를 하나 더 잡았습니다. 문제를 한꺼번에 해결하려 하지 않고 단계를 나누어 점검했습니다. 모터 제어를 맡은 저는 기존 무선 조종과 모터 제어 코드의 동작부터 다시 점검했습니다. 팀은 센서 신호를 시리얼 통신(보드의 값을 PC 화면으로 받아 보는 통신)으로 먼저 확인한 뒤 모터 코드와 합쳐, 바로 앞의 열원을 찾는 것까지 확인했습니다.</p>
+    <figure class="fig"><img class="narrow" src="images/grad/meeting-minutes-1014.jpg" alt="팀 회의록 1쪽: 회의 제목·일자·참석자 표, 목표도출, 회의내용, 향후 일정, 피드백 사항(본인 외 이름은 흐림 처리)" width="566" height="800" loading="lazy"><figcaption class="muted">예시: 팀 회의록 양식</figcaption></figure>
+    <figure class="fig"><img class="narrow" src="images/grad/rc-receiver-output.jpg" alt="무선 조종기 사진 위에 레버·버튼별 수신기 출력값을 적은 도식" width="493" height="367" loading="lazy"><figcaption class="muted">예시: 팀이 정리한 무선 조종기(RC) 레버·버튼별 수신기 출력값</figcaption></figure>
     <p>아두이노와 모터를 잇는 회로 구성 역시 제가 맡아 진행했습니다. 아두이노 보드 한 장에 열화상 센서, 조종 신호 수신기, 모터 드라이버(보드 신호를 받아 모터에 전기를 보내는 부품), 7.4V 배터리를 잇고, 보드와 모터 드라이버가 좁은 선체 안에 들어가도록 배선을 꾸렸습니다.</p>
     <figure class="fig">
       <img src="images/grad/circuit_fritzing.jpg" alt="구명튜브를 기어모터로 펼치던 방식의 회로 구성도: 아두이노 보드에 열화상 센서, RC 수신기, 좌우 DC 모터와 모터 드라이버, 구명튜브용 기어모터와 드라이버, 7.4V 배터리가 연결됨" width="1200" height="752" loading="lazy">
@@ -94,6 +108,10 @@
       <img class="narrow" src="images/grad/hull_interior.jpg" alt="선체 상판을 열어 본 내부: 아두이노 보드와 모터 드라이버, 배선" width="974" height="1314" loading="lazy">
       <figcaption class="muted">선체 내부: 상판을 열면 아두이노 보드와 모터 드라이버, 배선이 선체 안에 들어가 있습니다</figcaption>
     </figure>
+    <div class="fig-pair">
+      <figure class="fig"><img src="images/grad/hull-wiring-1.jpg" alt="선체 하부 안쪽과 배선" width="686" height="237" loading="lazy"><figcaption class="muted">예시: 선체 안에 들어간 배선</figcaption></figure>
+      <figure class="fig"><img src="images/grad/hull-wiring-2.jpg" alt="선체 안에 들어간 아두이노 보드, 배터리, 배선" width="686" height="237" loading="lazy"><figcaption class="muted">예시: 선체 안에 들어간 아두이노 보드와 배선</figcaption></figure>
+    </div>
     <p>팀은 원거리 열원 탐지 시험과 열원만 골라내는 필터는 다음 일정으로 남겼습니다. 복합적인 문제가 발생했을 때 전체를 한 번에 합치기보다 모듈별 동작과 신호를 먼저 분리해 확인한 뒤 순서대로 합치는 작업 순서의 중요성을 익혔습니다.</p>
   </details>
 
@@ -104,6 +122,15 @@
     <p>팀은 두 번째 학기에 On/Off 스위치와 배터리 보온 구조를 넣고, 기어모터로 튜브를 부풀리던 복잡한 메커니즘을 대체하려고 구명튜브 전개를 수면 착수 시 펼쳐지는 자동 팽창 밸브로 바꿨습니다.</p>
     <p>저는 두 번째 학기에 PM(프로젝트 진행 관리)을 맡아, 주간 강의 과제 발표에 맞춘 발표 자료 준비, 설계 수정 건의와 참여, 물품 관리, 회의와 작업 일정 조율을 챙겼습니다.</p>
     <p>팀은 발사체를 발사장치에 장착해 발사하고, 착수 후 익수자 쪽으로 자동 이동하며, 거리가 멀면 조종기로 수동 주행으로 전환하고 구조 종료나 돌발 상황 시 정지하는 순서로 작동 과정을 정리했습니다. 야외 발사 시험에서 실측 약 9m의 비거리를 확인했고, 수상 구동·비거리·자율주행 시험 영상을 남겼습니다. 팀은 제작비 약 51만 원으로 시제품을 완성했고, 교내 산학연 캡스톤디자인 아이디어 최우수상(24.11)과 졸업작품 경진대회 장려상(25.09)을 받았습니다.</p>
+    <div class="fig-pair">
+      <figure class="fig"><img src="images/grad/projectile-on-water.jpg" alt="물 위에 뜬 발사체와 노란 구명튜브" width="1050" height="547" loading="lazy"><figcaption class="muted">예시: 착수 뒤 물 위에 뜬 발사체와 구명튜브</figcaption></figure>
+      <figure class="fig"><img src="images/grad/rc-controller.jpg" alt="물가에서 두 손으로 잡은 무선 조종기" width="1050" height="537" loading="lazy"><figcaption class="muted">예시: 수동 주행에 쓰는 무선 조종기</figcaption></figure>
+    </div>
+    <div class="fig-pair">
+      <figure class="fig"><img src="images/grad/projectile-before-launch.jpg" alt="구명튜브를 단 발사체를 두 손으로 든 모습(얼굴 안 보임)" width="1050" height="383" loading="lazy"><figcaption class="muted">예시: 착수 전 구명튜브를 단 발사체</figcaption></figure>
+      <figure class="fig"><img src="images/grad/launch-pose.jpg" alt="물가 바위 위에서 발사장치를 겨누는 사람의 뒷모습" width="900" height="1200" loading="lazy"><figcaption class="muted">예시: 발사 직전 발사장치를 든 모습</figcaption></figure>
+    </div>
+    <figure class="fig"><img src="images/grad/rescue-flow-chart.jpg" alt="자율주행 MODE, 수동조작 MODE, 정지로 이어지는 구조 작동 순서도" width="817" height="483" loading="lazy"><figcaption class="muted">예시: 팀이 정리한 구조 작동 순서도</figcaption></figure>
     <p>다만 원거리 탐지 결과나 개선 전후의 전압·작동 시간은 기록으로 남기지 못했습니다. 한 학기 결과의 한계를 발표에서 개선안으로 정리해 다음 학기에 반영하는 흐름을 경험하며, 개선을 말하려면 전후를 비교할 값부터 데이터로 측정해 두어야 한다는 점을 배웠습니다.</p>
   </details>
 </section>
