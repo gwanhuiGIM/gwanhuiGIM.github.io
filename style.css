@@ -156,7 +156,7 @@ header a:focus-visible { outline-color: #fff; }
 header .muted, header .lead, header .tags { color: rgba(255,255,255,.8); }
 header > p.muted:first-child { display: inline-block; padding: 4px 12px; border: 1px solid rgba(255,255,255,.3); border-radius: 999px; font-size: 13px; }
 header h1 { font-size: clamp(30px, 4.6vw, 52px); font-weight: 800; letter-spacing: -0.03em; }
-header .lead { font-size: 17px; }
+header .lead { font-size: 17px; max-width: 48em; } /* 머리말 소개문 줄 길이 제한(11-04 critique 대조, 한 줄 약 80자 → 약 48자) */
 @media (min-width: 1000px) {
   header:has(> .video) > .video { max-width: 960px; margin: 32px auto 8px; border-radius: 18px; box-shadow: 0 30px 60px rgba(0,0,0,.45); }
   header:has(> .video) > p.muted:last-child { text-align: center; }
