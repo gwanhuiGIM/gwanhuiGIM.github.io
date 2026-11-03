@@ -187,8 +187,7 @@ main > ul:not(.vt) li b { display: block; font-size: 18px; margin-bottom: 6px; c
 main > ul:not(.vt) li br { display: none; }
 
 /* 프로젝트 카드 */
-.card { border-radius: 22px; padding: 26px; box-shadow: 0 1px 2px rgba(15,23,42,.05), 0 12px 32px rgba(15,23,42,.06); transition: transform .2s, box-shadow .2s; overflow: hidden; }
-.card:hover { transform: translateY(-3px); box-shadow: 0 20px 40px rgba(15,23,42,.12); }
+.card { border-radius: 22px; padding: 26px; box-shadow: 0 1px 2px rgba(15,23,42,.05), 0 12px 32px rgba(15,23,42,.06); overflow: hidden; }
 .card.big { background: linear-gradient(var(--card), var(--card)) padding-box, linear-gradient(135deg, #4f46e5, #06b6d4) border-box; border: 2px solid transparent; }
 .card > img:first-child { margin: -26px -26px 18px; width: calc(100% + 52px); max-width: none; border-radius: 0; aspect-ratio: 16 / 9; }
 .card .flow { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; counter-reset: s; }
@@ -203,7 +202,6 @@ main > ul.vt { display: block; }
 .vt li.now { border: 0; border-bottom: 1px solid var(--line); border-radius: 0; background: none; padding: 18px 16px; }
 .vt li.now b { font-size: 18px; }
 
-@media (prefers-reduced-motion: reduce) { .card { transition: none; } .card:hover { transform: none; } }
 
 /* 홈 카드: 대표 이미지·제목·요약 한 문단만 보이고 나머지는 접기 */
 main .grid { align-items: start; }
@@ -236,13 +234,24 @@ main.cobot1 .takeaway { border-left: 3px solid var(--fg); padding: 2px 0 2px 16p
 main.cobot1 .takeaway strong { font-weight: 700; color: var(--fg); }
 @media (max-width: 600px) { main.cobot1 .case { padding-left: 0; } main.cobot1 .case > h3::before, main.cobot1 .case > summary > h3::before { position: static; font-size: 20px; margin-right: 8px; } }
 
-/* 상세 페이지 진행 과정 사례 접기(2026-11-03 Phase 4) — 확정 아님, 추후 수정 가능(사용자 q2o "확정아님으로 명시, 추후 수정가능성"). 사례 하나 = <details class="case"><summary><h3 id="case-…">제목</h3></summary> … </details> */
-section > details.case { margin-top: 28px; }
-details.case > summary { display: block; cursor: pointer; list-style: none; }
+/* 상세 페이지 진행 과정 사례 접기(2026-11-03 Phase 4, 2026-11-04 디자인 점검 반영) — 확정 아님, 추후 수정 가능(사용자 q2o "확정아님으로 명시, 추후 수정가능성"). 사례 하나 = <details class="case"><summary><h3 id="case-…">제목</h3></summary> … </details> */
+/* 사례 토글: 한 줄 전체가 클릭 영역, 오른쪽 accent 꺾쇠(닫힘 >, 펼침 ∨), hover·focus 표시 */
+section > details.case { margin-top: 20px; }
+details.case { border-top: 1px solid var(--line); }
+details.case > summary { display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 12px 4px; cursor: pointer; list-style: none; }
 details.case > summary::-webkit-details-marker { display: none; }
-details.case > summary > h3 { display: inline; }
-details.case > summary > h3::after { content: " ▸"; color: var(--muted); font-weight: 400; }
-details.case[open] > summary > h3::after { content: " ▾"; }
+details.case > summary > h3 { display: block; flex: 1; margin: 0; }
+details.case > summary::after { content: ""; flex: none; width: 9px; height: 9px; margin: 0 8px 4px 0; border-right: 2px solid var(--accent); border-bottom: 2px solid var(--accent); transform: rotate(45deg); transition: transform .2s ease-out, margin .2s ease-out; }
+details.case:not([open]) > summary::after { transform: rotate(-45deg); margin-bottom: 0; }
+details.case > summary:hover > h3 { color: var(--accent); }
 details.case[open] > summary { margin-bottom: 8px; }
 details.case > .fig-pair { margin: 24px 0; }
+details.case > .fig { max-width: 720px; } /* 사례 안 단독 그림 폭 제한(2장 나란히는 그대로) */
 section > details.case + p { margin-top: 28px; }
+summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+@media (prefers-reduced-motion: reduce) { details.case > summary::after { transition: none; } }
+
+/* 2026-11-04 디자인 점검(impeccable 4.8.0 reference 기준, 문구 불변) */
+[id] { scroll-margin-top: 24px; } /* 해시 링크로 들어왔을 때 제목이 화면 끝에 붙지 않게 */
+h1, h2, h3 { text-wrap: balance; }
+section p, .card p { text-wrap: pretty; }
