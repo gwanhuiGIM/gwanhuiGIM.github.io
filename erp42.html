@@ -65,18 +65,30 @@
   <details class="case"><summary><h3 id="case-localization">GPS 음영구간의 위치 추정</h3></summary>
   <p>예선 코스에는 120m 안팎의 GPS 음영구간(철골 구조 등)이 있어 GPS가 잡히지 않았고, IMU는 갈수록 오차가 쌓였습니다(drift). 차가 자기 위치를 잃으면 경로점을 따라갈 기준도 함께 잃게 됩니다.</p>
   <p>팀은 25.02에 바퀴 회전량으로 이동거리와 회전각을 계산하는 프로그램을 먼저 만들었고, 그 보고서에 IMU와 바퀴 회전량을 합치는 일을 다음 과제로 적어 두었습니다. 이 방향을 이어 팀원들과 함께 바퀴 회전량·조향각으로 차가 움직인 만큼 위치를 계산하고 GPS로 바로잡는 EKF(여러 측정값을 합쳐 위치를 추정하는 필터)를 만들었습니다. 차의 방향은 IMU로 구했습니다.</p>
+  <div class="fig-pair">
+    <figure class="fig"><img src="images/erp42/erp42-sensor-frame-front.jpg" alt="복도에서 앞쪽 비스듬히 찍은, 센서 프레임과 상자·경고등을 얹은 ERP42" width="1050" height="1400" loading="lazy"><figcaption class="muted">예시: 센서 장착 프레임을 얹은 ERP42(팀 기술보고서 사진)</figcaption></figure>
+    <figure class="fig"><img src="images/erp42/erp42-gps-antenna-receiver.jpg" alt="프레임 기둥 위 GPS 안테나와 흰 스티로폼 위에 놓인 수신기 상자 근접 사진" width="1050" height="1400" loading="lazy"><figcaption class="muted">예시: 프레임에 장착한 GPS 안테나와 수신기(팀 기술보고서 사진)</figcaption></figure>
+  </div>
   <p>위치는 초기 GPS 위치를 원점으로 삼은 지도 좌표로 나오고, GPS가 끊기는 구간에서도 바퀴 회전량으로 위치 계산을 이어 가는 구성입니다. 팀은 미리 기록한 경로점의 위도·경도도 같은 원점 기준 지도 좌표로 바꿔 주행 경로로 내보냈습니다. 이 작업으로 팀은 센서 하나가 흔들려도 여러 측정값을 합쳐 위치를 유지하도록 설계하는 관점을 함께 익혔습니다.</p>
   </details>
 
   <details class="case"><summary><h3 id="case-path">곡선 구간의 경로추종</h3></summary>
   <p>8자 트랙이나 곡선을 달릴 때 조향이 급격히 튀면 주행이 불안정해집니다. 팀원들과 함께 25.03에 경로추종 기법인 Pure Pursuit(앞쪽 목표점을 향해 조향하는 방식)과 Stanley(경로와의 거리·각도 오차를 함께 줄이는 방식)를 학습·검토했고, 팀이 함께 쓴 연구계획서에는 경로와의 방향 오차에 비례해 조향하고 저역통과 처리로 흔들림을 줄이는 방식을 설계로 담았습니다. 여러 기법을 검토한 뒤 연구계획서의 방식(방향 오차에 비례한 조향과 저역통과 처리)으로 구현하기로 했습니다.</p>
   <p>저는 차가 이 경로를 따라가도록, 앞쪽 경로점을 향한 방향과 차의 진행 방향의 차이에 비례해 조향량을 정하고, 직전 조향값과 부드럽게 섞어 곡선에서 조향이 튀는 것을 줄이도록 했습니다. 팀은 25.04에 경로점 추종과 LiDAR 장애물 회피를 테스트 주행으로 확인했습니다('한눈에 보기'의 테스트 영상).</p>
+  <div class="fig-pair">
+    <figure class="fig"><img src="images/erp42/erp42-field-test-obstacle.jpg" alt="운동장에서 탁자 장애물 쪽으로 달리는 ERP42와 옆에 서서 지켜보는 두 사람(멀리서 찍힘)" width="1280" height="720" loading="lazy"><figcaption class="muted">예시: 경로점 추종과 장애물(탁자) 회피를 본 운동장 테스트 주행(25.04, 팀 내부 테스트)</figcaption></figure>
+    <figure class="fig"><img src="images/erp42/erp42-field-test-run.jpg" alt="운동장에서 카메라 쪽으로 달려오는 ERP42 옆모습" width="1280" height="720" loading="lazy"><figcaption class="muted">예시: 운동장 경로점 추종 테스트 중인 차량(25.04, 팀 내부 테스트)</figcaption></figure>
+  </div>
   <p>이 작업으로 정교한 기법보다 실제 차량에 맞는 단순한 구현을 고르는 판단을 익혔습니다.</p>
   </details>
 
   <details class="case"><summary><h3 id="case-arbiter">주행 명령 중재(프로토타입)</h3></summary>
   <p>인지 모듈마다 조향·속도 명령을 따로 내는데 조율할 곳이 없었습니다. 오래된 명령이 남거나 여러 명령이 한꺼번에 들어와도 무엇을 따를지 정할 지점이 없었습니다. 팀은 명령을 계산하는 프로그램과 차에 보내는 프로그램을 나눴습니다. 차량 통신 프로그램이 조향·속도·브레이크 명령을 ERP42에 보내고, 바퀴 회전량 같은 차 상태를 받아 위치 계산에 넘깁니다.</p>
   <p>보고서 설계는 신호·표지판, 장애물 회피, 경로추종 순으로 명령을 평가하는 판단 노드였습니다. 저는 명령을 계산하는 프로그램과 차에 보내는 프로그램 사이에서 차선·경로 명령에 우선순위를 두고, 여러 기능이 낸 명령 중 방금 들어온 유효한 명령 하나를 고르고 오래된 명령은 빼는 판단 노드(명령을 고르는 프로그램)를 소스 코드 수준 프로토타입으로 만들었습니다. 설계의 신호·표지판 단계는 구현하지 못했습니다. 유효한 명령이 없으면 <strong>완전 제동(full-brake)</strong>합니다. 다만 대회 당일 주행에 이 판단 노드를 사용했는지는 확인되지 않았습니다.</p>
+  <figure class="fig">
+    <img src="images/erp42/erp42-controller-design-flow.png" alt="LiDAR·카메라·경로 명령이 Controller(우선순위 선택)로 모이고, 신호·표지판, 장애물 회피, 경로 추종 순으로 골라 ERP42에 보내는 흐름도" width="964" height="481" loading="lazy">
+    <figcaption class="muted">팀 기술보고서의 판단 노드 설계 흐름도 — 신호·표지판, 장애물 회피, 경로추종 순으로 명령을 고르는 설계(설계도이며, 신호·표지판 단계는 구현하지 못함)</figcaption>
+  </figure>
   <p>이 작업으로 명령이 없거나 오래됐을 때는 차를 세우는 쪽을 기본으로 두고, 판단·인지·제어를 나눠 보는 설계 방식을 익혔습니다.</p>
   </details>
 
@@ -90,6 +102,14 @@
     <li>GNSS(위성 측위 수신기)·ROS2(로봇 프로그램 간 통신 체계) 연결 끊김</li>
   </ul>
   <p>실차 시험에서는 노면이 나쁜 구간에서 센서가 흔들렸습니다. 센서 장착 프레임은 재설계할 여력이 부족했습니다. 저는 새로 설계하는 대신 실차에 직접 대 보며 센서 부착 위치와 주행 중 안정성을 고려해 배치 기준을 다시 세웠습니다. 위치 추정 기준점이 차량 중앙이라 GPS 등을 중앙에 두고, 보조 배터리·노트북을 올리려고 가운데를 높게 쌓는 구조로 바꿨습니다.</p>
+  <figure class="fig">
+    <img src="images/erp42/erp42-sensor-frame-side.jpg" alt="알루미늄 프레임 위에 센서와 장비를 얹고 가운데 위쪽에 노트북을 올린 ERP42 차량 옆모습" width="1400" height="1050" loading="lazy">
+    <figcaption class="muted">예시: 센서 장착 프레임과 노트북을 얹은 ERP42 옆모습(팀 기술보고서 사진)</figcaption>
+  </figure>
+  <div class="fig-pair">
+    <figure class="fig"><img src="images/erp42/erp42-lidar-front-mount.jpg" alt="ERP42 앞쪽 알루미늄 프레임 아래에 단 원통형 LiDAR와 조향부" width="1050" height="1400" loading="lazy"><figcaption class="muted">예시: 차량 앞쪽 프레임에 단 LiDAR(팀 기술보고서 사진)</figcaption></figure>
+    <figure class="fig"><img src="images/erp42/erp42-lidar-camera-front.jpg" alt="앞바퀴 높이에서 본 ERP42 앞쪽 프레임 위의 LiDAR와 카메라 기둥" width="1050" height="1400" loading="lazy"><figcaption class="muted">예시: 앞쪽 프레임에 단 LiDAR와 카메라 기둥(팀 기술보고서 사진)</figcaption></figure>
+  </div>
   <figure class="fig">
     <img src="images/erp42/erp42_gps_mount.jpg" alt="ERP42 프레임 기둥에 케이블타이로 묶은 GPS 모듈과 프레임 위 GPS 안테나를 빨간 원으로 표시한 사진 두 장" width="910" height="397" loading="lazy">
     <figcaption class="muted">차량 프레임에 장착한 GPS 모듈과 안테나(빨간 원)</figcaption>
