@@ -204,7 +204,12 @@ main > ul.vt { display: block; }
 
 
 /* 홈 카드: 대표 이미지·제목·요약 한 문단만 보이고 나머지는 접기 */
-main .grid { align-items: start; }
+main .grid { align-items: stretch; } /* 같은 줄 카드 높이 맞춤(사용자 11-04 q2o — 상세를 열면 옆 카드도 늘어남) */
+.card { display: flex; flex-direction: column; }
+.card > p:last-child { margin-top: auto; padding-top: 10px; } /* 링크 줄을 카드 바닥에 */
+.card .role, .card .role-list { font-size: 16px; } /* 카드 글씨 2단계: 본문 16 / 부가 14 */
+.card .flow { font-size: 14px; }
+.tags b { color: var(--accent); }
 .card details.more { margin: 10px 0; }
 .card details.more > summary { cursor: pointer; color: var(--accent); font-size: 15px; font-weight: 600; }
 .card details.more[open] > summary { margin-bottom: 4px; }
@@ -255,3 +260,9 @@ summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; b
 [id] { scroll-margin-top: 24px; } /* 해시 링크로 들어왔을 때 제목이 화면 끝에 붙지 않게 */
 h1, h2, h3 { text-wrap: balance; }
 section p, .card p { text-wrap: pretty; }
+
+/* 사진 확대(img-zoom.js, 사용자 11-04) */
+img.zoomable { cursor: zoom-in; }
+dialog.zoom { padding: 0; border: 0; background: transparent; max-width: 96vw; max-height: 96vh; cursor: zoom-out; }
+dialog.zoom::backdrop { background: rgba(0,0,0,.85); }
+dialog.zoom img { max-width: 96vw; max-height: 96vh; width: auto; height: auto; border-radius: 6px; }

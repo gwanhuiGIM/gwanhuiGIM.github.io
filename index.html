@@ -21,7 +21,9 @@
 <nav class="toc" aria-label="목차">
 <b>목차</b>
 <ul>
+<!-- 임시 숨김(2026-11-04): 진행 방식 섹션 문구 수정 대기(사용자)
 <li><a href="#process">진행 방식</a></li>
+-->
 <li><a href="#featured">대표 프로젝트</a></li>
 <li><a href="#others">그 외 프로젝트</a></li>
 <li><a href="#bring">핵심역량</a></li>
@@ -30,6 +32,7 @@
 </nav>
 
 <main>
+<!-- 임시 숨김(2026-11-04): 문구 수정 대기(사용자) — 고친 뒤 주석 해제
 <h2 id="process">프로젝트를 진행하는 방식</h2>
 <ul>
   <li><b>관심 가는 기술은 지금 작업에서 쓸 자리부터 확인하고 제안합니다</b><br>자연어 물체 집기 프로젝트에서, 앞선 협동로봇 프로젝트 때 카메라 없이 좌표를 일일이 교시(로봇에 위치를 가르쳐 저장)했던 불편을 떠올려 GraspGenX(물체 형상을 보고 집을 자세 후보를 만드는 딥러닝 모델)를 시연 영상과 문서로 찾아봤고, 그 교시 수고를 대신할 수 있겠다고 판단해 팀에 도입을 건의했습니다.</li>
@@ -37,13 +40,14 @@
   <li><b>진행이 늦어지면 재촉하기보다 어디서 막혔는지부터 묻습니다</b><br>자율주행 대회에서 팀장으로 진행 속도를 자주 확인하다가 팀원이 어려움을 말하지 못하고 혼자 붙잡고 있는 모습을 보고, 얼마나 했는지 대신 어디서 막혔는지를 들으며 제가 이해한 작업 순서를 정리해 공유하고 다음 할 일을 함께 정했습니다.</li>
   <li><b>목표가 장비와 일정 안에서 해낼 수 있는 범위인지 작은 검증으로 먼저 짚어 봅니다</b><br>핸드드립 커피 프로젝트에서 팀이 처음 고른 트레이 밸런싱(쟁반 위 컵의 무게중심을 유지하는 과제)을 사흘간 검증하며 저도 검증 코드를 짰지만, 쟁반을 기울이면 달라지는 힘 계산값을 해석하지 못했고 기간도 짧아, 팀은 카메라 없이 가능한 공정 후보 4개를 검토해 핸드드립으로 주제를 바꿨습니다.</li>
 </ul>
+-->
 
 <h2 id="featured">대표 프로젝트</h2>
 <div class="grid">
   <article class="card big">
     <img src="images/cobot2/rg2_grasp.jpg" alt="M0609와 OnRobot RG2 그리퍼가 작업대 위 물체를 집는 장면" width="546" height="580" loading="lazy">
     <h3><a href="cobot2.html">VLA 기반 자연어 장애물 우회 Pick &amp; Place</a></h3>
-    <p class="tags">Doosan M0609 · OnRobot RG2 · RealSense · RTX 4060 Laptop(8GB) · 5인 팀 · <b>작업 제어(FSM) 담당</b>(공동작업) · 26.07.30~26.08.12</p>
+    <p class="tags">부트캠프 · 5인 팀 · <b>작업 제어(FSM) 담당</b>(공동작업) · 26.07~26.08(2주) · Doosan M0609 · RealSense</p>
     <p>이전 협동로봇 프로젝트에서 교시좌표를 일일이 지정해야 했던 팀 경험에서, 자연어 지시로 물체를 집어 정리하는 마트 계산대 작업을 목표로 잡았습니다. 제목의 VLA(보고·말을 알아듣고·움직이는 로봇)는 팀이 판단 계층에 붙인 이름으로, 카메라 인식과 자연어 지시로 집을 물체와 놓을 곳을 정하고 실제 로봇 이동은 작업 제어(FSM)가 맡습니다.</p>
     <details class="more"><summary>상세 내용</summary>
       <p>시뮬레이션에서는 정상이던 그리퍼(로봇 손) 모델이 실기에 올리자 실물 규격과 어긋났습니다. 저는 펜던트(로봇 조작기)로 그리퍼를 천천히 내려 접촉 지점까지 직접 재고 그 차이를 그리퍼 코드에 반영하며, <strong>검증된 모델이라도 실물 치수는 다시 재서 맞춰야 한다</strong>는 점을 익혔습니다.</p>
@@ -56,36 +60,12 @@
       </ul>
       <div class="keywords"><b>키워드</b><ul><li>시스템 통합</li><li>Doosan M0609</li><li>MoveIt</li></ul></div>
     </details>
-    <p><a href="cobot2.html">과정 자세히 보기 →</a></p>
+    <p><a href="cobot2.html">과정 자세히 보기 →</a> · <a href="https://youtu.be/bOec0yE8m94">▶ 1분 시연 영상</a> · <a href="https://github.com/gwanhuiGIM/Rokey_cobot2">코드</a></p>
   </article>
-  <article class="card big">
-    <img src="images/erp42/erp42_competition_run.jpg" alt="라바콘이 놓인 아스팔트 코스를 달리는 06번 ERP42 차량" width="640" height="365" loading="lazy">
-    <h3><a href="erp42.html">자율주행 ERP42 — 2025 대학생 창작모빌리티 경진대회</a></h3>
-    <p class="tags">ERP42 4륜 전기차 · 팀 MTP(충남대) · <b>4인 팀 팀장</b> · 24.08~25.11</p>
-    <p>2025 대학생 창작모빌리티 경진대회 무인모빌리티 부문에서, 예선 10분·본선 15분의 한 번의 주행 동안 인지가 일부 실패해도 멈추지 않고 완주하는 자율주행 시스템을 목표로 삼았습니다.</p>
-    <details class="more"><summary>상세 내용</summary>
-      <p>코스에는 GPS가 끊기는 구간이 있어, 차가 위치를 잃으면 경로점을 따라갈 기준도 함께 잃게 됩니다. 그래서 팀원들과 함께 바퀴 회전량으로 위치 계산을 이어 가고 GPS로 바로잡는 측위(차량 위치 추정)를 만들었고, 저는 그 위에서 앞쪽 경로점을 향해 조향하는 경로추종을 맡았습니다.</p>
-      <ol class="flow"><li>GPS 음영구간의 위치 추정</li><li>곡선 구간의 경로추종</li><li>주행 명령 중재(프로토타입)</li><li>실차 조정과 반복 테스트</li></ol>
-      <p class="role"><b>본인 담당</b></p>
-      <ul class="role-list">
-        <li>팀장(개발 일정 수립·공유, 실습 환경 구성, 인수인계 문서화)</li>
-        <li>waypoint 경로추종</li>
-        <li>명령 중재 판단 노드</li>
-        <li>실차에 맞춘 센서 장착 프레임 배치 변경</li>
-        <li>실차 설정 조정(카메라·IMU·RTK 접속, 속도·제동 값, 전륜 정렬)</li>
-      </ul>
-      <div class="keywords"><b>키워드</b><ul><li>팀장</li><li>ERP42</li><li>waypoint 경로추종</li><li>EKF 센서퓨전</li><li>실차 반복 테스트</li></ul></div>
-    </details>
-    <p><a href="erp42.html">과정 자세히 보기 →</a> · <a href="https://www.youtube.com/watch?v=YCeGdbSMRuc">▶ 대회 참고 영상</a> <span class="muted">(우리 팀 아님 · 본선 출전 팀 주행)</span></p>
-  </article>
-</div>
-
-<h2 id="others">그 외 프로젝트 <span class="muted">(진행 순)</span></h2>
-<div class="grid">
-  <article class="card" id="grad">
+  <article class="card big" id="grad">
     <img src="images/grad/hull_interior.jpg" alt="선체를 열어 본 내부: Arduino Uno와 모터 드라이버 배선" width="974" height="1314" loading="lazy">
     <h3><a href="grad.html">열감지 추적 구명튜브 전달장치 및 발사장치</a></h3>
-    <p class="tags">학사 졸업프로젝트 · Arduino Uno · 3인 팀 · <b>차동 제어·회로 구성 담당, 2학기 PM</b> · 24.08~25.08</p>
+    <p class="tags">졸업프로젝트 · 3인 팀 · <b>차동 제어·회로 구성 담당, 2학기 PM</b> · 24.08~25.08 · Arduino Uno</p>
     <p>상용 수난 구조장비는 비싸고 조작 숙련이 필요해 비전문가가 바로 쓰기 어렵습니다. 그래서 누구나 던져서 쓰고, 익수자에게 <strong>스스로 다가가는</strong> 저비용 구명보트를 목표로 삼았습니다.</p>
     <details class="more"><summary>상세 내용</summary>
       <p>저는 아두이노(센서와 모터를 제어하는 보드)로 좌우 모터를 돌리는 제어와 회로 구성을 맡았고, 열화상 센서 처리는 팀원과 함께했습니다. 보트는 발사장치로 물에 던져 넣기 때문에 떨어질 때의 충격에 견디고, 아두이노로 제어하기 쉬우면서 충분한 추진과 조향을 내는 구동 방식이 필요했습니다.</p>
@@ -109,10 +89,51 @@
     </details>
     <p><a href="grad.html">과정 자세히 보기 →</a> · <a href="https://github.com/gwanhuiGIM/Grad_proj">프로젝트 기록</a></p>
   </article>
+</div>
+
+<h2 id="others">그 외 프로젝트</h2>
+<div class="grid">
+  <article class="card">
+    <img src="images/erp42/erp42_competition_run.jpg" alt="라바콘이 놓인 아스팔트 코스를 달리는 06번 ERP42 차량" width="640" height="365" loading="lazy">
+    <h3><a href="erp42.html">자율주행 ERP42</a></h3>
+    <p class="tags">2025 대학생 창작모빌리티 경진대회 · 4인 팀 · <b>팀장</b> · 24.08~25.11 · ERP42 4륜 전기차</p>
+    <p>2025 대학생 창작모빌리티 경진대회 무인모빌리티 부문에서, 예선 10분·본선 15분의 한 번의 주행 동안 인지가 일부 실패해도 멈추지 않고 완주하는 자율주행 시스템을 목표로 삼았습니다.</p>
+    <details class="more"><summary>상세 내용</summary>
+      <p>코스에는 GPS가 끊기는 구간이 있어, 차가 위치를 잃으면 경로점을 따라갈 기준도 함께 잃게 됩니다. 그래서 팀원들과 함께 바퀴 회전량으로 위치 계산을 이어 가고 GPS로 바로잡는 측위(차량 위치 추정)를 만들었고, 저는 그 위에서 앞쪽 경로점을 향해 조향하는 경로추종을 맡았습니다.</p>
+      <ol class="flow"><li>GPS 음영구간의 위치 추정</li><li>곡선 구간의 경로추종</li><li>주행 명령 중재(프로토타입)</li><li>실차 조정과 반복 테스트</li></ol>
+      <p class="role"><b>본인 담당</b></p>
+      <ul class="role-list">
+        <li>팀장(개발 일정 수립·공유, 실습 환경 구성, 인수인계 문서화)</li>
+        <li>waypoint 경로추종</li>
+        <li>명령 중재 판단 노드</li>
+        <li>실차에 맞춘 센서 장착 프레임 배치 변경</li>
+        <li>실차 설정 조정(카메라·IMU·RTK 접속, 속도·제동 값, 전륜 정렬)</li>
+      </ul>
+      <div class="keywords"><b>키워드</b><ul><li>팀장</li><li>ERP42</li><li>waypoint 경로추종</li><li>EKF 센서퓨전</li><li>실차 반복 테스트</li></ul></div>
+    </details>
+    <p><a href="erp42.html">과정 자세히 보기 →</a> · <a href="https://www.youtube.com/watch?v=YCeGdbSMRuc">▶ 대회 참고 영상(타 팀)</a></p>
+  </article>
+  <article class="card">
+    <img src="images/cobot1/system_photo.jpg" class="pos-top" alt="실제 핸드드립 작업대: 협동로봇이 원두를 담은 스푼을 레고 블록 받침 위 그라인더에 붓는 장면, 오른쪽에 드리퍼와 드립 주전자" width="1200" height="854" loading="lazy">
+    <h3><a href="cobot1.html">협동로봇 핸드드립 커피 자동화</a></h3>
+    <p class="tags">부트캠프 · 5인 팀 · <b>그리퍼 관리·오류 대응</b>(발표 역할표 기준, 공동작업) · 26.07(2주) · Doosan M0609 · OnRobot RG2</p>
+    <p>부트캠프 과제 "ROS 2를 활용한 로봇 자동화 공정 시스템 구현"을 받아 핸드드립 공정을 만들었습니다. 사람이 부으면 손이 흔들려 매번 편차가 큰 나선 푸어링(물 붓기)을 협동로봇이 같은 궤적으로 재현합니다.</p>
+    <details class="more"><summary>상세 내용</summary>
+      <p>카메라가 없어 잡았는지는 그리퍼(물체를 잡는 로봇 손) 신호로만 알 수 있었는데, 물체 형태나 집는 오차에 따라 그 신호가 오지 않기도 했습니다. 저는 오픈소스 드라이버 코드를 보며 판정에 쓸 신호를 찾았고, 최종 제출본에서는 잡힘 신호 데이터가 들어오지 않으면 <strong>손가락이 닫힌 위치와 힘으로 대신 판정</strong>하게 했습니다.</p>
+      <ol class="flow"><li>트레이 밸런싱에서 핸드드립으로 주제 변경</li><li>물체 잡힘 판정과 이상 감시</li><li>실패 단계 재실행과 복구 분리</li></ol>
+      <p class="role"><b>본인 담당</b> (공동작업, 발표 역할표 기준)</p>
+      <ul class="role-list">
+        <li>그리퍼 관리와 오류 대응</li>
+        <li>위치 틀어짐에 대비해 공정 배치와 치수를 규격화한 작업 환경 도면 사후 작성</li>
+      </ul>
+      <div class="keywords"><b>키워드</b><ul><li>Doosan M0609</li><li>OnRobot RG2</li><li>카메라 없는 공정</li><li>주제 전환</li><li>작업 환경 도면</li></ul></div>
+    </details>
+    <p><a href="cobot1.html">과정 자세히 보기 →</a> · <a href="https://youtu.be/17UW9-wpsBg">▶ 1분 시연 영상</a> · <a href="https://github.com/gwanhuiGIM/Rokey_cobot1">코드</a></p>
+  </article>
   <article class="card">
     <img src="images/cobot3/yolo_tray_detection.jpg" alt="왼쪽: Isaac Sim 수술실 장면, 오른쪽: 시뮬레이터 카메라 영상에서 트레이 0~5마다 찾은 도구를 이름과 상자로 표시한 결과" width="1200" height="546" loading="lazy">
     <h3><a href="cobot3.html">멀티모달(손 동작·음성 명령) 기반 수술도구 집도의 전달 시뮬레이션 (Isaac Sim)</a></h3>
-    <p class="tags">Dual Doosan M0609 · Isaac Sim · 3인 팀 · <b>팀장</b> · 26.06.17~26.06.30</p>
+    <p class="tags">부트캠프 · 3인 팀 · <b>팀장</b> · 26.06(2주) · Isaac Sim · Doosan M0609 2대</p>
     <p>집도의의 손 동작과 음성 명령에 따라 협동로봇 두 대가 <strong>수술도구를 전달</strong>하는 시뮬레이션(Isaac Sim)입니다.</p>
     <details class="more"><summary>상세 내용</summary>
       <p>실물 수술도구 사진으로 학습한 도구 인식 모델이 시뮬레이터 속 도구를 제대로 찾지 못하자, 팀은 학습 사진의 배경과 초록색 트레이 환경의 차이를 주된 원인으로 봤습니다. 그래서 시뮬레이터의 도구 모델과 트레이 환경으로 <strong>학습 이미지(합성 데이터)를 만들어</strong> 모델을 추가 학습시켰고, 저도 이 작업에 참여했습니다.</p>
@@ -132,7 +153,7 @@
   <article class="card">
     <img src="images/intelli1/fleet_monitor_1200.jpg" alt="관제 웹 화면: 지도 위 로봇·사람 위치, 로봇별 FSM 상태와 출동 로봇 선정 근거(거리·배터리)" width="1200" height="628" loading="lazy">
     <h3><a href="intelli1.html">제조업 공장 산업안전 AMR 순찰로봇 및 관제 시스템</a></h3>
-    <p class="tags">AMR 2대 · 천장 웹캠 2대 · 5인 팀 · <b>팀장</b> · 26.07.01~26.07.14</p>
+    <p class="tags">부트캠프 · 5인 팀 · <b>팀장</b> · 26.07(2주) · AMR 2대 · 천장 웹캠 2대</p>
     <p>제조 현장에서 안전사고 발견과 초동 대응이 늦어지는 문제를 줄이려고, 천장 카메라 감지와 자율주행 로봇을 잇는 순찰·관제 시스템을 만들었습니다.</p>
     <details class="more"><summary>상세 내용</summary>
       <p>쓰러짐이나 안전모 미착용 때 <strong>가장 가까운 로봇이 출동</strong>해야 했지만, 로봇은 따로 '살아 있다'는 메시지를 보내지 않았습니다. 저는 로봇이 원래 내보내는 배터리·위치·주행 상태 메시지가 들어오는지로 상태를 관리하고, 위치 정보가 없거나 주행 프로그램이 떠 있지 않은 로봇은 출동 후보에서 뺐습니다.</p>
@@ -147,19 +168,6 @@
       <div class="keywords"><b>키워드</b><ul><li>팀장</li><li>TurtleBot4</li><li>관제 FSM</li><li>쓰러짐·안전모 감지</li><li>통신 구조 분석</li></ul></div>
     </details>
     <p><a href="intelli1.html">과정 자세히 보기 →</a> · <a href="https://youtu.be/-Q8ITIWgUp4">▶ 1분 시연 영상</a> · <a href="https://github.com/gwanhuiGIM/Rokey_intelli1">코드</a></p>
-  </article>
-  <article class="card">
-    <img src="images/cobot1/system_photo.jpg" class="pos-top" alt="실제 핸드드립 작업대: 협동로봇이 원두를 담은 스푼을 레고 블록 받침 위 그라인더에 붓는 장면, 오른쪽에 드리퍼와 드립 주전자" width="1200" height="854" loading="lazy">
-    <h3><a href="cobot1.html">협동로봇 핸드드립 커피 자동화</a></h3>
-    <p class="tags">Doosan M0609 + OnRobot RG2 · 5인 팀 · <b>그리퍼 관리·오류 대응</b>(발표 역할표 기준, 공동작업) · 26.07.15~26.07.29</p>
-    <p>부트캠프 과제 "ROS 2를 활용한 로봇 자동화 공정 시스템 구현"을 받아 핸드드립 공정을 만들었습니다. 사람이 부으면 손이 흔들려 매번 편차가 큰 나선 푸어링(물 붓기)을 협동로봇이 같은 궤적으로 재현합니다.</p>
-    <details class="more"><summary>상세 내용</summary>
-      <p>카메라가 없어 잡았는지는 그리퍼(물체를 잡는 로봇 손) 신호로만 알 수 있었는데, 물체 형태나 집는 오차에 따라 그 신호가 오지 않기도 했습니다. 저는 오픈소스 드라이버 코드를 보며 판정에 쓸 신호를 찾았고, 최종 제출본에서는 잡힘 신호 데이터가 들어오지 않으면 <strong>손가락이 닫힌 위치와 힘으로 대신 판정</strong>하게 했습니다.</p>
-      <ol class="flow"><li>트레이 밸런싱에서 핸드드립으로 주제 변경</li><li>물체 잡힘 판정과 이상 감시</li><li>실패 단계 재실행과 복구 분리</li></ol>
-      <p class="role"><b>본인 담당</b> 그리퍼 관리와 오류 대응(발표 역할표 기준, 공동작업) · 위치 틀어짐에 대비해 공정 배치와 치수를 규격화한 작업 환경 도면 사후 작성</p>
-      <div class="keywords"><b>키워드</b><ul><li>Doosan M0609</li><li>OnRobot RG2</li><li>카메라 없는 공정</li><li>주제 전환</li><li>작업 환경 도면</li></ul></div>
-    </details>
-    <p><a href="cobot1.html">과정 자세히 보기 →</a> · <a href="https://youtu.be/17UW9-wpsBg">▶ 1분 시연 영상</a> · <a href="https://github.com/gwanhuiGIM/Rokey_cobot1">코드</a></p>
   </article>
 </div>
 
