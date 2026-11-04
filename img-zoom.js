@@ -1,4 +1,4 @@
-// 프로젝트·전공 페이지 사진 확대: 본문 사진을 누르면 화면 가득 크게 보여 주고, 다시 누르거나 Esc로 닫는다(사용자 2026-11-04).
+// index·프로젝트·전공 페이지 사진 확대: 본문 사진을 누르면 화면 가득 크게 보여 주고, 다시 누르거나 Esc로 닫는다(사용자 2026-11-04).
 // 사진을 감싼 이미지 링크(<a href="images/...">)도 새 탭 대신 같은 확대 창으로 연다.
 addEventListener('DOMContentLoaded', function () {
   var dlg = document.createElement('dialog');
