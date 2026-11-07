@@ -262,3 +262,7 @@ img.zoomable { cursor: zoom-in; }
 dialog.zoom { padding: 0; border: 0; background: transparent; max-width: 96vw; max-height: 96vh; cursor: zoom-out; }
 dialog.zoom::backdrop { background: rgba(0,0,0,.85); }
 dialog.zoom img { max-width: 96vw; max-height: 96vh; width: auto; height: auto; border-radius: 6px; background: #fff; }
+
+/* 우상단 마지막 수정일: 작게·흐리게, 본문 오른쪽 끝·"← 포트폴리오 홈" 줄 높이에 맞춤(사용자 11-07). 날짜는 pre-commit hook이 커밋일로 갱신 */
+.updated { position: absolute; top: 30px; right: max(16px, calc((100% - 1160px) / 2)); margin: 0; font-size: 12px; line-height: 1.4; color: var(--muted); opacity: .6; pointer-events: none; }
+.updated:has(+ header) { color: #fff; opacity: .5; } /* 홈: 그라데이션 히어로 위 */
