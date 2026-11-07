@@ -213,6 +213,8 @@ main .grid { align-items: stretch; } /* 같은 줄 카드 높이 맞춤(사용�
 .card details.more { margin: 10px 0; }
 .card details.more > summary { cursor: pointer; color: var(--accent); font-size: 15px; font-weight: 600; }
 .card details.more[open] > summary { margin-bottom: 4px; }
+.sum { display: block; font-weight: 700; margin-bottom: 6px; }
+.card details.more p + p { border-top: 2px dashed var(--muted); padding-top: 12px; margin-top: 12px; }
 
 /* major.html 과목별 그림 격자: 가로·세로·그래프가 섞여도 칸 높이를 맞추고 잘리지 않게 */
 .shots { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr)); margin: 20px 0; }
