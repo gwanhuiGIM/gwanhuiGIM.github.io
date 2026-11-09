@@ -273,3 +273,11 @@ dialog.zoom img { max-width: 96vw; max-height: 96vh; width: auto; height: auto; 
 main { position: relative; display: flow-root; }
 .updated { position: absolute; top: 60px; right: 16px; margin: 0; font-size: 12px; line-height: 1.4; color: var(--muted); opacity: .6; pointer-events: none; }
 @media (min-width: 1160px) { .updated { right: 0; } }
+
+/* 타임라인(사용자 11-09): 날짜 아래 내용은 한 칸 들여쓰고 날짜와 띄운다. 부트캠프 프로젝트 4줄은 날짜 칸을 맞춘 2열 */
+.vt li:not(.now), .vt li.now { padding-left: calc(16px + 1.2em); }
+.vt time { margin: 0 0 6px -1.2em; }
+.vt .bc { display: grid; grid-template-columns: 8.5em 1fr; gap: 2px 12px; margin-top: 8px; }
+.vt .bc-date { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.vt .bc-gear { display: block; font-weight: 600; }
+@media (max-width: 520px) { .vt .bc { grid-template-columns: 1fr; } }
