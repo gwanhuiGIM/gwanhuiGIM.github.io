@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>수술도구 전달 시뮬레이션 (Isaac Sim) — 김관희</title>
-<meta name="description" content="집도의의 손 동작과 음성 명령에 따라 두 협동로봇이 수술도구를 전달하는 Isaac Sim 시뮬레이션 3인 팀 프로젝트에서, 팀장으로 도구 탐지와 합성 데이터 전환을 맡은 과정을 정리했습니다.">
+<meta name="description" content="집도의의 손 동작과 음성 명령에 따라 두 협동로봇이 수술도구를 전달하는 Isaac Sim 시뮬레이션 3인 팀 프로젝트에서, 팀장으로 시스템 구조 설계와 도구 탐지를 맡고 합성 데이터 전환에 참여한 과정을 정리했습니다.">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -29,7 +29,7 @@
 </nav>
 
 <main class="case-layout">
-<p class="updated">Last modified <time datetime="2026-11-07">2026-11-07</time></p>
+<p class="updated">Last modified <time datetime="2026-11-09">2026-11-09</time></p>
 <section>
   <h2 id="overview">한눈에 보기</h2>
   <div class="video"><iframe src="https://www.youtube-nocookie.com/embed/EUDn9btPNTw" title="수술도구 전달 시뮬레이션 1분 시연 영상" loading="lazy" allowfullscreen></iframe></div>
@@ -114,6 +114,7 @@
   </div>
   <p>3인이 손 추적, 음성 명령, 도구 인식, 로봇 작업 관리를 각자 맡아, 주말 포함 14일 안에 한 시스템으로 합쳐야 했습니다. 팀은 전체 일정을 사전 기획(목표·시스템·기술 요구사항 결정) 뒤 네 번의 병합(각자 만든 기능을 합쳐 확인하는 단계)으로 나누었습니다. 그리고 로봇 한 대(A)의 전체 작업 흐름을 먼저 확인한 다음 두 번째 로봇(B)을 붙였습니다.</p>
   <p>병합은 단계별로 확인 대상을 나누어 진행했습니다. 1차 병합에서는 음성 명령으로 트레이를 옮기는 시험과 손 추적 기능 완성, 그리퍼 선정을 진행했고, 2차 병합에서는 도구 인식 카메라 설계와 도구 모델 설정, 로봇 상태 설계, 작업 취소·반환 명령을 다뤘습니다. 3차 병합에서는 로봇 A의 전체 흐름 검증과 로봇 B를 추가한 시나리오 시험, ROS 2(로봇 프로그램끼리 메시지를 주고받게 하는 미들웨어) 최적화와 예외 상황 시험을 거쳤으며, 4차 병합에서 기능 간 점검과 문서화, 로봇 최종 동작을 확인했습니다. 저는 팀장으로서 전체 시스템 구조를 설계하고 ROS 2 환경 구성과 연결을 맡았습니다. 병합 과정에서는 팀 토의 일정을 조율하고 알고리즘 개선에도 참여했습니다.</p>
+  <p>구체적으로는 시뮬레이터 내장 파이썬과 시스템 파이썬 환경이 섞이지 않도록 로봇 제어와 시뮬레이션을 하나의 프로세스(독립적으로 실행되는 프로그램 단위)에 모으고, 손 추적·음성 명령·도구 인식·대시보드는 별도 프로세스로 띄워 ROS 2 메시지로만 연결했습니다. 카메라 배치를 정하고 각 프로그램이 어떤 데이터를 전처리해 주고받을지 소통 구조를 설계했습니다. 그리고 모든 프로그램이 같은 ROS 2 환경에서 메시지를 주고받도록 공통 실행 환경을 구성했습니다.</p>
   <figure class="fig">
     <img src="images/cobot3/robot-follows-hand.jpg" alt="Isaac Sim 가상 수술실: 오른쪽 로봇이 트레이를 든 채 수술대 위 가상 손 쪽으로 와 있고, 화면 아래에 'M0609에 실시간으로 End Effect를 보내어 따라오는 모습' 자막" width="1200" height="664" loading="lazy">
     <figcaption class="muted">예시: 팀 시연 영상 중 시뮬레이터에서 트레이를 든 로봇이 손 위치를 따라오는 장면</figcaption>
@@ -142,7 +143,18 @@
     <li>그리퍼: 기존 손가락 두 개짜리 그리퍼(RG2, 물체를 잡는 로봇 손)는 크기가 작고 힘을 조절하기 어려웠습니다. 트레이를 들기 힘들고 수술도구를 집기에도 불편해, 시뮬레이터 안에서 두 면으로 흡착하는 그리퍼를 만들어 바꿨습니다.</li>
     <li>배치: 실제 수술실을 닮게 하면서 두 로봇이 나란히 일할 수 있도록, 로봇을 직각으로 세우는 안과 테이블 위치를 놓고 토의해 최종 위치를 정했습니다.</li>
     <li>연산 자원: Isaac Sim 렌더링 렉과 프레임 드랍이 있어 시뮬레이션 에셋(가상 도구·환경 모델) 해상도와 GPU(시뮬레이션·학습 연산을 맡는 장치) 자원 분배를 조정했고, GPU를 더해 노트북 두 대를 랜선으로 연결했습니다.</li>
+    <li>경로 계획: 손을 따라가는 동안 기존 경로 계획(로봇이 목표 위치까지 이동할 궤적을 계산하는 기술) 도구인 RMPFlow를 쓰다 문제가 발생했습니다. 팀은 로봇 몸체를 근사한 충돌 구(sphere, 충돌 계산을 단순화하기 위해 로봇 외형을 감싼 구체) 설정이 실제 로봇 형상과 맞지 않는다고 의심하여, 로봇 모델 파일(URDF, 로봇 외형과 관절 규격을 담은 파일)을 바탕으로 충돌 구 모델을 새로 만들고 손목 쪽 두 링크(관절 사이의 연결 부위)의 충돌 여유 거리도 조정했습니다. 이에 따라 손 따라가기 경로는 다른 경로 계획 라이브러리인 cuRobo로 옮겼으며, 최종적으로 손 따라가기는 cuRobo, 도구 집기·놓기는 RMPFlow를 나누어 사용하도록 구성했습니다.</li>
   </ul>
+  <div class="fig-pair">
+    <figure class="fig">
+      <img src="images/cobot3/rmpflow-collision-spheres.jpg" alt="Isaac Sim 화면: 흰색 구 여러 개로 근사한 협동로봇 몸체, 손목 쪽 구 배치에 초록 원 표시" width="1159" height="1303" loading="lazy">
+      <figcaption class="muted">예시: 팀 발표 자료 — 기존 설정의 충돌 구로 근사한 로봇 몸체 화면에서, 팀이 문제 원인으로 의심했던 손목 쪽 구 배치가 원으로 표시되어 있습니다.</figcaption>
+    </figure>
+    <figure class="fig">
+      <img src="images/cobot3/curobo-yml-compare.jpg" alt="표: 기존 RMPFlow용 설정과 새 cuRobo용 설정을 목적, 충돌 계산용으로 로봇 형상을 근사한 구(sphere)의 개수·배치 방법·크기, 자기 충돌 설정(로봇 자신의 부품끼리는 충돌로 보지 않을 쌍과 여유 거리), 포맷 호환성 항목으로 비교" width="1400" height="600" loading="lazy">
+      <figcaption class="muted">예시: 팀 발표 자료 — 발표 시점 기준으로 기존 RMPFlow용 설정과 새로 만든 cuRobo용 설정을 목적, 구 개수, 배치 방법, 링크별 여유 거리 등 항목별로 비교한 표입니다.</figcaption>
+    </figure>
+  </div>
 </section>
 
 <section>
