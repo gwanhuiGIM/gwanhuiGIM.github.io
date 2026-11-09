@@ -215,6 +215,10 @@ main .grid { align-items: stretch; } /* 같은 줄 카드 높이 맞춤(사용�
 .card details.more[open] > summary { margin-bottom: 4px; }
 .sum { display: block; font-weight: 700; margin-bottom: 6px; }
 .card details.more p + p { border-top: 2px dashed var(--muted); padding-top: 12px; margin-top: 12px; }
+/* index 카드 접기 안 문단 구분(사용자 11-09): 굵은 요약 줄은 그대로, 그 아래 빈 줄 하나 + 본문 첫 줄 들여쓰기. 요약이 없는 문단은 첫 줄만 들여쓴다 */
+.card details.more p:not(:has(> .sum)) { text-indent: 1em; }
+.card details.more .sum { display: inline; margin: 0; }
+.card details.more .sum::after { content: "\A\A\2003"; white-space: pre; }
 
 /* major.html 과목별 그림 격자: 가로·세로·그래프가 섞여도 칸 높이를 맞추고 잘리지 않게 */
 .shots { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr)); margin: 20px 0; }
