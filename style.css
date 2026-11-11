@@ -284,3 +284,95 @@ main { position: relative; display: flow-root; }
 .vt .bc-date { font-variant-numeric: tabular-nums; white-space: nowrap; }
 .vt .bc-gear { display: block; font-weight: 600; }
 @media (max-width: 520px) { .vt .bc { grid-template-columns: 1fr; } }
+
+/* 2026-11-11 상세 페이지 6개 공통 틀(글자 불변, 레이아웃만) — 모든 규칙은 main.case-layout 아래로 한정해 index·major는 바뀌지 않는다.
+   ① 한눈에 보기: 미디어 칸(16:9) + 요약 상자 ② 그림: 고정 비율 틀 + contain ③ 본문 줄 길이 ④ 사례: 접힌 상태에서 결론 한 문장 ⑤ 소제목·절 간격 */
+main.case-layout { --text-w: 40em; --fig-w: 820px; }
+
+/* ③ 본문 줄 길이(그림은 더 넓게) · 문단 리듬 */
+main.case-layout section p, main.case-layout section li { max-width: var(--text-w); }
+main.case-layout section p { line-height: 1.75; }
+
+/* ⑤ 절·소제목 간격 */
+main.case-layout section > h2 { margin: 72px 0 24px; }
+main.case-layout section.overview > h2 { margin-top: 64px; }
+main.case-layout section > h3 { font-size: 20px; line-height: 1.4; margin: 40px 0 14px; padding-left: 12px; border-left: 3px solid var(--accent); }
+main.case-layout section > h2 + h3 { margin-top: 0; }
+main.case-layout section > details.tech h3 { font-size: 18px; margin: 24px 0 10px; }
+
+/* ① 한눈에 보기: 같은 폭·같은 비율의 미디어 칸 + 같은 모양의 요약 상자 */
+main.case-layout .ov-media { margin: 0 0 20px; }
+main.case-layout .ov-media .video { border-radius: 12px; }
+main.case-layout .ov-media > .fig { margin: 0; max-width: none; }
+main.case-layout .ov-media > .fig video { width: 100%; aspect-ratio: 16 / 9; object-fit: contain; border-radius: 12px; border: 0; }
+main.case-layout .ov-media > .fig-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 0; }
+main.case-layout .ov-media > .fig-pair img { width: 100%; aspect-ratio: 8 / 9; }
+main.case-layout .ov-media p.muted, main.case-layout .ov-media figcaption { margin: 8px 0 0; font-size: 14px; line-height: 1.5; }
+main.case-layout ul.ov-summary { max-width: none; margin: 0 0 24px; padding: 18px 24px 18px 44px; background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; }
+main.case-layout ul.ov-summary > li { margin: 8px 0; line-height: 1.65; }
+main.case-layout ul.ov-summary ul { margin: 6px 0; padding-left: 20px; }
+main.case-layout ul.ov-summary ul li { margin: 2px 0; }
+
+/* ② 그림 규격: 단독 그림·두 장 나란히 모두 고정 비율 틀 + contain(잘리지 않음) + 카드 바탕, 왼쪽 정렬 */
+main.case-layout .fig, main.case-layout details.case > .fig { max-width: var(--fig-w); margin: 24px 0; }
+main.case-layout .fig img, main.case-layout .fig img.narrow { width: 100%; max-width: 100%; aspect-ratio: 16 / 10; object-fit: contain; background: var(--card); border: 1px solid var(--line); border-radius: 10px; }
+main.case-layout .fig video { width: 100%; aspect-ratio: 16 / 10; object-fit: contain; border-radius: 10px; }
+main.case-layout .fig figcaption { margin-top: 8px; font-size: 14px; line-height: 1.55; max-width: calc(var(--text-w) * 17 / 14); }
+main.case-layout .fig-pair, main.case-layout details.case > .fig-pair, main.case-layout section > .fig-pair { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 16px; align-items: start; max-width: var(--fig-w); margin: 24px 0; }
+main.case-layout .fig-pair > .fig { margin: 0; }
+main.case-layout .fig-pair > .fig img, main.case-layout .fig-pair > .fig video { aspect-ratio: 4 / 3; }
+main.case-layout .ov-media > .fig-pair { max-width: none; }
+main.case-layout .ov-media > .fig-pair > .fig img { aspect-ratio: 8 / 9; }
+main.case-layout section > .fig + .fig, main.case-layout section > .fig-pair + .fig-pair, main.case-layout section > .fig + .fig-pair, main.case-layout section > .fig-pair + .fig { margin-top: -4px; }
+
+/* ④ 사례: 접힌 상태에서도 번호 + 제목 + 결론 한 문장이 보이게(제목 아래 결론, 오른쪽 꺾쇠는 두 줄 가운데) */
+main.case-layout details.case > summary { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 16px; row-gap: 6px; align-items: center; padding: 14px 4px 16px; }
+main.case-layout details.case > summary > h3 { grid-column: 1; }
+main.case-layout details.case > summary > .case-lead { grid-column: 1; display: block; max-width: var(--text-w); color: var(--muted); font-size: 16px; line-height: 1.65; font-weight: 400; }
+main.case-layout details.case > summary::after { grid-column: 2; grid-row: 1 / span 2; align-self: center; }
+main.case-layout details.case > summary:hover > .case-lead { color: var(--fg); }
+main.case-layout details.case[open] > summary > .case-lead { color: var(--fg); }
+main.case-layout .case > summary > h3::before { top: 24px; }
+main.case-layout details.case[open] > summary { margin-bottom: 12px; }
+main.case-layout section > details.case { margin-top: 0; }
+main.case-layout section > details.case:first-of-type { margin-top: 20px; }
+main.case-layout section > details.case:last-of-type { border-bottom: 1px solid var(--line); }
+
+/* takeaway: 6페이지 같은 모양 */
+main.case-layout .takeaway { max-width: var(--text-w); margin: 24px 0 20px; line-height: 1.7; }
+
+@media (max-width: 600px) {
+  main.case-layout section > h2 { margin-top: 56px; }
+  main.case-layout ul.ov-summary { padding: 14px 16px 14px 34px; }
+  main.case-layout .ov-media > .fig-pair { gap: 8px; }
+  main.case-layout details.case > summary { column-gap: 10px; }
+  main.case-layout .case > summary > h3::before { position: static; }
+}
+
+/* 2026-11-11 사례 본문 단계 블록(B안): 사례를 펼치면 [ 01 ] 번호 + 단계 제목(왼쪽) | 원문 문단·그림(오른쪽).
+   단계 사이는 위 가는 선, 왼쪽 점을 세로선으로 잇는다. 번호는 사례마다 01부터(CSS 카운터). takeaway는 단계 밖 맨 끝. */
+main.case-layout details.case { counter-reset: step; }
+main.case-layout .case-steps { margin: 4px 0 8px; }
+main.case-layout .step { counter-increment: step; position: relative; display: grid; grid-template-columns: 160px minmax(0, 1fr); column-gap: 24px; padding: 18px 0 10px 26px; }
+main.case-layout .step::before { content: ""; position: absolute; left: 0; top: 24px; width: 9px; height: 9px; border-radius: 50%; background: var(--bg); border: 2px solid var(--accent); }
+main.case-layout .step:not(:last-child)::after { content: ""; position: absolute; left: 6px; top: 39px; bottom: -24px; width: 1px; background: var(--line); }
+main.case-layout .step > .step-title { grid-column: 1; margin: 0; padding-top: 10px; border-top: 1px solid var(--line); font-size: 16px; line-height: 1.45; font-weight: 700; color: var(--fg); text-wrap: balance; }
+main.case-layout .step > .step-title::before { content: "[ " counter(step, decimal-leading-zero) " ]"; display: block; margin-bottom: 6px; font-size: 12px; font-weight: 500; letter-spacing: .12em; color: var(--muted); font-variant-numeric: tabular-nums; white-space: pre; }
+main.case-layout .step > .step-body { grid-column: 2; min-width: 0; padding-top: 10px; border-top: 1px solid var(--line); }
+main.case-layout .step-body > :last-child { margin-bottom: 0; }
+main.case-layout .step-body > .fig, main.case-layout .step-body > .fig-pair { margin: 16px 0; }
+main.case-layout .step-body > ul { margin: 0 0 14px; }
+main.case-layout details.case > .takeaway { margin-top: 20px; }
+@media (max-width: 700px) {
+  main.case-layout .step { grid-template-columns: minmax(0, 1fr); padding-left: 22px; }
+  main.case-layout .step > .step-body { grid-column: 1; border-top: 0; padding-top: 8px; }
+}
+
+/* A안 견본(cobot1_A.html 전용 마크업 .step-cards): 가로 단계 카드 — 위 가는 선, [ 01 ] 번호, 굵은 제목, 회색 1~2줄 설명 */
+main.case-layout .step-cards { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 20px; margin: 8px 0 28px; counter-reset: card; }
+main.case-layout .step-card { counter-increment: card; border-top: 1px solid var(--line); padding-top: 14px; }
+main.case-layout .step-card > .step-title { margin: 0 0 8px; font-size: 16px; line-height: 1.4; font-weight: 700; }
+main.case-layout .step-card > .step-title::before { content: "[ " counter(card, decimal-leading-zero) " ]"; display: block; margin-bottom: 10px; font-size: 12px; font-weight: 500; letter-spacing: .12em; color: var(--muted); white-space: pre; }
+main.case-layout .step-card > .step-desc { margin: 0; font-size: 14px; line-height: 1.6; color: var(--muted); }
+@media (max-width: 700px) { main.case-layout .step-cards { grid-auto-flow: row; grid-template-columns: 1fr 1fr; } }
+@media (max-width: 440px) { main.case-layout .step-cards { grid-template-columns: 1fr; } }
