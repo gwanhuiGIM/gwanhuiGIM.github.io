@@ -376,3 +376,17 @@ main.case-layout .step-card > .step-title::before { content: "[ " counter(card, 
 main.case-layout .step-card > .step-desc { margin: 0; font-size: 14px; line-height: 1.6; color: var(--muted); }
 @media (max-width: 700px) { main.case-layout .step-cards { grid-auto-flow: row; grid-template-columns: 1fr 1fr; } }
 @media (max-width: 440px) { main.case-layout .step-cards { grid-template-columns: 1fr; } }
+
+/* 렌더 확인 지적 수정(2026-11-11)
+   ① 1160px 이상: main이 margin: 0 auto(앞쪽 공통 규칙)라 grid 칸을 채우지 않고 내용 폭(fit-content)으로 줄어 가운데 놓였다.
+      접힘/펼침에 따라 내용 폭이 바뀌어 사례를 열고 닫으면 본문 단이 옆으로 움직였다 → 상세 페이지 main만 칸 폭을 채운다.
+   ② 본문 없는 사례(summary 뒤 내용 없음): 꺾쇠·클릭 커서·hover 색을 숨긴다. 번호·제목·결론 문장 모양은 그대로.
+   ③ 단계 제목 줄바꿈: balance가 의미 단위를 끊어 pretty로. */
+@media (min-width: 1160px) {
+  main.case-layout { width: 100%; }
+}
+main.case-layout details.case:not(:has(> summary ~ *)) > summary { cursor: default; }
+main.case-layout details.case:not(:has(> summary ~ *)) > summary::after { display: none; }
+main.case-layout details.case:not(:has(> summary ~ *)) > summary:hover > h3 { color: inherit; }
+main.case-layout details.case:not(:has(> summary ~ *)) > summary:hover > .case-lead { color: var(--muted); }
+main.case-layout .step > .step-title { text-wrap: pretty; }
