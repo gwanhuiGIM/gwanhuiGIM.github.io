@@ -390,3 +390,12 @@ main.case-layout details.case:not(:has(> summary ~ *)) > summary::after { displa
 main.case-layout details.case:not(:has(> summary ~ *)) > summary:hover > h3 { color: inherit; }
 main.case-layout details.case:not(:has(> summary ~ *)) > summary:hover > .case-lead { color: var(--muted); }
 main.case-layout .step > .step-title { text-wrap: pretty; }
+
+/* 단계 선 대비·가로 긴 그림 비율(2026-11-11)
+   ① 단계 세로선·단계 위 구분선: --line에 --muted를 23% 섞어 배경 대비 약 1.6:1(라이트)·1.9:1(다크). 굵기 1px, 점(accent)은 그대로.
+   ② 단계 안 단독 그림 중 원본 비율이 16:10보다 넓은 것(relayout.py가 figure에 class wide): 고정 비율 틀 대신 원래 비율로 단계 본문 폭을 채운다. */
+main.case-layout { --step-line: color-mix(in srgb, var(--line), var(--muted) 23%); }
+main.case-layout .step:not(:last-child)::after { background: var(--step-line); }
+main.case-layout .step > .step-title, main.case-layout .step > .step-body, main.case-layout .step-card { border-top-color: var(--step-line); }
+main.case-layout .step-body > .fig.wide { max-width: none; }
+main.case-layout .step-body > .fig.wide img { aspect-ratio: auto; height: auto; object-fit: initial; }

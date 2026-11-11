@@ -118,7 +118,7 @@
       <h4 class="step-title">손가락 위치와 힘으로 대체 판정</h4>
       <div class="step-body">
         <p>최종 제출본에서 저는 잡힘 신호를 먼저 확인하고, 그 신호 데이터가 들어오지 않으면 손가락 위치와 힘으로 대체 판정하도록 했습니다. 빈손이면 끝까지 닫히고 물체가 있으면 그 전에 멈춘다는 차이를 이용해 빈손 위치 실측값을 기준으로 삼았고, 프로젝트 중반쯤 실기에서 빈손일 때와 물체를 잡았을 때의 실측값으로 이 차이를 확인했습니다.</p>
-        <figure class="fig">
+        <figure class="fig wide">
     <img src="images/cobot1/grip_detection.jpg" alt="그래프: 그리퍼를 닫을 때 손가락 관절각 변화. 빈손은 끝까지 닫히고 물체를 잡으면 그 전에 멈춤" width="1200" height="676" loading="lazy">
     <figcaption class="muted">그리퍼를 닫을 때 손가락 관절각의 변화. 빈손(파란 점선)은 끝까지 닫히고, 물체를 잡으면(주황 실선) 그 전에 멈춥니다.</figcaption>
   </figure>
@@ -128,7 +128,7 @@
       <h4 class="step-title">이동 명령을 한 곳에서 감싸기</h4>
       <div class="step-body">
         <p>최종 제출본에서는 그리퍼 신호가 1초 넘게 끊기면 로봇 정지를 요청하는 감시도 제가 맡았습니다. 이동 명령마다 확인 코드를 넣으면 빠뜨리는 곳이 생기고 신호가 끊긴 직후 다음 동작이 이어질 틈이 남는다고 보아, 로봇 이동 명령을 한 곳에서 감싸 앞뒤로 신호 이상을 확인하고 이상 감지 뒤에는 다음 이동 명령을 막게 했습니다.</p>
-        <figure class="fig">
+        <figure class="fig wide">
     <img src="images/cobot1/gripper-signal-timeline.jpg" alt="도식: 그리퍼 신호 수신이 끊긴 뒤 1.0초가 지나면 감시 타이머가 신호 두절로 판단해 로봇 정지를 요청하는 흐름을 시간 순으로 그린 그림" width="1360" height="570" loading="lazy">
     <figcaption class="muted">최종 제출본에서 그리퍼 신호가 끊긴 뒤 1초가 지나면 로봇 정지를 요청하는 흐름을 시간 순으로 그린 도식입니다.</figcaption>
   </figure>
@@ -138,7 +138,7 @@
       <h4 class="step-title">개발본의 판정 불가 구분</h4>
       <div class="step-body">
         <p>물체를 깊게 물어 잡힘 신호가 없는데도 접촉 흔적이 남은 경우는, 제출 뒤 이어 간 개발본에서 '판정 불가'로 따로 떼어 다시 집지 않고 사람이 확인하도록 했습니다.</p>
-        <figure class="fig">
+        <figure class="fig wide">
     <img src="images/cobot1/probe-grip-versions.jpg" alt="도식: probe_grip v1~v4 비교. 버전마다 힘센서로 컵을 찌르는 축·횟수와 파지 여부, 중심좌표 산출 방식, 상태(v1 미검증·삭제, v4 실기 미검증)를 표로 정리" width="1180" height="600" loading="lazy">
     <figcaption class="muted">예시: 제출본 밖 개인 개발본에서 힘센서 접촉으로 컵 위치를 찾는 방식을 버전별로 비교한 도식</figcaption>
   </figure>
@@ -172,7 +172,7 @@
       <figcaption class="muted">예시: 웹 화면에서 로봇 오류로 동작을 정지했을 때 나오는 화면</figcaption>
     </figure>
   </div>
-        <figure class="fig">
+        <figure class="fig wide">
     <img src="images/cobot1/stage_retry.jpg" alt="단계 단위 복구 그림: 앞 세 단계는 완료, 4단계 나선 추출은 실패·재시도, 5단계는 대기" width="1200" height="406" loading="lazy">
     <figcaption class="muted">4단계(나선 드립)에서 실패한 경우의 복구. 앞 세 단계는 완료로 두고 실패한 단계만 처음부터 다시 실행하며, 다시 시작할지는 작업자가 버튼으로 정합니다.</figcaption>
   </figure>
