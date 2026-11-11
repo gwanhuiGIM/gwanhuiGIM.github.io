@@ -68,7 +68,7 @@
   <details class="case"><summary><h3 id="case-localization">GPS 음영구간의 위치 추정</h3><span class="case-lead">저는 각 센서를 구동해 얻은 바퀴 회전량·IMU·GPS 데이터를 바탕으로 EKF(여러 측정값을 합쳐 위치를 추정하는 필터)를 적용해, GPS가 끊기는 구간에서도 위치 계산을 이어 가도록 센서퓨전을 구성했습니다.</span></summary>
   <div class="case-steps">
     <div class="step">
-      <h4 class="step-title">120m 음영구간과 IMU 오차</h4>
+      <h4 class="step-title">120m 안팎 음영구간과 IMU 오차</h4>
       <div class="step-body">
         <p>예선 코스에는 120m 안팎의 GPS 음영구간(철골 구조 등)이 있어 GPS가 잡히지 않았고, IMU는 갈수록 오차가 쌓였습니다(drift). 차가 자기 위치를 잃으면 경로점을 따라갈 기준도 함께 잃게 됩니다.</p>
       </div>
