@@ -39,9 +39,9 @@
   </div>
   </div>
   <ul class="ov-summary">
-    <li>팀은 주행 중 인지 모듈(카메라·LiDAR로 주변을 알아보는 기능) 일부가 빠져도 측위(차량 위치 추정)와 경로추종을 유지하며 실차 대회를 완주했습니다(팀 회고 기준).</li>
+    <li>팀은 주행 중 인지 모듈(카메라·LiDAR로 주변을 알아보는 기능) 일부가 빠져도 측위와 경로추종을 유지하며 실차 대회를 완주했습니다(팀 회고 기준).</li>
     <li>대회는 예선 10분·본선 15분의 단일 주행으로 GPS 음영구간(위성 위치 신호가 끊기는 구간)·멈춰 있는 장애물·주차 같은 미션을 통과하며 기록을 겨루는 실차 대회입니다.</li>
-    <li>4인 팀의 팀장으로 ERP42 4륜 전기차와 LiDAR(레이저로 주변 거리를 재는 센서)·RTK-GPS(보정 신호로 오차를 줄인 GPS)·IMU(기울기·가속도 센서)를 다뤘습니다.</li>
+    <li>4인 팀의 팀장으로 ERP42 4륜 전기차와 LiDAR·RTK-GPS(보정 신호로 오차를 줄인 GPS)·IMU를 다뤘습니다.</li>
     <li>저는 센서 데이터를 합쳐 위치를 구하는 EKF 측위와 경로점(waypoint)을 따라가는 경로추종, 여러 주행 명령 중 따를 것을 고르는 판단 노드를 맡았습니다.</li>
   </ul>
   <figure class="fig"><img src="images/erp42/erp42_platform.jpg" alt="센서와 알루미늄 프레임을 얹은 ERP42 차량" width="524" height="601" loading="lazy" class="narrow"></figure>
@@ -164,7 +164,7 @@
     <div class="step">
       <h4 class="step-title">전륜 정렬과 rosbag 로깅</h4>
       <div class="step-body">
-        <p>저는 카메라 장치·해상도, IMU 포트, RTK(위치 보정 신호) 접속, 속도·제동 값을 실차에 맞추고, 각 노드를 구동해 ROS 2로 통합했습니다. 직진 명령에도 차가 한쪽으로 휘는 현상도 있었는데, 전륜 정렬이 틀어진 것이어서 직접 조정했습니다. 팀원들과는 튜닝·테스트 주행·rosbag(센서·제어 메시지 기록 도구) 로깅·분석을 반복했습니다.</p>
+        <p>저는 카메라 장치·해상도, IMU 포트, RTK 접속, 속도·제동 값을 실차에 맞추고, 각 노드를 구동해 ROS 2로 통합했습니다. 직진 명령에도 차가 한쪽으로 휘는 현상도 있었는데, 전륜 정렬이 틀어진 것이어서 직접 조정했습니다. 팀원들과는 튜닝·테스트 주행·rosbag 로깅·분석을 반복했습니다.</p>
         <div class="test-shots fig-pair">
     <figure class="fig"><img src="images/erp42/erp42_test_lane_data_collection.jpg" alt="차선 감지 알고리즘 구현용 데이터 수집" width="750" height="1000" loading="lazy"><figcaption class="muted">차선 감지 알고리즘 구현용 데이터 수집</figcaption></figure>
   </div>
