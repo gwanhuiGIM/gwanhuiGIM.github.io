@@ -434,3 +434,16 @@ details.ai-case summary { cursor: pointer; font-weight: 600; }
 .aiflow.merge { padding-left: 24px; }
 .aiflow.merge::before { content: "⤷"; color: var(--muted); margin: 8px 6px 0 -20px; }
 .aiflow li.loopback { border-style: dashed; }
+/* 첫머리 장비·기술 키워드 각주 링크(사용자 11-12): 숫자 → 활용 기록·코드, .team 흐린 숫자 팀 작업. 항목 구분은 .kw 뒤 가운뎃점. 어느 프로젝트인지는 도착한 페이지 목차의 .toc-proj 제목으로 보인다 */
+header ul.hardware-skills .kw { display: inline-block; }
+header ul.hardware-skills .kw:not(:last-child)::after { content: "·"; margin: 0 0.5em 0 0.55em; font-weight: 700; opacity: 0.75; }
+sup.fn { font-size: 0.82em; line-height: 0; margin-left: 2px; white-space: nowrap; }
+sup.fn a { text-decoration: none; font-weight: 700; padding: 0 2px; }
+sup.fn a + a { margin-left: 2px; }
+sup.fn a.team { opacity: 0.55; font-weight: 400; }
+header p.fn-note { margin: 0 0 8px; font-size: 13px; }
+/* 프로젝트 페이지 목차 위 프로젝트 제목: 넓은 화면에서 목차와 함께 따라 내려온다(좁은 화면은 바로 위 머리글과 겹쳐 숨김) */
+nav.toc .toc-proj { display: none; }
+@media (min-width: 1160px) {
+  nav.toc .toc-proj { display: block; margin: 0 0 14px; padding-bottom: 12px; border-bottom: 1px solid var(--line); font-size: 15px; font-weight: 800; line-height: 1.4; letter-spacing: -0.01em; }
+}

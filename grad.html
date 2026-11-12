@@ -16,6 +16,7 @@
 </header>
 
 <nav class="toc" aria-label="목차">
+<p class="toc-proj">열감지 추적 구명튜브 전달장치 및 발사장치</p>
 <b>목차</b>
 <ul>
 <li><a href="#overview">한눈에 보기</a></li>
@@ -70,15 +71,15 @@
       <h4 class="step-title">방향타·BLDC·방수 모터 제외</h4>
       <div class="step-body">
         <p>팀은 구동 방식을 토의하며, 프로펠러 하나에 방향타(키)를 다는 방식은 착수 충격에 키가 부서질 위험이 있어 제외했습니다. 고성능 모터(BLDC 모터)는 아두이노로 제어하기 어렵고 구조용 보트에 그 성능까지는 필요 없었으며, 방수 모터는 추진 성능이 떨어져 함께 제외했습니다.</p>
-        <figure class="fig">
+        <figure class="fig" id="fig-boat-model">
       <img src="images/grad/boat-module-model.jpg" alt="보트 3D 모델 분해도: 노즈콘 및 IR카메라, 센서 케이스, 배터리 및 모터 지지대, 모터, 케이스 상단·하단, 구명튜브 고정장치" width="810" height="720" loading="lazy">
       <figcaption class="muted">예시: 팀의 보트 3D 모델 분해도(배터리 및 모터 지지대, 모터, 센서 케이스, 노즈콘, 케이스 상단·하단)</figcaption>
     </figure>
-        <div class="fig-pair">
+        <div class="fig-pair" id="fig-boat-parts">
       <figure class="fig"><img src="images/grad/motor-bracket-model.jpg" alt="배터리와 모터를 고정하는 지지대 3D 모델" width="566" height="440" loading="lazy"><figcaption class="muted">예시: 팀의 배터리 및 모터 지지대 3D 모델</figcaption></figure>
       <figure class="fig"><img src="images/grad/sensor-housing-model.jpg" alt="센서 케이스 3D 모델" width="326" height="385" loading="lazy"><figcaption class="muted">예시: 팀의 센서 케이스 3D 모델</figcaption></figure>
     </div>
-        <div class="fig-pair">
+        <div class="fig-pair" id="fig-boat-assembled">
       <figure class="fig"><img src="images/grad/boat-assembled-model.jpg" alt="조립된 보트 선체 3D 모델" width="1264" height="534" loading="lazy"><figcaption class="muted">예시: 팀의 보트 3D 모델(조립)</figcaption></figure>
       <figure class="fig"><img src="images/grad/boat-with-tube-model.jpg" alt="구명튜브가 펼쳐진 상태의 보트 3D 모델" width="1227" height="682" loading="lazy"><figcaption class="muted">예시: 팀의 구명튜브를 단 보트 3D 모델</figcaption></figure>
     </div>
@@ -88,7 +89,7 @@
       <h4 class="step-title">열별 최댓값과 PWM 출력 배분</h4>
       <div class="step-body">
         <p>팀은 열화상 센서의 8×8 온도값을 열별 최댓값 8개로 줄여 가장 뜨거운 열의 위치로 좌우 방향을 정했습니다. 저는 이 방향에 맞춰 좌우 모터 출력을 다르게 주는 제어를 맡아, PWM으로 좌우 출력 배분을 달리해 크게 꺾기, 완만히 꺾기, 직진을 구분했습니다.</p>
-        <figure class="fig wide">
+        <figure class="fig wide" id="fig-ir">
       <img src="images/grad/ir_8x8_to_1x8.png" alt="8×8 열화상 격자에서 열마다 가장 높은 온도 칸을 골라 1×8 한 줄로 줄이는 도식" width="1200" height="384" loading="lazy">
       <figcaption class="muted">8×8 온도값에서 열마다 가장 높은 온도 칸(노란 칸)만 남겨 좌우 한 줄(1×8)로 줄이는 과정 (숫자는 칸 번호)</figcaption>
     </figure>
@@ -115,14 +116,14 @@
       <h4 class="step-title">시리얼 통신으로 먼저 확인</h4>
       <div class="step-body">
         <p>팀은 코드를 합치다 막히자 문제를 한꺼번에 해결하려 하지 않고 단계를 나누어 점검했고, 모터 제어를 맡은 저는 기존 조종·모터 코드부터 다시 점검했습니다. 팀은 센서 신호를 시리얼 통신(보드의 값을 PC 화면으로 받아 보는 통신)으로 먼저 확인한 뒤 모터 코드와 합쳤습니다.</p>
-        <figure class="fig"><img class="narrow" src="images/grad/rc-receiver-output.jpg" alt="무선 조종기 사진 위에 레버·버튼별 수신기 출력값을 적은 도식" width="493" height="367" loading="lazy"><figcaption class="muted">예시: 팀이 정리한 무선 조종기(RC) 레버·버튼별 수신기 출력값</figcaption></figure>
+        <figure class="fig" id="fig-rc"><img class="narrow" src="images/grad/rc-receiver-output.jpg" alt="무선 조종기 사진 위에 레버·버튼별 수신기 출력값을 적은 도식" width="493" height="367" loading="lazy"><figcaption class="muted">예시: 팀이 정리한 무선 조종기(RC) 레버·버튼별 수신기 출력값</figcaption></figure>
       </div>
     </div>
     <div class="step">
       <h4 class="step-title">보드 한 장의 배선</h4>
       <div class="step-body">
         <p>저는 아두이노와 모터를 잇는 회로 구성을 맡아 진행했습니다. 아두이노 보드 한 장에 열화상 센서, 조종 신호 수신기, 모터 드라이버, 7.4V 배터리를 잇고, 선체 내부 공간과 부품 간섭을 고려해 보드와 모터 드라이버가 좁은 선체 안에 들어가도록 배선을 꾸렸습니다.</p>
-        <figure class="fig">
+        <figure class="fig" id="fig-circuit">
       <img src="images/grad/circuit_fritzing.jpg" alt="구명튜브를 기어모터로 펼치던 방식의 회로 구성도: 아두이노 보드에 열화상 센서, RC 수신기, 좌우 DC 모터와 모터 드라이버, 구명튜브용 기어모터와 드라이버, 7.4V 배터리가 연결됨" width="1200" height="752" loading="lazy">
       <figcaption class="muted">회로 구성도(구명튜브를 기어모터로 펼치던 방식 기준): 아두이노 보드 하나에 열화상 센서, 조종 신호 수신기, 좌우 모터와 모터 드라이버, 구명튜브용 모터, 배터리가 연결됩니다</figcaption>
     </figure>
