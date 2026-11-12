@@ -462,5 +462,10 @@ header .skills-panel ul.hardware-skills li > span.muted:first-child { position: 
 /* 키워드 패널 큰 묶음(사용자 11-12 q1o): 기구 설계·로봇 플랫폼·센서·임베디드·시뮬레이션·소프트웨어. 묶음 제목 + 왼쪽 강조선, 행이 하나인 묶음(.single)은 소분류 이름 없이 키워드만 */
 header .skills-panel .skill-group { margin: 14px 0 6px; padding-left: 14px; border-left: 3px solid #a5b4fc; }
 header .skills-panel .skill-group:first-of-type { margin-top: 12px; }
-header .skills-panel p.sg-title { margin: 0 0 2px; font-size: 15px; font-weight: 800; letter-spacing: -0.01em; color: #fff; }
+header .skills-panel .sg-title { margin: 0 0 2px; cursor: pointer; font-size: 15px; font-weight: 800; letter-spacing: -0.01em; color: #fff; }
 header .skills-panel ul.hardware-skills.single li { padding-left: 0; }
+/* 키워드 묶음 토글(사용자 11-12 "토글로"): 기본 닫힘, 제목 눌러 펼침 */
+header .skills-panel details.skill-group:not([open]) .sg-title { margin-bottom: 0; }
+header .skills-panel details.skill-group[open] .sg-title { margin-bottom: 4px; }
+header .skills-panel .sg-title::marker { color: #a5b4fc; }
+header .skills-panel .sg-title:hover { color: #c7d2fe; }
