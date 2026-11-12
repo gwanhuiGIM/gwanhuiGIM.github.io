@@ -406,3 +406,31 @@ main.case-layout .step:not(:last-child)::after { background: var(--step-line); }
 main.case-layout .step > .step-title, main.case-layout .step > .step-body, main.case-layout .step-card { border-top-color: var(--step-line); }
 main.case-layout .step-body > .fig.wide { max-width: none; }
 main.case-layout .step-body > .fig.wide img { aspect-ratio: auto; height: auto; object-fit: initial; }
+
+/* ai.html — AI 에이전트 활용 페이지 (2026-11-12) */
+main.ai-page section { margin: 0 0 44px; }
+main.ai-page .ai-stats { padding-left: 20px; }
+main.ai-page .ai-stats li { margin: 8px 0; }
+.aiflow-wrap { margin: 16px 0 18px; }
+.aiflow { list-style: none; display: flex; flex-wrap: wrap; align-items: stretch; gap: 6px 0; padding: 0; margin: 0 0 8px; counter-reset: none; }
+.aiflow li { display: flex; align-items: center; padding: 8px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--card); font-size: 14px; line-height: 1.4; }
+.aiflow li:not(:last-child)::after { content: "→"; margin: 0 -26px 0 12px; width: 14px; color: var(--muted); }
+.aiflow li:not(:last-child) { margin-right: 26px; }
+.aiflow li.human { background: var(--accent-soft); border-color: var(--accent); font-weight: 600; }
+.aiflow.branch { padding-left: 24px; }
+.aiflow.branch::before { content: "↳"; color: var(--muted); margin: 8px 6px 0 -20px; }
+.ai-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; margin: 16px 0; }
+.ai-card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; font-size: 15px; line-height: 1.65; }
+.ai-card h3 { margin: 0 0 6px; font-size: 18px; }
+.ai-card .aiflow { flex-direction: column; align-items: flex-start; }
+.ai-card .aiflow li:not(:last-child) { margin-right: 0; }
+.ai-card .aiflow li:not(:last-child)::after { content: none; }
+.ai-card .aiflow li + li::before { content: "↓"; position: absolute; transform: translate(10px, -22px); color: var(--muted); }
+.ai-card .aiflow li { position: relative; margin-top: 14px; }
+.ai-card .aiflow li:first-child { margin-top: 0; }
+details.ai-case { border: 1px solid var(--line); border-radius: 12px; padding: 10px 16px; margin: 10px 0; background: var(--card); }
+details.ai-case summary { cursor: pointer; font-weight: 600; }
+@media (max-width: 560px) { .ai-cards { grid-template-columns: 1fr; } .aiflow li { font-size: 13px; } }
+.aiflow.merge { padding-left: 24px; }
+.aiflow.merge::before { content: "⤷"; color: var(--muted); margin: 8px 6px 0 -20px; }
+.aiflow li.loopback { border-style: dashed; }
