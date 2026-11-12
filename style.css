@@ -377,6 +377,13 @@ main.case-layout .step-card > .step-desc { margin: 0; font-size: 14px; line-heig
 @media (max-width: 700px) { main.case-layout .step-cards { grid-auto-flow: row; grid-template-columns: 1fr 1fr; } }
 @media (max-width: 440px) { main.case-layout .step-cards { grid-template-columns: 1fr; } }
 
+/* 타임라인 진행 중 항목 접기(2026-11-11, 사용자 "진행중인 항목은 접는게") */
+.vt li.now details.now-more > summary { cursor: pointer; color: var(--accent); font-size: 15px; font-weight: 600; margin-top: 4px; }
+.vt li.now details.now-more[open] > summary { margin-bottom: 4px; }
+.vt li.now .now-item { padding: 12px 0; }
+.vt li.now .now-item + .now-item { border-top: 1px solid var(--line); }
+.vt li.now .now-item p { margin: 6px 0 0; }
+
 /* 렌더 확인 지적 수정(2026-11-11)
    ① 1160px 이상: main이 margin: 0 auto(앞쪽 공통 규칙)라 grid 칸을 채우지 않고 내용 폭(fit-content)으로 줄어 가운데 놓였다.
       접힘/펼침에 따라 내용 폭이 바뀌어 사례를 열고 닫으면 본문 단이 옆으로 움직였다 → 상세 페이지 main만 칸 폭을 채운다.
