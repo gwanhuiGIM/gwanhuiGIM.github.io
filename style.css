@@ -447,3 +447,20 @@ nav.toc .toc-proj { display: none; }
 @media (min-width: 1160px) {
   nav.toc .toc-proj { display: block; margin: 0 0 14px; padding-bottom: 12px; border-bottom: 1px solid var(--line); font-size: 15px; font-weight: 800; line-height: 1.4; letter-spacing: -0.01em; }
 }
+/* 첫머리 장비·기술 키워드 패널(사용자 11-12): 위 소개문(.lead)과 구분되게 반투명 상자 + 왼쪽 분류 열 + 행 구분선. 글자는 그대로, 배치만 바꿈 */
+header .skills-panel { max-width: 62em; margin: 32px 0 28px; padding: 16px 22px 10px; border: 1px solid rgba(255,255,255,.2); border-radius: 16px; background: rgba(15,23,42,.28); box-shadow: inset 0 1px 0 rgba(255,255,255,.08); }
+header .skills-panel p.fn-note { margin: 0 0 6px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,.18); }
+header .skills-panel ul.hardware-skills { list-style: none; margin: 0; padding: 0; font-size: 15px; color: #fff; }
+header .skills-panel ul.hardware-skills li { position: relative; margin: 0; padding: 8px 0 8px 10.5em; border-top: 1px solid rgba(255,255,255,.1); }
+header .skills-panel ul.hardware-skills li:first-child { border-top: 0; }
+header .skills-panel ul.hardware-skills li > span.muted:first-child { position: absolute; left: 0; top: 10px; width: 9.8em; font-size: 13px; font-weight: 700; letter-spacing: .02em; color: #c7d2fe; }
+@media (max-width: 640px) {
+  header .skills-panel { padding: 12px 14px 6px; }
+  header .skills-panel ul.hardware-skills li { padding-left: 0; }
+  header .skills-panel ul.hardware-skills li > span.muted:first-child { position: static; display: block; width: auto; margin-bottom: 2px; }
+}
+/* 키워드 패널 큰 묶음(사용자 11-12 q1o): 기구 설계·로봇 플랫폼·센서·임베디드·시뮬레이션·소프트웨어. 묶음 제목 + 왼쪽 강조선, 행이 하나인 묶음(.single)은 소분류 이름 없이 키워드만 */
+header .skills-panel .skill-group { margin: 14px 0 6px; padding-left: 14px; border-left: 3px solid #a5b4fc; }
+header .skills-panel .skill-group:first-of-type { margin-top: 12px; }
+header .skills-panel p.sg-title { margin: 0 0 2px; font-size: 15px; font-weight: 800; letter-spacing: -0.01em; color: #fff; }
+header .skills-panel ul.hardware-skills.single li { padding-left: 0; }
