@@ -30,7 +30,7 @@
 </nav>
 
 <main class="case-layout">
-<p class="updated">Last modified <time datetime="2026-11-12">2026-11-12</time></p>
+<p class="updated">Last modified <time datetime="2026-11-13">2026-11-13</time></p>
 <section class="overview">
   <h2 id="overview">한눈에 보기</h2>
   <div class="ov-media">
@@ -51,7 +51,7 @@
   <p>사람이 말로 지시하면 카메라로 물체를 찾아 집을 자세를 고르고, 로봇 팔이 정해진 순서대로 집어 옮기는 것을 목표로 만든 협동로봇 시스템입니다. 지시를 해석하는 판단 계층과 로봇을 움직이고 멈추는 작업 제어 계층으로 나뉩니다. 팀은 음성이나 글로 받은 지시를 "어떤 물체를 어디로"로 정리하는 판단 계층과 조작 화면을 만들었습니다.</p>
 
   <h3>물체를 찾아 집을 자세 고르기</h3>
-  <p>YOLO-seg(물체 영역을 픽셀 단위로 나누는 인식 모델)로 카메라 깊이 영상에서 물체 영역만 잘라 만든 3차원 점군 데이터를 바탕으로, GraspGenX(물체를 집을 수 있는 자세 후보를 만드는 Nvidia의 파지 파운데이션 모델)를 활용해 파지 자세를 계산하고 최적의 자세를 선정합니다.</p>
+  <p>YOLO-seg(물체 영역을 픽셀 단위로 나누는 인식 모델)로 카메라 깊이 영상에서 물체 영역만 잘라 3차원 점군 데이터를 만들고, 이 점군에 GraspGenX(물체를 집을 수 있는 자세 후보를 만드는 Nvidia의 파지 파운데이션 모델)를 적용해 파지 자세를 계산한 뒤 가장 좋은 자세를 고릅니다.</p>
   <figure class="fig">
     <img src="images/cobot2/grasp_candidates_graspgenx.jpg" alt="3차원 점구름 위 한 물체 둘레에 그려진 여러 파지 후보 선과 그리퍼 모형" width="877" height="607" loading="lazy" class="narrow">
     <figcaption class="muted">GraspGenX가 표면 Pointcloud 위 한 물체 둘레에 만든 파지 후보(선)와, 후보 하나에 맞춰 놓은 그리퍼 모형</figcaption>
@@ -239,7 +239,7 @@
     <div class="step">
       <h4 class="step-title">접근 거리와 여유값 조정</h4>
       <div class="step-body">
-        <p>집기 전 물러서는 접근 거리를 0.10m에서 0.15m로 늘리고 앞 사례에서 바로잡은 닫힘 폭 여유값 부호와 함께 동작 관련 설정값을 실기에 맞춰 다듬었습니다. 후보 조건·접근 거리·여유값을 이렇게 함께 맞춰 가며 그리퍼가 바닥을 긁으며 들어가지 않고 적당한 거리에서 3차원 형상 기반으로 물체 중심을 파지하는 동작을 확인했습니다(파지 성공률 같은 수치는 재지 않았습니다).</p>
+        <p>집기 전 물러서는 접근 거리를 0.10m에서 0.15m로 늘리고 앞 사례에서 바로잡은 닫힘 폭 여유값 부호와 함께 동작 설정값을 실기에 맞춰 다듬었습니다. 후보 조건·접근 거리·여유값을 이렇게 함께 맞춰 가며 그리퍼가 바닥을 긁으며 들어가지 않고 적당한 거리에서 3차원 형상 기반으로 물체 중심을 파지하는 동작을 확인했습니다(파지 성공률 같은 수치는 재지 않았습니다).</p>
       </div>
     </div>
   </div>
@@ -435,7 +435,7 @@
       <tr><td>"이거 집어줘" (손가락으로 가리키며)</td><td>카메라 사진에서 가리킨 물체를 골라 화면 좌표로 넘깁니다.¹</td></tr>
       <tr><td>"사과 집어줘" (목적지 없이)</td><td>들어 올린 뒤 물체를 든 채 기다립니다. "테이블에 놔"로 놓을 곳을 정하거나 "그냥 거기 놔"로 그 자리에 놓으면 끝납니다.</td></tr>
       <tr><td>"보이는 과일 다 담아줘"</td><td>미션 관리 기능이 하나씩 순서대로 처리하고 도중에 지시를 바꿀 수 있습니다.</td></tr>
-      <tr><td>"멈춰"</td><td>언어 모델을 거치지 않고 일시정지하고 "계속해"로 이어 갑니다.</td></tr>
+      <tr><td>"멈춰"</td><td>언어 모델을 거치지 않고 일시정지했다가 "계속해"로 이어 갑니다.</td></tr>
       <tr><td>"컵은 앞으로 담지 마"</td><td>규칙으로 기억해 이후 "다 담아줘"에서 컵을 뺍니다.</td></tr>
     </tbody>
   </table>
@@ -443,7 +443,7 @@
   <p class="muted">¹ <code>vla_command.launch.py</code>로 띄울 때(<code>pixel_policy</code> 기본값 <code>select</code>) 동작합니다. 노드를 단독 실행하면 기본값이 <code>warn</code>이라 픽셀 좌표를 무시합니다.</p>
 
   <h3>시스템 구성</h3>
-  <p><b>인식</b> — 작업대 옆에 고정한 RealSense D435i 카메라 1대(eye-to-hand, 로봇 팔이 아니라 바깥에 고정한 카메라)와 YOLO-seg(영상에서 물체 영역을 픽셀 단위로 나누는 모델)로 대상을 찾습니다. 카메라 좌표는 eye-to-hand 캘리브레이션 결과로 로봇 기준 좌표로 바꿉니다.</p>
+  <p><b>인식</b> — 작업대 옆에 고정한 RealSense D435i 카메라 1대(eye-to-hand, 로봇 팔이 아니라 바깥에 고정한 카메라)와 YOLO-seg(영상에서 물체 영역을 픽셀 단위로 나누는 모델)로 대상을 찾습니다. 카메라 좌표는 eye-to-hand 캘리브레이션 결과를 써서 로봇 기준 좌표로 바꿉니다.</p>
   <p><code>graspgenx_perception</code>은 GraspGenX 컨테이너 안의 GraspGen(물체 형상을 보고 집을 수 있는 자세 후보를 만드는 모델)에서 파지 후보 64개를 받아 <strong>점수·도달 반경·접근축 조건으로</strong> 걸러 하나를 고릅니다. 기본 설정에서는 그리퍼 폭을 상수로 쓰고 물체별 폭까지 받으려면 별도 서비스 경로를 씁니다.</p>
   <h3>참고 문서</h3>
   <p class="muted">팀 발표 자료(세부 기술): <a href="https://github.com/gwanhuiGIM/Rokey_cobot2/releases/download/presentation/cobot2_presentation.pdf">발표 자료(PDF, 72쪽)</a></p>
