@@ -474,3 +474,12 @@ header p.scroll-hint { margin: 4px 0 0; font-size: 15px; color: rgba(255,255,255
 header p.scroll-hint > span { display: inline-block; margin-right: 6px; color: #a5b4fc; font-weight: 700; animation: hint-bob 1.6s ease-in-out infinite; }
 @keyframes hint-bob { 50% { transform: translateY(3px); } }
 @media (prefers-reduced-motion: reduce) { header p.scroll-hint > span { animation: none; } }
+/* 홈 버튼이 스크롤을 따라온다(사용자 11-14): 넓은 화면은 좌측 목차 맨 위 링크(.toc-home, 목차의 sticky를 그대로 탄다), 좁은 화면은 맨 위 nav.back을 상단에 붙인다 */
+nav.toc .toc-home { display: none; }
+@media (min-width: 1160px) {
+  nav.toc .toc-home { display: block; margin: 0 0 12px; font-size: 14px; font-weight: 600; color: var(--accent); }
+}
+@media (max-width: 1159.98px) {
+  nav.back { position: sticky; top: 0; z-index: 20; max-width: none; padding: 10px 16px; background: var(--bg); border-bottom: 1px solid var(--line); font-size: 15px; }
+  html { scroll-padding-top: 52px; }
+}
