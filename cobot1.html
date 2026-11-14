@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>협동로봇 핸드드립 커피 자동화 — 김관희</title>
-<meta name="description" content="카메라 없이 힘·접점 신호만으로 핸드드립 공정을 자동화한 5인 팀 프로젝트에서, 그리퍼 예외 처리와 공정 복귀, 작업 환경 도면을 맡은 과정을 정리했습니다.">
+<meta name="description" content="카메라 없이 힘·접점 신호만으로 핸드드립 공정을 자동화한 5인 팀 프로젝트에서, 그리퍼 파지 판정·예외 처리(공동작업)와 작업 환경 도면을 맡은 과정을 정리했습니다.">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -21,8 +21,10 @@
 <b>목차</b>
 <ul>
 <li><a href="#overview">한눈에 보기</a></li>
-<li><a href="#built">무엇을 만들었나</a></li>
-<li><a href="#process">진행 과정</a></li>
+<li><a href="#built">프로젝트 구현</a></li>
+<li class="toc-key"><a href="#process">진행 과정</a></li>
+<li class="toc-sub"><a href="#phase-why">동기</a></li>
+<li class="toc-sub"><a href="#phase-build">구현 과정</a></li>
 <li><a href="#team">팀에서 일한 방식</a></li>
 <li><a href="#learned">배운 점</a></li>
 <li><a href="#tech">기술 상세</a></li>
@@ -39,19 +41,36 @@
   <p class="muted">1분 시연 영상</p>
   </div>
   <ul class="ov-summary">
-    <li>팀은 카메라 없이 협동로봇의 힘 센서와 그리퍼의 접점 신호(물체를 잡았는지 알려 주는 신호)만으로 원두 계량부터 서빙까지 5단계 핸드드립 공정을 자동화해 최종 시연까지 이었습니다.</li>
-    <li>5인 팀에서 그리퍼 파지 판정과 예외 처리를 맡았고(실제 작업은 경계가 겹치는 공동작업), 작업 환경 도면을 그렸습니다.</li>
+    <li><b>내 담당</b> — 그리퍼 파지 판정·예외 처리(공동작업): <a href="#case-grip">파지 판정·이상 감시</a> · <a href="#case-retry">실패 단계 재실행</a> / <a href="#fig-layout">작업 환경 도면</a></li>
+    <li><b>팀 결과</b> — 원두 계량 → 분쇄 → 필터 투입 → 나선 드립 → 서빙, 5단계 공정 자동화 · 최종 시연</li>
+    <li><b>조건</b> — 카메라 없음 · 교시 좌표 · 협동로봇 힘 센서와 그리퍼 접점 신호(물체를 잡았는지 알려 주는 신호)</li>
+    <li><b>주제</b> — 트레이 밸런싱 검증(7월 20~22일) → 핸드드립 커피 확정(7월 23일)</li>
   </ul>
 </section>
 
 <section>
-  <h2 id="built">무엇을 만들었나</h2>
-  <h3>카메라 없이 이어지는 5단계 공정</h3>
+  <h2 id="built">프로젝트 구현</h2>
+  <p>팀은 카메라 없이 교시 좌표(로봇에 미리 가르쳐 저장한 위치)와 힘·접점 신호만으로 원두 계량, 분쇄, 필터 투입, 나선 드립, 서빙을 하나의 공정으로 이었습니다.</p>
+
+  <details class="impl">
+  <summary><h3>카메라 없이 이어지는 5단계 공정 (교시 좌표, 힘·접점 신호)</h3></summary>
+  <div class="pipe" role="img" aria-label="도식: 컨트롤박스 버튼으로 원두를 고르면 원두 계량, 분쇄, 필터 투입, 나선 드립, 서빙 순서로 이어지는 공정">
+    <div class="pipe-col"><div class="pipe-box">원두 선택<small>컨트롤박스 버튼</small></div></div>
+    <div class="pipe-arrow" aria-hidden="true">→</div>
+    <div class="pipe-col"><div class="pipe-box">원두 계량<small>스푼으로 떠 그라인더에</small></div></div>
+    <div class="pipe-arrow" aria-hidden="true">→</div>
+    <div class="pipe-col"><div class="pipe-box">분쇄<small>손잡이를 잡아 돌림</small></div></div>
+    <div class="pipe-arrow" aria-hidden="true">→</div>
+    <div class="pipe-col"><div class="pipe-box">필터 투입</div></div>
+    <div class="pipe-arrow" aria-hidden="true">→</div>
+    <div class="pipe-col"><div class="pipe-box">나선 드립<small>같은 나선 궤적</small></div></div>
+    <div class="pipe-arrow" aria-hidden="true">→</div>
+    <div class="pipe-col"><div class="pipe-box">서빙</div></div>
+  </div>
   <figure class="fig">
     <img src="images/cobot1/system_photo.jpg" alt="실제 작업대: 왼쪽 협동로봇과 티치 펜던트, 가운데 초록 레고 판 위 블록 받침에 올린 수동 그라인더와 그 아래 유리병, 오른쪽 서버 위 드리퍼와 흰 드립 주전자. 로봇 그리퍼는 원두를 담은 스푼을 그라인더 위로 들고 있음" width="1200" height="854" loading="lazy">
     <figcaption class="muted">실제로 구성한 작업대. 로봇이 원두를 담은 스푼을 그라인더에 붓는 단계입니다. 카메라가 없어 팀은 탁자에 레고 블록으로 물체 위치를 표시·고정해 처음 위치를 잡고, 블록으로 환경을 세팅해 위치가 틀어지는 것을 막으려 했습니다.</figcaption>
   </figure>
-  <p>팀은 카메라 없이 교시 좌표(로봇에 미리 가르쳐 저장한 위치)와 힘·접점 신호만으로 원두 계량, 분쇄, 필터 투입, 나선 드립, 서빙을 하나의 공정으로 이었습니다.</p>
   <p>작업자가 컨트롤박스(로봇 제어기)의 버튼으로 원두를 고르면 로봇이 스푼으로 원두를 떠 그라인더(원두 분쇄기)에 넣고, 그라인더 손잡이를 잡아 돌려 원두를 갑니다. 진행 상황은 팀이 만든 웹 화면에 단계별로 표시됩니다.</p>
   <div class="fig-pair">
     <figure class="fig">
@@ -63,18 +82,54 @@
       <figcaption class="muted">버튼으로 원두를 고르는 첫 화면과 오른쪽의 공정 진행 표시(팀 화면)</figcaption>
     </figure>
   </div>
+  <figure class="fig wide">
+    <img src="images/cobot1/slide_process_structure.jpg" alt="발표 슬라이드: 작업대 사진 위에 Bean_drop(스푼 파지·그라인더 호퍼 결합), Grinder(손잡이 파지·순응 제어·회전 및 분쇄), Dripper(병 파지·주기 운동·외력 기반 두드림 감지), Hand Drip(주둥이 위치 고정·내향 스파이럴 붓기), Pour(필터홀더·물컵 배치·주둥이 고정 붓기) 단계 설명을 붙인 프로젝트 구조" width="1200" height="675" loading="lazy">
+    <figcaption class="muted">팀 발표 자료 p10 — 실제 작업대 사진 위에 발표 자료의 단계 구분(Bean_drop·Grinder·Dripper·Hand Drip·Pour)으로 동작을 정리한 프로젝트 구조. 위 도식과 단계 이름·나눔이 다릅니다.</figcaption>
+  </figure>
+  </details>
+
+  <details class="impl">
+  <summary><h3>나선 드립 — 나선 이동과 주전자 기울임을 한 동작으로 (경유점 경로)</h3></summary>
   <p>팀은 나선 이동과 주전자 기울임을 하나의 연속 동작으로 묶어 로봇이 같은 나선 궤적으로 물을 붓게 했습니다.</p>
+  <figure class="fig wide">
+    <img src="images/cobot1/slide_spiral_pour.jpg" alt="발표 슬라이드: 왼쪽은 어둡게 찍힌 사진으로 레고 블록 받침 위 그라인더와 앞쪽의 금속 드리퍼, 가운데 상자는 컨트롤러가 한 순간에 하나의 궤적만 따라가 기울임을 따로 명령하면 나선 경로를 벗어난다는 문제, 오른쪽 상자는 위치는 삼각함수로·자세는 회전행렬로 넣고 웨이포인트 100개를 호 길이 등간격으로 배치한 해결 방안" width="1200" height="675" loading="lazy">
+    <figcaption class="muted">팀 발표 자료 p18 — 컨트롤러는 한 순간에 하나의 궤적만 따라가 기울임을 따로 명령하면 나선 경로를 벗어나므로, 팀은 위치와 자세를 함께 담은 경유점 100개로 한 경로를 만들었습니다.</figcaption>
+  </figure>
+  </details>
+
+  <details class="impl">
+  <summary><h3>그리퍼 파지 판정과 예외 처리 (잡힘 신호·손가락 위치·힘)</h3></summary>
+  <p>저는 그리퍼 파지 판정·예외 처리(공동작업)를 맡았습니다.</p>
+  <div class="pipe" role="img" aria-label="도식: 그리퍼 신호(잡힘 신호, 손가락 위치, 힘)로 잡힘 여부를 판정하고, 신호가 1초 넘게 끊기면 로봇 정지를 요청하며, 파지에 실패하면 실패한 단계만 작업자 버튼으로 다시 실행하는 흐름">
+    <div class="pipe-col"><span class="pipe-tag">입력</span><div class="pipe-box">그리퍼 신호<small>잡힘 신호 · 손가락 위치 · 힘</small></div></div>
+    <div class="pipe-arrow" aria-hidden="true">→</div>
+    <div class="pipe-col"><span class="pipe-tag">판정</span><div class="pipe-box">잡힘 신호 우선<small>신호가 없으면 손가락 위치·힘으로 대체 판정</small></div></div>
+    <div class="pipe-arrow" aria-hidden="true">→</div>
+    <div class="pipe-col"><span class="pipe-tag">대응</span><div class="pipe-box warn">신호 1초 넘게 끊김<small>로봇 정지 요청</small></div><div class="pipe-box gate">파지 실패<small>실패한 단계만 다시 실행 · 작업자가 버튼으로 결정</small></div></div>
+  </div>
+  <figure class="fig wide">
+    <img src="images/cobot1/slide_grip_fallback.jpg" alt="발표 슬라이드: 표준 RG2로도 3단 폴백으로 파지를 확인 — 01 최우선 하드웨어 grip 비트, 02 차선 모터 effort, 03 최후 position 갭(빈손 0.7587 rad, 40N 파지 0.7141 rad). 아래에 놓친 채 다음 동작을 하지 않는다는 문구" width="1200" height="675" loading="lazy">
+    <figcaption class="muted">팀 발표 자료 p32 — 하드웨어 잡힘 신호를 먼저 보고, 없으면 모터 힘과 닫힌 위치 차이로 파지를 확인하는 순서</figcaption>
+  </figure>
+  <p>판정 신호를 찾은 과정과 이상 감시, 실패 단계 재실행은 아래 진행 과정의 <a href="#case-grip">02</a>·<a href="#case-retry">03</a> 사례에서 다룹니다.</p>
+  </details>
 </section>
 
 <section>
-  <h2 id="process">진행 과정</h2>
-  <details class="case">
-  <summary><h3 id="case-topic">트레이 밸런싱에서 핸드드립으로 주제 변경</h3><span class="case-lead">팀은 쟁반 위 컵의 무게중심을 유지하는 트레이 밸런싱을 사흘간 검증한 뒤, 주어진 장비와 기간으로는 힘 변화를 해석하고 나눠 측정하기 어렵다고 판단해 핸드드립 커피 자동화로 주제를 바꿨습니다.</span></summary>
+  <h2 id="process">진행 과정 <span class="h2-hint">각 번호를 펼치면 사진과 함께 자세한 설명이 나옵니다</span></h2>
+  <h3 class="phase-title" id="phase-why">동기</h3>
+  <ul class="phase-facts">
+    <li><b>과제</b><span>ROS 2를 활용한 로봇 자동화 공정 구현</span></li>
+    <li><b>장비</b><span>Doosan M0609 협동로봇 · OnRobot RG2 그리퍼 · 카메라 없음</span></li>
+    <li><b>주제 기준</b><span>카메라 없이 구현 가능 · 실생활 적용 · 다양한 단계</span></li>
+  </ul>
+
+  <details class="case"><summary><h3 id="case-topic">트레이 밸런싱에서 핸드드립으로 주제 변경</h3><span class="badge-team">팀 작업 참여</span><span class="case-facts"><span class="cf"><b>처음 주제</b><span>트레이 밸런싱(쟁반 위 컵의 무게중심 유지) — 7월 20~22일 검증, 저도 검증 코드 작성</span></span><span class="cf"><b>막힌 점</b><span>기울일 때 힘 계산값 변화 해석 · 그리퍼·쟁반·물체 무게 분리 측정</span></span><span class="cf"><b>결정</b><span>7월 23일 핸드드립 커피 자동화로 최종 주제 확정(팀)</span></span></span></summary>
   <div class="case-steps">
     <div class="step">
       <h4 class="step-title">트레이 밸런싱 사흘간 검증</h4>
       <div class="step-body">
-        <p>과정에서 주어진 과제는 ROS 2를 활용한 로봇 자동화 공정 구현이었습니다. 팀은 먼저 트레이 밸런싱을 6일차부터 사흘간 검증했고, 저도 가능성을 검증하는 코드를 직접 짰습니다.</p>
+        <p>과정에서 주어진 과제는 ROS 2를 활용한 로봇 자동화 공정 구현이었습니다. 팀은 먼저 트레이 밸런싱을 7월 20일부터 사흘간 검증했고, 저도 가능성을 검증하는 코드를 직접 짰습니다.</p>
       </div>
     </div>
     <div class="step">
@@ -86,26 +141,26 @@
     <div class="step">
       <h4 class="step-title">카메라 없이 구현할 공정 후보 검토</h4>
       <div class="step-body">
-        <p>이에 팀은 카메라 없이 구현할 수 있는 공정 후보들을 검토한 끝에, 실생활에 적용할 수 있고 다양한 단계를 다룰 수 있는 핸드드립 커피로 9일차에 팀의 최종 주제를 확정했습니다.</p>
+        <p>팀은 카메라 없이 구현할 수 있는 공정 후보들을 검토한 끝에, 실생활에 적용할 수 있고 다양한 단계를 다룰 수 있는 핸드드립 커피로 7월 23일에 최종 주제를 확정했습니다.</p>
       </div>
     </div>
     <div class="step">
       <h4 class="step-title">평가 기준 표현과 멘토 질문</h4>
       <div class="step-body">
-        <p>급하게 정한 주제인 만큼 팀은 바꾼 주제를 평가 기준에 맞게 어떻게 표현하고 협동로봇을 어떻게 프로그래밍할지 멘토에게 물었고, 이후 접촉 감지와 물체 잡힘 판단, 나선 동작 구현으로 작업을 빠르게 이어 갔습니다.</p>
+        <p>급하게 정한 주제라 팀은 바꾼 주제를 평가 기준에 맞게 어떻게 표현하고 협동로봇을 어떻게 프로그래밍할지 멘토에게 물었고, 이후 접촉 감지와 물체 잡힘 판단, 나선 동작 구현으로 빠르게 이어 갔습니다.</p>
       </div>
     </div>
   </div>
   <p class="takeaway">이 경험에서 구현 목표가 주어진 하드웨어와 일정 안에서 실제로 측정하고 제어할 수 있는 범위인지, <strong>작은 검증 코드로 먼저 짚어보고 방향을 결정해야 한다</strong>는 일하는 방식을 배웠습니다.</p>
   </details>
 
-  <details class="case">
-  <summary><h3 id="case-grip">물체 잡힘 판정과 이상 감시</h3><span class="case-lead">저는 그리퍼의 잡힘 신호가 들어오지 않을 때 손가락 위치와 힘으로 잡힘 여부를 대신 판정하게 하고, 그리퍼 신호가 끊기면 로봇 정지를 요청하는 이상 감시를 만들었습니다.</span></summary>
+  <h3 class="phase-title" id="phase-build">구현 과정</h3>
+  <details class="case"><summary><h3 id="case-grip">물체 잡힘 판정과 이상 감시</h3><span class="case-facts"><span class="cf"><b>계기</b><span>깊게 물면 잡힘 신호가 뜨지 않음 → 실패로 읽으면 물체를 문 채 다시 집으러 감</span></span><span class="cf"><b>방법</b><span>잡힘 신호 우선 · 신호가 없으면 손가락 위치·힘으로 대체 판정 · 신호가 1초 넘게 끊기면 로봇 정지 요청</span></span><span class="cf"><b>결과</b><span>실제 로봇 시험에서 잡힘 판정 유지</span></span></span></summary>
   <div class="case-steps">
     <div class="step">
       <h4 class="step-title">잡힘 신호가 뜨지 않는 경우</h4>
       <div class="step-body">
-        <p>카메라가 없어 물체를 잡았는지는 그리퍼 신호로만 판단해야 했습니다. 특히 물체를 손가락 안쪽까지 깊게 물면 잡힘 신호가 뜨지 않았고, 이를 단순 실패로 읽으면 로봇이 물체를 문 채 다시 집으러 갈 위험이 있었습니다.</p>
+        <p>카메라가 없어 물체를 잡았는지는 그리퍼 신호로만 판단해야 했습니다. 물체를 손가락 안쪽까지 깊게 물면 잡힘 신호가 뜨지 않았고, 이를 실패로 읽으면 로봇이 물체를 문 채 다시 집으러 갈 위험이 있었습니다.</p>
       </div>
     </div>
     <div class="step">
@@ -117,7 +172,7 @@
     <div class="step">
       <h4 class="step-title">손가락 위치와 힘으로 대체 판정</h4>
       <div class="step-body">
-        <p>최종 제출본에서 저는 잡힘 신호를 먼저 확인하고, 그 신호 데이터가 들어오지 않으면 손가락 위치와 힘으로 대체 판정하도록 했습니다. 빈손이면 끝까지 닫히고 물체가 있으면 그 전에 멈춘다는 차이를 이용해 빈손 위치 실측값을 기준으로 삼았고, 프로젝트 중반쯤 실기에서 빈손일 때와 물체를 잡았을 때의 실측값으로 이 차이를 확인했습니다.</p>
+        <p>최종 제출본에서는 잡힘 신호를 먼저 확인하고, 신호 데이터가 들어오지 않으면 손가락 위치와 힘으로 대체 판정하게 했습니다. 빈손이면 끝까지 닫히고 물체가 있으면 그 전에 멈추는 차이를 실기 실측값으로 확인해, 빈손 위치를 기준으로 삼았습니다.</p>
         <figure class="fig wide">
     <img src="images/cobot1/grip_detection.jpg" alt="그래프: 그리퍼를 닫을 때 손가락 관절각 변화. 빈손은 끝까지 닫히고 물체를 잡으면 그 전에 멈춤" width="1200" height="676" loading="lazy">
     <figcaption class="muted">그리퍼를 닫을 때 손가락 관절각의 변화. 빈손(파란 점선)은 끝까지 닫히고, 물체를 잡으면(주황 실선) 그 전에 멈춥니다.</figcaption>
@@ -127,7 +182,7 @@
     <div class="step">
       <h4 class="step-title">이동 명령을 한 곳에서 감싸기</h4>
       <div class="step-body">
-        <p>최종 제출본에서는 그리퍼 신호가 1초 넘게 끊기면 로봇 정지를 요청하는 감시도 제가 맡았습니다. 이동 명령마다 확인 코드를 넣으면 빠뜨리는 곳이 생기고 신호가 끊긴 직후 다음 동작이 이어질 틈이 남는다고 보아, 로봇 이동 명령을 한 곳에서 감싸 앞뒤로 신호 이상을 확인하고 이상 감지 뒤에는 다음 이동 명령을 막게 했습니다.</p>
+        <p>최종 제출본에서는 그리퍼 신호가 1초 넘게 끊기면 로봇 정지를 요청하는 감시도 제가 맡았습니다. 이동 명령마다 확인 코드를 넣으면 빠뜨리는 곳이 생기므로, 이동 명령을 한 곳에서 감싸 앞뒤로 신호 이상을 확인하고 이상 감지 뒤에는 다음 이동을 막았습니다.</p>
         <figure class="fig wide">
     <img src="images/cobot1/gripper-signal-timeline.jpg" alt="도식: 그리퍼 신호 수신이 끊긴 뒤 1.0초가 지나면 감시 타이머가 신호 두절로 판단해 로봇 정지를 요청하는 흐름을 시간 순으로 그린 그림" width="1360" height="570" loading="lazy">
     <figcaption class="muted">최종 제출본에서 그리퍼 신호가 끊긴 뒤 1초가 지나면 로봇 정지를 요청하는 흐름을 시간 순으로 그린 도식입니다.</figcaption>
@@ -135,29 +190,33 @@
       </div>
     </div>
     <div class="step">
+      <h4 class="step-title">실제 로봇 시험</h4>
+      <div class="step-body">
+        <p>실제 로봇 시험에서는 잡힘 판정이 기존처럼 동작했습니다.</p>
+      </div>
+    </div>
+    <div class="step">
       <h4 class="step-title">개발본의 판정 불가 구분</h4>
       <div class="step-body">
-        <p>물체를 깊게 물어 잡힘 신호가 없는데도 접촉 흔적이 남은 경우는, 제출 뒤 이어 간 개발본에서 '판정 불가'로 따로 떼어 다시 집지 않고 사람이 확인하도록 했습니다.</p>
-        <p>이렇게 판정을 나눠 물체를 잡았는데도 실패로 잘못 읽는 경우(오탐)를 줄이려 했고, 조치가 필요할 때는 사람의 확인을 기다리게 했습니다. 실제 로봇 시험에서는 잡힘 판정이 기존처럼 동작했고 손가락 안쪽까지 깊게 물려 멈추는 경우를 따로 구분할 수 있게 되었으나, 이 실기 확인이 최종 제출본과 제출 뒤 이어 간 개발본 중 어느 쪽이었는지는 기록에 남아 있지 않습니다.</p>
+        <p>깊게 물어 잡힘 신호가 없는데도 접촉 흔적이 남은 경우는, 제출 뒤 이어 간 개발본에서 '판정 불가'로 따로 떼어 다시 집지 않고 사람이 확인하게 했습니다. 잡았는데도 실패로 잘못 읽는 경우(오탐)를 줄이고, 조치가 필요할 때는 사람의 확인을 기다리게 하려는 것이었습니다.</p>
       </div>
     </div>
   </div>
   <p class="takeaway">이 과정을 거치며 센서 신호로 상태를 판정할 때는 <strong>신호가 애매해지는 경우부터 정리하고, 로봇을 움직이기 전에 확인할 기준부터 세워야 한다</strong>는 점을 배웠습니다.</p>
   </details>
 
-  <details class="case">
-  <summary><h3 id="case-retry">실패 단계 재실행과 복구 분리</h3><span class="case-lead">저는 공정이 실패하면 전체를 처음부터 다시 시작하지 않고 실패한 단계만 다시 실행하도록 구조를 바꿨고, 현장 정리는 사람이 맡고 재시도 여부는 작업자가 컨트롤박스 버튼으로 정하게 나눴습니다.</span></summary>
+  <details class="case"><summary><h3 id="case-retry">실패 단계 재실행과 복구 분리</h3><span class="case-facts"><span class="cf"><b>계기</b><span>실패하면 공정 전체를 다시 시작 → 15초 가까운 나선 드립과 끝난 앞 단계까지 버림</span></span><span class="cf"><b>바꾼 구조</b><span>실패한 단계만 처음부터 다시 실행</span></span><span class="cf"><b>나눈 역할</b><span>현장 정리는 사람 · 재시도 여부는 작업자가 컨트롤박스 버튼으로</span></span></span></summary>
   <div class="case-steps">
     <div class="step">
       <h4 class="step-title">초기에 공정 전체를 다시 시작</h4>
       <div class="step-body">
-        <p>공정이 실패하면 초기에는 프로그램을 끝내거나 공정 전체를 다시 시작했습니다. 하지만 그러면 나선 드립처럼 15초 가까이 걸리는 단계와 이미 끝난 앞 단계를 모두 버려야 했고, 그렇다고 로봇이 무엇을 들고 있는지 모르는 상태에서 자동으로 복구하면 더 위험하다고 판단했습니다.</p>
+        <p>초기에는 공정이 실패하면 프로그램을 끝내거나 전체를 다시 시작해, 15초 가까이 걸리는 나선 드립과 이미 끝난 앞 단계까지 버려야 했습니다. 그렇다고 로봇이 무엇을 들고 있는지 모르는 상태에서 자동으로 복구하면 더 위험하다고 판단했습니다.</p>
       </div>
     </div>
     <div class="step">
       <h4 class="step-title">사람 책임으로 명시한 현장 정리</h4>
       <div class="step-body">
-        <p>그래서 저는 현장 정리(그리퍼를 껐다가 다시 켜는 것처럼 사람이 직접 해야 하는 조치)를 사람 책임으로 명시해 재시도와 중단 판단을 자동화하지 않고 작업자가 컨트롤박스 버튼으로 결정하게 했으며, 실패한 단계만 처음부터 다시 실행하도록 구조를 바꿨습니다.</p>
+        <p>그래서 저는 현장 정리(그리퍼를 껐다가 다시 켜는 것처럼 사람이 직접 해야 하는 조치)를 사람 책임으로 명시하고, 재시도와 중단은 작업자가 컨트롤박스 버튼으로 결정하게 했습니다.</p>
         <div class="fig-pair">
     <figure class="fig">
       <img src="images/cobot1/grip-failure-screen.jpg" alt="웹 화면: 그리퍼 파지 실패 안내와 기억된 작업 단계(그라인더), DI 13 관리자 호출·DI 14 단계 재시작 버튼 안내, 오른쪽에 공정 단계 진행 표시" width="1440" height="1509" loading="lazy">
@@ -168,6 +227,12 @@
       <figcaption class="muted">예시: 웹 화면에서 로봇 오류로 동작을 정지했을 때 나오는 화면</figcaption>
     </figure>
   </div>
+      </div>
+    </div>
+    <div class="step">
+      <h4 class="step-title">실패한 단계만 다시 실행</h4>
+      <div class="step-body">
+        <p>공정 전체 대신 실패한 단계만 처음부터 다시 실행하도록 구조를 바꿨습니다.</p>
         <figure class="fig wide">
     <img src="images/cobot1/stage_retry.jpg" alt="단계 단위 복구 그림: 앞 세 단계는 완료, 4단계 나선 추출은 실패·재시도, 5단계는 대기" width="1200" height="406" loading="lazy">
     <figcaption class="muted">4단계(나선 드립)에서 실패한 경우의 복구. 앞 세 단계는 완료로 두고 실패한 단계만 처음부터 다시 실행하며, 다시 시작할지는 작업자가 버튼으로 정합니다.</figcaption>
@@ -184,12 +249,6 @@
   </div>
       </div>
     </div>
-    <div class="step">
-      <h4 class="step-title">재시도 상한·확인 기록 없음</h4>
-      <div class="step-body">
-        <p>다만 최종 제출본의 이 복구에는 재시도 횟수 상한이 없고, 복구 경로가 실제로 동작하는지 자동 테스트나 실기로 확인한 기록은 남아 있지 않습니다.</p>
-      </div>
-    </div>
   </div>
   <p class="takeaway">이 경험으로 <strong>시스템이 자동으로 처리할 범위와 사람이 판단할 지점을 나누는 설계</strong>를 익혔습니다.</p>
   </details>
@@ -198,15 +257,19 @@
 
 <section>
   <h2 id="team">팀에서 일한 방식</h2>
-  <p>카메라가 없어 거의 모든 좌표를 로봇을 직접 움직여 펜던트로 하나하나 교시해야 했습니다. 팀은 공정별 상대 이동과 좌표 변환으로 일일이 교시하는 부담을 줄이려 했고, 공정 단계별로 교시를 반복하며 각자 익숙해진 파트를 골라 맡았습니다.</p>
-  <p>매일 함께 작업하며 진행 상황과 코드를 공유했고, 멘토에게 기능 구현과 예외 처리 피드백을 받았습니다.</p>
-  <p>로봇을 실제로 돌리기 위한 준비는 팀이 함께 정했습니다.</p>
-  <ul>
-    <li>장비·네트워크 설정</li>
-    <li>재교시 기준</li>
-    <li>실행 전 점검</li>
+  <ul class="phase-facts">
+    <li><b>팀 구성</b><span>5인 팀 · 공정 단계별 분업 · 교시를 반복하며 각자 익숙해진 파트를 골라 맡음</span></li>
+    <li><b>소통</b><span>매일 함께 작업하며 진행 상황·코드 공유 · 멘토에게 기능 구현·예외 처리 피드백</span></li>
+    <li><b>도구</b><span>Slack · Notion · GitHub</span></li>
+    <li><b>교시</b><span>카메라가 없어 거의 모든 좌표를 펜던트로 직접 교시 → 공정별 상대 이동과 좌표 변환으로 부담을 줄이려 함(팀)</span></li>
+    <li><b>실기 준비</b><span>팀이 함께 정함 — 장비·네트워크 설정 · 재교시 기준 · 실행 전 점검</span></li>
+    <li><b>그라인더</b><span>단기간 고정 구조물 설치 어려움 → 멘토와 상의 → 분쇄 중 사람이 그라인더를 잡고, 로봇이 손잡이를 잡는 조건을 엄밀하게 정해 공정 설계</span></li>
   </ul>
-  <p>그라인더를 고정할 구조물을 짧은 기간에 설치하기는 어려워, 팀은 사람이 공정에 들어가도 되는지 멘토에게 물었고 사람이 손으로 잡아도 평가에서 좋지 않게 보지는 않을 것이라는 이야기를 나눴습니다. 그래서 분쇄하는 동안 사람이 그라인더를 잡고, 로봇 그리퍼가 손잡이를 잡는 조건을 엄밀하게 정해 공정을 설계하고 구현했습니다.</p>
+  <p><b>본인 담당:</b></p>
+  <ul class="role-list">
+    <li>그리퍼 파지 판정·예외 처리(공동작업)</li>
+    <li>작업 환경 도면(SOLIDWORKS 3D 모델 바탕)</li>
+  </ul>
   <p>짧은 개발 기간과 잦은 변동으로 작업 환경 도면을 미리 정하고 시작하지는 못했습니다. 그래도 위치가 틀어질 때를 대비해, 저는 로봇 작업 영역과 공정 위치, 그리퍼 벌림 폭 등 위치와 치수를 규격화하는 작업 환경 도면을 공정 구성을 마친 뒤 프로젝트 기간 안에 한 장으로 정리했습니다.</p>
   <p>코드가 어떤 환경에서 동작하는지 이해하도록 돕는 문서이며, 도면 치수가 코드의 교시 좌표와 그대로 맞지는 않습니다.</p>
   <figure class="fig" id="fig-layout">
@@ -226,12 +289,18 @@
 
 <section>
   <h2 id="learned">배운 점</h2>
-  <p>저는 오픈소스 드라이버 코드를 읽어 판정에 쓸 신호를 찾고, 빈손일 때와 물체를 잡았을 때의 실측값으로 실물에서 동작 기준을 확인하며 소프트웨어를 실제 기기에 맞춰 구현하는 법을 배웠습니다.</p>
+  <ul class="phase-facts">
+    <li><b>기준</b><span>구현 목표가 주어진 장비와 일정 안에서 측정·제어할 수 있는 범위인지, 작은 검증 코드로 먼저 짚어 보고 방향을 정한다</span></li>
+    <li><b>깨달음</b><span>센서 신호로 상태를 판정할 때는 신호가 애매해지는 경우부터 정리하고, 로봇을 움직이기 전에 확인할 기준부터 세워야 한다</span></li>
+    <li><b>실물</b><span>빈손일 때와 물체를 잡았을 때의 실측값처럼 실물에서 확인한 값으로 동작 기준을 세운다</span></li>
+    <li><b>아쉬움</b><span>작업 환경 도면을 사후에 정리하며, 처음부터 도면을 정하고 시작했다면 좋았겠다</span></li>
+  </ul>
 </section>
 
 <section>
   <h2 id="tech">기술 상세</h2>
   <p class="muted">팀 발표 자료(세부 기술): <a href="https://github.com/gwanhuiGIM/Rokey_cobot1/releases/download/presentation/cobot1_presentation.pdf">발표 자료(PDF, 46쪽)</a></p>
+  <p class="muted pdf-index">발표 자료 목차·키워드: <a href="https://github.com/gwanhuiGIM/Rokey_cobot1/releases/download/presentation/cobot1_presentation.pdf#page=10">프로젝트 구조 p10</a> · <a href="https://github.com/gwanhuiGIM/Rokey_cobot1/releases/download/presentation/cobot1_presentation.pdf#page=12">팀 구성·역할 p12</a> · <a href="https://github.com/gwanhuiGIM/Rokey_cobot1/releases/download/presentation/cobot1_presentation.pdf#page=13">수행 일정 p13</a> · <a href="https://github.com/gwanhuiGIM/Rokey_cobot1/releases/download/presentation/cobot1_presentation.pdf#page=18">나선 드립 p18–24</a> · <a href="https://github.com/gwanhuiGIM/Rokey_cobot1/releases/download/presentation/cobot1_presentation.pdf#page=26">사용자 화면 p26–29</a> · <a href="https://github.com/gwanhuiGIM/Rokey_cobot1/releases/download/presentation/cobot1_presentation.pdf#page=30">관리자 화면 p30</a> · <a href="https://github.com/gwanhuiGIM/Rokey_cobot1/releases/download/presentation/cobot1_presentation.pdf#page=32">그리퍼 파지 판정 p32–34</a> · <a href="https://github.com/gwanhuiGIM/Rokey_cobot1/releases/download/presentation/cobot1_presentation.pdf#page=36">그리퍼 신호 예외 처리 p36–42</a> · <a href="https://github.com/gwanhuiGIM/Rokey_cobot1/releases/download/presentation/cobot1_presentation.pdf#page=45">Flow Chart p45</a> · <a href="https://github.com/gwanhuiGIM/Rokey_cobot1/releases/download/presentation/cobot1_presentation.pdf#page=46">노드 구성 p46</a></p>
 </section>
 
 <section>
