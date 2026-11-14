@@ -59,7 +59,43 @@
   <p>물에 던지면 열원을 찾아 익수자에게 다가가는 구명보트와, 그 보트를 물 위로 날려 보내는 발사장치입니다. 보트 안의 아두이노 보드 한 장이 열화상 센서, 조종 신호 수신기, 좌우 모터를 모두 다룹니다.</p>
 
   <details class="impl">
-  <summary><h3>열원 쪽으로 스스로 방향 틀기 (AMG8833 열화상 센서 · 좌우 DC 모터 PWM)</h3></summary>
+  <summary><h3>선체와 발사장치 설계 (3D 모델링 · 부품 도면) <span class="badge-team">팀 담당</span></h3></summary>
+  <p>팀은 보트 선체와 발사장치를 3D로 설계했습니다. 선체 형상은 팀이 함께 설계했고, 선체 항력 해석과 발사장치는 팀원이 주도했습니다.</p>
+  <ul class="phase-facts">
+    <li><b>설계 목표</b><span>착수 충격에 덜 부서짐 · 물과 공기 저항이 작음 · 물에서 안정적으로 뜸</span></li>
+    <li><b>선체 모듈</b><span>노즈콘 · 센서 케이스 · 배터리 및 모터 지지대 · 모터 · 케이스 상단·하단 · 구명튜브 고정장치</span></li>
+    <li><b>해석(팀원)</b><span>선체 항력(물의 저항) 해석</span></li>
+    <li><b>발사장치(팀원)</b><span>기존 컴파운드 석궁 3D 모델 참조 · 스프링 탄성 발사 구조 · 보트와의 간섭을 3D로 확인</span></li>
+    <li><b>도면</b><span>발표 자료의 발사장치 부품 도면 — 부품별 치수 · 재질 · 가공 방법</span></li>
+  </ul>
+  <div class="fig-pair">
+    <figure class="fig"><img src="images/grad/boat-module-model.jpg" alt="보트 3D 모델 분해도: 노즈콘 및 IR카메라, 센서 케이스, 배터리 및 모터 지지대, 모터, 케이스 상단·하단, 구명튜브 고정장치" width="810" height="720" loading="lazy"><figcaption class="muted">예시: 팀의 보트 3D 모델 분해도</figcaption></figure>
+    <figure class="fig"><img src="images/grad/boat-assembled-model.jpg" alt="조립된 보트 선체 3D 모델" width="1264" height="534" loading="lazy"><figcaption class="muted">예시: 팀의 보트 3D 모델(조립)</figcaption></figure>
+  </div>
+  <figure class="fig wide">
+    <img src="images/grad/slide_launcher_drawing.jpg" alt="발표 슬라이드의 발사장치 도면: 스프링이 달린 발사장치 평면도와 단면 A-A, 트리거 요소·장전부·부싱 등 부품별 치수도, 부싱·장전부·내외부 바디·트리거 요소·어셈블리의 재질과 가공 방법을 적은 부품표" width="1200" height="846" loading="lazy">
+    <figcaption class="muted">발표 자료(심화종합설계) p30의 발사장치 부품 도면(부품별 치수와 재질 · 가공 방법)</figcaption>
+  </figure>
+  </details>
+
+  <details class="impl">
+  <summary><h3>아두이노 한 장의 회로 구성 (Arduino Uno · L298N 모터 드라이버 · 7.4V 배터리) <span class="badge-team">본인 주 담당</span></h3></summary>
+  <p>저는 아두이노 보드 한 장에 열화상 센서, 조종 신호 수신기, 모터 드라이버, 7.4V 배터리를 잇는 회로 구성을 맡았습니다. 3D 모델에서 모터·센서 홀더 배치와 부품 간섭을 확인해, 보드와 모터 드라이버가 좁은 선체 안에 들어가도록 배선을 꾸렸습니다.</p>
+  <ul class="phase-facts">
+    <li><b>입력</b><span>열화상 센서(AMG8833, I2C) · 조종 신호 수신기(RC 3채널)</span></li>
+    <li><b>출력</b><span>L298N 모터 드라이버 → 좌우 DC 모터 2개</span></li>
+    <li><b>출력(튜브)</b><span>별도 모터 드라이버(회로도의 L9110H) → 구명튜브용 기어모터(기어모터로 펼치던 방식)</span></li>
+    <li><b>전원</b><span>7.4V 리튬폴리머 배터리 · 두 번째 학기에 팀이 On/Off 스위치와 배터리 보온 구조 추가</span></li>
+  </ul>
+  <figure class="fig">
+    <img src="images/grad/circuit_fritzing.jpg" alt="구명튜브를 기어모터로 펼치던 방식의 회로 구성도: 아두이노 보드에 열화상 센서, RC 수신기, 좌우 DC 모터와 모터 드라이버, 구명튜브용 기어모터와 드라이버, 7.4V 배터리가 연결됨" width="1200" height="752" loading="lazy">
+    <figcaption class="muted">회로 구성도(구명튜브를 기어모터로 펼치던 방식 기준)</figcaption>
+  </figure>
+  <p class="muted">진행 과정에서 보기 → <a href="#case-merge">02 부품별 코드 점검과 회로의 단일 보드 통합</a> · <a href="#fig-circuit">회로 구성도</a> · <a href="#case-improve">03 시제품 한계 분석과 2차 개선</a></p>
+  </details>
+
+  <details class="impl">
+  <summary><h3>열원 쪽으로 스스로 방향 틀기 (AMG8833 열화상 센서 · 좌우 DC 모터 PWM) <span class="badge-team">구현 참여</span></h3></summary>
   <p>팀은 열화상 센서(8×8 격자로 온도를 재는 센서)가 읽은 값에서 가장 뜨거운 쪽이 왼쪽인지 오른쪽인지 찾도록 처리했습니다. 저는 그 방향에 맞춰 좌우 모터 출력을 다르게 주는 제어를 맡았습니다.</p>
   <div class="pipe" role="img" aria-label="도식: 열화상 센서의 8×8 온도값을 열별 최댓값 1×8로 줄이고, 가장 뜨거운 열의 위치로 좌우 방향을 정한 뒤, 좌우 모터 PWM 출력 배분으로 방향을 트는 흐름">
     <div class="pipe-col"><span class="pipe-tag">입력</span><div class="pipe-box">열화상 센서<small>8×8 온도값</small></div></div>
@@ -74,11 +110,11 @@
     <img src="images/grad/slide_steering_case.jpg" alt="발표 슬라이드: 좌우 1×8 온도값 한 줄 예시 아래에 칸 위치 CASE 0~7이 급격한 우회전, 완만한 우회전, 직진, 완만한 좌회전, 급격한 좌회전으로 나뉜 설계 표와 설명 글" width="1200" height="800" loading="lazy">
     <figcaption class="muted">팀 발표 자료(심화종합설계) p15 — 1×8 온도값의 칸 위치(CASE)별로 크게 꺾기·완만히 꺾기·직진을 정한 설계 표</figcaption>
   </figure>
-  <p>열별 최댓값으로 줄이는 과정과 출력 배분은 아래 진행 과정의 <a href="#case-drive">구동 방식 결정</a> 사례에서 다룹니다.</p>
+  <p class="muted">진행 과정에서 보기 → <a href="#case-drive">01 구동 방식 결정과 좌우 모터 차동 제어</a> · <a href="#fig-ir">8×8 → 1×8 도식</a></p>
   </details>
 
   <details class="impl">
-  <summary><h3>조종기로 직접 몰기 (RC 송수신기)</h3></summary>
+  <summary><h3>조종기로 직접 몰기 (RC 송수신기) <span class="badge-team">본인 주 담당</span></h3></summary>
   <p>저는 무선 조종기(RC)의 신호로 좌우 모터를 움직여, 사람이 보트를 직접 몰 수 있는 수동 조종 부분을 맡았습니다. 팀이 함께 통합한 코드 기준으로는 조종 신호가 들어오면 수동 조종, 신호가 없으면 열원 자동 추적으로 나뉩니다.</p>
   <div class="pipe" role="img" aria-label="도식(팀 통합 코드 기준): 조종 신호 수신기의 신호가 있으면 수동 조종, 없으면 열원 자동 추적으로 나뉘고, 두 경우 모두 좌우 모터를 움직이는 흐름">
     <div class="pipe-col"><span class="pipe-tag">입력</span><div class="pipe-box">조종 신호 수신기<small>무선 조종기(RC)</small></div></div>
@@ -87,11 +123,11 @@
     <div class="pipe-arrow" aria-hidden="true">→</div>
     <div class="pipe-col"><span class="pipe-tag">구동</span><div class="pipe-box">좌우 DC 모터<small>모터 드라이버</small></div></div>
   </div>
-  <p>레버·버튼별 수신기 출력값은 <a href="#fig-rc">팀이 정리한 표</a>에서 볼 수 있습니다.</p>
+  <p class="muted">진행 과정에서 보기 → <a href="#case-drive">01 구동 방식 결정과 좌우 모터 차동 제어</a> · <a href="#case-merge">02 부품별 코드 점검과 회로의 단일 보드 통합</a> · <a href="#fig-rc">수신기 출력값 표(팀)</a></p>
   </details>
 
   <details class="impl">
-  <summary><h3>발사장치로 물에 던져 넣기 (스프링·방아쇠 발사장치)</h3></summary>
+  <summary><h3>발사장치로 물에 던져 넣기 (스프링·방아쇠 발사장치) <span class="badge-team">팀 담당</span></h3></summary>
   <p>팀은 사람이 들고 방아쇠로 쏘는 발사장치를 만들어, 보트를 익수자 근처 물 위로 날려 보내도록 했습니다. 팀이 정리한 작동 순서는 아래와 같습니다.</p>
   <div class="pipe" role="img" aria-label="도식: 팀이 정리한 작동 순서 — 발사장치로 발사, 착수, 익수자 쪽 자동 이동, 거리가 멀면 조종기로 수동 주행, 구조 종료나 돌발 상황 시 정지">
     <div class="pipe-col"><span class="pipe-tag">발사</span><div class="pipe-box">발사장치<small>발사체 장착 후 발사</small></div></div>
@@ -102,12 +138,12 @@
     <div class="pipe-arrow" aria-hidden="true">→</div>
     <div class="pipe-col"><span class="pipe-tag">정지</span><div class="pipe-box warn">정지<small>작동 순서상 정지 · 구조 종료 · 돌발 상황</small></div></div>
   </div>
-  <p>구동 방식 결정, 회로의 단일 보드 통합, 두 번째 학기의 개선은 아래 진행 과정 사례에서 다룹니다.</p>
+  <p class="muted">진행 과정에서 보기 → <a href="#case-improve">03 시제품 한계 분석과 2차 개선</a></p>
   </details>
 </section>
 
 <section>
-  <h2 id="process">진행 과정 <span class="h2-hint">각 번호를 펼치면 사진과 함께 자세한 설명이 나옵니다</span></h2>
+  <h2 id="process">진행 과정 <span class="h2-hint">각 번호를 펼치면 사진과 함께 자세한 설명이 나옵니다. 진한 글씨는 제 담당 및 주요 과정입니다.</span></h2>
   <h3 class="phase-title" id="phase-why">동기</h3>
   <ul class="phase-facts">
     <li><b>문제</b><span>상용 수난 구조장비 — 비싸고 조작 숙련 필요 → 비전문가가 바로 쓰기 어려움</span></li>
