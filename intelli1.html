@@ -12,6 +12,7 @@
 <header>
   <p class="muted">그 외 프로젝트 · 두산로보틱스 ROKEY 부트캠프 2차 · 26.07.01~26.07.14 · 5인 팀 · 팀장</p>
   <h1>제조업 공장 산업안전 AMR 순찰로봇 및 관제 시스템</h1>
+  <p class="muted">부트캠프 과제 · SLAM(위치추정 및 공간지도생성) 기반 자율주행 로봇 시스템 구현</p>
   <p class="tags">TurtleBot4 AMR 2대 · 천장 웹캠 2대 · Nav2 · ROS 2</p>
 </header>
 
@@ -54,7 +55,30 @@
   <p>천장 카메라와 이동로봇 두 대를 통신으로 묶어, 위험 상황이 생기면 로봇을 보내고 평소에는 순찰하게 하는 공장 안전 시스템입니다.</p>
 
   <details class="impl">
-  <summary><h3>위험 상황 접수와 가장 가까운 로봇 출동 (관제 FSM · Nav2)</h3></summary>
+  <summary><h3>현장 장비와 PC 구성 (TurtleBot4 AMR · 2D 라이다 · OAK-D · 천장 웹캠) <span class="badge-team">팀 담당</span></h3></summary>
+  <div class="pipe" role="img" aria-label="도식: 천장 웹캠 2대의 영상이 비전·관제 PC(감지, 관제 FSM, 관제 웹)로 들어가고, Wi-Fi로 AMR PC(로봇별 위치 추정·Nav2)와 라즈베리파이·2D 라이다·OAK-D 카메라를 탑재한 TurtleBot4 AMR 2대가 이어지는 하드웨어 구성">
+    <div class="pipe-col"><span class="pipe-tag">센서</span><div class="pipe-box">천장 웹캠 2대<small>작업 공간의 사람 감지</small></div></div>
+    <div class="pipe-arrow" aria-hidden="true">→</div>
+    <div class="pipe-col"><span class="pipe-tag">연산</span><div class="pipe-box">비전·관제 PC<small>감지 · 관제 FSM · 관제 웹</small></div><div class="pipe-box">AMR PC<small>로봇별 위치 추정 · Nav2</small></div></div>
+    <div class="pipe-arrow" aria-hidden="true">→</div>
+    <div class="pipe-col"><span class="pipe-tag">구동</span><div class="pipe-box">TurtleBot4 AMR 2대<small>라즈베리파이 · 2D 라이다 · OAK-D 카메라 · Wi-Fi 연결</small></div></div>
+  </div>
+  <p>TurtleBot4 AMR 2대는 라즈베리파이·2D 라이다·OAK-D 카메라를 탑재한 채 순찰과 출동을 맡고, 천장 웹캠 2대는 작업 공간의 사람을 지켜봅니다. 라이다는 위치 추정과 장애물 지도에, OAK-D 카메라는 소화기 표식 점검과 안전모 학습 데이터 수집에 쓰였습니다.</p>
+  <p>팀은 감지·관제를 돌리는 PC와 로봇별 위치 추정·주행을 돌리는 AMR PC로 역할을 나눴고, 로봇 2대와 관제 PC를 같은 통신 설정으로 맞춘 뒤 로봇의 배터리 상태 신호가 보이는지로 연결을 확인했습니다.</p>
+  </details>
+
+  <details class="impl">
+  <summary><h3>안전모 착용 판정 (YOLO 자세 추정 · 안전모 검출) <span class="badge-team">팀 담당</span></h3></summary>
+  <p>팀은 안전모가 화면에 보이는지만이 아니라, 사람의 머리 위치(자세 추정으로 찾은 기준점)와 안전모 영역이 실제로 겹치는지를 따져 착용 여부를 판정했습니다.</p>
+  </details>
+
+  <details class="impl">
+  <summary><h3 id="homography">천장 카메라 화면과 로봇 지도 맞추기 (호모그래피) <span class="badge-team">팀 담당</span></h3></summary>
+  <p>팀은 카메라 화면과 지도에서 같은 지점을 가리키는 점들을 짝지어 호모그래피(영상 평면을 지도 평면으로 옮기는 변환)를 구했습니다.</p>
+  </details>
+
+  <details class="impl">
+  <summary><h3>위험 상황 접수와 가장 가까운 로봇 출동 (관제 FSM · Nav2) <span class="badge-team">본인 주 담당</span></h3></summary>
   <div class="pipe" role="img" aria-label="도식: 천장 웹캠 감지(관찰, 사람 위치)와 관제 웹 버튼이 요청(관제 접수)으로 모이고, 요청과 명령 사이에서 관제 FSM이 출동할 수 없는 로봇을 뺀 뒤 가장 가까운 로봇을 골라 명령(로봇 이동)을 보내면 AMR이 Nav2로 이동하는 흐름">
     <div class="pipe-col"><span class="pipe-tag">관찰</span><div class="pipe-box">천장 웹캠 감지<small>사람 위치</small></div></div>
     <div class="pipe-arrow" aria-hidden="true">→</div>
@@ -70,31 +94,28 @@
   </figure>
   <p>카메라 감지나 관제 웹 버튼으로 위험 상황이 들어오면 관제 FSM이 먼저 출동할 수 없는 로봇을 뺍니다. 저는 남은 로봇 중 사람에게 가장 가까운 로봇에 출동 명령을 보내도록 만들었습니다. 안전모 미착용일 때는 바로 움직일 수 있는 대기 로봇이 있으면 그중 가까운 로봇을 먼저 고르게 했습니다.</p>
   <p>쓰러짐은 가장 급하고 순찰은 평소 일인 반면, 안전모 미착용은 조치가 필요하지만 순찰 중인 로봇을 빼 올 만큼 급하지는 않다고 보았고, 대기 로봇을 보내 로봇마다 역할이 나뉘는 모습을 보여 주고자 했기 때문입니다.</p>
-  <p>출동할 수 있는 로봇을 가리는 <a href="#case-status">상태 판단</a>과 <a href="#case-message">메시지 전달 방식</a>은 아래 진행 과정에 적었습니다.</p>
+  <p class="muted">진행 과정에서 보기 → <a href="#case-status">01 출동할 수 있는 로봇 가려내기</a> · <a href="#case-message">02 지난 명령 걸러내기</a></p>
   </details>
 
   <details class="impl">
-  <summary><h3>순찰 중 소화기 표식 점검과 기록 (ArUco · SQLite · Flask 웹, 팀 작업)</h3></summary>
+  <summary><h3>실물 로봇의 위치 추정과 주행 (AMCL · Nav2) <span class="badge-team">구현 참여</span></h3></summary>
+  <p>로봇은 2D 라이다 스캔을 지도에 맞춰 자기 위치를 보정하고(AMCL), Nav2가 장애물 지도를 갱신하며 출동·순찰 지점까지 경로를 짜 이동합니다. 팀은 기본 Nav2 설정을 실물 로봇에 맞게 바꾸고, 카메라와 로봇이 같은 지도를 쓰도록 맞춘 뒤 로봇 시작 위치를 지정하는 절차를 뒀습니다.</p>
+  <p>저는 로봇이 새로 갱신한 장애물 지도에 갇혀 움직이지 못하던 문제를 로봇 반경·장애물 주변 여유 거리·지도 갱신 주기 조정으로 풀었습니다.</p>
+  <p class="muted">진행 과정에서 보기 → <a href="#case-field">03 실물 주행 문제와 통신 분석</a></p>
+  </details>
+
+  <details class="impl">
+  <summary><h3>순찰 중 소화기 표식 점검과 기록 (ArUco · SQLite · Flask 웹) <span class="badge-team">구현 참여</span></h3></summary>
   <figure class="fig">
     <img src="images/intelli1/flask_inspection_history.jpg" alt="소화기 점검 이력 웹 화면: 점검 번호·마커 번호·로봇 이름·PASS/FAIL 결과·점검 시각 표와, 벽에 붙은 마커를 찍은 스냅샷" width="1200" height="440" loading="lazy">
     <figcaption class="muted">소화기 점검 이력(마커 번호·로봇·결과·시각)과 한 건을 열어 본 스냅샷 (팀 화면)</figcaption>
   </figure>
   <p>팀은 로봇이 순찰 중 소화기 지점에 도착했을 때만 ArUco 마커(카메라가 번호를 읽을 수 있게 만든 흑백 사각 표식)를 찾아, 점검 결과와 사진을 데이터베이스에 남기고 웹 화면에서 조회할 수 있게 했습니다. 이 점검 기능과 출동·순찰을 맡은 로봇 실행 프로그램을 하나로 합치는 일은 남은 과제였습니다.</p>
   </details>
-
-  <details class="impl">
-  <summary><h3 id="homography">천장 카메라 화면과 로봇 지도 맞추기 (호모그래피)</h3></summary>
-  <p>팀은 카메라 화면과 지도에서 같은 지점을 가리키는 점들을 짝지어 호모그래피(영상 평면을 지도 평면으로 옮기는 변환)를 구했습니다.</p>
-  </details>
-
-  <details class="impl">
-  <summary><h3>안전모 착용 판정 (YOLO 자세 추정 · 안전모 검출, 팀 작업)</h3></summary>
-  <p>팀은 안전모가 화면에 보이는지만이 아니라, 사람의 머리 위치(자세 추정으로 찾은 기준점)와 안전모 영역이 실제로 겹치는지를 따져 착용 여부를 판정했습니다.</p>
-  </details>
 </section>
 
 <section>
-  <h2 id="process">진행 과정 <span class="h2-hint">각 번호를 펼치면 자세한 설명이 나옵니다</span></h2>
+  <h2 id="process">진행 과정 <span class="h2-hint">각 번호를 펼치면 사진과 함께 자세한 설명이 나옵니다. 진한 글씨는 제 담당 및 주요 과정입니다.</span></h2>
   <h3 class="phase-title" id="phase-why">동기</h3>
   <ul class="phase-facts">
     <li><b>과제 조건</b><span>부트캠프가 정한 조건 — 로봇 간 협업 · 감지·AMR 제어 · 시스템 모니터</span></li>
