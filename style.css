@@ -483,3 +483,52 @@ nav.toc .toc-home { display: none; }
   nav.back { position: sticky; top: 0; z-index: 20; max-width: none; padding: 10px 16px; background: var(--bg); border-bottom: 1px solid var(--line); font-size: 15px; }
   html { scroll-padding-top: 52px; }
 }
+/* 진행 과정 우선순위(사용자 11-14): 목차의 핵심 절 강조, 6번째 사례부터 흐리게(펼치거나 가리키면 원래 진하기) */
+nav.toc li.toc-key a { color: var(--accent); font-weight: 800; }
+main.case-layout details.case-minor:not([open]) > summary { opacity: .55; transition: opacity .15s; }
+main.case-layout details.case-minor:not([open]) > summary:hover { opacity: 1; }
+/* 팀 작업 참여 배지: 사례 summary 그리드 1열, 제목과 결론 문장 사이 */
+.badge-team { display: inline-block; padding: 1px 10px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); font-size: 13px; font-weight: 600; line-height: 1.6; }
+main.case-layout details.case > summary > .badge-team { grid-column: 1; justify-self: start; }
+/* 발표 자료 쪽 바로가기 */
+p.pdf-index { line-height: 2; }
+/* 흐름 도식(.pipe, 사용자 11-14 "도식·플로우차트 적극 활용"): 열마다 단계 이름(.pipe-tag)과 상자, 두 갈래(CPU 위·GPU 아래)는 같은 열에 쌓는다. 좁은 화면은 세로로 */
+main.case-layout .pipe { display: flex; align-items: stretch; gap: 8px; margin: 20px 0 24px; flex-wrap: nowrap; }
+.pipe-col { flex: 1 1 0; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.pipe-tag { font-size: 12px; font-weight: 700; letter-spacing: .04em; color: var(--muted); }
+.pipe-box { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 10px 12px; border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 8px; background: var(--card); font-size: 15px; font-weight: 700; line-height: 1.35; }
+.pipe-box small { display: block; margin-top: 3px; font-size: 12.5px; font-weight: 400; color: var(--muted); }
+.pipe-box.gpu { border-left-color: #2e9d6b; }
+.pipe-box.warn { border-left-color: #d9822b; }
+.pipe-box.gate { border-left-color: #2e9d6b; border-style: solid dashed solid solid; }
+.pipe-arrow { align-self: center; color: var(--muted); font-size: 18px; flex: 0 0 auto; }
+.pipe-col:has(> .pipe-tag) ~ .pipe-arrow, .pipe-col:has(> .pipe-tag) + .pipe-arrow { padding-top: 20px; }
+@media (max-width: 700px) {
+  main.case-layout .pipe { flex-direction: column; }
+  .pipe-arrow { transform: rotate(90deg); padding-top: 0 !important; }
+}
+/* 절 본문의 가로 긴 발표 슬라이드 도식(11-14): 16:10 틀 대신 원래 비율 */
+main.case-layout section > .fig.wide img { aspect-ratio: auto; height: auto; object-fit: initial; }
+/* 프로젝트 구현의 기술·기능 묶음 토글(사용자 11-14 "기술 이름, 기능 단위별 토글") */
+main.case-layout details.impl { border-top: 1px solid var(--line); margin: 0; }
+main.case-layout details.impl:last-of-type { border-bottom: 1px solid var(--line); }
+main.case-layout details.impl > summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 0; }
+main.case-layout details.impl > summary::-webkit-details-marker { display: none; }
+main.case-layout details.impl > summary > h3 { margin: 0; }
+main.case-layout details.impl > summary::after { content: "›"; color: var(--accent); font-size: 22px; transition: transform .15s; }
+main.case-layout details.impl[open] > summary::after { transform: rotate(90deg); }
+main.case-layout details.impl[open] { padding-bottom: 16px; }
+
+/* 진행 과정 4갈래(동기·구현 준비·구현 과정·문제해결) + 사례 요약 줄(cobot2 파일럿, 2026-11-14) */
+main.case-layout h3.phase-title { margin: 48px 0 2px; font-size: 22px; font-weight: 800; color: var(--accent); }
+main.case-layout section > h2 + h3.phase-title { margin-top: 16px; }
+main.case-layout p.phase-note { margin: 0 0 8px; color: var(--muted); font-size: 15px; }
+ul.phase-facts { list-style: none; padding: 0; margin: 12px 0 20px; max-width: var(--text-w); }
+ul.phase-facts li, .case-facts .cf { display: grid; grid-template-columns: 6.5em minmax(0, 1fr); column-gap: 12px; padding: 3px 0; line-height: 1.6; }
+ul.phase-facts li > b, .case-facts .cf > b { color: var(--muted); font-weight: 700; font-size: 14px; padding-top: 2px; }
+main.case-layout details.case > summary > .case-facts { grid-column: 1; display: block; max-width: var(--text-w); font-size: 16px; font-weight: 400; color: var(--fg); }
+main.case-layout details.case > summary > .badge-team { grid-column: 1; justify-self: start; }
+main.case-layout p.case-intro { max-width: var(--text-w); color: var(--muted); margin: 0 0 8px; }
+nav.toc li.toc-sub a { font-size: 14px; color: var(--muted); }
+@media (min-width: 1160px) { nav.toc li.toc-sub { padding-left: 14px; margin-top: -4px; } }
+@media (max-width: 700px) { ul.phase-facts li, .case-facts .cf { grid-template-columns: 1fr; } }
