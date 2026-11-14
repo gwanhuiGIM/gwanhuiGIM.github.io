@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>자율주행 ERP42 — 김관희</title>
-<meta name="description" content="2025 대학생 창작모빌리티 경진대회 무인모빌리티 부문에 팀장으로 출전해, 인지 일부가 빠지는 상황에서도 측위(차량 위치 추정)와 경로추종을 유지하며 팀이 실차 대회를 완주한 과정입니다(팀 회고 기준).">
+<meta name="description" content="2025 대학생 창작모빌리티 경진대회 무인모빌리티 부문에 팀장으로 출전해, 인지 일부가 빠지는 상황에서도 측위(차량 위치 추정)와 경로추종을 유지하며 팀이 대회 예선을 완주한 과정입니다(팀 회고 기준).">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -23,8 +23,6 @@
 <li><a href="#overview">한눈에 보기</a></li>
 <li><a href="#built">프로젝트 구현</a></li>
 <li class="toc-key"><a href="#process">진행 과정</a></li>
-<li class="toc-sub"><a href="#phase-build">구현 과정</a></li>
-<li class="toc-sub"><a href="#phase-solve">문제해결</a></li>
 <li><a href="#team">팀에서 일한 방식</a></li>
 <li><a href="#learned">배운 점</a></li>
 <li><a href="#tech">기술 상세</a></li>
@@ -32,10 +30,23 @@
 </ul>
 </nav>
 
-<main class="case-layout">
-<p class="updated">Last modified <time datetime="2026-11-14">2026-11-14</time></p>
+<main class="case-layout outline">
+<p class="updated">Last modified <time datetime="2026-11-15">2026-11-15</time></p>
 <section class="overview">
   <h2 id="overview">한눈에 보기</h2>
+  <p class="first-note">대회 첫 참여라 다른 팀들에 비해 인원이 적고 알고리즘 완성도가 떨어졌습니다. 그래서 알고리즘의 기능별 코드 완성도를 챙기기보다, 실도로에서 완주 및 데이터 수집, 코스 완주를 목표로 했습니다. 따라서 각 알고리즘은 불완전할 수 있지만, 대회 예선 주행은 완료했습니다.</p>
+  <div class="role-map" role="group" aria-label="연구계획서 p10 설계 흐름 위에 표시한 제 담당 지점">
+    <p class="role-map-title">설계 흐름에서 제가 맡은 지점 <span>연구계획서 p10 흐름 기준 · 상자를 누르면 기술 설명으로, 아래 작은 링크는 진행 과정 사례로 이동합니다</span></p>
+    <div class="pipe role-pipe">
+      <div class="pipe-col"><span class="pipe-tag">센서</span><div class="pipe-box mine part"><a class="rm-main" href="#impl-hw">센서 및 하드웨어 설계</a><small>카메라 · LiDAR · IMU · GPS · 바퀴 센서 — 구현 참여</small><a class="rm-case" href="#case-vehicle">진행 과정 01</a><a class="rm-case" href="#case-bringup">진행 과정 02</a></div></div>
+      <div class="pipe-arrow" aria-hidden="true">→</div>
+      <div class="pipe-col"><span class="pipe-tag">인지</span><div class="pipe-box">영상<a class="rm-case" href="major.html#ai">대회 데이터로 차선 인식 모델 3종 비교·개선 (대회 뒤 인공지능 수업)</a></div><div class="pipe-box mine part"><a class="rm-main" href="#impl-perception">물체 감지(LiDAR)</a><small>구현 참여</small><a class="rm-case" href="#case-lidar">진행 과정 05</a></div><div class="pipe-box mine"><a class="rm-main" href="#impl-ekf">센서퓨전 위치 추정 (EKF)</a><small>본인 주 담당</small><a class="rm-case" href="#case-odom">진행 과정 04</a><a class="rm-case" href="#case-localization">진행 과정 07</a></div></div>
+      <div class="pipe-arrow" aria-hidden="true">→</div>
+      <div class="pipe-col"><span class="pipe-tag">판단</span><div class="pipe-box">미션 인식</div><div class="pipe-box mine"><a class="rm-main" href="#case-waypoint">경로 계획 — 경로점 만들기</a><small>본인 주 담당</small><a class="rm-case" href="#case-waypoint">진행 과정 03</a></div><div class="pipe-box mine"><a class="rm-main" href="#impl-arbiter">주행 명령 판단 노드</a><small>프로토타입 · 본인 주 담당</small><a class="rm-case" href="#case-arbiter">진행 과정 08</a></div></div>
+      <div class="pipe-arrow" aria-hidden="true">→</div>
+      <div class="pipe-col"><span class="pipe-tag">제어</span><div class="pipe-box mine"><a class="rm-main" href="#impl-path">경로추종</a><small>본인 주 담당</small><a class="rm-case" href="#case-path">진행 과정 06</a></div><div class="pipe-box">ERP-42</div></div>
+    </div>
+  </div>
   <div class="ov-media">
   <div class="fig-pair">
     <figure class="fig"><img src="images/erp42/erp42_competition_booth.jpg" alt="'6 충남대학교' 현수막이 걸린 대회 천막 부스에서 06번을 단 ERP42 차량과 함께 선 팀원 4명(얼굴 흐림 처리)" width="576" height="596"><figcaption class="muted">대회 현장 팀 부스와 출전 차량(06번)</figcaption></figure>
@@ -44,9 +55,9 @@
   </div>
   <ul class="ov-summary">
     <li><b>내 담당</b> — <a href="#case-localization">EKF 측위(센서퓨전)</a> · <a href="#case-path">경로추종</a> · <a href="#case-arbiter">주행 명령 판단 노드(프로토타입)</a> · <a href="#step-tuning">실차 설정값·전륜 정렬</a> · 팀장</li>
-    <li><b>대회</b> — 예선 10분·본선 15분 단일 주행 · GPS 음영구간 · 멈춰 있는 장애물 · 주차 미션</li>
+    <li><b>대회</b> — 예선(10분 주행 및 라바콘 곡면 코스 완주 시간) · 본선(15분 경로 주행 완주 시간) · GPS 음영구간 · 멈춰 있는 장애물 · 주차 미션</li>
     <li><b>플랫폼</b> — ERP42 4륜 전기차 · LiDAR · RTK-GPS · IMU · 카메라 · 4인 팀(실개발 2~3인)</li>
-    <li><b>결과(팀)</b> — 주행 중 인지 모듈 일부가 빠져도 측위·경로추종 유지 → 실차 대회 완주(팀 회고 기준)</li>
+    <li><b>결과(팀)</b> — 예선 코스 완주 · 다른 팀 기록에 밀려 본선 미진출</li>
   </ul>
   <figure class="fig"><img src="images/erp42/erp42_platform.jpg" alt="센서와 알루미늄 프레임을 얹은 ERP42 차량" width="524" height="601" loading="lazy" class="narrow"></figure>
   <p class="muted"><a href="https://www.youtube.com/watch?v=YCeGdbSMRuc">▶ 대회 진행 방식 참고 영상</a> — 우리 팀 시연이 아니라, 예선(트랙 주행·highway 예선 코스)을 통과한 상위 팀만 참가하는 본선 출전 팀들의 주행 영상입니다.</p>
@@ -69,8 +80,8 @@
   </figure>
   <p>저는 개발에 함께 참여했고, 맡은 일은 아래 진행 과정에 적었습니다.</p>
 
-  <details class="impl">
-  <summary><h3>센서 및 하드웨어 설계 (센서 구성 · 알루미늄 프로파일 프레임 · 전력) <span class="badge-team">구현 참여</span></h3></summary>
+  <details class="impl" id="impl-hw">
+  <summary><h3>센서 및 하드웨어 설계 (센서 구성 · 알루미늄 프로파일 프레임 · 전력) <span class="badge-team">구현 참여</span></h3><span class="impl-jump">진행 과정 <a href="#case-vehicle">01 실차 조정과 반복 테스트</a><a href="#case-bringup">02 ROS 2 센서 구동과 통합</a></span></summary>
   <p>ERP42 차체 위에 알루미늄 프로파일 프레임을 얹어 LiDAR·카메라·RTK-GPS·IMU와 노트북·전력 장비를 달고, 센서 데이터를 노트북의 ROS 2 노드가 받아 ERP42에 조향·속도·브레이크 명령을 보냅니다.</p>
   <div class="pipe" role="img" aria-label="도식: LiDAR는 이더넷, 카메라·RTK-GPS·IMU는 USB·시리얼로 노트북에 연결되고, 노트북의 ROS 2 노드가 ERP42와 시리얼로 바퀴 회전량·조향각을 받고 조향·속도·브레이크 명령을 보내며, 보조 배터리와 인버터가 장비 전력을 보강하는 구성">
     <div class="pipe-col"><span class="pipe-tag">센서</span><div class="pipe-box">3D LiDAR<small>Velodyne VLP-16 · 이더넷</small></div><div class="pipe-box">카메라 3대<small>USB</small></div><div class="pipe-box">RTK-GPS<small>u-blox ZED-F9P · 보정 정보는 네트워크로</small></div><div class="pipe-box">IMU<small>EBIMU(교체 전 VectorNav VN-100)</small></div></div>
@@ -98,11 +109,11 @@
     <li><b>프레임</b><span>팀이 함께 잰 차량 치수 → 팀원 초안 CAD → 팀과 함께 직선 알루미늄 프로파일을 분해·조립하며 배치 조정(구조를 바꿔 가며 맞출 수 있게 고정하지 않음)</span></li>
   </ul>
   <p>저는 팀과 함께 프레임을 조립하고 실차에 대 보며 센서 배치를 다시 잡았고, 카메라 장치·해상도, IMU 포트, RTK 접속, 속도·제동 값과 전륜 정렬은 직접 실차에 맞췄습니다.</p>
-  <p class="muted">진행 과정에서 보기 → <a href="#case-vehicle">04 실차 조정과 반복 테스트</a> · <a href="#step-layout">[03] 중앙에 둔 GPS와 배치 기준</a> · <a href="#fig-lidar">LiDAR·카메라 장착 사진</a> · <a href="#step-tuning">[04] 전륜 정렬과 rosbag 로깅</a></p>
+  <p class="muted">진행 과정에서 보기 → <a href="#case-vehicle">01 실차 조정과 반복 테스트</a> · <a href="#step-layout">[03] 중앙에 둔 GPS와 배치 기준</a> · <a href="#fig-lidar">LiDAR·카메라 장착 사진</a> · <a href="#step-tuning">[04] 전륜 정렬과 rosbag 로깅</a></p>
   </details>
 
-  <details class="impl">
-  <summary><h3>센서퓨전 위치 추정 (EKF) <span class="badge-team">본인 주 담당</span></h3></summary>
+  <details class="impl" id="impl-ekf">
+  <summary><h3>센서퓨전 위치 추정 (EKF) <span class="badge-team">본인 주 담당</span></h3><span class="impl-jump">진행 과정 <a href="#case-odom">04 바퀴 회전량으로 위치 계산</a><a href="#case-localization">07 GPS 음영구간의 위치 추정</a></span></summary>
   <p>바퀴 회전량과 조향각으로 차가 움직인 만큼 위치를 계산하고 GPS로 바로잡는 EKF(여러 측정값을 합쳐 위치를 추정하는 필터)로 위치를 구하며, 차의 방향은 IMU로 구합니다. 위치는 초기 GPS 위치를 원점으로 삼은 지도 좌표로 나옵니다.</p>
   <div class="pipe" role="img" aria-label="도식: 바퀴 회전량·조향각과 RTK-GPS가 EKF로 모여 초기 GPS 원점 기준 지도 좌표 위치를 만들고, 차의 방향은 EKF를 거치지 않고 IMU 값을 그대로 써서, 위치와 방향이 경로추종으로 이어지는 흐름">
     <div class="pipe-col"><span class="pipe-tag">입력</span><div class="pipe-box">바퀴 회전량·조향각<small>ERP42 · 위치 예측</small></div><div class="pipe-box">RTK-GPS<small>위치 바로잡기</small></div><div class="pipe-box">IMU<small>차의 방향</small></div></div>
@@ -117,17 +128,17 @@
     <img src="images/erp42/slide_localization.jpg" alt="연구계획서 슬라이드 '평시 주행 - Localization': 위치 추정 설명 상자, Sensor Data(Odometry·IMU·GPS) → Sensor Fusion(Extended Kalman Filter) → Localization data(차량 제어에 활용) 도식, 오른쪽에 Odometry·IMU·GPS 값이 Extended Kalman Filter를 거쳐 Topic parameter 수정(Yaw_offset, 자기 편각 보정)으로 이어지는 도식과 Sensor Fusion 설명 상자" width="1200" height="675" loading="lazy">
     <figcaption class="muted">팀 연구계획서 p3 — 계획서 단계의 위치 추정 설계(센서 데이터 → EKF → 위치 데이터). 위 도식은 저장소에 남은 코드 기준입니다.</figcaption>
   </figure>
-  <p class="muted">진행 과정에서 보기 → <a href="#case-localization">03 GPS 음영구간의 위치 추정</a></p>
+  <p class="muted">진행 과정에서 보기 → <a href="#case-localization">07 GPS 음영구간의 위치 추정</a></p>
   </details>
 
-  <details class="impl">
-  <summary><h3>환경 인지 (카메라 차선 · LiDAR 장애물) <span class="badge-team">팀 담당</span></h3></summary>
+  <details class="impl" id="impl-perception">
+  <summary><h3>환경 인지 (카메라 차선 · LiDAR 장애물) <span class="badge-team">팀 담당 · LiDAR 구현 참여</span></h3><span class="impl-jump">진행 과정 <a href="#case-lidar">05 LiDAR 장애물 회피 실험</a></span></summary>
   <p>팀은 카메라 영상과 LiDAR로 주변을 인식하는 기능을 개발·실험했습니다. 카메라 쪽에는 HSV·Hough 차선 처리와 YOLO가, LiDAR 쪽에는 2D 스캔 기반 장애물 회피와 3D 점군 클러스터링 실험이 있습니다. 다만 차선 인식은 대회 주행 적용 여부가 확인되지 않았고, LiDAR 장애물 회피는 현재 저장소 코드에서 경로추종과의 연결이 완성되지 않은 실험 단계입니다.</p>
-  <p class="muted">진행 과정에서 보기 → <a href="#step-pointcloud">[05] 3D 점군 클러스터링 실험</a></p>
+  <p class="muted">진행 과정에서 보기 → <a href="#case-lidar">05 LiDAR 장애물 회피 실험</a></p>
   </details>
 
-  <details class="impl">
-  <summary><h3>경로추종 (방향 오차 비례 조향 · 저역통과) <span class="badge-team">본인 주 담당</span></h3></summary>
+  <details class="impl" id="impl-path">
+  <summary><h3>경로추종 (방향 오차 비례 조향 · 저역통과) <span class="badge-team">본인 주 담당</span></h3><span class="impl-jump">진행 과정 <a href="#case-waypoint">03 경로점 만들기</a><a href="#case-path">06 곡선 구간의 경로추종</a></span></summary>
   <p>앞쪽의 가까운 경로점을 목표로 고르고, 경로와의 방향 오차에 비례해 조향한 뒤 직전 조향값과 섞어 곡선에서 조향이 튀지 않게 합니다.</p>
   <div class="pipe" role="img" aria-label="도식: 경로점에서 목표 경로점을 고르고, 방향 오차에 비례한 조향을 직전 조향값과 섞은 뒤 차량 통신 프로그램이 ERP42에 명령을 보내는 흐름">
     <div class="pipe-col"><span class="pipe-tag">입력</span><div class="pipe-box">경로점(waypoint)<small>지도 좌표로 바꾼 위도·경도</small></div><div class="pipe-box">차의 위치·방향<small>EKF 측위</small></div></div>
@@ -142,11 +153,11 @@
     <img src="images/erp42/slide_path_control.jpg" alt="연구계획서 슬라이드 '평시 주행 – 차량 주행 제어': 종방향·횡방향 제어 설명 상자, Pure Pursuit 개념 그림(Look ahead distance), 녹색 경로와 빨간 차량 위치 궤적을 겹친 Path tracking 화면, 운동장에서 탁자 옆을 달리는 차량 사진" width="1200" height="675" loading="lazy">
     <figcaption class="muted">팀 연구계획서 p5 — 차량 주행 제어 설계(Pure Pursuit 개념 그림, 방향 오차 P제어·저역필터, 운동장 경로 추종 화면). 슬라이드의 종방향 PID 속도 제어는 계획서의 설계이고, 구현한 것은 횡방향의 방향 오차 비례 조향과 저역통과입니다.</figcaption>
   </figure>
-  <p class="muted">진행 과정에서 보기 → <a href="#case-path">01 곡선 구간의 경로추종</a></p>
+  <p class="muted">진행 과정에서 보기 → <a href="#case-path">06 곡선 구간의 경로추종</a></p>
   </details>
 
-  <details class="impl">
-  <summary><h3>주행 명령 판단 노드 (프로토타입) <span class="badge-team">본인 주 담당</span></h3></summary>
+  <details class="impl" id="impl-arbiter">
+  <summary><h3>주행 명령 판단 노드 (프로토타입) <span class="badge-team">본인 주 담당</span></h3><span class="impl-jump">진행 과정 <a href="#case-arbiter">08 주행 명령 중재(프로토타입)</a></span></summary>
   <p>여러 기능이 낸 주행 명령 중 방금 들어온 유효한 명령 하나를 고르고, 유효한 명령이 없으면 완전 제동하도록 한 소스 코드 수준 프로토타입입니다.</p>
   <div class="pipe" role="img" aria-label="도식: 차선 명령과 경로 명령이 판단 노드로 모여 우선순위와 최신 여부로 하나를 고르고, 유효한 명령이 없으면 완전 제동하는 흐름">
     <div class="pipe-col"><span class="pipe-tag">입력</span><div class="pipe-box">차선 명령</div><div class="pipe-box">경로 명령</div></div>
@@ -155,79 +166,15 @@
     <div class="pipe-arrow" aria-hidden="true">→</div>
     <div class="pipe-col"><span class="pipe-tag">출력</span><div class="pipe-box">고른 명령 → ERP42</div><div class="pipe-box warn">완전 제동<small>유효한 명령이 없을 때</small></div></div>
   </div>
-  <p class="muted">진행 과정에서 보기 → <a href="#case-arbiter">02 주행 명령 중재(프로토타입)</a></p>
+  <p class="muted">진행 과정에서 보기 → <a href="#case-arbiter">08 주행 명령 중재(프로토타입)</a></p>
   </details>
 </section>
 
 <section>
   <h2 id="process">진행 과정 <span class="h2-hint">각 번호를 펼치면 사진과 함께 자세한 설명이 나옵니다. 진한 글씨는 제 담당 및 주요 과정입니다.</span></h2>
+  <p class="muted process-note">아래는 대회를 준비하며 센서와 기능을 하나씩 맞춰 간 구현 과정입니다. 대회 주행은 이 기능들이 모두 맞물린 결과라기보다, 차가 굴러가 예선 코스를 완주한 데에 가깝습니다.</p>
 
-  <h3 class="phase-title" id="phase-build">구현 과정</h3>
-  <details class="case"><summary><h3 id="case-path">곡선 구간의 경로추종</h3><span class="case-facts"><span class="cf"><b>무엇</b><span>경로점을 따라가되 곡선에서 조향이 튀지 않는 경로추종</span></span><span class="cf"><b>방법</b><span>팀원들과 Pure Pursuit·Stanley 검토 → 연구계획서 설계대로 방향 오차 비례 조향 + 직전 조향값과 섞기</span></span><span class="cf"><b>맡은 일</b><span>경로추종 구현</span></span><span class="cf"><b>결과</b><span>운동장 경로점 추종 테스트(팀 내부 테스트)</span></span></span></summary>
-  <div class="case-steps">
-    <div class="step">
-      <h4 class="step-title">Pure Pursuit·Stanley 검토</h4>
-      <div class="step-body">
-        <p>팀원들과 여러 경로추종 기법(Pure Pursuit·Stanley)을 검토한 뒤, 팀 연구계획서의 설계대로 경로와의 방향 오차에 비례해 조향하고 직전 조향값과 섞는 단순한 방식으로 구현했습니다.</p>
-        <figure class="fig"><img src="images/erp42/erp42-field-test-run.jpg" alt="운동장에서 카메라 쪽으로 달려오는 ERP42 옆모습" width="1280" height="720" loading="lazy"><figcaption class="muted">예시: 운동장 경로점 추종 테스트 중인 차량(팀 내부 테스트)</figcaption></figure>
-      </div>
-    </div>
-  </div>
-  <p class="takeaway">이 작업으로 <strong>정교한 기법보다 실제 차량에 맞는 단순한 구현을 고르는 판단</strong>을 익혔습니다.</p>
-  </details>
-
-  <details class="case case-minor"><summary><h3 id="case-arbiter">주행 명령 중재(프로토타입)</h3><span class="case-facts"><span class="cf"><b>무엇</b><span>여러 기능이 낸 주행 명령 중 따를 것 하나 고르기</span></span><span class="cf"><b>방법</b><span>차선·경로 명령 우선순위 · 오래된 명령 제외 · 유효 명령이 없으면 완전 제동</span></span><span class="cf"><b>결과</b><span>소스 코드 수준 프로토타입</span></span></span></summary>
-  <div class="case-steps">
-    <div class="step">
-      <h4 class="step-title">우선순위와 완전 제동</h4>
-      <div class="step-body">
-        <p>차선·경로 명령에 우선순위를 두고 오래된 명령은 빼며, 유효한 명령이 없으면 완전 제동하도록 했으나, 설계의 신호·표지판 단계는 구현하지 못했고 대회 당일 주행에 이 노드를 사용했는지는 확인되지 않았습니다.</p>
-        <figure class="fig wide">
-    <img src="images/erp42/erp42-controller-design-flow.png" alt="LiDAR·카메라·경로 명령이 Controller(우선순위 선택)로 모이고, 신호·표지판, 장애물 회피, 경로 추종 순으로 골라 ERP42에 보내는 흐름도" width="964" height="481" loading="lazy">
-    <figcaption class="muted">팀 기술보고서의 판단 노드 설계 흐름도 — 신호·표지판, 장애물 회피, 경로추종 순으로 명령을 고르는 설계</figcaption>
-  </figure>
-      </div>
-    </div>
-  </div>
-  <p class="takeaway">이 작업으로 <strong>명령이 없거나 오래됐을 때는 차를 세우는 쪽을 기본으로 두고</strong>, 판단·인지·제어를 나눠 보는 설계 방식을 익혔습니다.</p>
-  </details>
-
-  <h3 class="phase-title" id="phase-solve">문제해결</h3>
-  <details class="case"><summary><h3 id="case-localization">GPS 음영구간의 위치 추정</h3><span class="case-facts"><span class="cf"><b>문제 파트</b><span>측위(차량 위치 추정)</span></span><span class="cf"><b>문제</b><span>120m 안팎 GPS 음영구간 · 갈수록 쌓이는 IMU 오차(drift)</span></span><span class="cf"><b>해결</b><span>바퀴 회전량·조향각으로 위치를 예측하고 GPS로 바로잡는 EKF 적용 · 팀은 IMU 교체</span></span><span class="cf"><b>배운 점</b><span>센서 하나가 흔들려도 여러 측정값을 합쳐 위치를 유지하는 설계</span></span></span></summary>
-  <div class="case-steps">
-    <div class="step">
-      <h4 class="step-title">120m 안팎 음영구간과 IMU 오차</h4>
-      <div class="step-body">
-        <p>예선 코스에는 120m 안팎의 GPS 음영구간(철골 구조 등)이 있어 GPS가 잡히지 않았고, IMU는 갈수록 오차가 쌓였습니다(drift). 차가 자기 위치를 잃으면 경로점을 따라갈 기준도 함께 잃게 됩니다.</p>
-      </div>
-    </div>
-    <div class="step">
-      <h4 class="step-title">바퀴 회전량 계산 프로그램</h4>
-      <div class="step-body">
-        <p>팀은 먼저 바퀴 회전량으로 이동거리와 회전각을 계산하는 프로그램을 만들었고, 저는 이를 정리한 보고서에 바퀴 회전량과 IMU를 합치는 일을 다음 과제로 적어 두었습니다.</p>
-      </div>
-    </div>
-    <div class="step">
-      <h4 class="step-title">EKF 적용과 IMU 교체</h4>
-      <div class="step-body">
-        <p>저는 각 센서를 구동해 얻은 데이터를 써서 바퀴 회전량과 조향각으로 위치를 계산하고 GPS로 바로잡는 EKF를 적용했으며 차의 방향은 IMU로 구했습니다. 처음 쓰던 IMU는 쌓이는 오차를 잡지 못해 위치 추정이 부정확했고, 팀은 7차 원정 연습 뒤 IMU를 새로 구입해 교체했습니다.</p>
-        <div class="fig-pair">
-    <figure class="fig"><img src="images/erp42/erp42-sensor-frame-front.jpg" alt="복도에서 앞쪽 비스듬히 찍은, 센서 프레임과 상자·경고등을 얹은 ERP42" width="1050" height="1400" loading="lazy"><figcaption class="muted">예시: 센서 장착 프레임을 얹은 ERP42(팀 기술보고서 사진)</figcaption></figure>
-    <figure class="fig"><img src="images/erp42/erp42-gps-antenna-receiver.jpg" alt="프레임 기둥 위 GPS 안테나와 흰 스티로폼 위에 놓인 수신기 상자 근접 사진" width="1050" height="1400" loading="lazy"><figcaption class="muted">예시: 프레임에 장착한 GPS 안테나와 수신기(팀 기술보고서 사진)</figcaption></figure>
-  </div>
-      </div>
-    </div>
-    <div class="step">
-      <h4 class="step-title">초기 GPS 원점의 지도 좌표</h4>
-      <div class="step-body">
-        <p>위치는 초기 GPS 위치를 원점으로 삼은 지도 좌표로 나오고, 팀은 미리 기록한 경로점도 같은 좌표로 바꿔 주행 경로로 내보냈습니다.</p>
-      </div>
-    </div>
-  </div>
-  <p class="takeaway">이 작업으로 <strong>센서 하나가 흔들려도 여러 측정값을 합쳐 위치를 유지하도록 설계하는 관점</strong>을 익혔습니다.</p>
-  </details>
-
-  <details class="case"><summary><h3 id="case-vehicle">실차 조정과 반복 테스트</h3><span class="case-facts"><span class="cf"><b>문제 파트</b><span>실차(센서 장착 프레임·전력·통신·차체)</span></span><span class="cf"><b>문제</b><span>노면이 나쁠 때 센서 흔들림 · 전력 부족 · GNSS 연결 끊김 · 직진 명령에도 한쪽으로 휘는 차</span></span><span class="cf"><b>해결</b><span>팀과 함께 센서 배치 다시 잡기 · 실차 설정값과 전륜 정렬은 직접 조정 · 팀원들과 튜닝·테스트·로깅 반복</span></span><span class="cf"><b>배운 점</b><span>코드보다 하드웨어 설정과 차체 상태부터 확인</span></span></span></summary>
+  <details class="case"><summary><h3 id="case-vehicle">실차 조정과 반복 테스트</h3><span class="case-phase">환경 준비 · 문제해결</span><span class="badge-team">구현 참여</span><span class="case-facts"><span class="cf"><b>문제 파트</b><span>실차(센서 장착 프레임·전력·통신·차체)</span></span><span class="cf"><b>문제</b><span>노면이 나쁠 때 센서 흔들림 · 전력 부족 · GNSS 연결 끊김 · 직진 명령에도 한쪽으로 휘는 차</span></span><span class="cf"><b>해결</b><span>팀과 함께 센서 배치 다시 잡기 · 실차 설정값과 전륜 정렬은 직접 조정 · 팀원들과 튜닝·테스트·로깅 반복</span></span><span class="cf"><b>배운 점</b><span>코드보다 하드웨어 설정과 차체 상태부터 확인</span></span></span></summary>
   <div class="case-steps">
     <div class="step">
       <h4 class="step-title" id="step-concept">초안 이해와 프레임 조립</h4>
@@ -253,6 +200,10 @@
         <p class="muted" id="fn-power"><small>1 보조 배터리(LiFePO4 12.8V·100Ah·1,280Wh)와 1000W 인버터로 보강</small></p>
         <p class="muted" id="fn-layout"><small>2 실측으로 센서 배치를 다시 잡음 → <a href="#step-layout">[03] 중앙에 둔 GPS와 배치 기준</a></small></p>
         <p class="muted" id="fn-gnss"><small>3 RTK 보정 정보를 받는 네트워크가 끊긴 문제 — 시험 때 휴대폰을 이더넷·핫스팟으로 연결해 해결</small></p>
+        <div class="fig-pair" id="fig-roadtest">
+    <figure class="fig"><img src="images/erp42/erp42-road-test-campus.jpg" alt="학교 안 도로에서 노트북을 얹은 ERP42 차량 뒤에 모자를 쓴 사람이 서서 차체를 잡고 있고, 길가에 라바콘이 늘어선 모습(뒷모습)" width="670" height="1250" loading="lazy"><figcaption class="muted">예시: 측위·경로추종·차선 인식을 함께 돌린 학교 안 도로 시험(주간보고 사진)</figcaption></figure>
+    <figure class="fig"><img src="images/erp42/erp42-vibration-check.jpg" alt="실내 작업장의 ERP42 프레임 가운데 칸에 놓인 검은 장치에 빨간 원을 친 사진, 위쪽 기둥 끝에 카메라와 앞쪽에 LiDAR가 보임" width="536" height="716" loading="lazy"><figcaption class="muted">예시: 주간보고의 진동 대응 쪽 사진 — 진동이 카메라 각도와 IMU 상태에 영향을 준다고 적은 쪽(빨간 원은 보고서 표시)</figcaption></figure>
+  </div>
         <figure class="fig" id="fig-power">
     <img src="images/erp42/erp42-power-inverter.jpg" alt="알루미늄 프레임 가운데에 얹은 검은색 1000W 인버터와 오른쪽 노트북 받침 아래의 노란 라벨이 붙은 검은색 보조 배터리" width="540" height="320" loading="lazy">
     <figcaption class="muted">예시: 프레임에 얹은 1000W 인버터(왼쪽)와 보조 배터리(오른쪽 아래) — 차량 옆모습 사진에서 잘라냄(팀 기술보고서 사진)</figcaption>
@@ -286,15 +237,198 @@
   </div>
       </div>
     </div>
+  </div>
+  <p class="takeaway">이 과정에서 문제가 생기면 <strong>코드보다 진동·전력·정렬 같은 하드웨어 설정과 차체 상태를 먼저 확인</strong>하고 실물에 맞춰 기준을 세우는 방식, 그리고 튜닝·테스트·로깅을 반복하며 성능을 끌어올리는 방식을 익혔습니다.</p>
+  </details>
+
+  <details class="case"><summary><h3 id="case-bringup">단일 제어 PC 기반의 ROS 2 센서 구동과 시스템 통합</h3><span class="case-phase">환경 준비</span><span class="badge-team">본인 주 담당</span><span class="case-facts"><span class="cf"><b>무엇</b><span>제어용 노트북 한 대에서 플랫폼과 센서들을 ROS 2 환경으로 연동·통합</span></span><span class="cf"><b>방법</b><span>ROS 1에서 센서별 구동 확인 → 센서 출력 주기(Hz)·해상도·포트 실차 튜닝 → 한 노트북에서 ROS 2로 통합</span></span><span class="cf"><b>맡은 일</b><span>센서별 구동 점검 · 출력 주기·해상도·포트 실차 튜닝 · ROS 2 시스템 통합</span></span><span class="cf"><b>결과</b><span>한 노트북에서 센서와 차량을 함께 구동해 실도로 시험·데이터 수집에 사용</span></span></span></summary>
+  <figure class="fig" id="fig-sensor-numbered"><img src="images/erp42/erp42-sensor-frame-front-numbered.jpg" alt="복도에서 앞쪽 비스듬히 찍은 ERP42에 번호를 붙인 사진: 1 앞쪽 프레임 아래 원통형 LiDAR, 2 앞쪽 짧은 기둥 위 카메라, 3 가운데 높은 기둥 중간과 꼭대기의 카메라 두 대, 4 높은 기둥 꼭대기의 둥근 GPS 안테나, 5 프레임 가운데 1000W 인버터" width="1050" height="1400" loading="lazy"><figcaption class="muted">번호로 표시한 센서·장비 위치 — ① LiDAR ②③ 카메라 ④ GPS 안테나 ⑤ 인버터(팀 기술보고서 사진)</figcaption></figure>
+  <div class="case-steps">
     <div class="step">
-      <h4 class="step-title" id="step-pointcloud">3D 점군 클러스터링 실험</h4>
+      <h4 class="step-title" id="step-ros1">ROS 1에서 먼저 익힌 센서 구동</h4>
       <div class="step-body">
-        <p>팀은 테스트 주행으로 경로점 추종과 LiDAR 장애물 회피를 확인한 뒤, 회피를 2D 스캔 기반에서 3D 점군 클러스터링(가까운 점끼리 묶어 장애물로 보는 처리) 실험으로 넓혔습니다. 다만 차선 인식은 대회 주행 적용 여부가 확인되지 않았고, LiDAR 장애물 회피는 현재 저장소 코드에서 경로추종과의 연결이 완성되지 않은 실험 단계입니다.</p>
-    <figure class="fig"><img src="images/erp42/erp42_test_lidar_obstacle_track.jpg" alt="예선 미션 대비 LiDAR 장애물 트랙 주행 시뮬레이션" width="1000" height="1000" loading="lazy"><figcaption class="muted">예선 미션 대비 LiDAR 장애물 트랙 주행 시뮬레이션</figcaption></figure>
+        <p>실차 통합에 앞서 ROS 1 환경에서 카메라·IMU·GPS(RTK 보정)·LiDAR 패키지를 차례로 설치하고, 센서별 연결 포트와 네트워크를 확인해 데이터가 들어오는지 하나씩 띄워 봤습니다. 이 과정을 센서 보고서로 정리해 두었고, 이후 ROS 2에서 센서를 다시 구동할 때의 출발점으로 삼았습니다.</p>
+      </div>
+    </div>
+    <div class="step">
+      <h4 class="step-title">통신 인터페이스별 단독 구동</h4>
+      <div class="step-body">
+        <p>이더넷 통신 기반의 3D LiDAR와 USB·시리얼 통신을 사용하는 카메라, IMU, RTK-GPS를 단일 제어용 노트북에 물리적으로 연결하고, 각 하드웨어에 맞는 ROS 2 패키지를 빌드하여 데이터가 정상적으로 들어오는지 하나씩 독립적으로 점검했습니다.</p>
+      </div>
+    </div>
+    <div class="step">
+      <h4 class="step-title" id="step-sensor-tuning">센서 주기·해상도와 포트 실차 튜닝</h4>
+      <div class="step-body">
+        <p>카메라 해상도·연결 포트와 센서 출력 주기(Hz)를 실차에 맞춰 직접 조정했고, 포트를 나눠 여러 대의 카메라를 함께 구동했습니다.</p>
+      </div>
+    </div>
+    <div class="step">
+      <h4 class="step-title">RTK 보정 신호 유선 접속 환경 구성</h4>
+      <div class="step-body">
+        <p>GPS 위치를 RTK 보정 신호로 바로잡기 위해 보정 신호를 수신할 인터넷 연결이 필요했고, 시험 주행 중 이 네트워크가 끊긴 적이 있었습니다. 연결에는 휴대폰 핫스팟을 활용하되, 대회장에서 다른 팀들과 무선 간섭이 생길 것도 우려하여 휴대폰과 노트북을 유선으로 연결했습니다.</p>
+      </div>
+    </div>
+    <div class="step">
+      <h4 class="step-title">한 노트북에서 함께 실행</h4>
+      <div class="step-body">
+        <p>차량 플랫폼과의 시리얼 통신 노드와 각 센서 노드를 단일 노트북에서 함께 실행하도록 ROS 2로 통합했습니다.</p>
       </div>
     </div>
   </div>
-  <p class="takeaway">이 과정에서 문제가 생기면 <strong>코드보다 진동·전력·정렬 같은 하드웨어 설정과 차체 상태를 먼저 확인</strong>하고 실물에 맞춰 기준을 세우는 방식, 그리고 튜닝·테스트·로깅을 반복하며 성능을 끌어올리는 방식을 익혔습니다.</p>
+  </details>
+
+  <details class="case"><summary><h3 id="case-waypoint">경로점 만들기</h3><span class="case-phase">구현</span><span class="badge-team">본인 주 담당</span><span class="case-facts"><span class="cf"><b>무엇</b><span>경로추종 시험용 가상 경로와 주행용 위도·경도 경로점</span></span><span class="cf"><b>방법</b><span>전공(CAD응용)의 베지어 곡선으로 8자 시험 경로 → 위도·경도를 직접 측정해 경로점 만들기</span></span><span class="cf"><b>맡은 일</b><span>8자 시험 경로 수식 구현 · 실측 위도·경도 경로점으로 전환</span></span><span class="cf"><b>결과</b><span>운동장 8자 주행 시험 · 측정한 경로점을 따라가는 주행 테스트(팀 내부)</span></span></span></summary>
+  <div class="case-steps">
+    <div class="step">
+      <h4 class="step-title" id="step-bezier">베지어 곡선으로 만든 8자 시험 경로</h4>
+      <div class="step-body">
+        <p>경로추종을 시험하려고 가상 경로점이 필요해, 전공 과목 <a href="major.html#cad">CAD응용</a>에서 배운 베지어 곡선(점 몇 개로 매끄러운 곡선을 만드는 방법)을 바탕으로 연속 곡선을 수식으로 구현했습니다. 좌표 13개로 잡은 8자 모양 경로를 200여 개의 점으로 늘려 매끄러운 시험 경로를 만들고 주행을 시험했습니다.</p>
+        <div class="fig-pair">
+    <figure class="fig"><img src="images/erp42/erp42-waypoint-13pt-code.png" alt="8자 모양 경로점 13개를 좌표 순서쌍으로 적은 코드 화면" width="285" height="335" loading="lazy"><figcaption class="muted">좌표 13개로 정한 8자 경로점(2025년 3월 보고서 코드 화면)</figcaption></figure>
+    <figure class="fig"><img src="images/erp42/erp42-waypoint-bezier-rviz.png" alt="RViz 격자 위에 녹색 선으로 그려진 매끄러운 8자 경로" width="552" height="367" loading="lazy"><figcaption class="muted">베지어 곡선으로 200여 개 점으로 늘린 8자 시험 경로(RViz)</figcaption></figure>
+  </div>
+      </div>
+    </div>
+    <div class="step">
+      <h4 class="step-title">실측 위도·경도 경로점으로 전환</h4>
+      <div class="step-body">
+        <p>보고서에는 이 8자 경로가 초기 좌표계일 뿐 지구 좌표가 아니어서 실제 도로 시험 전에 바꿔야 한다고 적었습니다. 이후 시험용 가상 좌표 대신 위도와 경도를 직접 측정해 경로점을 만드는 방식으로 바꾸었고, 측정한 경로점을 지도 좌표로 바꿔 내보낸 과정은 <a href="#step-origin">07 위치 추정 › 초기 GPS 원점의 지도 좌표</a>에 이어집니다.</p>
+        <figure class="fig"><img src="images/erp42/erp42-waypoint-measured-route.png" alt="두 건물 사이를 오가는 파란 선과 빨간 선 경로점을 출발점 기준 동쪽·북쪽 거리(m)로 그린 그래프" width="960" height="690" loading="lazy"><figcaption class="muted">직접 측정한 위도·경도 경로점 파일 2개를 출발점 기준 거리(m)로 그린 그림 — 건물 사이 왕복 경로</figcaption></figure>
+      </div>
+    </div>
+  </div>
+  <p class="takeaway">이 작업으로 <strong>전공에서 배운 곡선 수식을 시험용 가상 경로로 직접 구현해 보고, 실도로에 맞춰 실제 좌표를 측정하는 방식으로 넘어가는 과정</strong>을 익혔습니다.</p>
+  </details>
+
+  <details class="case"><summary><h3 id="case-odom">바퀴 회전량으로 위치 계산(오도메트리)</h3><span class="case-phase">구현</span><span class="badge-team">본인 주 담당</span><span class="case-facts"><span class="cf"><b>무엇</b><span>바퀴 회전량과 조향각으로 차의 이동거리·방향 계산</span></span><span class="cf"><b>방법</b><span>타이어 반지름 실측 → 이동거리·회전각 누적 계산 코드 작성 → 한 바퀴 회전량 비교로 튜닝</span></span><span class="cf"><b>맡은 일</b><span>계산 코드 작성·실측 튜닝</span></span><span class="cf"><b>결과</b><span>남은 센서퓨전 위치 추정(EKF) 코드의 위치 예측 단계에서도 같은 실측 상수와 계산을 씀</span></span></span></summary>
+  <div class="case-steps">
+    <div class="step">
+      <h4 class="step-title">실측 기반 이동거리 계산과 튜닝</h4>
+      <div class="step-body">
+        <p>차량 상태 신호에서 바퀴 인코더 값과 조향값을 받아 이동거리와 회전각을 계산하는 코드를 작성했습니다. 타이어 반지름은 공기압과 장착 상태를 반영해 직접 잰 값(0.265 m)을 넣었고, 바퀴가 한 바퀴 돌 때 계산된 이동량이 얼마나 늘어나는지 비교하며 값을 맞췄습니다.</p>
+        <figure class="fig wide"><img src="images/erp42/erp42-odom-distance-code.png" alt="바퀴 반지름 0.265 m, 한 바퀴 인코더 100틱으로 인코더 차이를 이동거리로 바꾸는 파이썬 코드 화면" width="968" height="560" loading="lazy"><figcaption class="muted">2025년 2월 보고서의 계산 코드 — 바퀴 반지름과 한 바퀴 인코더 수로 이동거리를 구함</figcaption></figure>
+      </div>
+    </div>
+    <div class="step">
+      <h4 class="step-title">RViz 확인과 IMU 융합 과제</h4>
+      <div class="step-body">
+        <p>계산 프로그램을 차량 드라이버와 함께 실행해, 바퀴를 돌리면 위치 출력 값이 바뀌는 것을 RViz와 터미널에서 확인하고 보고서로 정리했습니다. 보고서에는 차의 방향을 더 정확히 얻기 위해 IMU와 바퀴 센서를 합치는 일을 다음 과제로 적었습니다.</p>
+        <figure class="fig wide"><img src="images/erp42/erp42-odom-rviz-check.jpg" alt="RViz 화면 위에, 센서 프레임 없이 노트북만 얹은 ERP42 차체 사진이 겹쳐진 결과 영상 캡처" width="1536" height="864" loading="lazy"><figcaption class="muted">결과 영상 캡처 — 바퀴를 돌리며 RViz에서 위치 출력 확인(2025년 2월)</figcaption></figure>
+      </div>
+    </div>
+    <div class="step">
+      <h4 class="step-title">남은 EKF 코드의 위치 예측에서도 같은 계산</h4>
+      <div class="step-body">
+        <p>여러 센서를 합쳐 위치를 구하는 남은 EKF 코드의 위치 예측 단계에서도 이 바퀴 이동거리·회전각 계산과 같은 실측 상수를 씁니다(<a href="#case-localization">07 GPS 음영구간의 위치 추정</a>).</p>
+      </div>
+    </div>
+  </div>
+  <p class="takeaway">이 작업으로 <strong>실측한 차량 수치를 계산식에 넣고 실제 움직임과 비교해 맞추는 방법</strong>을 익혔습니다.</p>
+  </details>
+
+  <details class="case"><summary><h3 id="case-lidar">LiDAR 장애물 회피 실험</h3><span class="case-phase">구현</span><span class="badge-team">구현 참여</span><span class="case-facts"><span class="cf"><b>무엇</b><span>LiDAR로 앞의 장애물을 찾아 빈 공간 쪽으로 피하는 주행</span></span><span class="cf"><b>방법</b><span>2D 스캔으로 시작 → 빈 공간 쪽 조향 설계 → 3D 점군 묶기·콘 중심선 따라가기 실험</span></span><span class="cf"><b>맡은 일</b><span>초기 2D 회피 설계 보고서 작성 · 회피 코드 구현 참여 · 라바콘 구입 · 사진 촬영</span></span><span class="cf"><b>결과</b><span>책상·사람을 장애물로 둔 회피 테스트(팀 내부) · 경로추종과의 연결은 실험 단계</span></span></span></summary>
+  <div class="case-steps">
+    <div class="step">
+      <h4 class="step-title">2D 스캔으로 시작한 설계와 장착 높이 한계</h4>
+      <div class="step-body">
+        <p>팀은 LiDAR의 대회 쓰임을 장애물 회피와 라바콘 주차로 보고, 먼저 2D 스캔으로 장애물을 찾는 방식부터 접근했습니다. 저는 이 초기 설계를 보고서로 정리하며, 예정된 LiDAR 장착 높이로는 소형 장애물과 차량은 볼 수 있지만 주차 미션의 라바콘을 찾기엔 맞지 않아 회피 알고리즘을 완성한 뒤 필요하면 3D 데이터로 넓힐 계획을 적었습니다.</p>
+      </div>
+    </div>
+    <div class="step">
+      <h4 class="step-title" id="step-pointcloud">빈 공간 쪽 회피 설계와 3D 점군 실험</h4>
+      <div class="step-body">
+        <p>팀은 장애물이 감지된 각도 사이에서 좌우 빈 공간을 비교해 더 넓은 쪽으로 차를 돌리는 회피 방식을 설계했습니다. 이후 빈 공간 각도에 맞춰 바로 조향을 보내는 방식부터, 3D 점군에서 가까운 점끼리 묶어 장애물로 보는 클러스터링, 라바콘 사이 중심선을 따라가는 방식까지 여러 회피 코드를 실험했고 저도 이 구현 과정에 함께 참여했습니다.</p>
+        <figure class="fig"><img src="images/erp42/erp42_test_lidar_obstacle_track.jpg" alt="알루미늄 프레임을 단 ERP42 앞부분 너머로 실내 복도 바닥에 놓인 라바콘들이 보이는 실차 시험 모습" width="1000" height="1000" loading="lazy"><figcaption class="muted">실내 복도에 라바콘을 놓고 한 장애물 트랙 실차 시험(팀 내부 테스트)</figcaption></figure>
+      </div>
+    </div>
+    <div class="step">
+      <h4 class="step-title">경로점 추종 중 회피 테스트와 다음 과제</h4>
+      <div class="step-body">
+        <p>2025년 4월 팀은 측정해 모은 경로점을 따라 달리며 책상과 사람을 장애물로 두고 피해 가는지 보는 테스트를 했습니다(<a href="#overview">한눈에 보기의 테스트 영상</a>). 7월 실도로 시험은 위치 추정·경로추종·차선 인식까지 함께 돌렸고, 장애물 회피를 함께 돌리는 일은 다음 과제로 남았습니다. 지금 남은 코드에서 회피는 경로추종과 연결되지 않은 실험 단계입니다.</p>
+      </div>
+    </div>
+  </div>
+  <p class="takeaway">이 작업으로 <strong>센서를 단 위치가 인식할 수 있는 대상을 정한다는 점을 보고, 2D에서 3D로 단계적으로 넓혀 가며 실험하는 순서</strong>를 익혔습니다.</p>
+  </details>
+
+  <details class="case"><summary><h3 id="case-path">곡선 구간의 경로추종</h3><span class="case-phase">구현</span><span class="badge-team">본인 주 담당</span><span class="case-facts"><span class="cf"><b>무엇</b><span>경로점을 따라가되 곡선에서 조향이 튀지 않는 경로추종</span></span><span class="cf"><b>방법</b><span>팀원들과 Pure Pursuit·Stanley 검토 → 방향 오차 비례 조향 + 직전 조향값과 섞기 → 남은 코드도 같은 틀</span></span><span class="cf"><b>맡은 일</b><span>경로추종 구현</span></span><span class="cf"><b>결과</b><span>운동장 8자 주행 시험 · 경로점과 차량 위치를 겹친 그래프(팀 내부 테스트)</span></span></span></summary>
+  <div class="case-steps">
+    <div class="step">
+      <h4 class="step-title">Pure Pursuit·Stanley 검토</h4>
+      <div class="step-body">
+        <p>팀원들과 여러 경로추종 기법(Pure Pursuit·Stanley)을 검토한 뒤, 팀 연구계획서의 설계대로 경로와의 방향 오차에 비례해 조향하고 직전 조향값과 섞는 단순한 방식으로 구현했습니다.</p>
+        <figure class="fig"><img src="images/erp42/erp42-field-test-run.jpg" alt="운동장에서 카메라 쪽으로 달려오는 ERP42 옆모습" width="1280" height="720" loading="lazy"><figcaption class="muted">예시: 운동장 경로점 추종 테스트 중인 차량(팀 내부 테스트)</figcaption></figure>
+      </div>
+    </div>
+    <div class="step">
+      <h4 class="step-title">3월 보고서의 조향 방식</h4>
+      <div class="step-body">
+        <p>목표 경로점과 차의 방향 차이에 비례해 조향하되 최대 조향각을 넘지 않게 자르고, 조향이 급하게 바뀌지 않도록 직전 조향값과 일정 비율로 섞었습니다. 이 틀은 남아 있는 팀 코드의 경로추종에도 같은 방식으로 이어졌습니다.</p>
+        <figure class="fig wide"><img src="images/erp42/erp42-pathtrack-steer-code.png" alt="방향 오차를 최대 조향각으로 자르고 ERP42 조향값으로 바꾼 뒤 직전 조향값과 섞는 파이썬 코드 화면" width="868" height="394" loading="lazy"><figcaption class="muted">2025년 3월 보고서의 조향 코드 — 방향 오차를 조향값으로 바꾸고 직전 조향값과 섞음</figcaption></figure>
+      </div>
+    </div>
+    <div class="step">
+      <h4 class="step-title">운동장 8자 주행 시험과 결과 그래프</h4>
+      <div class="step-body">
+        <p>ERP42에 IMU·GPS를 연결하고 위치 계산·<a href="#case-waypoint">8자 경로 생성</a>·경로추종을 차례로 실행해 운동장에서 8자 주행을 시험했고, 차량이 계산한 자기 위치를 경로점과 겹친 그래프로 정리했습니다. 두 선은 대부분 겹쳤고 일부 구간에서 조금 벗어났습니다.</p>
+        <div class="fig-pair">
+    <figure class="fig"><img src="images/erp42/erp42-pathtrack-8shape-plot.png" alt="8자 경로점(실선)과 ERP42가 계산한 자기 위치(점선)를 x·y 위치(m) 축에 겹친 그래프, 일부 구간에서 조금 어긋남" width="942" height="678" loading="lazy"><figcaption class="muted">경로점(실선)과 차량이 계산한 자기 위치(점선)를 겹친 그래프(팀 내부 테스트, 2025년 3월)</figcaption></figure>
+    <figure class="fig"><img src="images/erp42/erp42-pathtrack-8shape-run.jpg" alt="흙 운동장에서 멀리 8자로 달리는 ERP42와 오른쪽 아래 RViz 8자 경로 화면" width="1280" height="610" loading="lazy"><figcaption class="muted">8자 주행 시험 영상 캡처(3배속 영상)</figcaption></figure>
+  </div>
+      </div>
+    </div>
+  </div>
+  <p class="takeaway">이 작업으로 <strong>정교한 기법보다 실제 차량에 맞는 단순한 구현을 고르는 판단</strong>을 익혔습니다.</p>
+  </details>
+
+  <details class="case"><summary><h3 id="case-localization">GPS 음영구간의 위치 추정</h3><span class="case-phase">문제해결</span><span class="badge-team">본인 주 담당</span><span class="case-facts"><span class="cf"><b>문제 파트</b><span>측위(차량 위치 추정)</span></span><span class="cf"><b>문제</b><span>120m 안팎 GPS 음영구간 · 갈수록 쌓이는 IMU 오차(drift)</span></span><span class="cf"><b>해결</b><span>바퀴 회전량·조향각으로 위치를 예측하고 GPS로 바로잡는 EKF 적용 · 팀은 IMU 교체</span></span><span class="cf"><b>배운 점</b><span>센서 하나가 흔들려도 여러 측정값을 합쳐 위치를 유지하는 설계</span></span></span></summary>
+  <div class="case-steps">
+    <div class="step">
+      <h4 class="step-title">120m 안팎 음영구간과 IMU 오차</h4>
+      <div class="step-body">
+        <p>예선 코스에는 120m 안팎의 GPS 음영구간(철골 구조 등)이 있어 GPS가 잡히지 않았고, IMU는 갈수록 오차가 쌓였습니다(drift). 차가 자기 위치를 잃으면 경로점을 따라갈 기준도 함께 잃게 됩니다.</p>
+      </div>
+    </div>
+    <div class="step">
+      <h4 class="step-title">바퀴 회전량 계산과 IMU 융합 과제</h4>
+      <div class="step-body">
+        <p>직접 작성해 실측으로 튜닝한 <a href="#case-odom">바퀴 회전량 계산</a>을 바탕으로, 보고서에 차의 방향을 더 정확히 얻기 위해 IMU와 합치는 일을 다음 과제로 적어 두었습니다.</p>
+      </div>
+    </div>
+    <div class="step">
+      <h4 class="step-title">EKF 적용과 IMU 교체</h4>
+      <div class="step-body">
+        <p>저는 각 센서를 구동해 얻은 데이터를 써서 바퀴 회전량과 조향각으로 위치를 계산하고 GPS로 바로잡는 EKF를 적용했으며 차의 방향은 IMU로 구했습니다. 처음 쓰던 IMU는 쌓이는 오차를 잡지 못해 위치 추정이 부정확했고, 팀은 7차 원정 연습 뒤 IMU를 새로 구입해 교체했습니다.</p>
+        <div class="fig-pair">
+    <figure class="fig"><img src="images/erp42/erp42-sensor-frame-front.jpg" alt="복도에서 앞쪽 비스듬히 찍은, 센서 프레임과 상자·경고등을 얹은 ERP42" width="1050" height="1400" loading="lazy"><figcaption class="muted">예시: 센서 장착 프레임을 얹은 ERP42(팀 기술보고서 사진)</figcaption></figure>
+    <figure class="fig"><img src="images/erp42/erp42-gps-antenna-receiver.jpg" alt="프레임 기둥 위 GPS 안테나와 흰 스티로폼 위에 놓인 수신기 상자 근접 사진" width="1050" height="1400" loading="lazy"><figcaption class="muted">예시: 프레임에 장착한 GPS 안테나와 수신기(팀 기술보고서 사진)</figcaption></figure>
+  </div>
+      </div>
+    </div>
+    <div class="step">
+      <h4 class="step-title" id="step-origin">초기 GPS 원점의 지도 좌표</h4>
+      <div class="step-body">
+        <p>위치는 초기 GPS 위치를 원점으로 삼은 지도 좌표로 나오고, 팀은 미리 기록한 경로점도 같은 좌표로 바꿔 주행 경로로 내보냈습니다. 경로점을 직접 측정해 만든 과정은 <a href="#case-waypoint">03 경로점 만들기</a>에 있습니다.</p>
+      </div>
+    </div>
+  </div>
+  <p class="takeaway">이 작업으로 <strong>센서 하나가 흔들려도 여러 측정값을 합쳐 위치를 유지하도록 설계하는 관점</strong>을 익혔습니다.</p>
+  </details>
+
+  <details class="case case-minor"><summary><h3 id="case-arbiter">주행 명령 중재(프로토타입)</h3><span class="case-phase">구현</span><span class="badge-team">본인 주 담당</span><span class="case-facts"><span class="cf"><b>무엇</b><span>여러 기능이 낸 주행 명령 중 따를 것 하나 고르기</span></span><span class="cf"><b>방법</b><span>차선·경로 명령 우선순위 · 오래된 명령 제외 · 유효 명령이 없으면 완전 제동</span></span><span class="cf"><b>결과</b><span>소스 코드 수준 프로토타입</span></span></span></summary>
+  <div class="case-steps">
+    <div class="step">
+      <h4 class="step-title">우선순위와 완전 제동</h4>
+      <div class="step-body">
+        <p>차선·경로 명령에 우선순위를 두고 오래된 명령은 빼며, 유효한 명령이 없으면 완전 제동하도록 했으나, 설계의 신호·표지판 단계는 구현하지 못했고 대회 당일 주행에 이 노드를 사용했는지는 확인되지 않았습니다.</p>
+        <figure class="fig wide">
+    <img src="images/erp42/erp42-controller-design-flow.png" alt="LiDAR·카메라·경로 명령이 Controller(우선순위 선택)로 모이고, 신호·표지판, 장애물 회피, 경로 추종 순으로 골라 ERP42에 보내는 흐름도" width="964" height="481" loading="lazy">
+    <figcaption class="muted">팀 기술보고서의 판단 노드 설계 흐름도 — 신호·표지판, 장애물 회피, 경로추종 순으로 명령을 고르는 설계</figcaption>
+  </figure>
+      </div>
+    </div>
+  </div>
+  <p class="takeaway">이 작업으로 <strong>명령이 없거나 오래됐을 때는 차를 세우는 쪽을 기본으로 두고</strong>, 판단·인지·제어를 나눠 보는 설계 방식을 익혔습니다.</p>
   </details>
 </section>
 
@@ -304,6 +438,7 @@
     <li><b>팀 구성</b><span>4인 팀(실개발 2~3인) · 저는 팀장</span></li>
     <li><b>보고</b><span>주간 일정을 테스트 사진·영상과 함께 보고 → 지도교수 보고 · 팀 공유 · 이후 대회에 참가할 후배들의 참고 자료</span></li>
     <li><b>기록</b><span>당시 주행 기록(rosbag) 정리 · 다시 실험할 때 참고할 시뮬레이션 구성과 의도한 실험 방법</span></li>
+    <li><b>외부 학습</b><span>대회 기술세미나에 참석해 강연 내용을 메모로 정리하고, 메모의 튜닝 → 시험 주행 → 데이터 로깅 → 분석 → 개선 반복 사이클을 팀 실차 시험에 가져와 적용을 시도</span></li>
   </ul>
   <!-- 진행 방식 서술 숨김(사용자 11-09 "진행방식은 에이전트가 만든거라 서술이 부적합함. 모두 숨기기") <p>처음에는 부족한 인원과 경험 탓에 진행 속도를 자주 확인하며 재촉하기도 했지만, 팀원이 어려움을 말하지 못하고 혼자 붙잡고 있는 모습을 보며 제 반응이 질문을 어렵게 만들 수 있다고 돌아봤습니다. 이후 얼마나 했는지 재촉하기보다 어디서 막혔는지를 먼저 듣고, 제가 이해한 작업 순서를 정리해 공유하며 다음 할 일을 함께 정했습니다. 막힌 지점을 함께 들여다보자 서로 다르게 이해했던 부분이 드러나 맞춰 갈 수 있었고, 속도보다 함께 해결할 일을 먼저 살피게 됐습니다.</p> -->
   <p><b>본인 담당:</b></p>
@@ -312,7 +447,7 @@
   </ul>
   <p><b>팀원들과 함께:</b></p>
   <ul class="role-list">
-    <li>센서 bring-up(센서 연결·첫 구동 점검)</li>
+    <li>센서 장착·연결</li>
   </ul>
 </section>
 
@@ -321,7 +456,11 @@
   <ul class="phase-facts">
     <li><b>재미</b><span>팀이 함께 구상한 구조를 실기에서 조립해 견고하게 다듬고, 팀원 의견과 반복 시험으로 조금씩 나아지는 과정</span></li>
     <li><b>조언</b><span>지도교수님의 "아무리 사전준비를 잘 해가도, 실제 필드 테스트에선 문제가 드러날 수 있다"는 말 — 실차 시험에서 드러난 문제가 실차 조정으로 이어짐</span></li>
-    <li><b>깨달음</b><span>인지 기능을 더하기 전에 측위와 경로추종이라는 최소 기반부터 실차에서 다져야 상위 모듈이 빠져도 주행이 이어진다는 점은, 인지 일부가 빠진 채 완주한 경험(팀 회고 기준)으로 확인했습니다.</span></li>
+    <li><b>깨달음</b><span>인지 기능을 더하기 전에 측위와 경로추종이라는 최소 기반부터 실차에서 다져야 상위 모듈이 빠져도 주행이 이어진다는 점은, 인지 일부가 빠진 상태에서도 대회 예선을 완주한 경험(팀 회고 기준)으로 확인했습니다.</span></li>
+    <li><b>통합</b><span>Linux 환경에서 다양한 센서의 ROS 2 패키지를 빌드·튜닝하고 시리얼 통신으로 차량 플랫폼을 제어하며, 이기종 하드웨어와 소프트웨어를 한 시스템으로 엮어내는 엔지니어링 기초를 익혔습니다.</span></li>
+    <li><b>측위</b><span>GNSS로 지구 위 위치를 받는 절대 측위와 바퀴 회전량으로 움직임을 쌓는 상대 측위를 EKF로 융합하는 개념을 이해했습니다.</span></li>
+    <li><b>인지</b><span>차선 감지를 RGB 필터로 먼저 시작했지만 야외에서 달리는 대회 특성상 빛 조건에 민감해, HSV 색 공간을 공부해 도입했습니다. 대회장에서 찍은 데이터로 차선·신호등·표지판 감지 모델을 전이학습해 활용하는 방법도 익혔습니다.</span></li>
+    <li><b>현장 통신</b><span>RTK 보정 신호 접속이 끊기지 않도록, 무선 간섭이 우려되는 대회장에서는 휴대폰 핫스팟을 노트북에 유선으로 연결해 쓰는 방법을 익혔습니다.</span></li>
   </ul>
 </section>
 
