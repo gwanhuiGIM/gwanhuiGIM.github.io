@@ -115,7 +115,7 @@
     <img src="images/cobot2/slide_planner_ompl_cumotion.jpg" alt="발표 슬라이드 도식: 왼쪽 RRTConnect는 무작위 샘플을 이어 장애물을 돌아가는 꺾인 경로, 오른쪽 cuMotion은 여러 궤적을 동시에 밀어 하나의 매끄러운 곡선 경로로 수렴하는 모습" width="1200" height="471" loading="lazy">
     <figcaption class="muted">팀 발표 자료 p49 — OMPL(RRTConnect)은 무작위 샘플을 이어 경로를 찾고, cuMotion은 여러 궤적을 GPU에서 동시에 다듬어 하나로 모읍니다.</figcaption>
   </figure>
-  <p>두 장애물 지도의 반응 비교, 장애물 지도가 비어도 계획이 성공해 버리는 문제, 충돌 검사용 구 모델은 아래 진행 과정의 <a href="#case-3dmap">05</a>·<a href="#case-emptyworld">06</a>·<a href="#case-xrdf">08</a> 사례에서 다룹니다.</p>
+  <p>두 장애물 지도의 반응 비교, 장애물 지도가 비어도 계획이 성공해 버리는 문제, 충돌 검사용 구 모델은 아래 진행 과정의 <a href="#case-3dmap">06</a>·<a href="#case-emptyworld">10</a>·<a href="#case-xrdf">11</a> 사례에서 다룹니다.</p>
   </details>
 
   <details class="impl">
@@ -208,7 +208,7 @@
   <p class="takeaway">계산 결과보다 먼저 <strong>데이터를 만드는 실물 도구(체커보드)의 상태를 점검하고 고정해야 한다</strong>는 점을 배웠습니다.</p>
   </details>
 
-  <details class="case"><summary><h3 id="case-rg2">실물 그리퍼 실측 보정</h3><span class="case-facts"><span class="cf"><b>목적</b><span>시뮬레이션 그리퍼 모델 → 실물 그리퍼에 맞춤</span></span><span class="cf"><b>한 일</b><span>모델 회전값 비교 · 직접 실측(브라켓 22mm · 손끝 38mm) · 벌림 폭별 보정표</span></span><span class="cf"><b>결과</b><span>파지 모델은 그대로, 차이는 그리퍼 코드에서 흡수</span></span></span></summary>
+  <details class="case"><summary><h3 id="case-rg2">실물 그리퍼 실측 보정</h3><span class="case-facts"><span class="cf"><b>목적</b><span>시뮬레이션 그리퍼 모델 → 실물 그리퍼에 맞춤</span></span><span class="cf"><b>한 일</b><span>모델 회전값 비교 · 직접 실측(브라켓 22mm · 손끝 +38mm) · 벌림 폭별 보정표</span></span><span class="cf"><b>결과</b><span>파지 모델은 그대로, 차이는 그리퍼 코드에서 흡수</span></span></span></summary>
   <div class="case-steps">
     <div class="step">
       <h4 class="step-title">시뮬레이션과 실기의 규격 차이</h4>
@@ -242,7 +242,7 @@
   <p class="takeaway">시뮬레이션에서 정상인 모델도 <strong>실물 그리퍼의 치수와 기준을 다시 재서 맞춰야 한다</strong>는 점을 익혔습니다.</p>
   </details>
 
-  <details class="case"><summary><h3 id="case-gpu">단일 GPU 메모리 조정</h3><span class="case-facts"><span class="cf"><b>조건</b><span>노트북 GPU 하나(8GB)를 4개 모듈이 나눠 씀</span></span><span class="cf"><b>한 일</b><span>파지 후보 200 → 64개 · 중복 실행되던 인식 노드 → 1개</span></span><span class="cf"><b>결과</b><span>모든 모듈 함께 구동</span></span></span></summary>
+  <details class="case"><summary><h3 id="case-gpu">단일 GPU 메모리 조정</h3><span class="case-facts"><span class="cf"><b>조건</b><span>노트북 GPU 하나(8GB)를 여러 모듈이 나눠 씀</span></span><span class="cf"><b>한 일</b><span>파지 후보 200 → 64개 · 중복 실행되던 인식 노드 → 1개</span></span><span class="cf"><b>결과</b><span>모든 모듈 함께 구동</span></span></span></summary>
   <div class="case-steps">
     <div class="step">
       <h4 class="step-title">노트북 GPU 하나(8GB)</h4>
@@ -257,7 +257,7 @@
     <div class="step">
       <h4 class="step-title">지연 병목과 파지 후보 수</h4>
       <div class="step-body">
-        <p>물체 인식은 카메라 영상 공급보다 빨라(YOLO 상주 120MiB·추론 6.7ms) 최적화하지 않고, 지연 병목인 파지 후보 생성의 부하를 줄였습니다. 후보 수를 200개에서 64개로 낮춘 것도 그중 하나입니다.</p>
+        <p>물체 인식은 카메라 영상 공급보다 빨라 더 빠른 실행 형식으로 바꾸지 않기로 했고(실측해 보니 YOLO 상주 120MiB·추론 6.7ms), 지연 병목인 파지 후보 생성의 부하를 줄였습니다. 후보 수를 200개에서 64개로 낮춘 것도 그중 하나입니다.</p>
       </div>
     </div>
     <div class="step">
@@ -422,7 +422,7 @@
           <div class="pipe-arrow" aria-hidden="true">→</div>
           <div class="pipe-col"><div class="pipe-box">cuMotion 계획<small>정상 성공</small></div></div>
           <div class="pipe-arrow" aria-hidden="true">→</div>
-          <div class="pipe-col"><div class="pipe-box gate">이동 전 확인<small>지도 서비스 없음 → 이동 거부</small></div></div>
+          <div class="pipe-col"><div class="pipe-box gate">이동 전 확인<small>지도 서비스 없음 → 이동 거부(실험 코드)</small></div></div>
         </div>
         <p>nvblox가 꺼지면(2차원 설정이면 첫 계획 요청에 꺼짐) cuMotion은 장애물 없는 세상을 기준으로 계획에 성공합니다. 성공만 보고 넘어가면 로봇이 움직인 뒤에야 드러나는 실패라, 저는 로봇을 움직이지 않고 계획만 실행해 재현했습니다.</p>
       </div>
