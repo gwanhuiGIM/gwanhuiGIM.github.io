@@ -76,6 +76,12 @@
     </figure>
   </div>
   <figure class="fig">
+    <video controls muted loop playsinline preload="none" poster="images/cobot2/approach_yolo_clip_poster.jpg" width="960" height="532" aria-label="작업대 위 사과, 오렌지, 컵에 인식 상자와 라벨이 표시되어 있고, 로봇 팔이 관절 자세를 바꾸며 작업대 위 물체 쪽으로 내려가는 10초 영상">
+      <source src="images/cobot2/approach_yolo_clip.mp4" type="video/mp4">
+    </video>
+    <figcaption class="muted">카메라 영상에서 물체를 인식하고, 로봇 팔이 여러 자세로 물체를 집으러 내려가는 장면(8월 12일, 10초)</figcaption>
+  </figure>
+  <figure class="fig">
     <video controls muted loop playsinline preload="none" poster="images/cobot2/graspgenx_plan_poster.jpg" width="1280" height="688" aria-label="왼쪽은 3차원 칸으로 표시한 장애물 지도 위 로봇 경로 계획 화면, 오른쪽은 카메라 점구름 위에 파지 후보를 만드는 화면. 중간에 오른쪽 장면이 한 번 바뀐다">
       <source src="images/cobot2/graspgenx_plan.mp4" type="video/mp4">
     </video>
@@ -92,6 +98,14 @@
       <figcaption class="muted">같은 장면을 옆에서 본 화면 — 물체의 점들이 바닥(테이블)과 이어져 형상이 뭉개진다</figcaption>
     </figure>
   </div>
+  <figure class="fig">
+    <img src="images/cobot2/pointcloud_side_0809.jpg" alt="작업대 위 바나나, 콜라병, 사과, 오렌지의 3차원 점군 데이터가 분리되지 않고 테이블 바닥면의 점들과 붙어 있는 측면 시각화 화면" width="760" height="310" loading="lazy">
+    <figcaption class="muted">다른 날(8월 9일) 장면을 옆에서 본 점군 — 콜라병과 바나나의 점들이 바닥면과 이어져 형상이 뭉개진 모습으로, 콜라병을 집지 못한 원인 중 하나입니다.</figcaption>
+  </figure>
+  <figure class="fig">
+    <img src="images/cobot2/octomap_param_table.jpg" alt="파라미터 이름과 계획 값, 실제 적용 값이 정리된 3열 표 화면으로, 감지 거리, 포인트 샘플링 비율, octomap 해상도 등의 수치가 적혀 있다" width="700" height="652" loading="lazy" class="narrow">
+    <figcaption class="muted">연산 자원(CPU·GPU) 분배를 위해 오픈소스 코드의 octomap 및 센서 파라미터를 파악하고 수정한 계획·실제 값 비교(8월 10일)</figcaption>
+  </figure>
   <p>파지 모델 도입 건의와 인식·모델 연결, 실물 그리퍼 보정, GPU 메모리 조정 등 제가 맡은 진행 과정은 아래 사례에서 다룹니다.</p>
   </details>
 
@@ -125,6 +139,16 @@
     <figcaption class="muted">오렌지를 들어 올린 로봇(오른쪽)과 함께 띄운 화면(왼쪽) — 위는 주변 장애물을 3차원 칸으로 표시한 지도 위 경로 계획, 아래는 현재 단계(LIFT, 들어 올리기)·대상·목적지</figcaption>
   </figure>
   <p>저는 로봇 구동 파트에서 작업을 인식 → 계획 → 집기 → 옮겨 놓기 단계로 나눠 순서를 정하는 상태머신(FSM)을 맡았습니다.</p>
+  <div class="fig-pair">
+    <figure class="fig">
+      <img src="images/cobot2/fsm_control_panel.png" alt="상태 표시와 타겟 물체 선택, 속도 조절, 작업 시작·중단·즉시정지 버튼, 안전모드 및 그리퍼 전원 제어 메뉴가 배치된 그래픽 사용자 인터페이스(rqt) 조작 패널 창" width="484" height="765" loading="lazy">
+      <figcaption class="muted">작업 단계와 로봇 상태 확인, 대상 물체 선택, 정지와 안전모드 전환을 한 화면에서 하도록 제가 만든 조작 패널</figcaption>
+    </figure>
+    <figure class="fig">
+      <img src="images/cobot2/fsm_candidate_exhaust_log.jpg" alt="검은 터미널 화면에 역기구학 계산 실패(NO_IK_SOLUTION) 메시지와 함께 남은 후보가 0개가 되자 실패 통보 후 대기(IDLE) 상태로 전환되는 로그 텍스트가 위에서 아래로 출력되어 있다" width="706" height="708" loading="lazy">
+      <figcaption class="muted">파지 후보마다 역기구학 계산을 시도하다 모두 실패하면 실패를 알리고 대기 상태로 복귀하는 상태머신 처리 로그(8월 7일)</figcaption>
+    </figure>
+  </div>
   <p>정지와 그리퍼 판단은 팀이 정한 안전 규칙을 따릅니다. 예를 들어 "멈춰"는 언어 모델을 거치지 않고 바로 일시정지로 이어지고, 물체를 든 채 멈추면 그리퍼를 자동으로 열지 않습니다.</p>
   </details>
 </section>
@@ -154,6 +178,10 @@
     <div class="step">
       <h4 class="step-title">CAD 모델 대신 카메라 영상</h4>
       <div class="step-body">
+        <figure class="fig wide">
+          <img src="images/cobot2/graspgenx_example_run.jpg" alt="왼쪽에는 나무 테이블 위 과자 상자·컵·그릇·소스 병 등 여러 물체와 로봇 팔이 찍힌 카메라 사진이, 오른쪽에는 머스터드 병의 3차원 점군과 주황색 경계 상자 및 파란색 그리퍼 파지 모형이 나란히 배치되어 있다" width="994" height="529" loading="lazy">
+          <figcaption class="muted">GraspGenX 공개 예제 데이터를 실행한 화면(8월 10일) — 카메라 영상에서 물체 점군을 추출하고 파란 그리퍼 모형으로 파지 자세 후보를 생성합니다.</figcaption>
+        </figure>
         <p>팀은 물체의 CAD 모델이 필요한 방식 대신, 카메라 영상으로 바로 파지 후보를 만드는 GraspGenX를 시작점으로 삼았습니다.</p>
       </div>
     </div>
@@ -247,9 +275,9 @@
     <div class="step">
       <h4 class="step-title">노트북 GPU 하나(8GB)</h4>
       <div class="step-body">
-        <figure class="fig">
-      <a href="images/cobot2/gpu_usage.jpg"><img src="images/cobot2/gpu_usage.jpg" alt="시스템 모니터의 CPU 16스레드 사용률 87~97%와 메모리 18.0GB/33.3GB, nvidia-smi의 GPU 메모리 6752MiB/8188MiB 사용 화면" width="1740" height="720" loading="lazy"></a>
-      <figcaption class="muted">시스템을 띄운 상태의 자원 사용 실측(8월 11일) — CPU 16스레드 87~97%, 메모리 18.0/33.3GB, GPU 메모리 6,752/8,188MiB (누르면 원본 크기)</figcaption>
+        <figure class="fig wide">
+      <a href="images/cobot2/resource_usage_0811.jpg"><img src="images/cobot2/resource_usage_0811.jpg" alt="왼쪽에는 높은 CPU 사용률과 메모리 18.0GB 사용 현황 그래프가, 오른쪽에는 8GB GPU 메모리 중 6,752MiB가 사용 중임을 보여주는 터미널 창과 프로세스별 점유량 목록이 분할 표시되어 있다" width="1600" height="483" loading="lazy"></a>
+      <figcaption class="muted">시스템 구동 중 자원 사용 실측(8월 11일 녹화의 두 시점을 붙임) — 단일 GPU(8GB)를 여러 프로세스가 나눠 쓰는 상태와 CPU·메모리 부하를 기록한 화면 (누르면 원본 크기)</figcaption>
     </figure>
         <p>nvblox·cuMotion·YOLO-seg·GraspGenX가 노트북 GPU 하나(8GB)를 나눠 써야 했습니다.</p>
       </div>
@@ -300,6 +328,10 @@
           </figure>
         </div>
         <p>64개 후보를 점수 → 도달 반경 → 위에서 내려오는 접근 방향 순으로 걸렀습니다. 옆이나 크게 기울어 들어가 테이블과 부딪힐 수 있는 후보는 빼고, 남은 후보 중 점수가 가장 높은 자세를 골랐습니다.</p>
+        <figure class="fig">
+          <img src="images/cobot2/graspgenx_lying_grasp.jpg" alt="작업대 위 사과의 3차원 점군과 주황색 경계 상자 옆에, 파란색 그리퍼 모형이 수평에 가깝게 누운 각도로 배치된 시각화 화면" width="740" height="550" loading="lazy" class="narrow">
+          <figcaption class="muted">GraspGenX가 생성한 파지 후보 중 그리퍼가 옆으로 누워 접근하는 예시(8월 5일) — 옆면이나 잘못된 자세로 집으면 위험해, 실기 테스트로 조건을 맞춰 나간 계기가 됐습니다.</figcaption>
+        </figure>
       </div>
     </div>
     <div class="step">
