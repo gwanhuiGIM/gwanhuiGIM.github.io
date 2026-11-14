@@ -85,7 +85,7 @@
     <img src="images/erp42/slide_localization.jpg" alt="연구계획서 슬라이드 '평시 주행 - Localization': 위치 추정 설명 상자, Sensor Data(Odometry·IMU·GPS) → Sensor Fusion(Extended Kalman Filter) → Localization data(차량 제어에 활용) 도식, 오른쪽에 Odometry·IMU·GPS 값이 Extended Kalman Filter를 거쳐 Topic parameter 수정(Yaw_offset, 자기 편각 보정)으로 이어지는 도식과 Sensor Fusion 설명 상자" width="1200" height="675" loading="lazy">
     <figcaption class="muted">팀 연구계획서 p3 — 계획서 단계의 위치 추정 설계(센서 데이터 → EKF → 위치 데이터). 위 도식은 저장소에 남은 코드 기준입니다.</figcaption>
   </figure>
-  <p>GPS 음영구간과 IMU 오차를 다룬 과정은 아래 진행 과정 <a href="#case-localization">03</a> 사례에서 다룹니다.</p>
+  <p>GPS 음영구간과 IMU 오차를 다룬 과정은 아래 진행 과정 <a href="#case-localization">03</a> 사례에 정리했습니다.</p>
   </details>
 
   <details class="impl">
@@ -171,7 +171,7 @@
     <div class="step">
       <h4 class="step-title">EKF 적용과 IMU 교체</h4>
       <div class="step-body">
-        <p>저는 각 센서를 구동해 얻은 데이터로, 바퀴 회전량과 조향각으로 위치를 계산하고 GPS로 바로잡는 EKF를 적용했으며 차의 방향은 IMU로 구했습니다. 처음 쓰던 IMU는 쌓이는 오차를 잡지 못해 위치 추정이 부정확했고, 팀은 7차 원정 연습 뒤 IMU를 새로 구입해 교체했습니다.</p>
+        <p>저는 각 센서를 구동해 얻은 데이터를 써서 바퀴 회전량과 조향각으로 위치를 계산하고 GPS로 바로잡는 EKF를 적용했으며 차의 방향은 IMU로 구했습니다. 처음 쓰던 IMU는 쌓이는 오차를 잡지 못해 위치 추정이 부정확했고, 팀은 7차 원정 연습 뒤 IMU를 새로 구입해 교체했습니다.</p>
         <div class="fig-pair">
     <figure class="fig"><img src="images/erp42/erp42-sensor-frame-front.jpg" alt="복도에서 앞쪽 비스듬히 찍은, 센서 프레임과 상자·경고등을 얹은 ERP42" width="1050" height="1400" loading="lazy"><figcaption class="muted">예시: 센서 장착 프레임을 얹은 ERP42(팀 기술보고서 사진)</figcaption></figure>
     <figure class="fig"><img src="images/erp42/erp42-gps-antenna-receiver.jpg" alt="프레임 기둥 위 GPS 안테나와 흰 스티로폼 위에 놓인 수신기 상자 근접 사진" width="1050" height="1400" loading="lazy"><figcaption class="muted">예시: 프레임에 장착한 GPS 안테나와 수신기(팀 기술보고서 사진)</figcaption></figure>
@@ -223,7 +223,7 @@
     <div class="step">
       <h4 class="step-title" id="step-layout">중앙에 둔 GPS와 배치 기준</h4>
       <div class="step-body">
-        <p>노면이 나쁜 구간에서 센서가 흔들렸지만 프레임을 처음부터 다시 설계할 여력은 부족해, 저는 팀과 함께 실차에 직접 대 보며 센서 부착 위치와 주행 중 안정성을 기준으로 초안 배치를 다시 잡았습니다. 위치 추정 기준점이 차량 중앙이라 GPS 등을 중앙에 두고, 보조 배터리·노트북을 올리려고 가운데를 높게 쌓았습니다.</p>
+        <p>노면이 나쁜 구간에서 센서가 흔들렸지만 프레임을 처음부터 다시 설계할 여력이 부족해서, 저는 팀과 함께 실차에 직접 대 보며 센서 부착 위치와 주행 중 안정성을 기준으로 초안 배치를 다시 잡았습니다. 위치 추정 기준점이 차량 중앙이라 GPS 등을 중앙에 두고, 보조 배터리·노트북을 올리려고 가운데를 높게 쌓았습니다.</p>
         <figure class="fig" id="fig-frame">
     <img src="images/erp42/erp42-sensor-frame-side.jpg" alt="알루미늄 프레임 위에 센서와 장비를 얹고 가운데 위쪽에 노트북을 올린 ERP42 차량 옆모습" width="1400" height="1050" loading="lazy">
     <figcaption class="muted">예시: 센서 장착 프레임과 노트북을 얹은 ERP42 옆모습(팀 기술보고서 사진)</figcaption>
@@ -241,7 +241,7 @@
     <div class="step">
       <h4 class="step-title" id="step-tuning">전륜 정렬과 rosbag 로깅</h4>
       <div class="step-body">
-        <p>저는 카메라 장치·해상도, IMU 포트, RTK 접속, 속도·제동 값을 실차에 맞추고 각 노드를 구동해 ROS 2로 통합했으며, 직진 명령에도 한쪽으로 휘던 차는 전륜 정렬이 틀어진 것이어서 직접 조정했습니다. 팀원들과는 튜닝·테스트 주행·rosbag 로깅·분석을 반복했습니다.</p>
+        <p>저는 카메라 장치·해상도, IMU 포트, RTK 접속, 속도·제동 값을 실차에 맞추고 각 노드를 구동해 ROS 2로 통합했으며, 직진 명령에도 한쪽으로 휘던 차는 전륜 정렬이 틀어져 있어 직접 조정했습니다. 팀원들과는 튜닝·테스트 주행·rosbag 로깅·분석을 반복했습니다.</p>
         <div class="test-shots fig-pair">
     <figure class="fig"><img src="images/erp42/erp42_test_lane_data_collection.jpg" alt="차선 감지 알고리즘 구현용 데이터 수집" width="750" height="1000" loading="lazy"><figcaption class="muted">차선 감지 알고리즘 구현용 데이터 수집</figcaption></figure>
   </div>
