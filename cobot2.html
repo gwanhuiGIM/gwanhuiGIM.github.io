@@ -317,16 +317,10 @@
     <div class="step">
       <h4 class="step-title">파지 후보를 고르는 세 단계 조건</h4>
       <div class="step-body">
-        <div class="fig-pair">
-          <figure class="fig">
-            <img src="images/cobot2/grasp_pick_pose_a.jpg" alt="OnRobot RG2 그리퍼가 작업대 위 오렌지를 향해 한쪽으로 기울어진 채 내려와 있는 모습" width="720" height="994" loading="lazy">
-            <figcaption class="muted">같은 오렌지 — 파지 후보에 따라 그리퍼가 위에서 내려오되 한쪽으로 약간 기운 자세로 집기를 준비하는 모습</figcaption>
-          </figure>
-          <figure class="fig">
-            <img src="images/cobot2/grasp_pick_pose_b.jpg" alt="OnRobot RG2 그리퍼가 작업대 위 오렌지를 향해 다른 방향으로 돌아간 채 내려와 있는 모습" width="720" height="994" loading="lazy">
-            <figcaption class="muted">동일한 오렌지에 대해 다른 파지 후보에 따라 그리퍼 방향을 돌려 집기를 준비하는 모습</figcaption>
-          </figure>
-        </div>
+        <figure class="fig wide">
+          <img src="images/cobot2/grasp_filter_count_log.jpg" alt="터미널 로그 다섯 줄: obj_1은 195개에서 점수 195, 도달 195, 접근축 185개 통과, obj_2 후보 0, obj_3은 35개가 세 단계 모두 통과, obj_4 후보 0" width="834" height="196" loading="lazy">
+          <figcaption class="muted">물체마다 파지 후보가 점수 → 도달 범위 → 접근 방향 단계를 거치며 몇 개 남는지 센 로그(8월 7일)</figcaption>
+        </figure>
         <p>64개 후보를 점수 → 도달 반경 → 위에서 내려오는 접근 방향 순으로 걸렀습니다. 옆이나 크게 기울어 들어가 테이블과 부딪힐 수 있는 후보는 빼고, 남은 후보 중 점수가 가장 높은 자세를 골랐습니다.</p>
         <figure class="fig">
           <img src="images/cobot2/graspgenx_lying_grasp.jpg" alt="작업대 위 사과의 3차원 점군과 주황색 경계 상자 옆에, 파란색 그리퍼 모형이 수평에 가깝게 누운 각도로 배치된 시각화 화면" width="740" height="550" loading="lazy" class="narrow">
