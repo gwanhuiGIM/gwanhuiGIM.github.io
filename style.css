@@ -508,7 +508,7 @@ main.case-layout .pipe { display: flex; align-items: stretch; gap: 8px; margin: 
   .pipe-arrow { transform: rotate(90deg); padding-top: 0 !important; }
 }
 /* 절 본문의 가로 긴 발표 슬라이드 도식(11-14): 16:10 틀 대신 원래 비율 */
-main.case-layout section > .fig.wide img { aspect-ratio: auto; height: auto; object-fit: initial; }
+main.case-layout section > .fig.wide img, main.case-layout details.impl > .fig.wide img { aspect-ratio: auto; height: auto; object-fit: initial; }
 /* 프로젝트 구현의 기술·기능 묶음 토글(사용자 11-14 "기술 이름, 기능 단위별 토글") */
 main.case-layout details.impl { border-top: 1px solid var(--line); margin: 0; }
 main.case-layout details.impl:last-of-type { border-bottom: 1px solid var(--line); }
