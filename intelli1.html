@@ -21,8 +21,11 @@
 <b>목차</b>
 <ul>
 <li><a href="#overview">한눈에 보기</a></li>
-<li><a href="#built">무엇을 만들었나</a></li>
-<li><a href="#process">진행 과정</a></li>
+<li><a href="#built">프로젝트 구현</a></li>
+<li class="toc-key"><a href="#process">진행 과정</a></li>
+<li class="toc-sub"><a href="#phase-why">동기</a></li>
+<li class="toc-sub"><a href="#phase-build">구현 과정</a></li>
+<li class="toc-sub"><a href="#phase-solve">문제해결</a></li>
 <li><a href="#team">팀에서 일한 방식</a></li>
 <li><a href="#learned">배운 점</a></li>
 <li><a href="#tech">기술 상세</a></li>
@@ -39,50 +42,76 @@
   <p class="muted">1분 시연 영상</p>
   </div>
   <ul class="ov-summary">
-    <li>팀은 제조 현장에서 안전사고의 발견과 초동 대응이 늦어지는 문제를 줄이려고, 천장 카메라가 쓰러짐·안전모 미착용을 감지하면 가장 가까운 이동로봇이 출동하고 평소에는 순찰하는 관제 시스템을 개발했습니다.</li>
-    <li>5인 팀의 팀장으로 관제 FSM(로봇별 상태를 관리해 출동을 정하는 로직)과 AMR 연동을 맡았습니다.</li>
-    <li>두산로보틱스 ROKEY 부트캠프에서 TurtleBot4 AMR(자율주행 이동로봇) 2대와 천장 웹캠 2대로 진행했습니다.</li>
+    <li><b>내 담당</b> — 관제 FSM과 AMR 연동(5인 팀 팀장) · <a href="#case-status">출동할 수 있는 로봇 가려내기</a> · <a href="#case-message">지난 명령 걸러내기(공동작업)</a> · <a href="#case-field">실물 주행 설정 조정</a></li>
+    <li><b>목표</b> — 제조 현장 안전사고의 발견·초동 대응 지연 줄이기 · 쓰러짐·안전모 미착용 감지 → 가장 가까운 이동로봇 출동 · 평소에는 순찰</li>
+    <li><b>장비</b> — TurtleBot4 AMR(자율주행 이동로봇) 2대 · 천장 웹캠 2대</li>
+    <li><b>감지와 출동의 구분</b> — 천장 카메라 감지(팀) / 관제 FSM: 출동할 로봇 선정 / AMR: 출동·순찰 이동</li>
   </ul>
 </section>
 
 <section>
-  <h2 id="built">무엇을 만들었나</h2>
+  <h2 id="built">프로젝트 구현</h2>
   <p>천장 카메라와 이동로봇 두 대를 통신으로 묶어, 위험 상황이 생기면 로봇을 보내고 평소에는 순찰하게 하는 공장 안전 시스템입니다.</p>
 
-  <h3>위험 상황 접수와 가장 가까운 로봇 출동</h3>
+  <details class="impl">
+  <summary><h3>위험 상황 접수와 가장 가까운 로봇 출동 (관제 FSM · Nav2)</h3></summary>
+  <div class="pipe" role="img" aria-label="도식: 천장 웹캠 감지(관찰, 사람 위치)와 관제 웹 버튼이 요청(관제 접수)으로 모이고, 요청과 명령 사이에서 관제 FSM이 출동할 수 없는 로봇을 뺀 뒤 가장 가까운 로봇을 골라 명령(로봇 이동)을 보내면 AMR이 Nav2로 이동하는 흐름">
+    <div class="pipe-col"><span class="pipe-tag">관찰</span><div class="pipe-box">천장 웹캠 감지<small>사람 위치</small></div></div>
+    <div class="pipe-arrow" aria-hidden="true">→</div>
+    <div class="pipe-col"><span class="pipe-tag">요청</span><div class="pipe-box">관제 접수<small>카메라 감지 · 관제 웹 버튼</small></div></div>
+    <div class="pipe-arrow" aria-hidden="true">→</div>
+    <div class="pipe-col"><span class="pipe-tag">요청→명령 사이</span><div class="pipe-box">관제 FSM<small>출동할 수 없는 로봇 제외 · 가장 가까운 로봇</small></div></div>
+    <div class="pipe-arrow" aria-hidden="true">→</div>
+    <div class="pipe-col"><span class="pipe-tag">명령</span><div class="pipe-box">로봇 이동<small>TurtleBot4 · Nav2</small></div></div>
+  </div>
   <figure class="fig">
     <img src="images/intelli1/fleet_monitor_1200.jpg" alt="관제 웹 화면: 지도 위 로봇 두 대와 사람 위치 사이 거리 선, 로봇별 상태, 출동 로봇 선정 근거 표, 테스트 이벤트 버튼" width="1200" height="628" loading="lazy">
     <figcaption class="muted">관제 웹 화면 — 지도 위 로봇·사람 위치와 거리, 로봇별 상태, 출동 로봇 선정 근거(거리·배터리)</figcaption>
   </figure>
   <p>카메라 감지나 관제 웹 버튼으로 위험 상황이 들어오면 관제 FSM이 먼저 출동할 수 없는 로봇을 뺍니다. 저는 남은 로봇 중 사람에게 가장 가까운 로봇에 출동 명령을 보내도록 만들었습니다. 안전모 미착용일 때는 바로 움직일 수 있는 대기 로봇이 있으면 그중 가까운 로봇을 먼저 고르게 했습니다.</p>
   <p>쓰러짐은 가장 급하고 순찰은 평소 일인 반면, 안전모 미착용은 조치가 필요하지만 순찰 중인 로봇을 빼 올 만큼 급하지는 않다고 보았고, 대기 로봇을 보내 로봇마다 역할이 나뉘는 모습을 보여 주고자 했기 때문입니다.</p>
-  <p>출동할 수 있는 로봇을 가리는 상태 판단과 메시지 전달 방식은 아래 진행 과정에 적었습니다.</p>
+  <p>출동할 수 있는 로봇을 가리는 <a href="#case-status">상태 판단</a>과 <a href="#case-message">메시지 전달 방식</a>은 아래 진행 과정에 적었습니다.</p>
+  </details>
 
-  <h3>순찰 중 소화기 표식 점검과 기록</h3>
+  <details class="impl">
+  <summary><h3>순찰 중 소화기 표식 점검과 기록 (ArUco · SQLite · Flask 웹, 팀 작업)</h3></summary>
   <figure class="fig">
     <img src="images/intelli1/flask_inspection_history.jpg" alt="소화기 점검 이력 웹 화면: 점검 번호·마커 번호·로봇 이름·PASS/FAIL 결과·점검 시각 표와, 벽에 붙은 마커를 찍은 스냅샷" width="1200" height="440" loading="lazy">
     <figcaption class="muted">소화기 점검 이력(마커 번호·로봇·결과·시각)과 한 건을 열어 본 스냅샷 (팀 화면)</figcaption>
   </figure>
   <p>팀은 로봇이 순찰 중 소화기 지점에 도착했을 때만 ArUco 마커(카메라가 번호를 읽을 수 있게 만든 흑백 사각 표식)를 찾아, 점검 결과와 사진을 데이터베이스에 남기고 웹 화면에서 조회할 수 있게 했습니다. 이 점검 기능과 출동·순찰을 맡은 로봇 실행 프로그램을 하나로 합치는 일은 남은 과제였습니다.</p>
+  </details>
 
-  <h3 id="homography">천장 카메라 화면과 로봇 지도 맞추기</h3>
+  <details class="impl">
+  <summary><h3 id="homography">천장 카메라 화면과 로봇 지도 맞추기 (호모그래피)</h3></summary>
   <p>팀은 카메라 화면과 지도에서 같은 지점을 가리키는 점들을 짝지어 호모그래피(영상 평면을 지도 평면으로 옮기는 변환)를 구했습니다.</p>
+  </details>
 
-  <h3>안전모 착용 판정(팀 작업)</h3>
+  <details class="impl">
+  <summary><h3>안전모 착용 판정 (YOLO 자세 추정 · 안전모 검출, 팀 작업)</h3></summary>
   <p>팀은 안전모가 화면에 보이는지만이 아니라, 사람의 머리 위치(자세 추정으로 찾은 기준점)와 안전모 영역이 실제로 겹치는지를 따져 착용 여부를 판정했습니다.</p>
+  </details>
 </section>
 
 <section>
-  <h2 id="process">진행 과정</h2>
-  <p>부트캠프가 정한 조건(로봇 간 협업, 감지·AMR 제어, 시스템 모니터) 안에서 팀은 후보 세 개를 두고 논의했습니다. 제가 처음 제안한 공장 화재 감지·순찰 로봇에 팀원의 웹캠 활용 시나리오가 더해져 지금의 주제로 좁혀졌습니다.</p>
+  <h2 id="process">진행 과정 <span class="h2-hint">각 번호를 펼치면 자세한 설명이 나옵니다</span></h2>
+  <h3 class="phase-title" id="phase-why">동기</h3>
+  <ul class="phase-facts">
+    <li><b>과제 조건</b><span>부트캠프가 정한 조건 — 로봇 간 협업 · 감지·AMR 제어 · 시스템 모니터</span></li>
+    <li><b>주제 논의(팀)</b><span>후보 세 개 중 제가 처음 제안한 공장 화재 감지·순찰 로봇 + 팀원의 웹캠 활용 시나리오 → 지금의 주제로 좁힘</span></li>
+  </ul>
 
-  <details class="case">
-    <summary><h3 id="case-status">출동할 수 있는 로봇 가려내기</h3><span class="case-lead">저는 로봇이 원래 내보내는 표준 토픽(상태 메시지를 주고받는 채널)이 들어오는지로 로봇별 상태를 관리해, 출동할 수 없는 로봇을 후보에서 빼고 그 이유를 관제 웹에 보이게 했습니다.</span></summary>
+  <h3 class="phase-title" id="phase-build">구현 과정</h3>
+  <details class="case"><summary><h3 id="case-status">출동할 수 있는 로봇 가려내기</h3><span class="case-facts"><span class="cf"><b>목적</b><span>관제가 지금 움직일 수 있는 로봇을 알아야 가장 가까운 로봇을 보냄</span></span><span class="cf"><b>한 일</b><span>로봇이 원래 내보내는 표준 토픽 수신 = 생존 신호 · 위치 정보 없음 · 주행 프로그램 없음 → 출동 후보에서 제외</span></span><span class="cf"><b>현장 조정</b><span>Wi-Fi에서 오프라인으로 깜빡임 → 오프라인으로 보기까지 기다리는 시간 늘림</span></span><span class="cf"><b>결과</b><span>제외 이유를 관제 웹에 표시</span></span></span></summary>
   <div class="case-steps">
     <div class="step">
       <h4 class="step-title">토픽 수신을 생존 신호로</h4>
       <div class="step-body">
-        <p>가장 가까운 로봇을 보내려면 관제가 지금 어느 로봇이 움직일 수 있는지 알아야 했습니다. 그런데 로봇이 따로 '살아 있다'는 메시지를 보내지는 않았습니다. 그래서 관제에서 배터리·도킹·위치 추정·주행 상태 토픽이 들어오는지를 생존 신호(heartbeat)로 삼았고, 위치 정보가 들어오지 않거나 주행 프로그램이 떠 있지 않은 로봇을 출동 후보에서 뺐습니다.</p>
+        <p>로봇이 따로 '살아 있다'는 메시지를 보내지는 않아, 관제에서 배터리·도킹·위치 추정·주행 상태 토픽이 들어오는지를 생존 신호(heartbeat)로 삼았습니다. 위치 정보가 들어오지 않거나 주행 프로그램이 떠 있지 않은 로봇은 출동 후보에서 뺐습니다.</p>
+        <figure class="fig wide">
+          <img src="images/intelli1/slide_status_diagnosis.jpg" alt="발표 슬라이드: 원인 구분 진단·표준 인터페이스 직접 구독·독립적 장애 판단 세 항목, 상태 로그, 그리고 robot02는 LOCALIZED·ACTIVE·DOCKED·NORMAL, robot06은 NO LOCALIZATION·INACTIVE·IDLE·ALARM으로 표시된 로봇 상태 표" width="1200" height="637" loading="lazy">
+          <figcaption class="muted">팀 발표 자료 p40 — 도킹·배터리·위치 추정·Nav2 상태를 조합해 OFFLINE·NO_LOCALIZATION·NO_NAV2로 나눠 진단하는 상태 판단</figcaption>
+        </figure>
         <figure class="fig wide">
       <img src="images/intelli1/fleet_status_panel.jpg" alt="관제 웹의 로봇 상태 칸: robot2는 이동 중, robot9는 위급 출동 중으로 강조되고 아래에 도킹·주행·위치·마지막 수신 뒤 지난 시간이 표시됨" width="664" height="258" loading="lazy">
       <figcaption class="muted">관제 웹의 로봇 상태 칸 — 로봇별 현재 상태와 마지막 수신 뒤 지난 시간</figcaption>
@@ -92,21 +121,20 @@
     <div class="step">
       <h4 class="step-title">출동 전 확인표와 프로그램 목록</h4>
       <div class="step-body">
-        <p>상태마다 할 조치는 팀에서 출동 전 확인표로 묶어 함께 썼습니다. 주행 기능은 실행 중인 프로그램 목록으로 확인했는데, 각 기기가 자기가 받아 보기로 한 신호만 확인하는 통신 방식 탓에 관제 PC가 프로그램 목록을 다 보지 못했습니다. 그래서 멀쩡한 로봇도 주행 기능이 없다고 판정되어 출동을 배정받지 못하는 문제가 있었습니다. 팀에서는 관제 PC가 전체 목록을 빠짐없이 확인하는 역할로 설정을 고정하고 점검 절차를 문서로 남겼습니다.</p>
+        <p>상태마다 할 조치는 팀에서 출동 전 확인표로 묶어 함께 썼습니다. 그런데 각 기기가 자기가 받아 보기로 한 신호만 확인하는 통신 방식 탓에 관제 PC가 실행 중인 프로그램 목록을 다 보지 못해, 멀쩡한 로봇도 주행 기능이 없다고 판정되어 출동을 배정받지 못했습니다. 팀에서는 관제 PC가 전체 목록을 빠짐없이 확인하는 역할로 설정을 고정하고 점검 절차를 문서로 남겼습니다.</p>
       </div>
     </div>
     <div class="step">
       <h4 class="step-title">Wi-Fi에서 깜빡인 오프라인</h4>
       <div class="step-body">
-        <p>그런데 부트캠프 Wi-Fi에서는 정상 순찰 중인 로봇이 오프라인으로 깜빡였습니다. 저는 신호가 끊긴 뒤 오프라인으로 보기까지 기다리는 시간을 늘렸습니다(늘린 뒤 다시 측정하지는 못했습니다).</p>
+        <p>부트캠프 Wi-Fi에서는 정상 순찰 중인 로봇이 오프라인으로 깜빡여, 저는 신호가 끊긴 뒤 오프라인으로 보기까지 기다리는 시간을 늘렸습니다.</p>
       </div>
     </div>
   </div>
   <p class="takeaway">상태 판정의 기준은 로봇이 실제로 내보내는 신호에 두고, 그 기준이 <strong>현장 통신 조건에서 흔들리면 다시 맞춰야 한다</strong>는 것을 익혔습니다.</p>
   </details>
 
-  <details class="case">
-    <summary><h3 id="case-message">지난 명령 걸러내기(구현은 공동작업)</h3><span class="case-lead">저는 ROS 2가 제공하는 전달 방식 설정(QoS, 메시지를 어떻게 보내고 남길지 정하는 통신 설정)을 메시지 성격에 맞게 나누는 설계에 직접 관여해, 관제가 보낸 지 오래된 명령은 로봇이 버리도록 했습니다.</span></summary>
+  <details class="case"><summary><h3 id="case-message">지난 명령 걸러내기(구현은 공동작업)</h3><span class="case-facts"><span class="cf"><b>문제</b><span>마지막 명령을 남겨 두는 전달 방식 → 나중에 켜진 로봇이 끝난 상황의 좌표로 출동할 수 있음</span></span><span class="cf"><b>맡은 일</b><span>메시지 성격별 전달 방식(QoS) 나누기 설계에 직접 관여</span></span><span class="cf"><b>방법</b><span>명령에 보낸 시각 · 로봇 쪽에서 30초 지난 명령은 버림</span></span><span class="cf"><b>한계</b><span>보낸 시각이 없거나 읽지 못한 명령은 거르지 못함</span></span></span></summary>
   <div class="case-steps">
     <div class="step">
       <h4 class="step-title">보낸 시각과 30초 기준</h4>
@@ -123,8 +151,8 @@
   </div>
   </details>
 
-  <details class="case">
-    <summary><h3 id="case-field">실물 주행 문제와 통신 분석</h3><span class="case-lead">저는 실물 로봇이 Nav2(자율주행 소프트웨어)가 만든 장애물 지도에 갇혀 움직이지 못하던 문제를 주행 설정 조정으로 풀었고, 위치 추정·자율주행이 실행 도중 멈추던 문제는 부트캠프 뒤 원인 후보 정리와 비교 실험 계획까지 진행했습니다.</span></summary>
+  <h3 class="phase-title" id="phase-solve">문제해결</h3>
+  <details class="case"><summary><h3 id="case-field">실물 주행 문제와 통신 분석</h3><span class="case-facts"><span class="cf"><b>문제 파트</b><span>실물 로봇 주행(Nav2) · 위치 추정·자율주행 통신</span></span><span class="cf"><b>문제</b><span>새로 갱신한 장애물 지도에 갇혀 움직이지 못함 · 위치 추정·자율주행이 실행 도중 멈춤</span></span><span class="cf"><b>해결</b><span>로봇 반경 · 장애물 주변 여유 거리 · 지도 갱신 주기 직접 조정(실물 전환 전체는 팀)</span></span><span class="cf"><b>사후 분석</b><span>실행 도중 멈춤 → 부트캠프 뒤 원인 후보 정리 · 비교 실험 계획</span></span></span></summary>
   <div class="case-steps">
     <div class="step">
       <h4 class="step-title">로봇 반경과 여유 거리 설정</h4>
@@ -138,35 +166,44 @@
         <p>실행 도중 멈추던 문제는 일정 안에 통신 설정을 바꿔 시험하기 빠듯해 부트캠프 뒤의 분석 과제로 남겼고, 적용과 실측은 하지 않았습니다.</p>
       </div>
     </div>
+    <div class="step">
+      <h4 class="step-title">원인 후보와 비교 실험 계획</h4>
+      <div class="step-body">
+        <p>부트캠프 뒤에는 공식 문서와 비슷한 장애 사례를 대조해 통신 탐색·서비스 통신, 이름 공간·좌표 변환(TF) 충돌, Nav2 초기화, QoS, Wi-Fi 혼잡·연산 자원으로 원인 후보를 나누고, 기본 탐색 방식·Fast DDS Discovery Server·CycloneDDS와 Zenoh 조합을 비교하는 실험 계획을 세웠습니다.</p>
+      </div>
+    </div>
   </div>
   </details>
-  <p>팀은 실물 로봇 2대와 천장 웹캠으로 감지·출동·순찰 기능을 개발했지만, 시나리오 전 과정의 실행 결과나 성능은 기록으로 남기지 못했습니다.</p>
 </section>
 
 <section>
   <h2 id="team">팀에서 일한 방식</h2>
-  <p>역할은 각자의 역량과 흥미를 기준으로 나눴습니다.</p>
-  <ul>
-    <li>감지</li>
-    <li>로봇 제어·마커 점검</li>
-    <li>DB(점검 기록 저장)·웹</li>
-    <li>관제 FSM과 AMR 연동(제 담당)</li>
+  <ul class="phase-facts">
+    <li><b>팀 구성</b><span>5인 · 각자의 역량과 흥미 기준 — 감지 / 로봇 제어·마커 점검 / DB(점검 기록 저장)·웹 / 관제 FSM과 AMR 연동(제 담당)</span></li>
+    <li><b>소통</b><span>매일같이 잡힌 강사 평가 준비로 수시 회의</span></li>
+    <li><b>강사 평가</b><span>요구사항 발표 · 스프린트(기능별로 나눈 짧은 개발 기간)마다 설계·코드·테스트 리뷰</span></li>
+    <li><b>팀 약속</b><span>토픽 세 단계 — 관찰(사람 위치) · 요청(관제 접수) · 명령(로봇 이동) / 로봇 2대 운용 → 팀이 실행 노드에 로봇 이름 지정</span></li>
   </ul>
-  <p>저는 팀장으로서 각 노드(기능별 실행 프로그램)를 이해하고 FSM으로 잇는 일이 맞다고 보고 관제를 맡았습니다.</p>
-  <p>강사 평가가 매일같이 잡혀 있어 평가를 준비하느라 수시로 회의했습니다. 평가는 요구사항 발표와, 스프린트(기능별로 나눈 짧은 개발 기간)마다 받는 설계·코드·테스트 리뷰였습니다.</p>
-  <p>감지 결과와 특정 로봇에 내리는 명령이 섞이지 않도록 토픽을 관찰(사람 위치)·요청(관제 접수)·명령(로봇 이동) 세 단계로 나누는 계약을 팀에서 정했습니다. 로봇 2대를 함께 운용하면서는 팀에서 실행 노드를 띄울 때 로봇 이름을 지정할 수 있게 고쳤습니다.</p>
-  <p>저는 실기에서 바꿔 가며 쓰던 도킹(충전대 복귀) 좌표·대기 시간 같은 값을 별도 설정 파일로 빼자고 제안했고, 팀은 코드를 건드리지 않고 설정 파일만 바꿔 다시 실행하는 방식으로 실기 시험에 함께 썼습니다.</p>
+  <p><b>본인 담당:</b></p>
+  <ul class="role-list">
+    <li>관제 FSM과 AMR 연동
+      <span class="role-sub"><b>맡은 이유</b> 팀장으로서 각 노드(기능별 실행 프로그램)를 이해하고 FSM으로 잇는 일이 맞다고 봄</span></li>
+    <li>실기 값(도킹 좌표·대기 시간)을 별도 설정 파일로 빼자고 제안
+      <span class="role-sub"><b>팀 사용</b> 팀은 코드를 건드리지 않고 설정 파일만 바꿔 다시 실행하는 방식으로 실기 시험에 함께 씀</span></li>
+  </ul>
 </section>
 
 <section>
   <h2 id="learned">배운 점</h2>
-  <p>TurtleBot4와 Nav2는 부트캠프 초반 4일간의 실물 미니프로젝트에서 활용법과 하드웨어 구조를 파악한 뒤 예제와 실기로 계속 익혔습니다.</p>
-  <p>관제 노드를 로봇이 내보내는 표준 토픽을 직접 받아 판단하는 방식으로 짜면서, 상태 판정의 기준은 로봇이 실제로 내보내는 신호에 두되 그 기준이 현장 통신 조건에서 흔들리면 다시 맞춰야 한다는 것을 알게 되었습니다.</p>
+  <ul class="phase-facts">
+    <li><b>깨달음</b><span>상태 판정의 기준은 로봇이 실제로 내보내는 신호에 두되, 그 기준이 현장 통신 조건에서 흔들리면 다시 맞춰야 한다</span></li>
+  </ul>
 </section>
 
 <section>
   <h2 id="tech">기술 상세</h2>
   <p class="muted">팀 발표 자료(세부 기술): <a href="https://github.com/gwanhuiGIM/Rokey_intelli1/releases/download/presentation/intelli1_presentation.pdf">발표 자료(PDF, 58쪽)</a></p>
+  <p class="muted pdf-index">발표 자료 목차·키워드: <a href="https://github.com/gwanhuiGIM/Rokey_intelli1/releases/download/presentation/intelli1_presentation.pdf#page=4">프로젝트 개요 p4</a> · <a href="https://github.com/gwanhuiGIM/Rokey_intelli1/releases/download/presentation/intelli1_presentation.pdf#page=7">감지에서 출동까지 흐름 p7</a> · <a href="https://github.com/gwanhuiGIM/Rokey_intelli1/releases/download/presentation/intelli1_presentation.pdf#page=14">수행 절차 p14</a> · <a href="https://github.com/gwanhuiGIM/Rokey_intelli1/releases/download/presentation/intelli1_presentation.pdf#page=16">AMR·ArUco p16</a> · <a href="https://github.com/gwanhuiGIM/Rokey_intelli1/releases/download/presentation/intelli1_presentation.pdf#page=23">웹캠 감지 p23</a> · <a href="https://github.com/gwanhuiGIM/Rokey_intelli1/releases/download/presentation/intelli1_presentation.pdf#page=40">관제 FSM 상태 판단 p40</a> · <a href="https://github.com/gwanhuiGIM/Rokey_intelli1/releases/download/presentation/intelli1_presentation.pdf#page=41">우선순위 배정 p41</a> · <a href="https://github.com/gwanhuiGIM/Rokey_intelli1/releases/download/presentation/intelli1_presentation.pdf#page=44">웹 관제 대시보드 p44</a> · <a href="https://github.com/gwanhuiGIM/Rokey_intelli1/releases/download/presentation/intelli1_presentation.pdf#page=45">관제 FSM 구조 p45</a> · <a href="https://github.com/gwanhuiGIM/Rokey_intelli1/releases/download/presentation/intelli1_presentation.pdf#page=47">데이터베이스 p47</a> · <a href="https://github.com/gwanhuiGIM/Rokey_intelli1/releases/download/presentation/intelli1_presentation.pdf#page=57">자체 평가 p57</a></p>
 </section>
 
 <section>
