@@ -21,9 +21,14 @@
 <b>목차</b>
 <ul>
 <li><a href="#overview">한눈에 보기</a></li>
-<li><a href="#built">무엇을 만들었나</a></li>
-<li><a href="#process">진행 과정</a></li>
+<li><a href="#built">프로젝트 구현</a></li>
+<li class="toc-key"><a href="#process">진행 과정</a></li>
+<li class="toc-sub"><a href="#phase-why">동기</a></li>
+<li class="toc-sub"><a href="#phase-prep">구현 준비</a></li>
+<li class="toc-sub"><a href="#phase-build">구현 과정</a></li>
+<li class="toc-sub"><a href="#phase-solve">문제해결</a></li>
 <li><a href="#team">팀에서 일한 방식</a></li>
+<li><a href="#learned">배운 점</a></li>
 <li><a href="#tech">기술 상세</a></li>
 <li><a href="#code">코드 근거</a></li>
 </ul>
@@ -42,31 +47,77 @@
   </figure>
   </div>
   <ul class="ov-summary">
-    <li>팀은 비전문가가 바로 쓸 수 있는 구조장치를 목표로, 물에 던지면 열원을 찾아 익수자에게 다가가도록 만든 저비용 구명보트와 발사장치 시제품을 제작비 약 51만 원으로 완성했습니다. 첫 학기 아이디어 단계에서 교내 산학연 캡스톤디자인 아이디어 최우수상(24.11)을, 완성 뒤 졸업작품 경진대회 장려상(25.09)을 받았습니다.</li>
-    <li>3인 팀에서 저는 차동 제어(좌우 DC 모터의 출력을 달리해 방향을 트는 제어), 아두이노 회로 구성, 설계보고서 문서화를 맡았습니다. 두 번째 학기에는 PM(프로젝트 진행 관리)도 맡았습니다.</li>
-    <li>졸업 프로젝트로, 창의적종합설계와 심화종합설계 두 학기에 걸쳐 진행했습니다.</li>
+    <li><b>내 담당</b> — <a href="#case-drive">좌우 모터 차동 제어</a> · <a href="#case-merge">아두이노 회로 구성</a> · 설계보고서 문서화 · 두 번째 학기 PM(프로젝트 진행 관리)</li>
+    <li><b>영상에서 확인 가능한 것</b> — 물을 채운 수조에 띄운 보트가 물 위에서 움직이는 모습</li>
+    <li><b>목표</b> — 비전문가가 바로 쓰는 구조장치 · 물에 던지면 열원을 찾아 익수자에게 다가가는 저비용 구명보트 · 발사장치</li>
+    <li><b>결과(팀)</b> — 제작비 약 51만 원 시제품 · 교내 산학연 캡스톤디자인 아이디어 최우수상(24.11, 첫 학기 아이디어 단계) · 졸업작품 경진대회 장려상(25.09, 완성 뒤)</li>
   </ul>
 </section>
 
 <section>
-  <h2 id="built">무엇을 만들었나</h2>
+  <h2 id="built">프로젝트 구현</h2>
+  <p>물에 던지면 열원을 찾아 익수자에게 다가가는 구명보트와, 그 보트를 물 위로 날려 보내는 발사장치입니다. 보트 안의 아두이노 보드 한 장이 열화상 센서, 조종 신호 수신기, 좌우 모터를 모두 다룹니다.</p>
 
-  <h3>① 열원 쪽으로 스스로 방향을 튼다</h3>
-  <p>팀은 열화상 센서(8×8 격자로 온도를 재는 센서)가 읽은 값에서 가장 뜨거운 쪽이 왼쪽인지 오른쪽인지 찾도록 처리했습니다.</p>
+  <details class="impl">
+  <summary><h3>열원 쪽으로 스스로 방향 틀기 (AMG8833 열화상 센서 · 좌우 DC 모터 PWM)</h3></summary>
+  <p>팀은 열화상 센서(8×8 격자로 온도를 재는 센서)가 읽은 값에서 가장 뜨거운 쪽이 왼쪽인지 오른쪽인지 찾도록 처리했습니다. 저는 그 방향에 맞춰 좌우 모터 출력을 다르게 주는 제어를 맡았습니다.</p>
+  <div class="pipe" role="img" aria-label="도식: 열화상 센서의 8×8 온도값을 열별 최댓값 1×8로 줄이고, 가장 뜨거운 열의 위치로 좌우 방향을 정한 뒤, 좌우 모터 PWM 출력 배분으로 방향을 트는 흐름">
+    <div class="pipe-col"><span class="pipe-tag">입력</span><div class="pipe-box">열화상 센서<small>8×8 온도값</small></div></div>
+    <div class="pipe-arrow" aria-hidden="true">→</div>
+    <div class="pipe-col"><span class="pipe-tag">줄이기(팀)</span><div class="pipe-box">열별 최댓값<small>1×8 한 줄</small></div></div>
+    <div class="pipe-arrow" aria-hidden="true">→</div>
+    <div class="pipe-col"><span class="pipe-tag">방향(팀)</span><div class="pipe-box">가장 뜨거운 열의 위치<small>왼쪽 · 오른쪽 · 가운데</small></div></div>
+    <div class="pipe-arrow" aria-hidden="true">→</div>
+    <div class="pipe-col"><span class="pipe-tag">구동(제 담당)</span><div class="pipe-box gpu">좌우 PWM 출력 배분<small>모터 드라이버 · DC 모터 2개 · 크게 꺾기 · 완만히 꺾기 · 직진</small></div></div>
+  </div>
+  <figure class="fig wide">
+    <img src="images/grad/slide_steering_case.jpg" alt="발표 슬라이드: 좌우 1×8 온도값 한 줄 예시 아래에 칸 위치 CASE 0~7이 급격한 우회전, 완만한 우회전, 직진, 완만한 좌회전, 급격한 좌회전으로 나뉜 설계 표와 설명 글" width="1200" height="800" loading="lazy">
+    <figcaption class="muted">팀 발표 자료(심화종합설계) p15 — 1×8 온도값의 칸 위치(CASE)별로 크게 꺾기·완만히 꺾기·직진을 정한 설계 표</figcaption>
+  </figure>
+  <p>열별 최댓값으로 줄이는 과정과 출력 배분은 아래 진행 과정의 <a href="#case-drive">구동 방식 결정</a> 사례에서 다룹니다.</p>
+  </details>
 
-  <h3>② 조종기로 직접 몰 수 있다</h3>
-  <p>저는 무선 조종기(RC)의 신호로 좌우 모터를 움직여, 사람이 보트를 직접 몰 수 있는 수동 조종 부분을 맡았습니다.</p>
+  <details class="impl">
+  <summary><h3>조종기로 직접 몰기 (RC 송수신기)</h3></summary>
+  <p>저는 무선 조종기(RC)의 신호로 좌우 모터를 움직여, 사람이 보트를 직접 몰 수 있는 수동 조종 부분을 맡았습니다. 팀이 함께 통합한 코드 기준으로는 조종 신호가 들어오면 수동 조종, 신호가 없으면 열원 자동 추적으로 나뉩니다.</p>
+  <div class="pipe" role="img" aria-label="도식(팀 통합 코드 기준): 조종 신호 수신기의 신호가 있으면 수동 조종, 없으면 열원 자동 추적으로 나뉘고, 두 경우 모두 좌우 모터를 움직이는 흐름">
+    <div class="pipe-col"><span class="pipe-tag">입력</span><div class="pipe-box">조종 신호 수신기<small>무선 조종기(RC)</small></div></div>
+    <div class="pipe-arrow" aria-hidden="true">→</div>
+    <div class="pipe-col"><span class="pipe-tag">모드(팀 통합 코드 기준)</span><div class="pipe-box">신호 있음 → 수동 조종<small>레버로 방향 · 속도</small></div><div class="pipe-box gpu">신호 없음 → 자동 추적<small>열화상 센서 기준</small></div></div>
+    <div class="pipe-arrow" aria-hidden="true">→</div>
+    <div class="pipe-col"><span class="pipe-tag">구동</span><div class="pipe-box">좌우 DC 모터<small>모터 드라이버</small></div></div>
+  </div>
+  <p>레버·버튼별 수신기 출력값은 <a href="#fig-rc">팀이 정리한 표</a>에서 볼 수 있습니다.</p>
+  </details>
 
-  <h3>③ 발사장치로 물에 던져 넣는다</h3>
-  <p>팀은 사람이 들고 방아쇠로 쏘는 발사장치를 만들어, 보트를 익수자 근처 물 위로 날려 보내도록 했습니다.</p>
+  <details class="impl">
+  <summary><h3>발사장치로 물에 던져 넣기 (스프링·방아쇠 발사장치)</h3></summary>
+  <p>팀은 사람이 들고 방아쇠로 쏘는 발사장치를 만들어, 보트를 익수자 근처 물 위로 날려 보내도록 했습니다. 팀이 정리한 작동 순서는 아래와 같습니다.</p>
+  <div class="pipe" role="img" aria-label="도식: 팀이 정리한 작동 순서 — 발사장치로 발사, 착수, 익수자 쪽 자동 이동, 거리가 멀면 조종기로 수동 주행, 구조 종료나 돌발 상황 시 정지">
+    <div class="pipe-col"><span class="pipe-tag">발사</span><div class="pipe-box">발사장치<small>발사체 장착 후 발사</small></div></div>
+    <div class="pipe-arrow" aria-hidden="true">→</div>
+    <div class="pipe-col"><span class="pipe-tag">착수</span><div class="pipe-box">물 위로 착수<small>두 번째 학기: 자동 팽창 밸브로 구명튜브 전개</small></div></div>
+    <div class="pipe-arrow" aria-hidden="true">→</div>
+    <div class="pipe-col"><span class="pipe-tag">이동</span><div class="pipe-box gpu">자동 이동<small>익수자 쪽으로</small></div><div class="pipe-box">수동 주행<small>거리가 멀면 조종기로 전환</small></div></div>
+    <div class="pipe-arrow" aria-hidden="true">→</div>
+    <div class="pipe-col"><span class="pipe-tag">정지</span><div class="pipe-box warn">정지<small>작동 순서상 정지 · 구조 종료 · 돌발 상황</small></div></div>
+  </div>
+  <p>구동 방식 결정, 회로의 단일 보드 통합, 두 번째 학기의 개선은 아래 진행 과정 사례에서 다룹니다.</p>
+  </details>
 </section>
 
 <section>
-  <h2 id="process">진행 과정</h2>
-  <p>상용 수난 구조장비는 비싸고 조작 숙련이 필요해 비전문가가 바로 쓰기 어렵다는 문제에서 출발했습니다.</p>
+  <h2 id="process">진행 과정 <span class="h2-hint">각 번호를 펼치면 사진과 함께 자세한 설명이 나옵니다</span></h2>
+  <h3 class="phase-title" id="phase-why">동기</h3>
+  <ul class="phase-facts">
+    <li><b>문제</b><span>상용 수난 구조장비 — 비싸고 조작 숙련 필요 → 비전문가가 바로 쓰기 어려움</span></li>
+    <li><b>목표(팀)</b><span>물에 던지면 열원을 찾아 익수자에게 다가가는 저비용 구명보트 · 발사장치</span></li>
+    <li><b>기간</b><span>졸업 프로젝트 · 창의적종합설계 → 심화종합설계 두 학기</span></li>
+  </ul>
 
+  <h3 class="phase-title" id="phase-prep">구현 준비</h3>
   <details class="case">
-  <summary><h3 id="case-drive">구동 방식 결정과 좌우 모터 차동 제어</h3><span class="case-lead">팀은 착수 충격과 아두이노 제어 난이도를 고려해 일반 DC 모터 2개를 좌우에 두는 차동 방식을 택했고, 저는 열원 방향에 따라 좌우 모터 출력을 달리하는 제어와 무선 조종기(RC) 수동 조종을 맡았습니다.</span></summary>
+  <summary><h3 id="case-drive">구동 방식 결정과 좌우 모터 차동 제어</h3><span class="case-facts"><span class="cf"><b>기준</b><span>착수 충격 · 아두이노 제어 난이도</span></span><span class="cf"><b>선택(팀)</b><span>일반 DC 모터 2개를 좌우에 두는 차동 방식 — 방향타 · BLDC · 방수 모터 제외</span></span><span class="cf"><b>맡은 일</b><span>열원 방향 → 좌우 모터 PWM 출력 배분 · 무선 조종기(RC) 수동 조종</span></span><span class="cf"><b>점검(팀)</b><span>지상에서 켜진 전기히터 쪽으로 향하게 하며 열원 추적 동작 확인</span></span></span></summary>
   <div class="case-steps">
     <div class="step">
       <h4 class="step-title">방향타·BLDC·방수 모터 제외</h4>
@@ -110,8 +161,9 @@
   <p class="takeaway">이 경험으로 장치가 실제로 쓰이는 환경의 충격이나 보드의 제어 성능처럼 <strong>실물 운용 조건을 기준으로 삼아야</strong> 부품이 견디고 다룰 수 있는 방식을 고를 수 있다는 점을 배웠습니다.</p>
   </details>
 
+  <h3 class="phase-title" id="phase-build">구현 과정</h3>
   <details class="case">
-  <summary><h3 id="case-merge">부품별 코드 점검과 회로의 단일 보드 통합</h3><span class="case-lead">팀은 따로 짠 센서·조종·모터 코드를 아두이노 한 장에 합쳐 바로 앞 1m 정도 거리의 열원을 찾는 데까지 확인했습니다.</span></summary>
+  <summary><h3 id="case-merge">부품별 코드 점검과 회로의 단일 보드 통합</h3><span class="case-facts"><span class="cf"><b>막힌 점(팀)</b><span>따로 짠 센서 · 조종 · 모터 코드를 아두이노 한 장에 합치기</span></span><span class="cf"><b>방법(팀)</b><span>단계를 나눠 점검 · 센서 신호를 시리얼 통신으로 먼저 확인 → 모터 코드와 결합</span></span><span class="cf"><b>맡은 일</b><span>기존 조종 · 모터 코드 재점검 · 보드 한 장의 회로 구성</span></span><span class="cf"><b>결과(팀)</b><span>바로 앞 1m 정도 거리의 열원 탐지 확인</span></span></span></summary>
   <div class="case-steps">
     <div class="step">
       <h4 class="step-title">시리얼 통신으로 먼저 확인</h4>
@@ -134,8 +186,9 @@
   <p class="takeaway">복합적인 문제가 발생했을 때 전체를 한 번에 합치기보다 <strong>모듈별 동작과 신호를 먼저 분리해 확인한 뒤 순서대로 합치는</strong> 작업 순서의 중요성을 익혔습니다.</p>
   </details>
 
+  <h3 class="phase-title" id="phase-solve">문제해결</h3>
   <details class="case">
-  <summary><h3 id="case-improve">시제품 한계 분석과 2차 개선</h3><span class="case-lead">팀은 두 번째 학기에 전원 스위치·배터리 보온 구조와 자동 팽창 밸브를 넣어 시제품을 보완하고 야외 발사 시험에서 약 9m 비거리를 확인했습니다.</span></summary>
+  <summary><h3 id="case-improve">시제품 한계 분석과 2차 개선</h3><span class="badge-team">팀 작업 참여</span><span class="case-facts"><span class="cf"><b>문제 파트</b><span>전원 계통 · 구명튜브 전개 기구</span></span><span class="cf"><b>문제</b><span>전원 스위치가 없어 빠른 방전 · 저온 방전 · 기어모터의 허용하중 한계</span></span><span class="cf"><b>해결(팀)</b><span>기말 발표에서 개선안 정리 → 두 번째 학기에 On/Off 스위치 · 배터리 보온 구조 · 자동 팽창 밸브</span></span><span class="cf"><b>결과(팀)</b><span>야외 발사 시험에서 실측 약 9m 비거리 · 수상 구동 · 비거리 · 자율주행 시험 영상</span></span><span class="cf"><b>배운 점</b><span>한 학기의 한계 → 발표에서 개선안 → 다음 학기에 반영하는 흐름</span></span></span></summary>
   <div class="case-steps">
     <div class="step">
       <h4 class="step-title">첫 학기 방전과 허용하중</h4>
@@ -147,6 +200,10 @@
       <h4 class="step-title">기말 발표 개선안과 2학기 시제품 보완</h4>
       <div class="step-body">
         <p>팀은 기말 발표에서 전원 스위치 추가와 스위치부 방수 처리, 고용량 배터리 교체, 배터리 단열 처리를 개선안으로 정리했습니다. 팀은 두 번째 학기에 On/Off 스위치와 배터리 보온 구조를 넣고, 기어모터 메커니즘 대신 수면 착수 시 펼쳐지는 자동 팽창 밸브로 구명튜브 전개 방식을 바꿨습니다.</p>
+        <figure class="fig wide">
+      <img src="images/grad/slide_improve_points.jpg" alt="발표 슬라이드: 발사체 사진 둘레에 On/Off Switch, 공기역학적 설계, 다양한 크기의 튜브장착 가능, 자동팽창 밸브, 배터리 보온 말풍선과 부품 사진이 달린 발사체 보완점 정리" width="1200" height="865" loading="lazy">
+      <figcaption class="muted">팀 발표 자료(심화종합설계) p10 — 두 번째 학기 발사체 보완점(On/Off 스위치, 자동 팽창 밸브, 배터리 보온 등)</figcaption>
+    </figure>
       </div>
     </div>
     <div class="step">
@@ -164,36 +221,40 @@
         <figure class="fig wide"><img src="images/grad/rescue-flow-chart.jpg" alt="자율주행 MODE, 수동조작 MODE, 정지로 이어지는 구조 작동 순서도" width="817" height="483" loading="lazy"><figcaption class="muted">예시: 팀이 정리한 구조 작동 순서도</figcaption></figure>
       </div>
     </div>
-    <div class="step">
-      <h4 class="step-title">남기지 못한 전압·작동 시간</h4>
-      <div class="step-body">
-        <p>다만 원거리 탐지 결과나 개선 전후의 전압·작동 시간은 기록으로 남기지 못했습니다.</p>
-      </div>
-    </div>
   </div>
-  <p class="takeaway">한 학기 결과의 한계를 발표에서 개선안으로 정리해 다음 학기에 반영하는 흐름을 경험하며, 개선을 말하려면 <strong>전후를 비교할 값부터 데이터로 측정해 두어야 한다</strong>는 점을 배웠습니다.</p>
+  <p class="takeaway">한 학기 결과의 한계를 발표에서 <strong>개선안으로 정리해 다음 학기에 반영하는</strong> 흐름을 경험했습니다.</p>
   </details>
 </section>
 
 <section>
   <h2 id="team">팀에서 일한 방식</h2>
-  <p>역할은 회로 구성(제 담당)·센서 제어·모델링으로 나눴습니다.</p>
-  <ul>
-    <li>팀원들이 이끈 일: 선체 항력(물의 저항) 해석, 발사장치, 방수 하우징, 구명튜브 팽창 기구</li>
-    <li>함께 한 일(공동작업): 코드 통합, 선체 형상 설계</li>
+  <ul class="phase-facts">
+    <li><b>팀 구성</b><span>3인 — 역할: 회로 구성(제 담당) · 센서 제어 · 모델링</span></li>
+    <li><b>팀원 주도</b><span>선체 항력(물의 저항) 해석 · 발사장치 · 방수 하우징 · 구명튜브 팽창 기구</span></li>
+    <li><b>공동작업</b><span>코드 통합 · 선체 형상 설계</span></li>
   </ul>
-  <p>그 안에서 저는 이렇게 일했습니다.</p>
-  <ul>
-    <li>3D 모델에서 모터·센서를 고정하는 홀더의 배치와 부품끼리 부딪히는지(간섭)를 확인하며, 회로와 제어를 선체 형상에 맞췄습니다.</li>
-    <li>회의록 작성을 맡아 담당과 다음 일정, 시험 확인 결과와 다음 개선 과제를 기록했습니다.</li>
-    <li>두 번째 학기에 PM을 맡아 주간 강의 과제 발표에 맞춘 발표 자료 준비, 설계 수정 건의와 참여, 물품 관리, 회의와 작업 일정 조율을 챙겼습니다.</li>
-    <li>설계보고서 문서화를 맡았고, 회의록과 보고서로 팀 협업을 뒷받침하는 방식을 배웠습니다.</li>
+  <p><b>그 안에서 제가 한 일:</b></p>
+  <ul class="role-list">
+    <li>3D 모델에서 모터·센서 홀더 배치와 부품 간섭 확인 → 회로와 제어를 선체 형상에 맞춤</li>
+    <li>회의록 작성 — 담당 · 다음 일정 · 시험 확인 결과 · 다음 개선 과제 기록</li>
+    <li>두 번째 학기 PM — 주간 강의 과제 발표 자료 준비 · 설계 수정 건의와 참여 · 물품 관리 · 회의와 작업 일정 조율</li>
+    <li>설계보고서 문서화</li>
+  </ul>
+</section>
+
+<section>
+  <h2 id="learned">배운 점</h2>
+  <ul class="phase-facts">
+    <li><b>개선 흐름</b><span>한 학기 결과의 한계를 발표에서 개선안으로 정리해 다음 학기에 반영하는 흐름을 경험</span></li>
+    <li><b>협업</b><span>회의록과 보고서로 팀 협업을 뒷받침하는 방식</span></li>
   </ul>
 </section>
 
 <section>
   <h2 id="tech">기술 상세</h2>
   <p class="muted">팀 발표 자료(세부 기술): <a href="https://github.com/gwanhuiGIM/grad_proj/releases/download/presentation/grad_creative_design.pdf">창의적종합설계 발표 자료(PDF, 47쪽)</a> · <a href="https://github.com/gwanhuiGIM/grad_proj/releases/download/presentation/grad_advanced_design.pdf">심화종합설계 발표 자료(PDF, 48쪽)</a></p>
+  <p class="muted pdf-index">창의적종합설계 쪽 목록: <a href="https://github.com/gwanhuiGIM/grad_proj/releases/download/presentation/grad_creative_design.pdf#page=3">주제 선정 배경 p3</a> · <a href="https://github.com/gwanhuiGIM/grad_proj/releases/download/presentation/grad_creative_design.pdf#page=6">시장 조사 p6</a> · <a href="https://github.com/gwanhuiGIM/grad_proj/releases/download/presentation/grad_creative_design.pdf#page=7">목표 설정 p7</a> · <a href="https://github.com/gwanhuiGIM/grad_proj/releases/download/presentation/grad_creative_design.pdf#page=9">모델링 p9</a> · <a href="https://github.com/gwanhuiGIM/grad_proj/releases/download/presentation/grad_creative_design.pdf#page=18">회로 p18</a> · <a href="https://github.com/gwanhuiGIM/grad_proj/releases/download/presentation/grad_creative_design.pdf#page=21">발사체 작동 순서도 p21</a> · <a href="https://github.com/gwanhuiGIM/grad_proj/releases/download/presentation/grad_creative_design.pdf#page=23">열화상 자율주행 구동 p23</a> · <a href="https://github.com/gwanhuiGIM/grad_proj/releases/download/presentation/grad_creative_design.pdf#page=25">조종기 수동 조작 p25</a> · <a href="https://github.com/gwanhuiGIM/grad_proj/releases/download/presentation/grad_creative_design.pdf#page=28">제한요소 p28</a> · <a href="https://github.com/gwanhuiGIM/grad_proj/releases/download/presentation/grad_creative_design.pdf#page=32">심화종합설계 계획 p32</a></p>
+  <p class="muted pdf-index">심화종합설계 쪽 목록: <a href="https://github.com/gwanhuiGIM/grad_proj/releases/download/presentation/grad_advanced_design.pdf#page=7">창의적종합설계 요약 p7</a> · <a href="https://github.com/gwanhuiGIM/grad_proj/releases/download/presentation/grad_advanced_design.pdf#page=10">보완점 p10</a> · <a href="https://github.com/gwanhuiGIM/grad_proj/releases/download/presentation/grad_advanced_design.pdf#page=13">발사체 작동 순서도 p13</a> · <a href="https://github.com/gwanhuiGIM/grad_proj/releases/download/presentation/grad_advanced_design.pdf#page=15">방향 판정(CASE) p15</a> · <a href="https://github.com/gwanhuiGIM/grad_proj/releases/download/presentation/grad_advanced_design.pdf#page=16">발사장치 p16</a> · <a href="https://github.com/gwanhuiGIM/grad_proj/releases/download/presentation/grad_advanced_design.pdf#page=26">구동 영상 p26</a> · <a href="https://github.com/gwanhuiGIM/grad_proj/releases/download/presentation/grad_advanced_design.pdf#page=27">완성도 평가 p27</a> · <a href="https://github.com/gwanhuiGIM/grad_proj/releases/download/presentation/grad_advanced_design.pdf#page=30">도면 p30</a></p>
 </section>
 
 <section>
