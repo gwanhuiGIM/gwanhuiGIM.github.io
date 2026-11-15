@@ -25,9 +25,6 @@
 <li><a href="#overview">한눈에 보기</a></li>
 <li><a href="#built">프로젝트 구현</a></li>
 <li class="toc-key"><a href="#process">진행 과정</a></li>
-<li class="toc-sub"><a href="#phase-why">동기</a></li>
-<li class="toc-sub"><a href="#phase-build">구현 과정</a></li>
-<li class="toc-sub"><a href="#phase-solve">문제해결</a></li>
 <li><a href="#team">팀에서 일한 방식</a></li>
 <li><a href="#learned">배운 점</a></li>
 <li><a href="#tech">기술 상세</a></li>
@@ -35,10 +32,20 @@
 </ul>
 </nav>
 
-<main class="case-layout">
-<p class="updated">Last modified <time datetime="2026-11-15">2026-11-15</time></p>
+<main class="case-layout outline">
+<p class="updated">Last modified <time datetime="2026-11-16">2026-11-16</time></p>
 <section class="overview">
   <h2 id="overview">한눈에 보기</h2>
+  <div class="role-map" role="group" aria-label="발표 p7 ROS 2 노드 구조 위에 표시한 제 담당 지점">
+    <p class="role-map-title">설계 흐름에서 제가 맡은 지점 <span>발표 p7 ROS 2 노드 구조 기준 · 상자를 누르면 기술 설명으로, 아래 작은 링크는 진행 과정 사례로 이동합니다</span></p>
+    <div class="pipe role-pipe">
+      <div class="pipe-col"><span class="pipe-tag">입력·인식</span><div class="pipe-box mine"><a class="rm-main" href="#impl-ros2">카메라 배치와 ROS 2 연결 구조</a><small>본인 주 담당</small><a class="rm-case" href="#case-merge">진행 과정 01</a><a class="rm-case" href="#case-vision">진행 과정 02</a></div><div class="pipe-box"><a class="rm-main" href="#impl-request">손 동작·음성·화면 클릭 요청</a><small>MediaPipe · Whisper · Gemini — 팀 담당</small></div><div class="pipe-box mine part"><a class="rm-main" href="#impl-vision">도구 인식 (YOLO · 합성 데이터)</a><small>본인 주 담당 · 합성 데이터 팀 작업 참여</small><a class="rm-case" href="#case-vision">진행 과정 02</a><a class="rm-case" href="#case-data">진행 과정 03</a></div></div>
+      <div class="pipe-arrow" aria-hidden="true">→</div>
+      <div class="pipe-col"><span class="pipe-tag">작업 관리</span><div class="pipe-box"><a class="rm-main" href="#impl-manager">작업 관리 프로그램</a><small>도구 있는 트레이 찾기 · 로봇 배정 · 공동 트레이 구역 — 팀 담당</small></div></div>
+      <div class="pipe-arrow" aria-hidden="true">→</div>
+      <div class="pipe-col"><span class="pipe-tag">실행</span><div class="pipe-box"><a class="rm-main" href="#impl-manager">동작 계획 → 로봇 A · 로봇 B</a><small>RMPFlow · cuRobo · 흡착 그리퍼 — 팀 담당</small></div><div class="pipe-box"><a class="rm-main" href="#impl-sim">가상 수술실 (Isaac Sim)</a><small>팀 담당</small></div></div>
+    </div>
+  </div>
   <div class="ov-media">
   <div class="video"><iframe src="https://www.youtube-nocookie.com/embed/EUDn9btPNTw" title="수술도구 전달 시뮬레이션 1분 시연 영상" loading="lazy" allowfullscreen></iframe></div>
   <p class="muted">1분 시연 영상</p>
@@ -64,7 +71,7 @@
     <div class="pipe-col"><span class="pipe-tag">표시</span><div class="pipe-box">웹 대시보드<small>로봇·트레이 상태 · 명령 처리 결과</small></div></div>
   </div>
 
-  <details class="impl">
+  <details class="impl" id="impl-sim">
   <summary><h3>가상 수술실·두 로봇·흡착 그리퍼 (Isaac Sim) <span class="badge-team">팀 담당</span></h3></summary>
   <figure class="fig">
     <img src="images/cobot3/isaac_operating_room_scene.jpg" alt="Isaac Sim 가상 수술실: 수술대 옆 테이블 위 초록 트레이 6칸과 그 양쪽의 흰색 협동로봇 두 대" width="1163" height="642" loading="lazy">
@@ -75,14 +82,17 @@
   <p>Isaac Sim 렌더링 렉·프레임 드랍에는 팀이 에셋 해상도·GPU 자원 분배를 조정하고 GPU를 추가했으며, 노트북 두 대를 랜선으로 연결했습니다.</p>
   </details>
 
-  <details class="impl">
-  <summary><h3>카메라 배치와 ROS 2 연결 구조 (ROS 2) <span class="badge-team">본인 주 담당</span></h3></summary>
+  <details class="impl" id="impl-ros2">
+  <summary><h3>카메라 배치와 ROS 2 연결 구조 (ROS 2) <span class="badge-team">본인 주 담당</span></h3><span class="impl-jump">진행 과정 <a href="#case-merge">01 두 로봇 시스템 통합</a><a href="#case-vision">02 카메라·도구 인식 노드</a></span></summary>
   <p>시스템 구조 설계와 ROS 2 환경 구성·연결은 제가 맡았습니다. 카메라 배치를 정하고, 각 프로그램이 어떤 데이터를 전처리해 주고받을지 소통 구조를 설계했습니다.</p>
   <p>Isaac Sim 프로세스 하나가 로봇 제어와 시뮬레이션을 맡고, 나머지 모듈은 별도 프로세스로 돌며 같은 ROS 2 환경에서 토픽으로 연결됩니다.</p>
-  <p class="muted">진행 과정에서 보기 → <a href="#case-merge">01 두 로봇 시스템 통합</a> · <a href="#case-vision">02 카메라·도구 인식 노드</a></p>
+  <figure class="fig wide">
+    <img src="images/cobot3/slide_ros2_nodes.jpg" alt="발표 슬라이드 도식: 왼쪽 입력·인식 노드(카메라·마이크에서 손 추적, 음성 인식, 명령 해석, 도구 인식 노드), 가운데 통합 판단 노드(robot_manager_node), 오른쪽 실행 노드(로봇 A·B마다 집기·놓기와 손 따라가기 제어기, 흡착 그리퍼, Isaac Sim 로봇)가 화살표로 이어지고, 아래에 카메라·마이크에서 그리퍼·Isaac Sim까지의 주요 토픽 흐름" width="1200" height="500" loading="lazy">
+    <figcaption class="muted">팀 발표 자료 p7 — 입력·인식 노드가 ROS 2 토픽으로 통합 판단 노드에 모이고, 통합 판단 노드가 로봇 A·B 실행 노드에 작업을 보내는 노드 구조</figcaption>
+  </figure>
   </details>
 
-  <details class="impl">
+  <details class="impl" id="impl-request">
   <summary><h3 id="request">손 동작·음성·화면 클릭으로 요청 (MediaPipe · 음성 인식 · LLM) <span class="badge-team">팀 담당</span></h3></summary>
   <div class="fig-pair">
     <figure class="fig">
@@ -98,17 +108,16 @@
   <p>도구를 든 로봇은 웹캠으로 추적한 손 위치를 따라오고, 손 모양을 바꾸면 도구를 트레이로 돌려놓습니다. 로봇·트레이 상태와 명령 처리 결과는 웹 대시보드에 함께 표시됩니다.</p>
   </details>
 
-  <details class="impl">
-  <summary><h3>도구 인식과 합성 데이터 (YOLO · Replicator) <span class="badge-team">본인 주 담당</span></h3></summary>
+  <details class="impl" id="impl-vision">
+  <summary><h3>도구 인식과 합성 데이터 (YOLO · Replicator) <span class="badge-team">본인 주 담당 · 합성 데이터 팀 작업 참여</span></h3><span class="impl-jump">진행 과정 <a href="#case-vision">02 카메라·도구 인식 노드</a><a href="#case-data">03 학습 데이터 전환</a></span></summary>
   <p>도구 인식 프로그램은 카메라 영상에서 YOLO로 도구를 찾아 트레이 6칸에 배정하고, 어느 칸에 어떤 도구가 있는지를 ROS 2 메시지로 보냅니다. 도구 인식 설계와 인식 노드 구성은 제가 맡았고, 학습 데이터는 팀이 Replicator(시뮬레이터 안에서 학습 이미지를 만드는 도구)로 만든 합성 데이터이며 저는 데이터 생성과 학습에 참여했습니다.</p>
   <figure class="fig wide">
     <img src="images/cobot3/slide_replicator.jpg" alt="발표 슬라이드의 합성 데이터 생성 파이프라인: USD 모델·장면 구성, Replicator 무작위 변경, 데이터 렌더링, 라벨 자동 생성(영역 마스크·상자), YOLO 데이터셋 저장의 다섯 단계 사진" width="1200" height="569" loading="lazy">
     <figcaption class="muted">팀 발표 자료 p57 — 합성 데이터 생성 순서: 도구 3D 모델과 초록 트레이 장면 구성 → 도구 위치·각도·종류·개수와 조명·카메라 조건을 무작위로 바꿈 → 렌더링 → 영역·상자 라벨 자동 생성 → YOLO 데이터셋 저장</figcaption>
   </figure>
-  <p class="muted">진행 과정에서 보기 → <a href="#case-vision">02 카메라·도구 인식 노드</a> · <a href="#case-data">03 학습 데이터 전환</a></p>
   </details>
 
-  <details class="impl">
+  <details class="impl" id="impl-manager">
   <summary><h3>작업 관리와 두 로봇 동작 계획 (Robot Manager · RMPFlow · cuRobo) <span class="badge-team">팀 담당</span></h3></summary>
   <p>요청이 들어오면 작업 관리 프로그램이 도구가 있는 트레이를 찾아 두 로봇 중 하나에 작업을 맡기고, 두 로봇이 함께 쓰는 트레이 구역은 한 번에 한 로봇만 쓰게 합니다.</p>
   <p>트레이에서 도구를 집고 놓는 동작은 RMPFlow로, 도구를 든 로봇이 손을 따라가는 동작은 cuRobo로 움직입니다.</p>
@@ -121,7 +130,6 @@
 
 <section>
   <h2 id="process">진행 과정 <span class="h2-hint">각 번호를 펼치면 사진과 함께 자세한 설명이 나옵니다. 진한 글씨는 제 담당 및 주요 과정입니다.</span></h2>
-  <h3 class="phase-title" id="phase-why">동기</h3>
   <ul class="phase-facts">
     <li><b>과제</b><span>디지털 트윈 기반 서비스 자동화 시뮬레이션 시스템 구현(디지털 트윈: 실제 설비를 가상 공간에 옮겨 시험하는 방식)</span></li>
     <li><b>계기</b><span>수술 뒤 기구 파편이 체내에 남는 사고 보도</span></li>
@@ -129,8 +137,7 @@
     <li><b>범위</b><span>의료 현장에는 완전 자동화보다 사람을 돕는 협동로봇</span></li>
   </ul>
 
-  <h3 class="phase-title" id="phase-build">구현 과정</h3>
-  <details class="case"><summary><h3 id="case-merge">네 번의 병합으로 두 로봇 시스템 통합</h3><span class="case-facts"><span class="cf"><b>맡은 일</b><span>팀장 · 시스템 구조 설계 · ROS 2 연결</span></span><span class="cf"><b>방법</b><span>카메라 배치 · 주고받을 데이터 · 소통 구조 설계 → 팀이 네 번 병합 · 토의 일정 조율</span></span><span class="cf"><b>결과</b><span>팀이 두 로봇의 도구 전달 시나리오까지 시뮬레이터에서 확인</span></span></span></summary>
+  <details class="case"><summary><h3 id="case-merge">네 번의 병합으로 두 로봇 시스템 통합</h3><span class="case-phase">구현</span><span class="badge-team">본인 주 담당</span><span class="case-facts"><span class="cf"><b>맡은 일</b><span>팀장 · 시스템 구조 설계 · ROS 2 연결</span></span><span class="cf"><b>방법</b><span>카메라 배치 · 주고받을 데이터 · 소통 구조 설계 → 팀이 네 번 병합 · 토의 일정 조율</span></span><span class="cf"><b>결과</b><span>팀이 두 로봇의 도구 전달 시나리오까지 시뮬레이터에서 확인</span></span></span></summary>
   <div class="case-steps">
     <div class="step">
       <h4 class="step-title">카메라 배치와 소통 구조</h4>
@@ -180,7 +187,7 @@
   </div>
   </details>
 
-  <details class="case"><summary><h3 id="case-vision">시뮬레이터 카메라와 도구 인식 노드 구성</h3><span class="case-facts"><span class="cf"><b>맡은 일</b><span>시뮬레이터 카메라 · ROS 2 연결 · 도구 인식 노드</span></span><span class="cf"><b>방법</b><span>Isaac Sim 카메라 영상을 ROS 2 토픽으로 연결 → Colab에서 Roboflow 실물 사진으로 YOLO 학습 → 영상을 받아 트레이 칸에 배정하는 노드</span></span><span class="cf"><b>결과</b><span>카메라 영상 → 도구 인식 → 트레이별 도구 메시지로 이어지는 흐름 · 모델은 이후 합성 데이터 학습 모델로 교체</span></span></span></summary>
+  <details class="case"><summary><h3 id="case-vision">시뮬레이터 카메라와 도구 인식 노드 구성</h3><span class="case-phase">환경 준비 · 구현</span><span class="badge-team">본인 주 담당</span><span class="case-facts"><span class="cf"><b>맡은 일</b><span>시뮬레이터 카메라 · ROS 2 연결 · 도구 인식 노드</span></span><span class="cf"><b>방법</b><span>Isaac Sim 카메라 영상을 ROS 2 토픽으로 연결 → Colab에서 Roboflow 실물 사진으로 YOLO 학습 → 영상을 받아 트레이 칸에 배정하는 노드</span></span><span class="cf"><b>결과</b><span>카메라 영상 → 도구 인식 → 트레이별 도구 메시지로 이어지는 흐름 · 모델은 이후 합성 데이터 학습 모델로 교체</span></span></span></summary>
   <div class="case-steps">
     <div class="step">
       <h4 class="step-title">시뮬레이터 안 카메라와 ROS 2 연결</h4>
@@ -231,6 +238,10 @@ self.create_timer(1.0 / PUBLISH_RATE_HZ, self.publish_detections)
 tray_id = self.find_tray(cx, cy)
 self.update_stable_states(frame_assignments)</code></pre>
         <p class="muted">팀 최종 코드 <a href="https://github.com/gwanhuiGIM/Rokey_cobot3/blob/main/vision_detection_model/vision_tool_detection_node.py">vision_tool_detection_node.py</a>에서 모델 불러오기, 구독·발행 주기, 트레이 칸 배정·안정화 부분만 옮겼습니다(51·58·61·114·126행).</p>
+        <figure class="fig">
+          <img src="images/cobot3/tray-detection-overlay.jpg" alt="시뮬레이터 장면 위에 트레이 6칸 인식 화면이 겹쳐 있음: 칸마다 찾은 도구 이름과 상자가 표시되고, 화면에 '현재 DETECTION 중인 YOLO 상태' 자막" width="1200" height="664" loading="lazy">
+          <figcaption class="muted">팀 시연 영상 중 시뮬레이터 장면과 트레이 6칸의 도구 인식 화면</figcaption>
+        </figure>
       </div>
     </div>
     <div class="step">
@@ -242,8 +253,7 @@ self.update_stable_states(frame_assignments)</code></pre>
   </div>
   </details>
 
-  <h3 class="phase-title" id="phase-solve">문제해결</h3>
-  <details class="case"><summary><h3 id="case-data">도구 인식 학습 데이터 전환</h3><span class="badge-team">팀 작업 참여</span><span class="case-facts"><span class="cf"><b>문제 파트</b><span>도구 인식(YOLO) — 실물 사진 학습 모델</span></span><span class="cf"><b>문제</b><span>시뮬레이터 속 가상 도구를 제대로 찾지 못함</span></span><span class="cf"><b>해결</b><span>(팀) Replicator 합성 데이터로 사전학습 YOLO 파인튜닝 → 트레이 6칸 배정 · 저는 인식 설계, 데이터 생성·학습 참여</span></span><span class="cf"><b>배운 점</b><span>검증 데이터는 실제 사용 환경에서</span></span></span></summary>
+  <details class="case"><summary><h3 id="case-data">도구 인식 학습 데이터 전환</h3><span class="case-phase">문제해결</span><span class="badge-team">팀 작업 참여</span><span class="case-facts"><span class="cf"><b>문제 파트</b><span>도구 인식(YOLO) — 실물 사진 학습 모델</span></span><span class="cf"><b>문제</b><span>시뮬레이터 속 가상 도구를 제대로 찾지 못함</span></span><span class="cf"><b>해결</b><span>(팀) Replicator 합성 데이터로 사전학습 YOLO 파인튜닝 → 트레이 6칸 배정 · 저는 인식 설계, 데이터 생성·학습 참여</span></span><span class="cf"><b>배운 점</b><span>검증 데이터는 실제 사용 환경에서</span></span></span></summary>
   <div class="case-steps">
     <div class="step">
       <h4 class="step-title">8~9일차 실물 사진 학습 모델</h4>
@@ -320,7 +330,7 @@ self.update_stable_states(frame_assignments)</code></pre>
   <h3 id="tech-flow">시스템 흐름</h3>
   <p>팀 시스템은 손 추적(MediaPipe, 카메라 영상에서 손 관절 위치를 찾는 라이브러리)과 음성 명령(음성 인식 결과를 LLM(대규모 언어 모델)이 명령으로 해석)을 입력으로 받아, 작업 관리 프로그램이 두 로봇에 도구 집기·반납 작업을 나눠 주고 상태를 관리합니다.</p>
   <h3 id="tech-vision">도구 인식 노드</h3>
-  <p>도구 인식 프로그램(노드)은 카메라 영상에서 YOLO로 도구를 찾아 미리 지정한 트레이 구역에 배정하고, 어느 트레이에 어떤 도구가 있는지를 ROS 2 메시지로 보냅니다. 손 추적·음성 명령·웹 대시보드는 팀원이 맡은 부분입니다.</p>
+  <p>도구 인식 프로그램(노드)은 카메라 영상에서 YOLO로 도구를 찾아 미리 지정한 트레이 구역에 배정하고, 어느 트레이에 어떤 도구가 있는지를 ROS 2 메시지로 보냅니다. 손 추적·음성 명령은 팀 공동 합의로 진행했고, 웹 대시보드는 팀원이 맡은 부분입니다.</p>
   <h3 id="tech-docs">참고 문서</h3>
   <p class="muted">팀 발표 자료(세부 기술): <a href="https://github.com/gwanhuiGIM/Rokey_cobot3/releases/download/presentation/cobot3_presentation.pdf">발표 자료(PDF, 66쪽)</a></p>
   <p class="muted pdf-index">발표 자료 목차·키워드: <a href="https://github.com/gwanhuiGIM/Rokey_cobot3/releases/download/presentation/cobot3_presentation.pdf#page=4">주제 선정 배경 p4</a> · <a href="https://github.com/gwanhuiGIM/Rokey_cobot3/releases/download/presentation/cobot3_presentation.pdf#page=6">시스템 아키텍처 p6</a> · <a href="https://github.com/gwanhuiGIM/Rokey_cobot3/releases/download/presentation/cobot3_presentation.pdf#page=7">ROS 2 노드 구조 p7</a> · <a href="https://github.com/gwanhuiGIM/Rokey_cobot3/releases/download/presentation/cobot3_presentation.pdf#page=8">흐름도 p8</a> · <a href="https://github.com/gwanhuiGIM/Rokey_cobot3/releases/download/presentation/cobot3_presentation.pdf#page=11">수행 절차 p11</a> · <a href="https://github.com/gwanhuiGIM/Rokey_cobot3/releases/download/presentation/cobot3_presentation.pdf#page=13">수술실·로봇 배치 p13</a> · <a href="https://github.com/gwanhuiGIM/Rokey_cobot3/releases/download/presentation/cobot3_presentation.pdf#page=15">흡착 그리퍼 p15</a> · <a href="https://github.com/gwanhuiGIM/Rokey_cobot3/releases/download/presentation/cobot3_presentation.pdf#page=17">두 로봇 작업 관리 p17</a> · <a href="https://github.com/gwanhuiGIM/Rokey_cobot3/releases/download/presentation/cobot3_presentation.pdf#page=19">공동 작업구역 p19</a> · <a href="https://github.com/gwanhuiGIM/Rokey_cobot3/releases/download/presentation/cobot3_presentation.pdf#page=21">음성 인식 p21</a> · <a href="https://github.com/gwanhuiGIM/Rokey_cobot3/releases/download/presentation/cobot3_presentation.pdf#page=26">손 추적(MediaPipe) p26</a> · <a href="https://github.com/gwanhuiGIM/Rokey_cobot3/releases/download/presentation/cobot3_presentation.pdf#page=38">RMPFlow·cuRobo p38</a> · <a href="https://github.com/gwanhuiGIM/Rokey_cobot3/releases/download/presentation/cobot3_presentation.pdf#page=54">도구 인식(YOLO) p54</a> · <a href="https://github.com/gwanhuiGIM/Rokey_cobot3/releases/download/presentation/cobot3_presentation.pdf#page=56">실패 요인 분석 p56</a> · <a href="https://github.com/gwanhuiGIM/Rokey_cobot3/releases/download/presentation/cobot3_presentation.pdf#page=57">Replicator 합성 데이터 p57</a> · <a href="https://github.com/gwanhuiGIM/Rokey_cobot3/releases/download/presentation/cobot3_presentation.pdf#page=61">트레이 구역 설정 p61</a> · <a href="https://github.com/gwanhuiGIM/Rokey_cobot3/releases/download/presentation/cobot3_presentation.pdf#page=64">대시보드 p64</a> · <a href="https://github.com/gwanhuiGIM/Rokey_cobot3/releases/download/presentation/cobot3_presentation.pdf#page=65">자체 평가 p65</a></p>
