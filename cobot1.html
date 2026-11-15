@@ -25,9 +25,6 @@
 <li><a href="#overview">한눈에 보기</a></li>
 <li><a href="#built">프로젝트 구현</a></li>
 <li class="toc-key"><a href="#process">진행 과정</a></li>
-<li class="toc-sub"><a href="#phase-why">동기</a></li>
-<li class="toc-sub"><a href="#phase-prep">구현 준비</a></li>
-<li class="toc-sub"><a href="#phase-build">구현 과정</a></li>
 <li><a href="#team">팀에서 일한 방식</a></li>
 <li><a href="#learned">배운 점</a></li>
 <li><a href="#tech">기술 상세</a></li>
@@ -35,16 +32,40 @@
 </ul>
 </nav>
 
-<main class="case-layout">
-<p class="updated">Last modified <time datetime="2026-11-15">2026-11-15</time></p>
+<main class="case-layout outline">
+<p class="updated">Last modified <time datetime="2026-11-16">2026-11-16</time></p>
 <section class="overview">
   <h2 id="overview">한눈에 보기</h2>
+  <p class="first-note">카메라가 없어 위치는 교시 좌표로 정하고, 물체를 잡았는지와 각 단계의 성공·실패는 힘·접점·통신 신호로만 판정해야 했습니다. 그래서 파지 판정, 신호 이상 감시, 실패 단계 복구가 이 공정의 핵심이었고, 제가 이 부분을 맡았습니다(공동작업).</p>
+  <div class="role-map" role="group" aria-label="발표 p10 프로젝트 구조 위에 표시한 제 담당 지점">
+    <p class="role-map-title">설계 흐름에서 제가 맡은 지점 <span>발표 p10 프로젝트 구조 기준 · 상자를 누르면 기술 설명으로, 아래 작은 링크는 진행 과정 사례로 이동합니다</span></p>
+    <div class="pipe role-pipe">
+      <div class="pipe-col"><span class="pipe-tag">Bean_drop</span><div class="pipe-box mine part"><a class="rm-main" href="#impl-process">원두 계량</a><small>스푼 파지 → 그라인더 호퍼 결합 — 구현 참여</small></div></div>
+      <div class="pipe-arrow" aria-hidden="true">→</div>
+      <div class="pipe-col"><span class="pipe-tag">Grinder</span><div class="pipe-box mine part"><a class="rm-main" href="#impl-process">분쇄</a><small>손잡이 파지 → 순응 제어 진입 → 회전 및 분쇄 — 구현 참여</small></div></div>
+      <div class="pipe-arrow" aria-hidden="true">→</div>
+      <div class="pipe-col"><span class="pipe-tag">Dripper</span><div class="pipe-box mine part"><a class="rm-main" href="#impl-process">필터 투입</a><small>병 파지 → 드리퍼 위 주기 운동 → 외력 기반 "두드림" 감지 — 구현 참여</small></div></div>
+      <div class="pipe-arrow" aria-hidden="true">→</div>
+      <div class="pipe-col"><span class="pipe-tag">Hand Drip</span><div class="pipe-box"><a class="rm-main" href="#impl-spiral">나선 드립</a><small>주둥이 위치를 고정한 채 내향 스파이럴로 붓기 — 팀 담당</small></div></div>
+      <div class="pipe-arrow" aria-hidden="true">→</div>
+      <div class="pipe-col"><span class="pipe-tag">Pour</span><div class="pipe-box mine part"><a class="rm-main" href="#impl-process">서빙</a><small>필터홀더·물컵 배치 → 주둥이 고정 위치보상 붓기 — 구현 참여</small></div></div>
+    </div>
+    <div class="pipe role-pipe">
+      <div class="pipe-col"><span class="pipe-tag">준비</span><div class="pipe-box mine part"><a class="rm-main" href="#impl-env">로봇 팔·그리퍼·작업 환경</a><small>구현 참여</small></div></div>
+      <div class="pipe-col"><span class="pipe-tag">입력</span><div class="pipe-box"><a class="rm-main" href="#impl-ui">작업자 입력과 진행 화면</a><small>팀 담당</small></div></div>
+      <div class="pipe-col"><span class="pipe-tag">예외 처리 (모든 단계)</span><div class="pipe-box mine"><a class="rm-main" href="#impl-grip">그리퍼 파지 판정·이상 감시</a><small>본인 주 담당</small><a class="rm-case" href="#case-grip">진행 과정 01</a><a class="rm-case" href="#case-watchdog">진행 과정 02</a></div><div class="pipe-box mine"><a class="rm-main" href="#impl-grip">실패 단계 재실행</a><small>본인 주 담당</small><a class="rm-case" href="#case-retry">진행 과정 03</a></div></div>
+    </div>
+    <div class="pipe role-pipe">
+      <div class="pipe-col"><span class="pipe-tag">흐름 밖</span><div class="pipe-box mine"><a class="rm-main" href="#case-env">작업 환경 도면(SOLIDWORKS 3D 모델 바탕)</a><small>본인 주 담당</small><a class="rm-case" href="#case-env">진행 과정 04</a></div></div>
+      <div class="pipe-col"><span class="pipe-tag">흐름 밖</span><div class="pipe-box"><a class="rm-main" href="#case-probe">힘 센서 접촉 탐지(probe_grip)</a><small>개인 개발 · 제출본과 별개</small><a class="rm-case" href="#case-probe">진행 과정 06</a></div></div>
+    </div>
+  </div>
   <div class="ov-media">
   <div class="video"><iframe src="https://www.youtube-nocookie.com/embed/17UW9-wpsBg" title="협동로봇 핸드드립 커피 자동화 1분 시연 영상" loading="lazy" allowfullscreen></iframe></div>
   <p class="muted">1분 시연 영상</p>
   </div>
   <ul class="ov-summary">
-    <li><b>내 담당</b> — 그리퍼 파지 판정·예외 처리(공동작업): <a href="#case-grip">파지 판정·이상 감시</a> · <a href="#case-retry">실패 단계 재실행</a> / <a href="#fig-layout">작업 환경 도면</a></li>
+    <li><b>내 담당</b> — 그리퍼 파지 판정·예외 처리(공동작업): <a href="#case-grip">파지 판정</a>·<a href="#case-watchdog">이상 감시</a> · <a href="#case-retry">실패 단계 재실행</a> / <a href="#fig-layout">작업 환경 도면</a></li>
     <li><b>팀 결과</b> — 원두 계량 → 분쇄 → 필터 투입 → 나선 드립 → 서빙, 5단계 공정 자동화 · 최종 시연</li>
     <li><b>조건</b> — 카메라 없음 · 교시 좌표 · 협동로봇 힘 센서와 그리퍼 접점 신호(물체를 잡았는지 알려 주는 신호)</li>
     <li><b>주제</b> — 트레이 밸런싱 검증(7월 20~22일) → 핸드드립 커피 확정(7월 23일)</li>
@@ -55,8 +76,8 @@
   <h2 id="built">프로젝트 구현</h2>
   <p>팀은 카메라 없이 교시 좌표(로봇에 미리 가르쳐 저장한 위치)와 힘·접점 신호만으로 원두 계량, 분쇄, 필터 투입, 나선 드립, 서빙을 하나의 공정으로 이었습니다.</p>
 
-  <details class="impl">
-  <summary><h3>로봇 팔·그리퍼·작업 환경 (Doosan M0609, OnRobot RG2, 레고 블록 받침, SOLIDWORKS 도면) <span class="badge-team">구현 참여</span></h3></summary>
+  <details class="impl" id="impl-env">
+  <summary><h3>로봇 팔·그리퍼·작업 환경 (Doosan M0609, OnRobot RG2, 레고 블록 받침, SOLIDWORKS 도면) <span class="badge-team">구현 참여</span></h3><span class="impl-jump">진행 과정 <a href="#case-env">04 작업 환경 구성</a><a href="#case-probe">06 힘 센서 접촉 탐지(probe_grip)</a></span></summary>
   <p>팀은 Doosan M0609 로봇 팔에 OnRobot RG2 그리퍼를 달고, 카메라 없이 레고 블록을 쌓은 받침과 표시로 도구 위치를 고정해 작업 환경을 구성했습니다. 로봇·그리퍼·작업자 버튼은 각각 다른 경로로 붙고, 로봇 제어와 웹 화면은 PC 한 대에서 돌렸습니다.</p>
   <div class="pipe" role="img" aria-label="도식: 컨트롤박스 버튼과 협동로봇 힘 센서의 입력을 PC 한 대가 받아 Doosan M0609 로봇 팔과 OnRobot RG2 그리퍼를 움직이는 하드웨어 구성. 그리퍼 개폐는 컨트롤박스 디지털 출력, 상태 감시는 Modbus TCP">
     <div class="pipe-col"><span class="pipe-tag">입력</span><div class="pipe-box">컨트롤박스 버튼<small>DI 13~16 · 원두 선택·재시작</small></div><div class="pipe-box">협동로봇 힘 센서<small>외력 감지</small></div></div>
@@ -70,10 +91,9 @@
     <img src="images/cobot1/workspace_layout.jpg" alt="작업 환경 도면: 작업대 크기, 공정 위치 5곳, 로봇 작업 영역, 그리퍼 치수와 물체별 벌림 폭" width="1200" height="848" loading="lazy">
     <figcaption class="muted">제가 그린 작업 환경 도면. 작업대와 공정 위치, 로봇 작업 영역, RG2 그리퍼 치수도를 한 장에 담았습니다.</figcaption>
   </figure>
-  <p class="muted">진행 과정에서 보기 → <a href="#case-env">02 작업 환경 구성</a> · <a href="#case-probe">05 힘 센서 접촉 탐지(probe_grip)</a></p>
   </details>
 
-  <details class="impl">
+  <details class="impl" id="impl-ui">
   <summary><h3>작업자 입력과 진행 화면 (컨트롤박스 버튼, 웹 화면) <span class="badge-team">팀 담당</span></h3></summary>
   <p>팀은 주문 입력·공정 진행 상태 표시·비상 정지를 담은 웹 화면을 만들었고, 작업자는 컨트롤박스 버튼으로 원두를 고릅니다.</p>
   <figure class="fig">
@@ -82,8 +102,8 @@
   </figure>
   </details>
 
-  <details class="impl">
-  <summary><h3>그리퍼 파지 판정과 예외 처리 (잡힘 신호·손가락 위치·힘) <span class="badge-team">본인 주 담당</span></h3></summary>
+  <details class="impl" id="impl-grip">
+  <summary><h3>그리퍼 파지 판정과 예외 처리 (잡힘 신호·손가락 위치·힘) <span class="badge-team">본인 주 담당</span></h3><span class="impl-jump">진행 과정 <a href="#case-grip">01 물체 잡힘 판정</a><a href="#case-watchdog">02 그리퍼 신호 끊김 감시</a><a href="#case-retry">03 실패 단계 재실행과 복구 분리</a></span></summary>
   <p>저는 그리퍼 파지 판정·예외 처리(공동작업)를 맡았습니다.</p>
   <div class="pipe" role="img" aria-label="도식: 그리퍼 신호(잡힘 신호, 손가락 위치, 힘)로 잡힘 여부를 판정하고, 신호가 1초 넘게 끊기면 로봇 정지를 요청하며, 파지에 실패하면 실패한 단계만 작업자 버튼으로 다시 실행하는 흐름">
     <div class="pipe-col"><span class="pipe-tag">입력</span><div class="pipe-box">그리퍼 신호<small>잡힘 신호 · 손가락 위치 · 힘</small></div></div>
@@ -96,11 +116,10 @@
     <img src="images/cobot1/slide_grip_fallback.jpg" alt="발표 슬라이드: 표준 RG2로도 3단 폴백으로 파지를 확인 — 01 최우선 하드웨어 grip 비트, 02 차선 모터 effort, 03 최후 position 갭(빈손 0.7587 rad, 40N 파지 0.7141 rad). 아래에 놓친 채 다음 동작을 하지 않는다는 문구" width="1200" height="675" loading="lazy">
     <figcaption class="muted">팀 발표 자료 p32 — 하드웨어 잡힘 신호를 먼저 보고, 없으면 모터 힘과 닫힌 위치 차이로 파지를 확인하는 순서</figcaption>
   </figure>
-  <p class="muted">진행 과정에서 보기 → <a href="#case-grip">03 물체 잡힘 판정과 이상 감시</a> · <a href="#case-retry">04 실패 단계 재실행과 복구 분리</a></p>
   </details>
 
-  <details class="impl">
-  <summary><h3>카메라 없이 이어지는 5단계 공정 (교시 좌표, 힘·접점 신호) <span class="badge-team">구현 참여</span></h3></summary>
+  <details class="impl" id="impl-process">
+  <summary><h3>카메라 없이 이어지는 5단계 공정 (교시 좌표, 힘·접점 신호) <span class="badge-team">구현 참여</span></h3><span class="impl-jump">진행 과정 <a href="#case-topic">05 주제 변경</a><a href="#case-retry">03 실패 단계 재실행</a></span></summary>
   <div class="pipe" role="img" aria-label="도식: 컨트롤박스 버튼으로 원두를 고르면 원두 계량, 분쇄, 필터 투입, 나선 드립, 서빙 순서로 이어지는 공정">
     <div class="pipe-col"><div class="pipe-box">원두 선택<small>컨트롤박스 버튼</small></div></div>
     <div class="pipe-arrow" aria-hidden="true">→</div>
@@ -127,103 +146,25 @@
     <img src="images/cobot1/slide_process_structure.jpg" alt="발표 슬라이드: 작업대 사진 위에 Bean_drop(스푼 파지·그라인더 호퍼 결합), Grinder(손잡이 파지·순응 제어·회전 및 분쇄), Dripper(병 파지·주기 운동·외력 기반 두드림 감지), Hand Drip(주둥이 위치 고정·내향 스파이럴 붓기), Pour(필터홀더·물컵 배치·주둥이 고정 붓기) 단계 설명을 붙인 프로젝트 구조" width="1200" height="675" loading="lazy">
     <figcaption class="muted">팀 발표 자료 p10 — 실제 작업대 사진 위에 발표 자료의 단계 구분(Bean_drop·Grinder·Dripper·Hand Drip·Pour)으로 동작을 정리한 프로젝트 구조. 위 도식과 단계 이름·나눔이 다릅니다.</figcaption>
   </figure>
-  <p class="muted">진행 과정에서 보기 → <a href="#case-topic">01 주제 변경</a> · <a href="#case-retry">04 실패 단계 재실행</a></p>
   </details>
 
-  <details class="impl">
+  <details class="impl" id="impl-spiral">
   <summary><h3>나선 드립 — 나선 이동과 주전자 기울임을 한 동작으로 (경유점 경로) <span class="badge-team">팀 담당</span></h3></summary>
   <p>팀은 나선 이동과 주전자 기울임을 하나의 연속 동작으로 묶어 로봇이 같은 나선 궤적으로 물을 붓게 했습니다.</p>
   <figure class="fig wide">
     <img src="images/cobot1/slide_spiral_pour.jpg" alt="발표 슬라이드: 왼쪽은 어둡게 찍힌 사진으로 레고 블록 받침 위 그라인더와 앞쪽의 금속 드리퍼, 가운데 상자는 컨트롤러가 한 순간에 하나의 궤적만 따라가 기울임을 따로 명령하면 나선 경로를 벗어난다는 문제, 오른쪽 상자는 위치는 삼각함수로·자세는 회전행렬로 넣고 웨이포인트 100개를 호 길이 등간격으로 배치한 해결 방안" width="1200" height="675" loading="lazy">
     <figcaption class="muted">팀 발표 자료 p18 — 컨트롤러는 한 순간에 하나의 궤적만 따라가 기울임을 따로 명령하면 나선 경로를 벗어나므로, 팀은 위치와 자세를 함께 담은 경유점 100개로 한 경로를 만들었습니다.</figcaption>
   </figure>
+  <figure class="fig">
+    <img src="images/cobot1/spiral_pour_run.jpg" alt="위에서 내려다본 장면: 금속 주전자 주둥이에서 아래의 검은 드리퍼로 물줄기가 떨어짐" width="609" height="772" loading="lazy">
+    <figcaption class="muted">나선 드립 중 주전자로 드리퍼에 물을 붓는 장면(위에서 본 모습)</figcaption>
+  </figure>
   </details>
 </section>
 
 <section>
   <h2 id="process">진행 과정 <span class="h2-hint">각 번호를 펼치면 사진과 함께 자세한 설명이 나옵니다. 진한 글씨는 제 담당 및 주요 과정입니다.</span></h2>
-  <h3 class="phase-title" id="phase-why">동기</h3>
-  <ul class="phase-facts">
-    <li><b>과제</b><span>ROS2를 활용한 로봇 자동화 공정 시스템 구현 프로젝트</span></li>
-    <li><b>장비</b><span>Doosan M0609 협동로봇 · OnRobot RG2 그리퍼 · 카메라 없음</span></li>
-    <li><b>주제 기준</b><span>카메라 없이 구현 가능 · 실생활 적용 · 다양한 단계</span></li>
-  </ul>
-
-  <details class="case"><summary><h3 id="case-topic">트레이 밸런싱에서 핸드드립으로 주제 변경</h3><span class="badge-team">팀 작업 참여</span><span class="case-facts"><span class="cf"><b>처음 주제</b><span>트레이 밸런싱(쟁반 위 컵의 무게중심 유지) — 7월 20~22일 검증, 저도 검증 코드 작성</span></span><span class="cf"><b>막힌 점</b><span>기울일 때 힘 계산값 변화 해석 · 그리퍼·쟁반·물체 무게 분리 측정</span></span><span class="cf"><b>결정</b><span>7월 23일 핸드드립 커피 자동화로 최종 주제 확정(팀)</span></span></span></summary>
-  <div class="case-steps">
-    <div class="step">
-      <h4 class="step-title">트레이 밸런싱 사흘간 검증</h4>
-      <div class="step-body">
-        <p>과정에서 주어진 과제는 ROS 2를 활용한 로봇 자동화 공정 구현이었습니다. 팀은 먼저 트레이 밸런싱을 7월 20일부터 사흘간 검증했고, 저도 가능성을 검증하는 코드를 직접 짰습니다.</p>
-      </div>
-    </div>
-    <div class="step">
-      <h4 class="step-title">해석·측정하지 못한 힘과 무게중심</h4>
-      <div class="step-body">
-        <p>하지만 긴 그리퍼와 무거운 쟁반이 이어진 구조에서 쟁반을 기울일 때 힘 계산값이 달라지는 이유를 해석하지 못했고, 그리퍼·쟁반·물체의 무게와 무게중심 변화를 나누어 측정하지도 못했습니다. 힘 감지 원리와 관성을 다룰 이론적 배경이 부족하고 기간도 짧아, 확신 없이 추가 센서를 붙여 보완하기도 어려웠습니다.</p>
-      </div>
-    </div>
-    <div class="step">
-      <h4 class="step-title">카메라 없이 구현할 공정 후보 검토</h4>
-      <div class="step-body">
-        <p>팀은 카메라 없이 구현할 수 있는 공정 후보들을 검토한 끝에, 실생활에 적용할 수 있고 다양한 단계를 다룰 수 있는 핸드드립 커피로 7월 23일에 최종 주제를 확정했습니다.</p>
-      </div>
-    </div>
-    <div class="step">
-      <h4 class="step-title">평가 기준 표현과 멘토 질문</h4>
-      <div class="step-body">
-        <p>급하게 정한 주제라 팀은 바꾼 주제를 평가 기준에 맞게 어떻게 표현하고 협동로봇을 어떻게 프로그래밍할지 멘토에게 물었고, 이후 접촉 감지와 물체 잡힘 판단, 나선 동작 구현으로 빠르게 이어 갔습니다.</p>
-      </div>
-    </div>
-  </div>
-  <p class="takeaway">이 경험에서 구현 목표가 주어진 하드웨어와 일정 안에서 실제로 측정하고 제어할 수 있는 범위인지, <strong>작은 검증 코드로 먼저 짚어보고 방향을 결정해야 한다</strong>는 일하는 방식을 배웠습니다.</p>
-  </details>
-
-  <h3 class="phase-title" id="phase-prep">구현 준비</h3>
-  <details class="case"><summary><h3 id="case-env">작업 환경 구성 — 3D 모델(역설계)과 작업 환경 도면</h3><span class="case-facts"><span class="cf"><b>계기</b><span>위치가 틀어질 때 대비 → 위치·치수 규격화</span></span><span class="cf"><b>한 일</b><span>SOLIDWORKS 3D 모델(역설계) → 작업 환경 도면 한 장</span></span><span class="cf"><b>담은 것</b><span>작업대 크기 · 공정 위치 5곳 · 로봇 작업 영역 · 그리퍼 치수와 물체별 벌림 폭</span></span><span class="cf"><b>쓰임</b><span>코드가 동작하는 환경 이해 · 도면 치수 ≠ 교시 좌표</span></span></span></summary>
-  <div class="case-steps">
-    <div class="step">
-      <h4 class="step-title">블록으로 잡은 작업 환경</h4>
-      <div class="step-body">
-        <p>카메라가 없어 팀은 탁자에 레고 블록으로 물체 위치를 표시·고정하고, 블록으로 환경을 세팅해 위치가 틀어지는 것을 막으려 했습니다. 짧은 개발 기간과 잦은 변동으로 작업 환경 도면을 미리 정하고 시작하지는 못했습니다.</p>
-      </div>
-    </div>
-    <div class="step">
-      <h4 class="step-title">SOLIDWORKS 3D 모델(역설계)</h4>
-      <div class="step-body">
-        <p>공정 구성을 마친 뒤, 저는 이미 꾸민 작업 환경을 보고 작업대와 공정 도구를 SOLIDWORKS로 거꾸로 모델링(역설계)했습니다. 작업 영역과 도구 형상을 3차원으로 직접 옮긴 작업입니다.</p>
-        <figure class="fig" id="fig-sw-model">
-    <img src="images/cobot1/solidworks_model_iso.png" alt="SOLIDWORKS 창의 3D 모델 등각 보기. 왼쪽 피처 트리에 WorkSpace, Robot_Base, Spoon, WaterCup, Grinder_Support, Drip_Filter, Order_serve 등 작업대와 도구별 바디가 나열되어 있고, 화면에는 작업대 판 위의 상자·원통·깔때기 모양 형상과 위쪽 참조 평면의 원형 작업 가능 영역 스케치가 보임" width="1435" height="804" loading="lazy">
-    <figcaption class="muted">도면의 바탕이 된 SOLIDWORKS 3D 모델(등각 보기). 왼쪽 피처 트리에 작업대와 도구별 바디가, 위쪽에 원형 작업 가능 영역 스케치가 보입니다.</figcaption>
-  </figure>
-        <figure class="fig" id="fig-sw-side">
-    <img src="images/cobot1/solidworks_model_side.png" alt="같은 3D 모델의 측면 보기. 바닥의 작업대 판과 파란 수평 참조 평면 선을 기준으로 상자·원통·깔때기 모양 형상의 윤곽이 놓여 있고, 위쪽 높이에 작은 부품 하나가 있음" width="985" height="418" loading="lazy">
-    <figcaption class="muted">같은 모델의 측면 보기. 작업대 바닥과 수평 참조 평면을 기준으로 각 형상의 높이 배치를 볼 수 있습니다.</figcaption>
-  </figure>
-      </div>
-    </div>
-    <div class="step">
-      <h4 class="step-title">작업 환경 도면 한 장</h4>
-      <div class="step-body">
-        <p>위치가 틀어질 때를 대비해, 이 3D 모델을 바탕으로 로봇 작업 영역과 공정 위치, 그리퍼 벌림 폭 등 위치와 치수를 규격화하는 작업 환경 도면을 7월 28일에 한 장으로 정리했습니다.</p>
-        <figure class="fig" id="fig-layout">
-    <img src="images/cobot1/workspace_layout.jpg" alt="작업 환경 도면: 작업대 크기, 공정 위치 5곳, 로봇 작업 영역, 그리퍼 치수와 물체별 벌림 폭" width="1200" height="848" loading="lazy">
-    <figcaption class="muted">제가 그린 작업 환경 도면. 작업대 크기, 공정 위치 5곳, 로봇 작업 영역, 그리퍼 치수와 물체별 벌림 폭을 한 장에 담았습니다.</figcaption>
-  </figure>
-      </div>
-    </div>
-    <div class="step">
-      <h4 class="step-title">도면의 쓰임과 치수 경계</h4>
-      <div class="step-body">
-        <p>코드가 어떤 환경에서 동작하는지 이해하도록 돕는 문서이며, 도면 치수가 코드의 교시 좌표와 그대로 맞지는 않습니다. 역설계라 치수도 실제와 완전히 일치하지는 않습니다.</p>
-      </div>
-    </div>
-  </div>
-  <p class="takeaway">도면을 사후에 정리하며, <strong>처음부터 작업 환경 도면을 정하고 시작했다면 좋았겠다</strong>는 아쉬움을 남겼습니다.</p>
-  </details>
-
-  <h3 class="phase-title" id="phase-build">구현 과정</h3>
-  <details class="case"><summary><h3 id="case-grip">물체 잡힘 판정과 이상 감시</h3><span class="case-facts"><span class="cf"><b>계기</b><span>깊게 물면 잡힘 신호가 뜨지 않음 → 실패로 읽으면 물체를 문 채 다시 집으러 감</span></span><span class="cf"><b>방법</b><span>잡힘 신호 우선 · 신호가 없으면 손가락 위치·힘으로 대체 판정 · 신호가 1초 넘게 끊기면 로봇 정지 요청</span></span><span class="cf"><b>결과</b><span>실제 로봇 시험에서 잡힘 판정 유지</span></span></span></summary>
+  <details class="case"><summary><h3 id="case-grip">물체 잡힘 판정</h3><span class="case-phase">구현 · 문제해결</span><span class="badge-team">본인 주 담당</span><span class="case-facts"><span class="cf"><b>계기</b><span>깊게 물면 잡힘 신호가 뜨지 않음 → 실패로 읽으면 물체를 문 채 다시 집으러 감</span></span><span class="cf"><b>방법</b><span>잡힘 신호 우선 · 신호가 없으면 손가락 위치·힘으로 대체 판정</span></span><span class="cf"><b>결과</b><span>실제 로봇 시험에서 잡힘 판정 유지</span></span></span></summary>
   <div class="case-steps">
     <div class="step">
       <h4 class="step-title">잡힘 신호가 뜨지 않는 경우</h4>
@@ -248,16 +189,6 @@
       </div>
     </div>
     <div class="step">
-      <h4 class="step-title">이동 명령을 한 곳에서 감싸기</h4>
-      <div class="step-body">
-        <p>최종 제출본에서는 그리퍼 신호가 1초 넘게 끊기면 로봇 정지를 요청하는 감시도 제가 맡았습니다. 이동 명령마다 확인 코드를 넣으면 빠뜨리는 곳이 생기므로, 이동 명령을 한 곳에서 감싸 앞뒤로 신호 이상을 확인하고 이상 감지 뒤에는 다음 이동을 막았습니다.</p>
-        <figure class="fig wide">
-    <img src="images/cobot1/gripper-signal-timeline.jpg" alt="도식: 그리퍼 신호 수신이 끊긴 뒤 1.0초가 지나면 감시 타이머가 신호 두절로 판단해 로봇 정지를 요청하는 흐름을 시간 순으로 그린 그림" width="1360" height="570" loading="lazy">
-    <figcaption class="muted">최종 제출본에서 그리퍼 신호가 끊긴 뒤 1초가 지나면 로봇 정지를 요청하는 흐름을 시간 순으로 그린 도식입니다.</figcaption>
-  </figure>
-      </div>
-    </div>
-    <div class="step">
       <h4 class="step-title">실제 로봇 시험</h4>
       <div class="step-body">
         <p>실제 로봇 시험에서는 잡힘 판정이 기존처럼 동작했습니다.</p>
@@ -273,7 +204,22 @@
   <p class="takeaway">이 과정을 거치며 센서 신호로 상태를 판정할 때는 <strong>신호가 애매해지는 경우부터 정리하고, 로봇을 움직이기 전에 확인할 기준부터 세워야 한다</strong>는 점을 배웠습니다.</p>
   </details>
 
-  <details class="case"><summary><h3 id="case-retry">실패 단계 재실행과 복구 분리</h3><span class="case-facts"><span class="cf"><b>계기</b><span>실패하면 공정 전체를 다시 시작 → 15초 가까운 나선 드립과 끝난 앞 단계까지 버림</span></span><span class="cf"><b>바꾼 구조</b><span>실패한 단계만 처음부터 다시 실행</span></span><span class="cf"><b>나눈 역할</b><span>현장 정리는 사람 · 재시도 여부는 작업자가 컨트롤박스 버튼으로</span></span></span></summary>
+  <details class="case"><summary><h3 id="case-watchdog">그리퍼 신호 끊김 감시</h3><span class="case-phase">구현</span><span class="badge-team">본인 주 담당</span><span class="case-facts"><span class="cf"><b>계기</b><span>이동 명령마다 확인 코드를 넣으면 빠뜨리는 곳이 생김</span></span><span class="cf"><b>방법</b><span>신호가 1초 넘게 끊기면 로봇 정지 요청 · 이동 명령을 한 곳에서 감싸 앞뒤로 신호 이상 확인</span></span></span></summary>
+  <div class="case-steps">
+    <div class="step">
+      <h4 class="step-title">이동 명령을 한 곳에서 감싸기</h4>
+      <div class="step-body">
+        <p>최종 제출본에서는 그리퍼 신호가 1초 넘게 끊기면 로봇 정지를 요청하는 감시를 제가 맡았습니다. 이동 명령마다 확인 코드를 넣으면 빠뜨리는 곳이 생기므로, 이동 명령을 한 곳에서 감싸 앞뒤로 신호 이상을 확인하고 이상 감지 뒤에는 다음 이동을 막았습니다.</p>
+        <figure class="fig wide">
+    <img src="images/cobot1/gripper-signal-timeline.jpg" alt="도식: 그리퍼 신호 수신이 끊긴 뒤 1.0초가 지나면 감시 타이머가 신호 두절로 판단해 로봇 정지를 요청하는 흐름을 시간 순으로 그린 그림" width="1360" height="570" loading="lazy">
+    <figcaption class="muted">최종 제출본에서 그리퍼 신호가 끊긴 뒤 1초가 지나면 로봇 정지를 요청하는 흐름을 시간 순으로 그린 도식입니다.</figcaption>
+  </figure>
+      </div>
+    </div>
+  </div>
+  </details>
+
+  <details class="case"><summary><h3 id="case-retry">실패 단계 재실행과 복구 분리</h3><span class="case-phase">구현</span><span class="badge-team">본인 주 담당</span><span class="case-facts"><span class="cf"><b>계기</b><span>실패하면 공정 전체를 다시 시작 → 15초 가까운 나선 드립과 끝난 앞 단계까지 버림</span></span><span class="cf"><b>바꾼 구조</b><span>실패한 단계만 처음부터 다시 실행</span></span><span class="cf"><b>나눈 역할</b><span>현장 정리는 사람 · 재시도 여부는 작업자가 컨트롤박스 버튼으로</span></span></span></summary>
   <div class="case-steps">
     <div class="step">
       <h4 class="step-title">초기에 공정 전체를 다시 시작</h4>
@@ -321,7 +267,84 @@
   <p class="takeaway">이 경험으로 <strong>시스템이 자동으로 처리할 범위와 사람이 판단할 지점을 나누는 설계</strong>를 익혔습니다.</p>
   </details>
 
-  <details class="case"><summary><h3 id="case-probe">힘 센서 접촉 탐지로 물체 중심 좌표 구하기(probe_grip)</h3><span class="case-facts"><span class="cf"><b>범위</b><span>개인 개발 · 팀 제출본에 병합하지 않은 별개 모듈</span></span><span class="cf"><b>방법</b><span>엔드이펙터에 닿는 힘을 협동로봇 힘 센서로 감지 → 물체 중심 좌표 산출</span></span><span class="cf"><b>한 일</b><span>힘 측정 방식이 다른 접촉 탐지 4가지 · 각각 동작 확인</span></span><span class="cf"><b>조정</b><span>힘 센서 측정 방식·축 방향 숙지 → 작용 힘 조건 부호 조정</span></span></span></summary>
+  <details class="case"><summary><h3 id="case-env">작업 환경 구성 — 3D 모델(역설계)과 작업 환경 도면</h3><span class="case-phase">구현</span><span class="badge-team">본인 주 담당</span><span class="case-facts"><span class="cf"><b>계기</b><span>위치가 틀어질 때 대비 → 위치·치수 규격화</span></span><span class="cf"><b>한 일</b><span>SOLIDWORKS 3D 모델(역설계) → 작업 환경 도면 한 장</span></span><span class="cf"><b>담은 것</b><span>작업대 크기 · 공정 위치 5곳 · 로봇 작업 영역 · 그리퍼 치수와 물체별 벌림 폭</span></span><span class="cf"><b>쓰임</b><span>코드가 동작하는 환경 이해 · 도면 치수 ≠ 교시 좌표</span></span></span></summary>
+  <div class="case-steps">
+    <div class="step">
+      <h4 class="step-title">블록으로 잡은 작업 환경</h4>
+      <div class="step-body">
+        <p>카메라가 없어 팀은 탁자에 레고 블록으로 물체 위치를 표시·고정하고, 블록으로 환경을 세팅해 위치가 틀어지는 것을 막으려 했습니다. 짧은 개발 기간과 잦은 변동으로 작업 환경 도면을 미리 정하고 시작하지는 못했습니다.</p>
+      </div>
+    </div>
+    <div class="step">
+      <h4 class="step-title">SOLIDWORKS 3D 모델(역설계)</h4>
+      <div class="step-body">
+        <p>공정 구성을 마친 뒤, 저는 이미 꾸민 작업 환경을 보고 작업대와 공정 도구를 SOLIDWORKS로 거꾸로 모델링(역설계)했습니다. 작업 영역과 도구 형상을 3차원으로 직접 옮긴 작업입니다.</p>
+        <figure class="fig" id="fig-sw-model">
+    <img src="images/cobot1/solidworks_model_iso.png" alt="SOLIDWORKS 창의 3D 모델 등각 보기. 왼쪽 피처 트리에 WorkSpace, Robot_Base, Spoon, WaterCup, Grinder_Support, Drip_Filter, Order_serve 등 작업대와 도구별 바디가 나열되어 있고, 화면에는 작업대 판 위의 상자·원통·깔때기 모양 형상과 위쪽 참조 평면의 원형 작업 가능 영역 스케치가 보임" width="1435" height="804" loading="lazy">
+    <figcaption class="muted">도면의 바탕이 된 SOLIDWORKS 3D 모델(등각 보기). 왼쪽 피처 트리에 작업대와 도구별 바디가, 위쪽에 원형 작업 가능 영역 스케치가 보입니다.</figcaption>
+  </figure>
+        <figure class="fig" id="fig-sw-side">
+    <img src="images/cobot1/solidworks_model_side.png" alt="같은 3D 모델의 측면 보기. 바닥의 작업대 판과 파란 수평 참조 평면 선을 기준으로 상자·원통·깔때기 모양 형상의 윤곽이 놓여 있고, 위쪽 높이에 작은 부품 하나가 있음" width="985" height="418" loading="lazy">
+    <figcaption class="muted">같은 모델의 측면 보기. 작업대 바닥과 수평 참조 평면을 기준으로 각 형상의 높이 배치를 볼 수 있습니다.</figcaption>
+  </figure>
+      </div>
+    </div>
+    <div class="step">
+      <h4 class="step-title">작업 환경 도면 한 장</h4>
+      <div class="step-body">
+        <p>위치가 틀어질 때를 대비해, 이 3D 모델을 바탕으로 로봇 작업 영역과 공정 위치, 그리퍼 벌림 폭 등 위치와 치수를 규격화하는 작업 환경 도면을 7월 28일에 한 장으로 정리했습니다.</p>
+        <figure class="fig" id="fig-layout">
+    <img src="images/cobot1/workspace_layout.jpg" alt="작업 환경 도면: 작업대 크기, 공정 위치 5곳, 로봇 작업 영역, 그리퍼 치수와 물체별 벌림 폭" width="1200" height="848" loading="lazy">
+    <figcaption class="muted">제가 그린 작업 환경 도면. 작업대 크기, 공정 위치 5곳, 로봇 작업 영역, 그리퍼 치수와 물체별 벌림 폭을 한 장에 담았습니다.</figcaption>
+  </figure>
+      </div>
+    </div>
+    <div class="step">
+      <h4 class="step-title">도면의 쓰임과 치수 경계</h4>
+      <div class="step-body">
+        <p>코드가 어떤 환경에서 동작하는지 이해하도록 돕는 문서이며, 도면 치수가 코드의 교시 좌표와 그대로 맞지는 않습니다. 역설계라 치수도 실제와 완전히 일치하지는 않습니다.</p>
+      </div>
+    </div>
+  </div>
+  <p class="takeaway">도면을 사후에 정리하며, <strong>처음부터 작업 환경 도면을 정하고 시작했다면 좋았겠다</strong>는 아쉬움을 남겼습니다.</p>
+  </details>
+
+  <details class="case"><summary><h3 id="case-topic">트레이 밸런싱에서 핸드드립으로 주제 변경</h3><span class="case-phase">동기</span><span class="badge-team">팀 작업 참여</span><span class="case-facts"><span class="cf"><b>처음 주제</b><span>트레이 밸런싱(쟁반 위 컵의 무게중심 유지) — 7월 20~22일 검증, 저도 검증 코드 작성</span></span><span class="cf"><b>막힌 점</b><span>기울일 때 힘 계산값 변화 해석 · 그리퍼·쟁반·물체 무게 분리 측정</span></span><span class="cf"><b>결정</b><span>7월 23일 핸드드립 커피 자동화로 최종 주제 확정(팀)</span></span></span></summary>
+  <ul class="phase-facts">
+    <li><b>과제</b><span>ROS2를 활용한 로봇 자동화 공정 시스템 구현 프로젝트</span></li>
+    <li><b>장비</b><span>Doosan M0609 협동로봇 · OnRobot RG2 그리퍼 · 카메라 없음</span></li>
+    <li><b>주제 기준</b><span>카메라 없이 구현 가능 · 실생활 적용 · 다양한 단계</span></li>
+  </ul>
+  <div class="case-steps">
+    <div class="step">
+      <h4 class="step-title">트레이 밸런싱 사흘간 검증</h4>
+      <div class="step-body">
+        <p>과정에서 주어진 과제는 ROS 2를 활용한 로봇 자동화 공정 구현이었습니다. 팀은 먼저 트레이 밸런싱을 7월 20일부터 사흘간 검증했고, 저도 가능성을 검증하는 코드를 직접 짰습니다.</p>
+      </div>
+    </div>
+    <div class="step">
+      <h4 class="step-title">해석·측정하지 못한 힘과 무게중심</h4>
+      <div class="step-body">
+        <p>하지만 긴 그리퍼와 무거운 쟁반이 이어진 구조에서 쟁반을 기울일 때 힘 계산값이 달라지는 이유를 해석하지 못했고, 그리퍼·쟁반·물체의 무게와 무게중심 변화를 나누어 측정하지도 못했습니다. 힘 감지 원리와 관성을 다룰 이론적 배경이 부족하고 기간도 짧아, 확신 없이 추가 센서를 붙여 보완하기도 어려웠습니다.</p>
+      </div>
+    </div>
+    <div class="step">
+      <h4 class="step-title">카메라 없이 구현할 공정 후보 검토</h4>
+      <div class="step-body">
+        <p>팀은 카메라 없이 구현할 수 있는 공정 후보들을 검토한 끝에, 실생활에 적용할 수 있고 다양한 단계를 다룰 수 있는 핸드드립 커피로 7월 23일에 최종 주제를 확정했습니다.</p>
+      </div>
+    </div>
+    <div class="step">
+      <h4 class="step-title">평가 기준 표현과 멘토 질문</h4>
+      <div class="step-body">
+        <p>급하게 정한 주제라 팀은 바꾼 주제를 평가 기준에 맞게 어떻게 표현하고 협동로봇을 어떻게 프로그래밍할지 멘토에게 물었고, 이후 접촉 감지와 물체 잡힘 판단, 나선 동작 구현으로 빠르게 이어 갔습니다.</p>
+      </div>
+    </div>
+  </div>
+  <p class="takeaway">이 경험에서 구현 목표가 주어진 하드웨어와 일정 안에서 실제로 측정하고 제어할 수 있는 범위인지, <strong>작은 검증 코드로 먼저 짚어보고 방향을 결정해야 한다</strong>는 일하는 방식을 배웠습니다.</p>
+  </details>
+
+  <details class="case case-minor"><summary><h3 id="case-probe">힘 센서 접촉 탐지로 물체 중심 좌표 구하기(probe_grip)</h3><span class="case-phase">구현</span><span class="badge-team">개인 개발</span><span class="case-facts"><span class="cf"><b>범위</b><span>개인 개발 · 팀 제출본에 병합하지 않은 별개 모듈</span></span><span class="cf"><b>방법</b><span>엔드이펙터에 닿는 힘을 협동로봇 힘 센서로 감지 → 물체 중심 좌표 산출</span></span><span class="cf"><b>한 일</b><span>힘 측정 방식이 다른 접촉 탐지 4가지 · 각각 동작 확인</span></span><span class="cf"><b>조정</b><span>힘 센서 측정 방식·축 방향 숙지 → 작용 힘 조건 부호 조정</span></span></span></summary>
   <div class="case-steps">
     <div class="step">
       <h4 class="step-title">접촉으로 물체 중심 찾기</h4>
