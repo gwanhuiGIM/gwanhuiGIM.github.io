@@ -553,7 +553,7 @@ main.case-layout.outline details.impl > summary::after { grid-column: 2; grid-ro
 .role-map-title { margin: 0 0 4px; font-weight: 700; }
 .role-map-title span { display: block; font-size: 13.5px; font-weight: 400; color: var(--muted); }
 main.case-layout .role-pipe { margin: 12px 0 0; }
-.role-pipe .pipe-box { border-left-color: var(--line); color: var(--muted); font-size: 14.5px; }
+.role-pipe .pipe-box { position: relative; border-left-color: var(--line); color: var(--muted); font-size: 14.5px; }
 .role-pipe .pipe-box.mine { position: relative; border: 2px solid var(--accent); background: var(--accent-soft); color: var(--fg); }
 .role-pipe .pipe-box.mine.part { border-style: dashed; }
 .role-pipe .pipe-box.mine:hover { box-shadow: 0 0 0 3px var(--accent-soft); }
