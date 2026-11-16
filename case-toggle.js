@@ -19,6 +19,7 @@ function openHash() {
 // index 키워드 각주(?from=fn)로 들어오면 사례 대신 첫머리 흐름도(#role-map)로 가서 해당 진행 과정 번호를 강조한다
 // — 링크 → 흐름 확인 → 세부 순서(사용자 2026-11-16 "a"). 목표가 사례 안 그림·단계면 그 사례 번호를 강조하고,
 // 번호를 누르면 원래 목표로 간다. 흐름도에 대응 칸이 없으면(#team 등) false를 돌려 기존 openHash로 바로 이동.
+// ?from=fn 표시는 index.html 끝의 스크립트가 sup.fn 링크에 자동으로 붙인다(손으로 안 붙여도 됨).
 function flowFirst() {
   if (new URLSearchParams(location.search).get('from') !== 'fn') return false;
   var id = decodeURIComponent(location.hash.slice(1));

@@ -265,5 +265,13 @@
   <p><b>김관희</b> · <a href="mailto:gwanhuig01@gmail.com">gwanhuig01@gmail.com</a> · <a href="https://github.com/gwanhuiGIM">GitHub</a></p>
 </footer>
 <script src="img-zoom.js" defer></script>
+<script>
+// 키워드 각주(sup.fn)의 페이지 내부 링크(*.html#…)에 ?from=fn을 자동으로 붙인다 — 새 각주도 표시 없이
+// "링크 → 흐름도 → 세부" 순서를 따르게(사용자 2026-11-16 q1o). 받는 쪽은 case-toggle.js flowFirst().
+document.querySelectorAll('sup.fn a[href]').forEach(function (a) {
+  var h = a.getAttribute('href'), m = /^([\w-]+\.html)(#.+)$/.exec(h);
+  if (m) a.setAttribute('href', m[1] + '?from=fn' + m[2]);
+});
+</script>
 </body>
 </html>
