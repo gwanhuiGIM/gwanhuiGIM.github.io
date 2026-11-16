@@ -591,9 +591,17 @@ main.case-layout details.impl > summary > h3:has(> .badge-team) { padding-right:
 main.case-layout details.impl > summary > h3 > .badge-team { position: absolute; top: 14px; right: 0; white-space: nowrap; }
 main.case-layout.outline details.impl > summary::after { align-self: end; }
 .role-pipe .pipe-box { position: relative; }
-main.case-layout.outline .role-pipe .pipe-box { padding-top: 36px; }  /* 배지 유무와 관계없이 같은 위 여백 — 같은 행 제목 높이 맞춤(사용자 2026-11-16 "상단정렬") */
+main.case-layout.outline .role-pipe .pipe-box { padding-top: 9px; justify-content: center; }  /* 글은 상자 세로 가운데(사용자 "글들만 중앙배치 복구"), 번호·배지는 아래 구석 — 위 36px 여백 원복(사용자 2026-11-16 "q1o") */
+main.case-layout.outline .role-pipe .pipe-box:has(> .rm-cases, > .rm-badge) { padding-bottom: 38px; }  /* 아래 번호·배지 줄 자리 */
+.role-pipe .pipe-box > .rm-cases { position: absolute; left: 13px; bottom: 9px; margin: 0; }  /* 번호는 왼쪽 아래 */
 .role-pipe .rm-cases { position: relative; z-index: 1; display: block; margin-top: 4px; }  /* 사례 번호를 한 줄에 나란히 */
 .role-pipe > .pipe-col:only-child { flex: 0 0 calc((100% - 102px) / 4); }  /* 한 칸뿐인 "흐름 밖" 줄은 흐름도 한 열 폭으로(4열 + 화살표 3개 기준, 사용자 2026-11-16 "q5o") */
 main.case-layout.outline .role-pipe .rm-cases .rm-case { font-size: 14px; }
-.role-pipe .rm-badge { position: absolute; top: 7px; right: 7px; z-index: 1; white-space: nowrap; }
+.role-pipe .rm-badge { position: absolute; right: 0; bottom: 0; white-space: nowrap; border-width: 1px 0 0 1px; border-radius: 8px 0 6px 0; }  /* 배지는 상자 안쪽 오른쪽 아래 모서리에 붙인 꼬리표 — 테두리선은 가리지 않음(사용자 2026-11-16 "안b. 칸 안으로 들어오게") */
+/* 제목 링크가 있는 상자: 글은 세로 가운데, 아래 줄에 번호(왼쪽)·배지(오른쪽). 배지가 길면 배지 칸 안에서 줄바꿈(번호와 겹치지 않게) */
+main.case-layout.outline .role-pipe .pipe-box:has(> .rm-main) { display: grid; grid-template-columns: max-content minmax(0, 1fr); grid-template-rows: 1fr auto auto 1fr auto; column-gap: 10px; padding-bottom: 9px; }
+.role-pipe .pipe-box:has(> .rm-main) > .rm-main { grid-column: 1 / -1; grid-row: 2; }
+.role-pipe .pipe-box:has(> .rm-main) > small { grid-column: 1 / -1; grid-row: 3; }
+.role-pipe .pipe-box:has(> .rm-main) > .rm-cases { position: relative; left: auto; bottom: auto; grid-column: 1; grid-row: 5; align-self: end; margin-top: 6px; }
+.role-pipe .pipe-box:has(> .rm-main) > .rm-badge { position: static; grid-column: 2; grid-row: 5; justify-self: end; align-self: end; margin: 6px -13px -9px 0; white-space: normal; text-align: right; }  /* 안쪽 모서리까지(상자 padding 9px 13px만큼 당김) */
 @media (max-width: 600px) { main.case-layout details.impl > summary > h3:has(> .badge-team) { padding-right: 0; padding-top: 30px; } main.case-layout details.impl > summary > h3 > .badge-team { top: 10px; right: auto; left: 16px; } }
