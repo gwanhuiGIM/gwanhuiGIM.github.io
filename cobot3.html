@@ -37,13 +37,13 @@
 <section class="overview">
   <h2 id="overview">한눈에 보기</h2>
   <div class="role-map" role="group" aria-label="발표 p7 ROS 2 노드 구조 위에 표시한 제 담당 지점">
-    <p class="role-map-title">설계 흐름에서 제가 맡은 지점 <span>발표 p7 ROS 2 노드 구조 기준 · 상자를 누르면 기술 설명으로, 아래 작은 링크는 진행 과정 사례로 이동합니다</span></p>
+    <p class="role-map-title">설계 흐름에서 제가 맡은 지점 <span>상자를 누르면 기술 설명으로, 아래 번호는 진행 과정 사례로 이동합니다</span></p>
     <div class="pipe role-pipe">
-      <div class="pipe-col"><span class="pipe-tag">입력·인식</span><div class="pipe-box mine"><a class="rm-main" href="#impl-ros2">카메라 배치와 ROS 2 연결 구조</a><small>본인 주 담당</small><a class="rm-case" href="#case-merge">진행 과정 01</a><a class="rm-case" href="#case-vision">진행 과정 02</a></div><div class="pipe-box"><a class="rm-main" href="#impl-request">손 동작·음성·화면 클릭 요청</a><small>MediaPipe · Whisper · Gemini — 팀 담당</small></div><div class="pipe-box mine part"><a class="rm-main" href="#impl-vision">도구 인식 (YOLO · 합성 데이터)</a><small>본인 주 담당 · 합성 데이터 팀 작업 참여</small><a class="rm-case" href="#case-vision">진행 과정 02</a><a class="rm-case" href="#case-data">진행 과정 03</a></div></div>
+      <div class="pipe-col"><span class="pipe-tag">입력·인식</span><div class="pipe-box mine"><a class="rm-main" href="#impl-ros2">카메라 배치와 ROS 2 연결 구조</a><span class="badge-team rm-badge">본인 주 담당</span><span class="rm-cases"><a class="rm-case" href="#case-merge" title="네 번의 병합으로 두 로봇 시스템 통합">01</a> · <a class="rm-case" href="#case-vision" title="시뮬레이터 카메라와 도구 인식 노드 구성">02</a></span></div><div class="pipe-box"><a class="rm-main" href="#impl-request">손 동작·음성·화면 클릭 요청</a><small>MediaPipe · Whisper · Gemini</small><span class="badge-team rm-badge">팀 담당</span></div><div class="pipe-box mine part"><a class="rm-main" href="#impl-vision">도구 인식 (YOLO · 합성 데이터)</a><span class="badge-team rm-badge">본인 주 담당 · 합성 데이터 팀 작업 참여</span><span class="rm-cases"><a class="rm-case" href="#case-vision" title="시뮬레이터 카메라와 도구 인식 노드 구성">02</a> · <a class="rm-case" href="#case-data" title="도구 인식 학습 데이터 전환">03</a></span></div></div>
       <div class="pipe-arrow" aria-hidden="true">→</div>
-      <div class="pipe-col"><span class="pipe-tag">작업 관리</span><div class="pipe-box"><a class="rm-main" href="#impl-manager">작업 관리 프로그램</a><small>도구 있는 트레이 찾기 · 로봇 배정 · 공동 트레이 구역 — 팀 담당</small></div></div>
+      <div class="pipe-col"><span class="pipe-tag">작업 관리</span><div class="pipe-box"><a class="rm-main" href="#impl-manager">작업 관리 프로그램</a><small>도구 있는 트레이 찾기 · 로봇 배정 · 공동 트레이 구역</small><span class="badge-team rm-badge">팀 담당</span></div></div>
       <div class="pipe-arrow" aria-hidden="true">→</div>
-      <div class="pipe-col"><span class="pipe-tag">실행</span><div class="pipe-box"><a class="rm-main" href="#impl-manager">동작 계획 → 로봇 A · 로봇 B</a><small>RMPFlow · cuRobo · 흡착 그리퍼 — 팀 담당</small></div><div class="pipe-box"><a class="rm-main" href="#impl-sim">가상 수술실 (Isaac Sim)</a><small>팀 담당</small></div></div>
+      <div class="pipe-col"><span class="pipe-tag">실행</span><div class="pipe-box"><a class="rm-main" href="#impl-manager">동작 계획 → 로봇 A · 로봇 B</a><small>RMPFlow · cuRobo · 흡착 그리퍼</small><span class="badge-team rm-badge">팀 담당</span></div><div class="pipe-box"><a class="rm-main" href="#impl-sim">가상 수술실 (Isaac Sim)</a><span class="badge-team rm-badge">팀 담당</span></div></div>
     </div>
   </div>
   <div class="ov-media">

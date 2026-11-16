@@ -38,26 +38,26 @@
   <h2 id="overview">한눈에 보기</h2>
   <p class="first-note">카메라가 없어 위치는 교시 좌표로 정하고, 물체를 잡았는지와 각 단계의 성공·실패는 힘·접점·통신 신호로만 판정해야 했습니다. 그래서 파지 판정, 신호 이상 감시, 실패 단계 복구가 이 공정의 핵심이었고, 제가 이 부분을 맡았습니다(공동작업).</p>
   <div class="role-map" role="group" aria-label="발표 p10 프로젝트 구조 위에 표시한 제 담당 지점">
-    <p class="role-map-title">설계 흐름에서 제가 맡은 지점 <span>발표 p10 프로젝트 구조 기준 · 상자를 누르면 기술 설명으로, 아래 작은 링크는 진행 과정 사례로 이동합니다</span></p>
+    <p class="role-map-title">설계 흐름에서 제가 맡은 지점 <span>상자를 누르면 기술 설명으로, 아래 번호는 진행 과정 사례로 이동합니다</span></p>
     <div class="pipe role-pipe">
-      <div class="pipe-col"><span class="pipe-tag">Bean_drop</span><div class="pipe-box mine part"><a class="rm-main" href="#impl-process">원두 계량</a><small>스푼 파지 → 그라인더 호퍼 결합 — 구현 참여</small></div></div>
+      <div class="pipe-col"><span class="pipe-tag">Bean_drop</span><div class="pipe-box mine part"><a class="rm-main" href="#impl-process">원두 계량</a><small>스푼 파지 → 그라인더 호퍼 결합</small><span class="badge-team rm-badge">구현 참여</span></div></div>
       <div class="pipe-arrow" aria-hidden="true">→</div>
-      <div class="pipe-col"><span class="pipe-tag">Grinder</span><div class="pipe-box mine part"><a class="rm-main" href="#impl-process">분쇄</a><small>손잡이 파지 → 순응 제어 진입 → 회전 및 분쇄 — 구현 참여</small></div></div>
+      <div class="pipe-col"><span class="pipe-tag">Grinder</span><div class="pipe-box mine part"><a class="rm-main" href="#impl-process">분쇄</a><small>손잡이 파지 → 순응 제어 진입 → 회전 및 분쇄</small><span class="badge-team rm-badge">구현 참여</span></div></div>
       <div class="pipe-arrow" aria-hidden="true">→</div>
-      <div class="pipe-col"><span class="pipe-tag">Dripper</span><div class="pipe-box mine part"><a class="rm-main" href="#impl-process">필터 투입</a><small>병 파지 → 드리퍼 위 주기 운동 → 외력 기반 "두드림" 감지 — 구현 참여</small></div></div>
+      <div class="pipe-col"><span class="pipe-tag">Dripper</span><div class="pipe-box mine part"><a class="rm-main" href="#impl-process">필터 투입</a><small>병 파지 → 드리퍼 위 주기 운동 → 외력 기반 "두드림" 감지</small><span class="badge-team rm-badge">구현 참여</span></div></div>
       <div class="pipe-arrow" aria-hidden="true">→</div>
-      <div class="pipe-col"><span class="pipe-tag">Hand Drip</span><div class="pipe-box"><a class="rm-main" href="#impl-spiral">나선 드립</a><small>주둥이 위치를 고정한 채 내향 스파이럴로 붓기 — 팀 담당</small></div></div>
+      <div class="pipe-col"><span class="pipe-tag">Hand Drip</span><div class="pipe-box"><a class="rm-main" href="#impl-spiral">나선 드립</a><small>주둥이 위치를 고정한 채 내향 스파이럴로 붓기</small><span class="badge-team rm-badge">팀 담당</span></div></div>
       <div class="pipe-arrow" aria-hidden="true">→</div>
-      <div class="pipe-col"><span class="pipe-tag">Pour</span><div class="pipe-box mine part"><a class="rm-main" href="#impl-process">서빙</a><small>필터홀더·물컵 배치 → 주둥이 고정 위치보상 붓기 — 구현 참여</small></div></div>
+      <div class="pipe-col"><span class="pipe-tag">Pour</span><div class="pipe-box mine part"><a class="rm-main" href="#impl-process">서빙</a><small>필터홀더·물컵 배치 → 주둥이 고정 위치보상 붓기</small><span class="badge-team rm-badge">구현 참여</span></div></div>
     </div>
     <div class="pipe role-pipe">
-      <div class="pipe-col"><span class="pipe-tag">준비</span><div class="pipe-box mine part"><a class="rm-main" href="#impl-env">로봇 팔·그리퍼·작업 환경</a><small>구현 참여</small></div></div>
-      <div class="pipe-col"><span class="pipe-tag">입력</span><div class="pipe-box"><a class="rm-main" href="#impl-ui">작업자 입력과 진행 화면</a><small>팀 담당</small></div></div>
-      <div class="pipe-col"><span class="pipe-tag">예외 처리 (모든 단계)</span><div class="pipe-box mine"><a class="rm-main" href="#impl-grip">그리퍼 파지 판정·이상 감시</a><small>본인 주 담당</small><a class="rm-case" href="#case-grip">진행 과정 01</a><a class="rm-case" href="#case-watchdog">진행 과정 02</a></div><div class="pipe-box mine"><a class="rm-main" href="#impl-grip">실패 단계 재실행</a><small>본인 주 담당</small><a class="rm-case" href="#case-retry">진행 과정 03</a></div></div>
+      <div class="pipe-col"><span class="pipe-tag">준비</span><div class="pipe-box mine part"><a class="rm-main" href="#impl-env">로봇 팔·그리퍼·작업 환경</a><span class="badge-team rm-badge">구현 참여</span></div></div>
+      <div class="pipe-col"><span class="pipe-tag">입력</span><div class="pipe-box"><a class="rm-main" href="#impl-ui">작업자 입력과 진행 화면</a><span class="badge-team rm-badge">팀 담당</span></div></div>
+      <div class="pipe-col"><span class="pipe-tag">예외 처리 (모든 단계)</span><div class="pipe-box mine"><a class="rm-main" href="#impl-grip">그리퍼 파지 판정·이상 감시</a><span class="badge-team rm-badge">본인 주 담당</span><span class="rm-cases"><a class="rm-case" href="#case-grip" title="물체 잡힘 판정">01</a> · <a class="rm-case" href="#case-watchdog" title="그리퍼 신호 끊김 감시">02</a></span></div><div class="pipe-box mine"><a class="rm-main" href="#impl-grip">실패 단계 재실행</a><span class="badge-team rm-badge">본인 주 담당</span><span class="rm-cases"><a class="rm-case" href="#case-retry" title="실패 단계 재실행과 복구 분리">03</a></span></div></div>
     </div>
     <div class="pipe role-pipe">
-      <div class="pipe-col"><span class="pipe-tag">흐름 밖</span><div class="pipe-box mine"><a class="rm-main" href="#case-env">작업 환경 도면(SOLIDWORKS 3D 모델 바탕)</a><small>본인 주 담당</small><a class="rm-case" href="#case-env">진행 과정 04</a></div></div>
-      <div class="pipe-col"><span class="pipe-tag">흐름 밖</span><div class="pipe-box"><a class="rm-main" href="#case-probe">힘 센서 접촉 탐지(probe_grip)</a><small>개인 개발 · 제출본과 별개</small><a class="rm-case" href="#case-probe">진행 과정 06</a></div></div>
+      <div class="pipe-col"><span class="pipe-tag">흐름 밖</span><div class="pipe-box mine"><a class="rm-main" href="#case-env">작업 환경 도면(SOLIDWORKS 3D 모델 바탕)</a><span class="badge-team rm-badge">본인 주 담당</span><span class="rm-cases"><a class="rm-case" href="#case-env" title="작업 환경 구성 — 3D 모델(역설계)과 작업 환경 도면">04</a></span></div></div>
+      <div class="pipe-col"><span class="pipe-tag">흐름 밖</span><div class="pipe-box"><a class="rm-main" href="#case-probe">힘 센서 접촉 탐지(probe_grip)</a><small>개인 개발 · 제출본과 별개</small><span class="rm-cases"><a class="rm-case" href="#case-probe" title="힘 센서 접촉 탐지로 물체 중심 좌표 구하기(probe_grip)">06</a></span></div></div>
     </div>
   </div>
   <div class="ov-media">

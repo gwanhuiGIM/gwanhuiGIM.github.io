@@ -31,20 +31,23 @@
 </nav>
 
 <main class="case-layout outline">
-<p class="updated">Last modified <time datetime="2026-11-15">2026-11-15</time></p>
+<p class="updated">Last modified <time datetime="2026-11-16">2026-11-16</time></p>
 <section class="overview">
   <h2 id="overview">한눈에 보기</h2>
   <p class="first-note">대회 첫 참여라 다른 팀들에 비해 인원이 적고 알고리즘 완성도가 떨어졌습니다. 그래서 알고리즘의 기능별 코드 완성도를 챙기기보다, 실도로에서 완주 및 데이터 수집, 코스 완주를 목표로 했습니다. 따라서 각 알고리즘은 불완전할 수 있지만, 대회 예선 주행은 완료했습니다.</p>
   <div class="role-map" role="group" aria-label="연구계획서 p10 설계 흐름 위에 표시한 제 담당 지점">
-    <p class="role-map-title">설계 흐름에서 제가 맡은 지점 <span>연구계획서 p10 흐름 기준 · 상자를 누르면 기술 설명으로, 아래 작은 링크는 진행 과정 사례로 이동합니다</span></p>
+    <p class="role-map-title">설계 흐름에서 제가 맡은 지점 <span>상자를 누르면 기술 설명으로, 아래 번호는 진행 과정 사례로 이동합니다</span></p>
     <div class="pipe role-pipe">
-      <div class="pipe-col"><span class="pipe-tag">센서</span><div class="pipe-box mine part"><a class="rm-main" href="#impl-hw">센서 및 하드웨어 설계</a><small>카메라 · LiDAR · IMU · GPS · 바퀴 센서 — 구현 참여</small><a class="rm-case" href="#case-vehicle">진행 과정 01</a><a class="rm-case" href="#case-bringup">진행 과정 02</a></div></div>
+      <div class="pipe-col"><span class="pipe-tag">센서</span><div class="pipe-box mine part"><a class="rm-main" href="#impl-hw">센서 및 하드웨어 설계</a><small>카메라 · LiDAR · IMU · GPS · 바퀴 센서</small><span class="badge-team rm-badge">구현 참여</span><span class="rm-cases"><a class="rm-case" href="#case-vehicle" title="실차 조정과 반복 테스트">01</a> · <a class="rm-case" href="#case-bringup" title="단일 제어 PC 기반의 ROS 2 센서 구동과 시스템 통합">02</a></span></div></div>
       <div class="pipe-arrow" aria-hidden="true">→</div>
-      <div class="pipe-col"><span class="pipe-tag">인지</span><div class="pipe-box">영상<a class="rm-case" href="major.html#ai">대회 데이터로 차선 인식 모델 3종 비교·개선 (대회 뒤 인공지능 수업)</a></div><div class="pipe-box mine part"><a class="rm-main" href="#impl-perception">물체 감지(LiDAR)</a><small>구현 참여</small><a class="rm-case" href="#case-lidar">진행 과정 05</a></div><div class="pipe-box mine"><a class="rm-main" href="#impl-ekf">센서퓨전 위치 추정 (EKF)</a><small>본인 주 담당</small><a class="rm-case" href="#case-odom">진행 과정 04</a><a class="rm-case" href="#case-localization">진행 과정 07</a></div></div>
+      <div class="pipe-col"><span class="pipe-tag">인지</span><div class="pipe-box">영상</div><div class="pipe-box mine part"><a class="rm-main" href="#impl-perception">물체 감지(LiDAR)</a><span class="badge-team rm-badge">구현 참여</span><span class="rm-cases"><a class="rm-case" href="#case-lidar" title="LiDAR 장애물 회피 실험">05</a></span></div><div class="pipe-box mine"><a class="rm-main" href="#impl-ekf">센서퓨전 위치 추정 (EKF)</a><span class="badge-team rm-badge">본인 주 담당</span><span class="rm-cases"><a class="rm-case" href="#case-odom" title="바퀴 회전량으로 위치 계산(오도메트리)">04</a> · <a class="rm-case" href="#case-localization" title="GPS 음영구간의 위치 추정">07</a></span></div></div>
       <div class="pipe-arrow" aria-hidden="true">→</div>
-      <div class="pipe-col"><span class="pipe-tag">판단</span><div class="pipe-box">미션 인식</div><div class="pipe-box mine"><a class="rm-main" href="#case-waypoint">경로 계획 — 경로점 만들기</a><small>본인 주 담당</small><a class="rm-case" href="#case-waypoint">진행 과정 03</a></div><div class="pipe-box mine"><a class="rm-main" href="#impl-arbiter">주행 명령 판단 노드</a><small>프로토타입 · 본인 주 담당</small><a class="rm-case" href="#case-arbiter">진행 과정 08</a></div></div>
+      <div class="pipe-col"><span class="pipe-tag">판단</span><div class="pipe-box">미션 인식</div><div class="pipe-box mine"><a class="rm-main" href="#case-waypoint">경로 계획 — 경로점 만들기</a><span class="badge-team rm-badge">본인 주 담당</span><span class="rm-cases"><a class="rm-case" href="#case-waypoint" title="경로점 만들기">03</a></span></div><div class="pipe-box mine"><a class="rm-main" href="#impl-arbiter">주행 명령 판단 노드</a><small>프로토타입</small><span class="badge-team rm-badge">본인 주 담당</span><span class="rm-cases"><a class="rm-case" href="#case-arbiter" title="주행 명령 중재(프로토타입)">08</a></span></div></div>
       <div class="pipe-arrow" aria-hidden="true">→</div>
-      <div class="pipe-col"><span class="pipe-tag">제어</span><div class="pipe-box mine"><a class="rm-main" href="#impl-path">경로추종</a><small>본인 주 담당</small><a class="rm-case" href="#case-path">진행 과정 06</a></div><div class="pipe-box">ERP-42</div></div>
+      <div class="pipe-col"><span class="pipe-tag">제어</span><div class="pipe-box mine"><a class="rm-main" href="#impl-path">경로추종</a><span class="badge-team rm-badge">본인 주 담당</span><span class="rm-cases"><a class="rm-case" href="#case-path" title="곡선 구간의 경로추종">06</a></span></div><div class="pipe-box">ERP-42</div></div>
+    </div>
+    <div class="pipe role-pipe">
+      <div class="pipe-col"><span class="pipe-tag">흐름 밖</span><div class="pipe-box"><a class="rm-main" href="major.html#ai">대회 데이터로 차선 인식 모델 3종 비교·개선 (대회 뒤 인공지능 수업)</a></div></div>
     </div>
   </div>
   <div class="ov-media">

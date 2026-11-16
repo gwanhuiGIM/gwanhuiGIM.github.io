@@ -37,15 +37,15 @@
 <section class="overview">
   <h2 id="overview">한눈에 보기</h2>
   <div class="role-map" role="group" aria-label="팀 발표 자료 p7 흐름 위에 표시한 제 담당 지점">
-    <p class="role-map-title">설계 흐름에서 제가 맡은 지점 <span>팀 발표 자료 p7 흐름 기준 · 상자를 누르면 기술 설명으로, 아래 작은 링크는 진행 과정 사례로 이동합니다</span></p>
+    <p class="role-map-title">설계 흐름에서 제가 맡은 지점 <span>상자를 누르면 기술 설명으로, 아래 번호는 진행 과정 사례로 이동합니다</span></p>
     <div class="pipe role-pipe">
-      <div class="pipe-col"><span class="pipe-tag">장비</span><div class="pipe-box"><a class="rm-main" href="#impl-hw">현장 장비와 PC 구성</a><small>팀 담당</small></div></div>
+      <div class="pipe-col"><span class="pipe-tag">장비</span><div class="pipe-box"><a class="rm-main" href="#impl-hw">현장 장비와 PC 구성</a><span class="badge-team rm-badge">팀 담당</span></div></div>
       <div class="pipe-arrow" aria-hidden="true">→</div>
-      <div class="pipe-col"><span class="pipe-tag">감지</span><div class="pipe-box"><a class="rm-main" href="#impl-helmet">천장 웹캠 감지 · 안전모 착용 판정</a><small>팀 담당</small></div><div class="pipe-box"><a class="rm-main" href="#homography">카메라 화면과 로봇 지도 맞추기(호모그래피)</a><small>팀 담당</small></div></div>
+      <div class="pipe-col"><span class="pipe-tag">감지</span><div class="pipe-box"><a class="rm-main" href="#impl-helmet">천장 웹캠 감지 · 안전모 착용 판정</a><span class="badge-team rm-badge">팀 담당</span></div><div class="pipe-box"><a class="rm-main" href="#homography">카메라 화면과 로봇 지도 맞추기(호모그래피)</a><span class="badge-team rm-badge">팀 담당</span></div></div>
       <div class="pipe-arrow" aria-hidden="true">→</div>
-      <div class="pipe-col"><span class="pipe-tag">관제</span><div class="pipe-box mine"><a class="rm-main" href="#impl-dispatch">위험 상황 접수와 가장 가까운 로봇 출동(관제 FSM)</a><small>본인 주 담당</small><a class="rm-case" href="#case-status">진행 과정 01</a><a class="rm-case" href="#case-message">진행 과정 03</a></div></div>
+      <div class="pipe-col"><span class="pipe-tag">관제</span><div class="pipe-box mine"><a class="rm-main" href="#impl-dispatch">위험 상황 접수와 가장 가까운 로봇 출동(관제 FSM)</a><span class="badge-team rm-badge">본인 주 담당</span><span class="rm-cases"><a class="rm-case" href="#case-status" title="출동할 수 있는 로봇 가려내기">01</a> · <a class="rm-case" href="#case-message" title="지난 명령 걸러내기(구현은 공동작업)">03</a></span></div></div>
       <div class="pipe-arrow" aria-hidden="true">→</div>
-      <div class="pipe-col"><span class="pipe-tag">출동·순찰</span><div class="pipe-box mine part"><a class="rm-main" href="#impl-nav">실물 로봇의 위치 추정과 주행(AMCL · Nav2)</a><small>구현 참여</small><a class="rm-case" href="#case-field">진행 과정 02</a><a class="rm-case" href="#case-network">진행 과정 04</a></div><div class="pipe-box mine part"><a class="rm-main" href="#impl-aruco">순찰 중 소화기 표식 점검과 기록(ArUco · DB · 웹)</a><small>구현 참여</small></div></div>
+      <div class="pipe-col"><span class="pipe-tag">출동·순찰</span><div class="pipe-box mine part"><a class="rm-main" href="#impl-nav">실물 로봇의 위치 추정과 주행(AMCL · Nav2)</a><span class="badge-team rm-badge">구현 참여</span><span class="rm-cases"><a class="rm-case" href="#case-field" title="실물 주행 설정 조정">02</a> · <a class="rm-case" href="#case-network" title="실행 도중 멈춤과 통신 분석">04</a></span></div><div class="pipe-box mine part"><a class="rm-main" href="#impl-aruco">순찰 중 소화기 표식 점검과 기록(ArUco · DB · 웹)</a><span class="badge-team rm-badge">구현 참여</span></div></div>
     </div>
   </div>
   <div class="ov-media">
