@@ -38,7 +38,7 @@ function flowFirst() {
     a.setAttribute('href', '#' + id);
   });
   var tip = document.createElement('p'); tip.className = 'flow-tip';
-  tip.textContent = '찾으신 항목은 강조된 「' + hits[0].textContent.trim() + '」입니다 — 눌러서 세부 내용으로 이동';
+  tip.textContent = '강조된 항목을 누르면 이동합니다';
   var title = map.querySelector('.role-map-title');
   if (title) title.after(tip); else map.prepend(tip);
   function go() { map.scrollIntoView({ block: 'start' }); }
