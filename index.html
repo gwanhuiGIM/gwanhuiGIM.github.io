@@ -267,7 +267,9 @@
 <script src="img-zoom.js" defer></script>
 <script>
 // 키워드 각주(sup.fn)의 페이지 내부 링크(*.html#…)에 ?from=fn을 자동으로 붙인다 — 새 각주도 표시 없이
-// "링크 → 흐름도 → 세부" 순서를 따르게(사용자 2026-11-16 q1o). 받는 쪽은 case-toggle.js flowFirst().
+// "링크 → 흐름도 → 세부" 순서를 따르게(사용자 2026-11-16 q1o). 받는 쪽은 case-toggle.js flowFirst() —
+// 흐름도(#role-map)와 대응 칸이 있는 페이지만 해당, 없으면(major 등) 기존처럼 바로 이동.
+// 핵심역량 "근거:" 링크(sup.fn 밖)는 일부러 제외 — 프로젝트를 둘러본 뒤라 세부로 바로(사용자 2026-11-16).
 document.querySelectorAll('sup.fn a[href]').forEach(function (a) {
   var h = a.getAttribute('href'), m = /^([\w-]+\.html)(#.+)$/.exec(h);
   if (m) a.setAttribute('href', m[1] + '?from=fn' + m[2]);
