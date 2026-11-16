@@ -38,7 +38,7 @@
   <div class="role-map" role="group" aria-label="회로 구성도·팀 통합 코드 흐름 위에 표시한 제 담당 지점">
     <p class="role-map-title">설계 흐름에서 제가 맡은 지점 <span>상자를 누르면 기술 설명으로, 아래 번호는 진행 과정 사례로 이동합니다</span></p>
     <div class="pipe role-pipe">
-      <div class="pipe-col"><span class="pipe-tag">발사·착수</span><div class="pipe-box"><a class="rm-main" href="#impl-launch">발사장치로 물에 던져 넣기</a><span class="badge-team rm-badge">팀 담당</span><span class="rm-cases"><a class="rm-case" href="#case-improve" title="시제품 한계 분석과 2차 개선">04</a> · <a class="rm-case" href="#case-test" title="작동 순서와 야외 발사·비거리 시험">05</a></span></div><div class="pipe-box"><a class="rm-main" href="#impl-design">선체와 발사장치 설계</a><span class="badge-team rm-badge">팀 담당</span><span class="rm-cases"><a class="rm-case" href="#case-drive" title="구동 방식 결정과 좌우 모터 차동 제어">02</a></span></div></div>
+      <div class="pipe-col"><span class="pipe-tag">발사·착수</span><div class="pipe-box"><a class="rm-main" href="#impl-launch">발사장치로 물에 던져 넣기</a><span class="badge-team rm-badge">팀 담당</span><span class="rm-cases"><a class="rm-case" href="#case-improve" title="시제품 한계 분석과 2차 개선">05</a> · <a class="rm-case" href="#case-test" title="작동 순서와 야외 발사·비거리 시험">06</a></span></div><div class="pipe-box"><a class="rm-main" href="#impl-design">선체와 발사장치 설계</a><span class="badge-team rm-badge">팀 담당</span><span class="rm-cases"><a class="rm-case" href="#case-drive" title="구동 방식 결정과 좌우 모터 차동 제어">02</a> · <a class="rm-case" href="#case-hull" title="선체 제작과 부위별 방수 · 침수 대비">04</a></span></div></div>
       <div class="pipe-arrow" aria-hidden="true">→</div>
       <div class="pipe-col"><span class="pipe-tag">입력</span><div class="pipe-box">열화상 센서<small>8×8 온도값</small></div><div class="pipe-box">조종 신호 수신기<small>무선 조종기(RC)</small></div></div>
       <div class="pipe-arrow" aria-hidden="true">→</div>
@@ -69,11 +69,14 @@
   <p>물에 던지면 열원을 찾아 익수자에게 다가가는 구명보트와, 그 보트를 물 위로 날려 보내는 발사장치입니다. 보트 안의 아두이노 보드 한 장이 열화상 센서, 조종 신호 수신기, 좌우 모터를 모두 다룹니다.</p>
 
   <details class="impl" id="impl-design">
-  <summary><h3>선체와 발사장치 설계 (3D 모델링 · 부품 도면) <span class="badge-team">팀 담당 · 도면 본인 주 담당</span></h3><span class="impl-jump">진행 과정 <a href="#case-drive">02 구동 방식 결정과 좌우 모터 차동 제어</a></span></summary>
+  <summary><h3>선체와 발사장치 설계 (3D 모델링 · 부품 도면) <span class="badge-team">팀 담당 · 도면 본인 주 담당</span></h3><span class="impl-jump">진행 과정 <a href="#case-drive">02 구동 방식 결정과 좌우 모터 차동 제어</a><a href="#case-hull">04 선체 제작과 부위별 방수 · 침수 대비</a></span></summary>
   <p>팀은 보트 선체와 발사장치를 3D로 설계했습니다. 선체 형상은 팀이 함께 설계했고, 선체 항력 해석과 발사장치는 팀원이 주도했습니다.</p>
   <ul class="phase-facts">
     <li><b>설계 목표</b><span>착수 충격에 덜 부서짐 · 물과 공기 저항이 작음 · 물에서 안정적으로 뜸</span></li>
     <li><b>선체 모듈</b><span>노즈콘 · 센서 케이스 · 배터리 및 모터 지지대 · 모터 · 케이스 상단·하단 · 구명튜브 고정장치</span></li>
+    <li><b>제작(팀)</b><span>필라멘트 3D 프린팅 · 요소 조립과 상·하부 나사 고정 · 노즈콘 실리콘 주문 제작(착수 충격 완화)</span></li>
+    <li><b>방수(팀)</b><span>모터 방수 퍼티(물 유입 방지 · 회전축 변동 방지) · 열화상 센서 글루건 · 몸체 측면 가스켓 · 실리콘 · 카본 봉 · 3D 프린팅 몸통 방수 스프레이</span></li>
+    <li><b>침수 대비(팀)</b><span>센서 케이스 · 배터리 · 모터를 몸체에서 띄워 별도 고정(모듈화)</span></li>
     <li><b>해석(팀원)</b><span>선체 항력(물의 저항) 해석</span></li>
     <li><b>발사장치(팀원)</b><span>기존 컴파운드 석궁 3D 모델 참조 · 스프링 탄성 발사 구조 · 보트와의 간섭을 3D로 확인</span></li>
     <li><b>도면(본인)</b><span>구명보트 조립 도면 · 발표 자료의 발사장치 부품 도면 — 부품별 치수 · 재질 · 가공 방법 · 도면 구현 · 규격 · 기입</span></li>
@@ -138,7 +141,7 @@
   </details>
 
   <details class="impl" id="impl-launch">
-  <summary><h3>발사장치로 물에 던져 넣기 (스프링·방아쇠 발사장치) <span class="badge-team">팀 담당</span></h3><span class="impl-jump">진행 과정 <a href="#case-improve">04 시제품 한계 분석과 2차 개선</a><a href="#case-test">05 작동 순서와 야외 발사·비거리 시험</a></span></summary>
+  <summary><h3>발사장치로 물에 던져 넣기 (스프링·방아쇠 발사장치) <span class="badge-team">팀 담당</span></h3><span class="impl-jump">진행 과정 <a href="#case-improve">05 시제품 한계 분석과 2차 개선</a><a href="#case-test">06 작동 순서와 야외 발사·비거리 시험</a></span></summary>
   <p>팀은 사람이 들고 방아쇠로 쏘는 발사장치를 만들어, 보트를 익수자 근처 물 위로 날려 보내도록 했습니다. 팀이 정리한 작동 순서는 아래와 같습니다.</p>
   <div class="pipe" role="img" aria-label="도식: 팀이 정리한 작동 순서 — 발사장치로 발사, 착수, 익수자 쪽 자동 이동, 거리가 멀면 조종기로 수동 주행, 구조 종료나 돌발 상황 시 정지">
     <div class="pipe-col"><span class="pipe-tag">발사</span><div class="pipe-box">발사장치<small>발사체 장착 후 발사</small></div></div>
@@ -235,6 +238,33 @@
   </details>
 
   <details class="case">
+  <summary><h3 id="case-hull">선체 제작과 부위별 방수 · 침수 대비</h3><span class="case-phase">구현</span><span class="badge-team">팀 작업 참여</span><span class="case-facts"><span class="cf"><b>제작(팀)</b><span>필라멘트 3D 프린팅 · 상·하부 나사 고정 · 노즈콘 실리콘 주문 제작</span></span><span class="cf"><b>방수(팀)</b><span>모터 방수 퍼티 · 열화상 센서 글루건 · 몸체 측면 가스켓 · 실리콘 · 카본 봉 · 몸통 방수 스프레이</span></span><span class="cf"><b>침수 대비(팀)</b><span>센서 케이스 · 배터리 · 모터를 몸체에서 띄워 별도 고정</span></span></span></summary>
+  <div class="case-steps">
+    <div class="step">
+      <h4 class="step-title">3D 프린팅과 조립</h4>
+      <div class="step-body">
+        <p>팀은 선체 모델을 필라멘트 3D 프린팅으로 만들어 요소를 조립하고, 선체 상부와 하부를 나사로 고정했습니다. 노즈콘은 착수 충격을 줄이기 위해 실리콘으로 주문 제작했습니다.</p>
+        <figure class="fig"><img class="narrow" src="images/grad/hull_interior.jpg" alt="3D 프린팅한 선체 하부 안쪽: 테두리를 따라 난 나사 구멍과, 흰 지지대 위에 놓인 모터와 아두이노 보드" width="974" height="1314" loading="lazy"><figcaption class="muted">3D 프린팅한 선체 하부 — 테두리의 나사 구멍과 지지대에 올린 모터 · 아두이노 보드</figcaption></figure>
+      </div>
+    </div>
+    <div class="step">
+      <h4 class="step-title">부위별 방수</h4>
+      <div class="step-body">
+        <p>팀은 부위마다 방수 방법을 달리했습니다. 모터 부분에는 퍼티가 굳으면서 물 유입을 막고 모터 회전축 변동을 막도록 방수 퍼티를 설치했습니다. 열화상 센서에는 글루건을 썼고, 몸체 측면 틈은 가스켓과 실리콘으로 막았습니다. 실리콘과 함께 카본 봉을 넣어 구조를 보완하고 틈을 더 촘촘히 메워 내부 기밀성을 유지하도록 했습니다. 3D 프린팅한 몸통 전체에는 방수 스프레이를 사용했습니다.</p>
+        <figure class="fig"><img src="images/grad/hull-wiring-1.jpg" alt="선체 테두리를 따라 붉은 실리콘을 바른 모습" width="686" height="237" loading="lazy"><figcaption class="muted">측면 틈을 막으려고 선체 테두리에 바른 붉은 실리콘</figcaption></figure>
+      </div>
+    </div>
+    <div class="step">
+      <h4 class="step-title">전자기기 띄워 고정</h4>
+      <div class="step-body">
+        <p>팀은 물이 차오르는 경우에 대비해 센서 케이스와 배터리·모터 등 전자기기를 몸체에서 일정 높이 띄워 별도로 고정하는 모듈화 설계를 적용했습니다.</p>
+      </div>
+    </div>
+  </div>
+  <p class="takeaway">팀 작업에 참여하며 <strong>물에 닿는 부위마다 방수 방법을 따로 고르고, 물이 들어오는 경우까지 대비해 부품을 배치하는</strong> 방식을 경험했습니다.</p>
+  </details>
+
+  <details class="case">
   <summary><h3 id="case-improve">시제품 한계 분석과 2차 개선</h3><span class="case-phase">문제해결</span><span class="badge-team">팀 작업 참여</span><span class="case-facts"><span class="cf"><b>문제 파트</b><span>전원 계통 · 구명튜브 전개 기구</span></span><span class="cf"><b>문제</b><span>전원 스위치가 없어 빠른 방전 · 저온 방전 · 기어모터의 허용하중 한계</span></span><span class="cf"><b>해결(팀)</b><span>기말 발표에서 개선안 정리 → 두 번째 학기에 On/Off 스위치 · 배터리 보온 구조 · 자동 팽창 밸브</span></span><span class="cf"><b>배운 점</b><span>한 학기의 한계 → 발표에서 개선안 → 다음 학기에 반영하는 흐름</span></span></span></summary>
   <div class="case-steps">
     <div class="step">
@@ -290,8 +320,8 @@
   <h2 id="team">팀에서 일한 방식</h2>
   <ul class="phase-facts">
     <li><b>팀 구성</b><span>3인 — 역할: 회로 구성(제 담당) · 센서 제어 · 모델링</span></li>
-    <li><b>팀원 주도</b><span>선체 항력(물의 저항) 해석 · 발사장치 · 방수 하우징 · 구명튜브 팽창 기구</span></li>
-    <li><b>공동작업</b><span>코드 통합 · 선체 형상 설계</span></li>
+    <li><b>팀원 주도</b><span>선체 항력(물의 저항) 해석 · 발사장치 · 구명튜브 팽창 기구</span></li>
+    <li><b>공동작업</b><span>코드 통합 · 선체 형상 설계 · 선체 제작 · 방수 처리</span></li>
   </ul>
   <p><b>그 안에서 제가 한 일:</b></p>
   <ul class="role-list">
