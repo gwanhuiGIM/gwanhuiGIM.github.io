@@ -23,6 +23,7 @@
 <b>목차</b>
 <ul>
 <li><a href="#overview">한눈에 보기</a></li>
+<li><a href="#role-map">설계 흐름도</a></li>
 <li><a href="#built">프로젝트 구현</a></li>
 <li class="toc-key"><a href="#process">진행 과정</a></li>
 <li><a href="#team">팀에서 일한 방식</a></li>
@@ -36,7 +37,7 @@
 <p class="updated">Last modified <time datetime="2026-11-16">2026-11-16</time></p>
 <section class="overview">
   <h2 id="overview">한눈에 보기</h2>
-  <div class="role-map" role="group" aria-label="발표 p7 ROS 2 노드 구조 위에 표시한 제 담당 지점">
+  <div class="role-map" id="role-map" role="group" aria-label="발표 p7 ROS 2 노드 구조 위에 표시한 제 담당 지점">
     <p class="role-map-title">설계 흐름에서 제가 맡은 지점 <span>상자를 누르면 기술 설명으로, 아래 번호는 진행 과정 사례로 이동합니다</span></p>
     <div class="pipe role-pipe">
       <div class="pipe-col"><span class="pipe-tag">입력·인식</span><div class="pipe-box mine"><a class="rm-main" href="#impl-ros2">카메라 배치와 ROS 2 연결 구조</a><span class="badge-team rm-badge">본인 주 담당</span><span class="rm-cases"><a class="rm-case" href="#case-merge" title="네 번의 병합으로 두 로봇 시스템 통합">01</a> · <a class="rm-case" href="#case-vision" title="시뮬레이터 카메라와 도구 인식 노드 구성">02</a></span></div><div class="pipe-box"><a class="rm-main" href="#impl-request">손 동작·음성·화면 클릭 요청</a><small>MediaPipe · Whisper · Gemini</small><span class="badge-team rm-badge">팀 담당</span></div><div class="pipe-box mine part"><a class="rm-main" href="#impl-vision">도구 인식 (YOLO · 합성 데이터)</a><span class="badge-team rm-badge">본인 주 담당 · 합성 데이터 팀 작업 참여</span><span class="rm-cases"><a class="rm-case" href="#case-vision" title="시뮬레이터 카메라와 도구 인식 노드 구성">02</a> · <a class="rm-case" href="#case-data" title="도구 인식 학습 데이터 전환">03</a></span></div></div>

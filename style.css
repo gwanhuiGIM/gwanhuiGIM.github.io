@@ -605,3 +605,10 @@ main.case-layout.outline .role-pipe .pipe-box:has(> .rm-main) { display: grid; g
 .role-pipe .pipe-box:has(> .rm-main) > .rm-cases { position: relative; left: auto; bottom: auto; grid-column: 1; grid-row: 5; align-self: end; margin-top: 6px; }
 .role-pipe .pipe-box:has(> .rm-main) > .rm-badge { position: static; grid-column: 2; grid-row: 5; justify-self: end; align-self: end; margin: 6px -13px -9px 0; white-space: normal; text-align: right; }  /* 안쪽 모서리까지(상자 padding 9px 13px만큼 당김) */
 @media (max-width: 600px) { main.case-layout details.impl > summary > h3:has(> .badge-team) { padding-right: 0; padding-top: 30px; } main.case-layout details.impl > summary > h3 > .badge-team { top: 10px; right: auto; left: 16px; } }
+
+/* index 키워드 각주(?from=fn)로 들어왔을 때 흐름도에서 해당 진행 과정 번호 강조 — case-toggle.js flowFirst(사용자 2026-11-16 "a") */
+#role-map { scroll-margin-top: 24px; }
+.role-map a.flow-hl { background: var(--accent); color: var(--card) !important; border-radius: 6px; padding: 1px 6px; text-decoration: none; outline: 3px solid var(--accent-soft); animation: flowpulse 1s ease-in-out 4; }
+.role-map .pipe-box.flow-hl-box { box-shadow: 0 0 0 3px var(--accent); }
+@keyframes flowpulse { 50% { outline-width: 8px; } }
+.flow-tip { margin: 8px 0 4px; font-size: 14px; color: var(--fg); background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 6px 10px; border-radius: 6px; }

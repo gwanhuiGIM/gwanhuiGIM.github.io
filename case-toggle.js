@@ -16,5 +16,34 @@ function openHash() {
   }
   else t.parentElement.querySelectorAll('details.case').forEach(function (x) { x.open = true; });
 }
-addEventListener('DOMContentLoaded', openHash);
+// index 키워드 각주(?from=fn)로 들어오면 사례 대신 첫머리 흐름도(#role-map)로 가서 해당 진행 과정 번호를 강조한다
+// — 링크 → 흐름 확인 → 세부 순서(사용자 2026-11-16 "a"). 목표가 사례 안 그림·단계면 그 사례 번호를 강조하고,
+// 번호를 누르면 원래 목표로 간다. 흐름도에 대응 칸이 없으면(#team 등) false를 돌려 기존 openHash로 바로 이동.
+function flowFirst() {
+  if (new URLSearchParams(location.search).get('from') !== 'fn') return false;
+  var id = decodeURIComponent(location.hash.slice(1));
+  var t = id && document.getElementById(id), map = document.getElementById('role-map');
+  if (!t || !map) return false;
+  function find(k) { return map.querySelectorAll('a[href="#' + k + '"]'); }
+  var hits = find(id);
+  if (!hits.length) {
+    var c = t.closest('details.case'), h = c && c.querySelector('summary h3[id]');
+    if (h) hits = find(h.id);
+  }
+  if (!hits.length) return false;
+  history.replaceState(null, '', location.pathname); // 해시를 지워 번호를 눌렀을 때 hashchange로 openHash가 돌게
+  hits.forEach(function (a) {
+    a.classList.add('flow-hl');
+    var b = a.closest('.pipe-box'); if (b) b.classList.add('flow-hl-box');
+    a.setAttribute('href', '#' + id);
+  });
+  var tip = document.createElement('p'); tip.className = 'flow-tip';
+  tip.textContent = '찾으신 항목은 강조된 「' + hits[0].textContent.trim() + '」입니다 — 눌러서 세부 내용으로 이동';
+  var title = map.querySelector('.role-map-title');
+  if (title) title.after(tip); else map.prepend(tip);
+  function go() { map.scrollIntoView({ block: 'start' }); }
+  go(); addEventListener('load', go);
+  return true;
+}
+addEventListener('DOMContentLoaded', function () { if (!flowFirst()) openHash(); });
 addEventListener('hashchange', openHash);
