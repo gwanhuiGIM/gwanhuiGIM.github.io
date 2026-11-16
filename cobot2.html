@@ -34,7 +34,7 @@
 </nav>
 
 <main class="case-layout outline">
-<p class="updated">Last modified <time datetime="2026-11-16">2026-11-16</time></p>
+<p class="updated">Last modified <time datetime="2026-11-17">2026-11-17</time></p>
 <section class="overview">
   <h2 id="overview">한눈에 보기</h2>
   <p class="first-note">이전 협동로봇 프로젝트에서 좌표를 일일이 교시해야 했던 부담에서 출발해, 팀은 카메라로 물체를 찾아 로봇이 직접 집는 구성을 목표로 삼았습니다. 저는 그리퍼가 집을 자세를 스스로 찾는 GraspGenX 도입을 팀에 건의했습니다.</p>
@@ -409,6 +409,13 @@
         <p>팀은 GPU를 쓰는 영역 분할·파지 후보 생성은 컨테이너 안에서, 나머지는 호스트에서 돌려 ROS 2 토픽으로 주고받았습니다. 이렇게 정리한 뒤 모든 모듈을 함께 구동했습니다.</p>
       </div>
     </div>
+    <div class="step">
+      <h4 class="step-title" id="step-dds">토픽은 보이는데 오지 않던 데이터</h4>
+      <div class="step-body">
+        <p>호스트와 컨테이너로 나눠 돌리자 토픽 목록은 보이는데 데이터는 한 건도 오지 않았습니다. ROS 2 기본 통신(FastDDS)이 둘을 같은 컴퓨터로 보고 공유메모리로 보내려 했는데, 이 전송은 컨테이너 경계를 넘지 못했습니다. 컨테이너가 호스트의 공유메모리·프로세스 공간을 함께 쓰게 하는 두 옵션(ipc=host, pid=host)은 시험해 보니 데이터가 오지 않아 배제했고, 설정 파일로 통신을 UDP 전용으로 강제해 호스트·컨테이너 양쪽에 적용했습니다.</p>
+        <p>640×480 영상 한 장(약 921KB)은 UDP에서 쪼개 보내야 하는 크기라 송수신 버퍼도 키웠습니다. 설정 전후를 비교 측정해 보니 10Hz로 보낸 영상이 5~7Hz만 도착하던 것이 10Hz로 도착했고, 공유 노트북이라 시스템 전역 버퍼 값 변경은 팀 합의 사항으로 남겼습니다.</p>
+      </div>
+    </div>
   </div>
   <p class="takeaway">GPU 부하 조율과 프로그램 실행·종료 관리는 다른 문제였고, <strong>기능 속도 못지않게 전체 실행 환경을 안정적으로 통제해야 한다</strong>는 점을 배웠습니다.</p>
   </details>
@@ -465,6 +472,13 @@
       </video>
       <figcaption class="muted">평평한 노트북 케이스를 넣었다 뺄 때 두 장애물 지도의 반응(8월 11일) — 큐브 칸이 octomap, 빨간 덩어리가 nvblox</figcaption>
     </figure>
+      </div>
+    </div>
+    <div class="step">
+      <h4 class="step-title" id="step-qos">밀린 옛 depth 프레임 버리기</h4>
+      <div class="step-body">
+        <p>depth 영상에서 로봇 몸체를 지우는 노드는 3.7Hz로, 카메라(9.65Hz)보다 느렸습니다. 기본 설정(reliable, 최근 10장 유지)대로 두면 최대 10프레임, 약 1초치 옛 depth 프레임이 쌓여 장애물 지도에 낡은 공간 정보가 반영될 수 있었습니다. 그래서 이 노드의 depth 입력은 밀린 옛 프레임을 버리는 QoS(best_effort, 최근 5장만 유지)로 바꿨습니다.</p>
+        <p>nvblox로 보내는 출력은 nvblox가 받는 방식(reliable)에 맞춰 그대로 두었습니다. 발행 쪽만 best_effort로 바꾸면 QoS가 맞지 않아 nvblox가 오류 없이 아무것도 받지 못하기 때문입니다.</p>
       </div>
     </div>
   </div>

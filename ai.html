@@ -146,7 +146,7 @@
 <ul>
 <li><b><a href="https://github.com/gwanhuiGIM/agent-sidekick-tools/tree/main/subdisplay">subdisplay</a></b>: 태블릿을 보조 화면으로 연결하여 에이전트 상태, 점검 목록, 시스템 리소스 현황을 로컬 문서 기반으로 실시간 공유하는 도구입니다.</li>
 <li><b><a href="https://github.com/gwanhuiGIM/agent-sidekick-tools/tree/main/usage-indicator">usage-indicator</a></b>: 여러 에이전트 CLI의 사용량과 갱신 잔여 시간을 상단 패널에 상시 표시하고 파일로 공유해 중복 조회를 방지하는 모니터링 도구입니다.</li>
-<li><b><a href="https://github.com/gwanhuiGIM/agent-sidekick-tools/tree/main/tok_refresh">tok_refresh</a></b>: 5시간 단위 사용량 제한은 첫 요청 시점에 따라 갱신 시각이 매일 달라집니다. 클라우드 예약 작업이 정해진 시각마다 짧은 요청을 보내 그 시각을 고정하고, 하루 사용량을 업무 시간에 맞춰 나눠 쓰게 하는 장치입니다.</li>
+<li><b><a href="https://github.com/gwanhuiGIM/agent-sidekick-tools/tree/main/tok_refresh">tok_refresh</a></b>: 5시간 단위 사용량 제한은 첫 요청 시점에 따라 갱신 시각이 매일 달라집니다. 클라우드 예약 작업이 정해진 시각마다 짧은 요청을 보내 그 시각을 고정하고, 하루 사용량을 업무 시간에 맞춰 나눠 쓰게 하는 장치입니다. 이 예약 작업은 Oracle Cloud의 메모리 1GB 가상 서버에 SSH로 접속해 cron으로 구성·운영하며, 로그 크기 제한을 두었습니다. 예약 실행과 수동 작업이 겹쳐 서버 메모리가 바닥나고 원격 접속까지 끊긴 뒤로는, 중복 실행 차단·swap 추가·실행 시간 제한을 더했습니다.</li>
 <li><b>일일 브리핑</b>: 여러 작업 공간의 변경 이력과 상태를 모아 요약하고 다른 모델로 교차 점검해 보고서를 생성하는 수동 실행 요약 절차입니다(교차 점검은 보조라, 실패한 날에는 점검 없이 생성).</li>
 <li><b>지원현황 점검</b>: 지원 서류 폴더의 위치, 마감일, 상태 표기 불일치를 매일 밤 자동으로 점검해 정리하고 변경 사항이 있을 때만 알림을 주는 스크립트입니다.</li>
 <li><b>사실 보존 검사</b>: 문체를 자연스럽게 다듬는 과정에서 수치, 코드 낱말, 인용구 등 핵심 사실이 왜곡되거나 누락되지 않았는지 전후 차이를 대조하는 검사 도구입니다.</li>
