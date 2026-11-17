@@ -32,7 +32,7 @@
 </nav>
 
 <main class="case-layout outline">
-<p class="updated">Last modified <time datetime="2026-11-16">2026-11-16</time></p>
+<p class="updated">Last modified <time datetime="2026-11-17">2026-11-17</time></p>
 <section class="overview">
   <h2 id="overview">한눈에 보기</h2>
   <p class="first-note">대회 첫 참여라 다른 팀들에 비해 인원이 적고 알고리즘 완성도가 떨어졌습니다. 그래서 알고리즘의 기능별 코드 완성도를 챙기기보다, 실도로에서 완주 및 데이터 수집, 코스 완주를 목표로 했습니다. 따라서 각 알고리즘은 불완전할 수 있지만, 대회 예선 주행은 완료했습니다.</p>
@@ -58,7 +58,7 @@
   </div>
   </div>
   <ul class="ov-summary">
-    <li><b>내 담당</b> — <a href="#case-localization">EKF 측위(센서퓨전)</a> · <a href="#case-path">경로추종</a> · <a href="#case-arbiter">주행 명령 판단 노드(프로토타입)</a> · <a href="#step-tuning">실차 설정값·전륜 정렬</a> · 팀장</li>
+    <li><b>내 담당</b> — <a href="#case-localization">EKF 측위(센서퓨전)</a> <span class="sep">|</span> <a href="#case-path">경로추종</a> <span class="sep">|</span> <a href="#case-arbiter">주행 명령 판단 노드(프로토타입)</a> <span class="sep">|</span> <a href="#step-tuning">실차 설정값·전륜 정렬</a> <span class="sep">|</span> 팀장</li>
     <li><b>대회</b> — 예선(10분 주행 및 라바콘 곡면 코스 완주 시간) · 본선(15분 경로 주행 완주 시간) · GPS 음영구간 · 멈춰 있는 장애물 · 주차 미션</li>
     <li><b>플랫폼</b> — ERP42 4륜 전기차 · LiDAR · RTK-GPS · IMU · 카메라 · 4인 팀(실개발 2~3인)</li>
     <li><b>결과(팀)</b> — 예선 코스 완주 · 다른 팀 기록에 밀려 본선 미진출</li>
@@ -113,7 +113,7 @@
     <li><b>프레임</b><span>팀이 함께 잰 차량 치수 → 팀원 초안 CAD → 팀과 함께 직선 알루미늄 프로파일을 분해·조립하며 배치 조정(구조를 바꿔 가며 맞출 수 있게 고정하지 않음)</span></li>
   </ul>
   <p>저는 팀과 함께 프레임을 조립하고 실차에 대 보며 센서 배치를 다시 잡았고, 카메라 장치·해상도, IMU 포트, RTK 접속, 속도·제동 값과 전륜 정렬은 직접 실차에 맞췄습니다.</p>
-  <p class="muted">진행 과정에서 보기 → <a href="#case-vehicle">01 실차 조정과 반복 테스트</a> · <a href="#step-layout">[03] 중앙에 둔 GPS와 배치 기준</a> · <a href="#fig-lidar">LiDAR·카메라 장착 사진</a> · <a href="#step-tuning">[04] 전륜 정렬과 rosbag 로깅</a></p>
+  <p class="muted">진행 과정에서 보기 → <a href="#case-vehicle">01 실차 조정과 반복 테스트</a> <span class="sep">|</span> <a href="#step-layout">[03] 중앙에 둔 GPS와 배치 기준</a> <span class="sep">|</span> <a href="#fig-lidar">LiDAR·카메라 장착 사진</a> <span class="sep">|</span> <a href="#step-tuning">[04] 전륜 정렬과 rosbag 로깅</a></p>
   </details>
 
   <details class="impl" id="impl-ekf">
@@ -470,7 +470,7 @@
 
 <section>
   <h2 id="tech">기술 상세</h2>
-  <p class="muted">참고 문서(팀 MTP가 대회 제출용으로 함께 작성, 개인정보 처리본): <a href="https://github.com/gwanhuiGIM/Erp42_ws/blob/master/assets/erp42_research_plan.pdf">연구계획서</a> · <a href="https://github.com/gwanhuiGIM/Erp42_ws/blob/master/assets/erp42_tech_report.pdf">기술보고서</a></p>
+  <p class="muted">참고 문서(팀 MTP가 대회 제출용으로 함께 작성, 개인정보 처리본): <a href="https://github.com/gwanhuiGIM/Erp42_ws/blob/master/assets/erp42_research_plan.pdf">연구계획서</a> <span class="sep">|</span> <a href="https://github.com/gwanhuiGIM/Erp42_ws/blob/master/assets/erp42_tech_report.pdf">기술보고서</a></p>
   <p class="muted pdf-index">연구계획서 목차·키워드(PDF 쪽 기준 — 슬라이드 인쇄 번호와 다를 수 있음):하드웨어·소프트웨어 구성 p2 · 위치 추정 p3 · 주행 경로 설정 p4 · 차량 주행 제어 p5 · LiDAR 장애물 회피 p6 · 카메라 인식 p7 · Work Flow Chart p10</p>
   <p class="muted pdf-index">기술보고서 목차·키워드(PDF 쪽 기준):플랫폼 Layout p5 · 센서 Layout p7 · 센서 장착 설계 p11 · 환경 인지(카메라·LiDAR) p16 · 차량 측위 p20 · 판단 로직 p21 · 플랫폼 제어 로직 p22</p>
 </section>

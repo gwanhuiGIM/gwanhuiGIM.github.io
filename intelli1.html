@@ -34,7 +34,7 @@
 </nav>
 
 <main class="case-layout outline">
-<p class="updated">Last modified <time datetime="2026-11-16">2026-11-16</time></p>
+<p class="updated">Last modified <time datetime="2026-11-17">2026-11-17</time></p>
 <section class="overview">
   <h2 id="overview">한눈에 보기</h2>
   <div class="role-map" id="role-map" role="group" aria-label="팀 발표 자료 p7 흐름 위에 표시한 제 담당 지점">
@@ -54,7 +54,7 @@
   <p class="muted">1분 시연 영상</p>
   </div>
   <ul class="ov-summary">
-    <li><b>내 담당</b> — 관제 FSM과 AMR 연동(5인 팀 팀장) · <a href="#case-status">출동할 수 있는 로봇 가려내기</a> · <a href="#case-message">지난 명령 걸러내기(공동작업)</a> · <a href="#case-field">실물 주행 설정 조정</a></li>
+    <li><b>내 담당</b> — 관제 FSM과 AMR 연동(5인 팀 팀장) <span class="sep">|</span> <a href="#case-status">출동할 수 있는 로봇 가려내기</a> <span class="sep">|</span> <a href="#case-message">지난 명령 걸러내기(공동작업)</a> <span class="sep">|</span> <a href="#case-field">실물 주행 설정 조정</a></li>
     <li><b>목표</b> — 제조 현장 안전사고의 발견·초동 대응 지연 줄이기 · 쓰러짐·안전모 미착용 감지 → 가장 가까운 이동로봇 출동 · 평소에는 순찰</li>
     <li><b>장비</b> — TurtleBot4 AMR(자율주행 이동로봇) 2대 · 천장 웹캠 2대</li>
     <li><b>감지와 출동의 구분</b> — 천장 카메라 감지(팀) / 관제 FSM: 출동할 로봇 선정 / AMR: 출동·순찰 이동</li>
@@ -105,14 +105,14 @@
   </figure>
   <p>카메라 감지나 관제 웹 버튼으로 위험 상황이 들어오면 관제 FSM이 먼저 출동할 수 없는 로봇을 뺍니다. 저는 남은 로봇 중 사람에게 가장 가까운 로봇에 출동 명령을 보내도록 만들었습니다. 안전모 미착용일 때는 바로 움직일 수 있는 대기 로봇이 있으면 그중 가까운 로봇을 먼저 고르게 했습니다.</p>
   <p>쓰러짐은 가장 급하고 순찰은 평소 일인 반면, 안전모 미착용은 조치가 필요하지만 순찰 중인 로봇을 빼 올 만큼 급하지는 않다고 보았고, 대기 로봇을 보내 로봇마다 역할이 나뉘는 모습을 보여 주고자 했기 때문입니다.</p>
-  <p class="muted">진행 과정에서 보기 → <a href="#case-status">01 출동할 수 있는 로봇 가려내기</a> · <a href="#case-message">03 지난 명령 걸러내기</a></p>
+  <p class="muted">진행 과정에서 보기 → <a href="#case-status">01 출동할 수 있는 로봇 가려내기</a> <span class="sep">|</span> <a href="#case-message">03 지난 명령 걸러내기</a></p>
   </details>
 
   <details class="impl" id="impl-nav">
   <summary><h3>실물 로봇의 위치 추정과 주행 (AMCL · Nav2) <span class="badge-team">구현 참여</span></h3><span class="impl-jump">진행 과정 <a href="#case-field">02 실물 주행 설정 조정</a><a href="#case-network">04 실행 도중 멈춤과 통신 분석</a></span></summary>
   <p>로봇은 2D 라이다 스캔을 지도에 맞춰 자기 위치를 보정하고(AMCL), Nav2가 장애물 지도를 갱신하며 출동·순찰 지점까지 경로를 짜 이동합니다. 팀은 기본 Nav2 설정을 실물 로봇에 맞게 바꾸고, 카메라와 로봇이 같은 지도를 쓰도록 맞춘 뒤 로봇 시작 위치를 지정하는 절차를 뒀습니다.</p>
   <p>저는 로봇이 새로 갱신한 장애물 지도에 갇혀 움직이지 못하던 문제를 로봇 반경·장애물 주변 여유 거리·지도 갱신 주기 조정으로 풀었습니다.</p>
-  <p class="muted">진행 과정에서 보기 → <a href="#case-field">02 실물 주행 설정 조정</a> · <a href="#case-network">04 실행 도중 멈춤과 통신 분석</a></p>
+  <p class="muted">진행 과정에서 보기 → <a href="#case-field">02 실물 주행 설정 조정</a> <span class="sep">|</span> <a href="#case-network">04 실행 도중 멈춤과 통신 분석</a></p>
   </details>
 
   <details class="impl" id="impl-aruco">
@@ -245,7 +245,7 @@
 <section>
   <h2 id="tech">기술 상세</h2>
   <p class="muted">팀 발표 자료(세부 기술): <a href="https://github.com/gwanhuiGIM/Rokey_intelli1/releases/download/presentation/intelli1_presentation.pdf">발표 자료(PDF, 58쪽)</a></p>
-  <p class="muted pdf-index">발표 자료 목차·키워드: <a href="https://github.com/gwanhuiGIM/Rokey_intelli1/releases/download/presentation/intelli1_presentation.pdf#page=4">프로젝트 개요 p4</a> · <a href="https://github.com/gwanhuiGIM/Rokey_intelli1/releases/download/presentation/intelli1_presentation.pdf#page=7">감지에서 출동까지 흐름 p7</a> · <a href="https://github.com/gwanhuiGIM/Rokey_intelli1/releases/download/presentation/intelli1_presentation.pdf#page=14">수행 절차 p14</a> · <a href="https://github.com/gwanhuiGIM/Rokey_intelli1/releases/download/presentation/intelli1_presentation.pdf#page=16">AMR·ArUco p16</a> · <a href="https://github.com/gwanhuiGIM/Rokey_intelli1/releases/download/presentation/intelli1_presentation.pdf#page=23">웹캠 감지 p23</a> · <a href="https://github.com/gwanhuiGIM/Rokey_intelli1/releases/download/presentation/intelli1_presentation.pdf#page=40">관제 FSM 상태 판단 p40</a> · <a href="https://github.com/gwanhuiGIM/Rokey_intelli1/releases/download/presentation/intelli1_presentation.pdf#page=41">우선순위 배정 p41</a> · <a href="https://github.com/gwanhuiGIM/Rokey_intelli1/releases/download/presentation/intelli1_presentation.pdf#page=44">웹 관제 대시보드 p44</a> · <a href="https://github.com/gwanhuiGIM/Rokey_intelli1/releases/download/presentation/intelli1_presentation.pdf#page=45">관제 FSM 구조 p45</a> · <a href="https://github.com/gwanhuiGIM/Rokey_intelli1/releases/download/presentation/intelli1_presentation.pdf#page=47">데이터베이스 p47</a> · <a href="https://github.com/gwanhuiGIM/Rokey_intelli1/releases/download/presentation/intelli1_presentation.pdf#page=57">자체 평가 p57</a></p>
+  <p class="muted pdf-index">발표 자료 목차·키워드: <a href="https://github.com/gwanhuiGIM/Rokey_intelli1/releases/download/presentation/intelli1_presentation.pdf#page=4">프로젝트 개요 p4</a> <span class="sep">|</span> <a href="https://github.com/gwanhuiGIM/Rokey_intelli1/releases/download/presentation/intelli1_presentation.pdf#page=7">감지에서 출동까지 흐름 p7</a> <span class="sep">|</span> <a href="https://github.com/gwanhuiGIM/Rokey_intelli1/releases/download/presentation/intelli1_presentation.pdf#page=14">수행 절차 p14</a> <span class="sep">|</span> <a href="https://github.com/gwanhuiGIM/Rokey_intelli1/releases/download/presentation/intelli1_presentation.pdf#page=16">AMR·ArUco p16</a> <span class="sep">|</span> <a href="https://github.com/gwanhuiGIM/Rokey_intelli1/releases/download/presentation/intelli1_presentation.pdf#page=23">웹캠 감지 p23</a> <span class="sep">|</span> <a href="https://github.com/gwanhuiGIM/Rokey_intelli1/releases/download/presentation/intelli1_presentation.pdf#page=40">관제 FSM 상태 판단 p40</a> <span class="sep">|</span> <a href="https://github.com/gwanhuiGIM/Rokey_intelli1/releases/download/presentation/intelli1_presentation.pdf#page=41">우선순위 배정 p41</a> <span class="sep">|</span> <a href="https://github.com/gwanhuiGIM/Rokey_intelli1/releases/download/presentation/intelli1_presentation.pdf#page=44">웹 관제 대시보드 p44</a> <span class="sep">|</span> <a href="https://github.com/gwanhuiGIM/Rokey_intelli1/releases/download/presentation/intelli1_presentation.pdf#page=45">관제 FSM 구조 p45</a> <span class="sep">|</span> <a href="https://github.com/gwanhuiGIM/Rokey_intelli1/releases/download/presentation/intelli1_presentation.pdf#page=47">데이터베이스 p47</a> <span class="sep">|</span> <a href="https://github.com/gwanhuiGIM/Rokey_intelli1/releases/download/presentation/intelli1_presentation.pdf#page=57">자체 평가 p57</a></p>
 </section>
 
 <section>
