@@ -624,6 +624,12 @@ header .skills-panel .bring ul { margin: 0; padding-left: 1.2rem; color: #fff; f
 header .skills-panel .bring li { margin-bottom: 6px; }
 header .skills-panel .bring a { color: #fff; font-weight: 400; text-decoration: underline; text-underline-offset: 2px; }
 header .skills-panel .bring .muted { color: #c7d2fe; }
+/* 경험 위주로 보기: 소주제 토글 + 기술 키워드와 같은 하늘색 ㄴ자 선, 항목마다 설명 한 줄 + 근거 글머리 들여쓰기(사용자 11-17) */
+header .skills-panel .bring.exp ul.br { padding-left: 0; }
+header .skills-panel .bring.exp li.rec { margin-bottom: 6px; }
+header .skills-panel .bring .exp-d { color: #e0e7ff; font-size: 13.5px; }
+header .skills-panel .bring ul.ev, .bring-low ul.ev { list-style: disc; margin: 2px 0 0; padding-left: 1.3rem; }
+.bring-low .exp-g { margin: 18px 0 6px; font-size: 1.05rem; }
 .sep { margin: 0 .35em; opacity: .6; } /* 링크 사이 구분(링크 글자 안의 "·"와 구별, 사용자 11-17) */
 /* 기술 키워드: 장비(HW)/기술(SW) 두 축 → 그룹 → 키워드 → 유형 → 기록, ㄴ자 트리 선(원래 그룹 선 색) */
 header .skills-panel .axes { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
