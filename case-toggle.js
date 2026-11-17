@@ -39,7 +39,7 @@ function openHash() {
   else t.parentElement.querySelectorAll('details.case').forEach(function (x) { x.open = true; });
   land(t);
 }
-// 브라우저가 load 때 주소의 #로 다시 스크롤하면 맨 위로 붙으니 한 번 더 가운데로
+// 브라우저가 load 때 주소의 #로 다시 스크롤하면 맨 위로 붙으니 한 번 더 가운데로(load는 3초 제한과 별개 — 늦게 끝나도 사용자 입력이 없으면 맞춘다)
 addEventListener('load', function () { if (landAnchor && !userMoved) landAnchor.scrollIntoView({ block: 'center' }); });
 // index 키워드 각주(?from=fn)로 들어오면 사례 대신 첫머리 흐름도(#role-map)로 가서 해당 진행 과정 번호를 강조한다
 // — 링크 → 흐름 확인 → 세부 순서(사용자 2026-11-16 "a"). 목표가 사례 안 그림·단계면 그 사례 번호를 강조하고,
@@ -67,7 +67,8 @@ function flowFirst() {
   tip.textContent = '강조된 항목을 누르면 이동합니다';
   var title = map.querySelector('.role-map-title');
   if (title) title.after(tip); else map.prepend(tip);
-  function go() { map.scrollIntoView({ block: 'start' }); }
+  // 로딩이 끝나기 전에 강조 번호를 눌러 사례로 착지했으면(landAnchor) load 때 흐름도로 되돌리지 않는다(Codex 지적 11-17)
+  function go() { if (!landAnchor) map.scrollIntoView({ block: 'start' }); }
   go(); addEventListener('load', go);
   return true;
 }
