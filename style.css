@@ -127,7 +127,7 @@ main > ul li { background: var(--card); border: 1px solid var(--line); border-le
 .vt li::before { content: ""; position: absolute; left: -27px; top: 16px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
 .vt li.now::before { background: var(--bg); border: 2px solid var(--accent); }
 .vt time { display: block; font-size: 13px; color: var(--muted); }
-.vt .muted { display: block; font-size: 14px; }
+.vt .muted { display: block; font-size: 15px; }
 .vt p { margin: 6px 0 0; font-size: 15px; }
 .vt li:not(.now) { background: none; border: 0; padding: 2px 16px; }
 .vt li:not(.now)::before { left: -23px; top: 7px; }
@@ -203,7 +203,7 @@ main > ul.vt { display: block; }
 .vt li::before { background: var(--accent); border-radius: 0; }
 .vt li.now::before { background: var(--bg); }
 .vt li.now { border: 0; border-bottom: 1px solid var(--line); border-radius: 0; background: none; padding: 18px 16px; }
-.vt li.now b { font-size: 18px; }
+.vt li.now b { font-weight: 600; } /* 타임라인 글꼴 통일: 제목줄 17px·600, 설명 15px(사용자 11-19) */
 
 
 /* 홈 카드: 대표 이미지·제목·요약 한 문단만 보이고 나머지는 접기 */
@@ -378,8 +378,6 @@ main.case-layout .step-card > .step-desc { margin: 0; font-size: 14px; line-heig
 @media (max-width: 440px) { main.case-layout .step-cards { grid-template-columns: 1fr; } }
 
 /* 타임라인 진행 중 항목 접기(2026-11-11, 사용자 "진행중인 항목은 접는게") */
-.vt li.now details.now-more > summary { cursor: pointer; color: var(--accent); font-size: 15px; font-weight: 600; margin-top: 4px; }
-.vt li.now details.now-more[open] > summary { margin-bottom: 4px; }
 .vt li.now .now-item { padding: 12px 0; }
 .vt li.now .now-item + .now-item { border-top: 1px solid var(--line); }
 .vt li.now .now-item p { margin: 6px 0 0; }
