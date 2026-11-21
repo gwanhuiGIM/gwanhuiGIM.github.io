@@ -21,7 +21,7 @@
   <!-- <p class="fn-note muted">각 요소는 우선순위 정렬되어 있습니다.</p>
   2026-11-20: 경험·기술 키워드 두 보기를 큰 토글 "경험·기술 키워드" 하나로 묶고 프로젝트 링크는 밖에 둠, 첫머리 "3가지 분류" 문장 삭제(사용자 q3·q4o·직전 q5x). 세 가지 보기(사용자 2026-11-17): 경험(핵심역량 다섯 줄 + 자소서 소재 다섯 줄, 소주제 4개 토글 — 2026-11-19 SW 개발 역량 두 줄·소주제 "ROS 2 SW 개발" 추가(사용자 q1 a1 c1·q2o)로 지금은 핵심역량 일곱 줄·소주제 5개·줄마다 설명 한 줄과 근거 — 아래 #bring 절과 같은 내용, 둘 다 둠, 사용자 11-17. 기존 다섯 줄 제목은 바꾸지 않음) / 기술 키워드(장비·기술 두 축 트리) / 프로젝트(카드 절로 이동).
        기술 키워드 배치·정렬의 원본은 vault docs/plans/2026-11-17-index-키워드-재구성.md 대조표. 한 기록은 각 축 한 곳까지. -->
-  <details class="big"><summary>경험·기술 키워드</summary><div class="big-body">
+  <details class="big"><summary>경험·기술 키워드</summary><div class="big-body kw-root"><button type="button" class="kw-collapse">모두 접기</button>
   <details class="big"><summary>경험 위주로 보기</summary><div class="big-body bring exp"><div class="axis"><div class="br">
 <details class="skill-group nd"><summary class="sg-title">작업 흐름 설계·구현</summary><ul class="br"><li class="nd rec"><b>인식부터 구동까지 로봇 작업을 상태로 나눠 시스템을 설계·구현한 경험</b><br><span class="exp-d">협동로봇 재시도 때 홈 위치 경유, 커피 공정의 실패 단계만 재실행, 관제의 출동 가능 로봇 판별을 맡으며 자동 처리와 사람 판단의 경계부터 정하는 설계를 익힘</span><ul class="ev"><li class="muted">근거: <a href="intelli1.html#process">산업안전 순찰 · 진행 과정</a> <span class="sep">|</span> <a href="cobot2.html#case-fsm-home">자연어 물체 집기 · 홈 경유 전이 규칙</a> <span class="sep">|</span> <a href="cobot1.html#process">핸드드립 커피 · 진행 과정</a></li></ul></li></ul></details>
 <details class="skill-group nd"><summary class="sg-title">실물 맞춤·검증</summary><ul class="br"><li class="nd rec"><b>기구·센서 등 하드웨어 특성을 이해하고 로봇 소프트웨어를 실물에 맞춰 통합한 경험</b><br><span class="exp-d">실물 그리퍼를 직접 재 다문 상태에서 모델보다 38mm 긴 손끝을 찾아 보정표를 만들고, 실차는 휘는 차의 전륜 정렬을 직접 조정하며 코드보다 하드웨어 상태부터 확인하는 방식을 익힘</span><ul class="ev"><li class="muted">근거: <a href="cobot2.html#case-rg2">자연어 물체 집기 · 실물 그리퍼 실측 보정</a> <span class="sep">|</span> <a href="erp42.html#case-vehicle">자율주행 ERP42 · 실차 조정과 반복 테스트</a> <span class="sep">|</span> <a href="grad.html#team">졸업 프로젝트 · 팀에서 일한 방식</a> <span class="sep">|</span> <a href="major.html">기계공학부 전공 학습</a></li></ul></li><li class="nd rec"><b>오픈소스·AI 모델의 설정을 실측값과 대조·검증해 작업 목적에 적용한 경험</b><br><span class="exp-d">좌표 교시 불편을 계기로 GraspGenX(파지 자세 생성 모델) 도입을 건의하고 실기 조정을 맡으며, 새 기술은 쓸 자리부터 찾고 오차는 측정 방식부터 따지는 법을 익힘</span><ul class="ev"><li class="muted">근거: <a href="cobot2.html#case-graspgen">자연어 물체 집기 · 파지 자세 모델 도입</a> <span class="sep">|</span> <a href="cobot2.html#case-poserr">자연어 물체 집기 · 위치 오차 실측과 원인 분리</a> <span class="sep">|</span> <a href="cobot2.html#case-approach">자연어 물체 집기 · 접근 거리와 파지 조건 조정</a> <span class="sep">|</span> <a href="cobot1.html#case-grip">핸드드립 커피 · 물체 잡힘 판정</a></li></ul></li></ul></details>
@@ -50,7 +50,7 @@
 </nav>
 
 <main>
-<p class="updated">Last modified <time datetime="2026-11-20">2026-11-20</time></p>
+<p class="updated">Last modified <time datetime="2026-11-21">2026-11-21</time></p>
 <!-- 숨김(2026-11-04, 11-09 확정): 쓰지 않음 — 되살리지 않는다(사용자 11-09)
 <h2 id="process">프로젝트를 진행하는 방식</h2>
 <ul>
@@ -259,6 +259,16 @@
 document.querySelectorAll('.skills-panel .axes li.rec a[href]').forEach(function (a) {
   var h = a.getAttribute('href'), m = /^([\w-]+\.html)(#.+)$/.exec(h);
   if (m) a.setAttribute('href', m[1] + '?from=fn' + m[2]);
+});
+// 키워드란 "모두 접기"(사용자 2026-11-21): "경험 위주로 보기"·"기술 키워드로 보기"는 열어 둔 채 그 안의 토글(소주제·장비·기술 갈래)만 닫는다
+// — 두 보기까지 닫으면 보기 제목을 누르는 것과 같아서 한 단계 아래만(사용자 11-21). 버튼은 두 보기 줄 오른쪽에 하나만.
+// 닫혀 줄어든 뒤 버튼이 화면 위로 벗어났으면 버튼 위치로 되돌린다.
+document.querySelectorAll('.kw-root > .kw-collapse').forEach(function (b) {
+  b.addEventListener('click', function () {
+    var root = b.parentElement;
+    root.querySelectorAll(':scope > details.big details[open]').forEach(function (d) { d.open = false; });
+    if (b.getBoundingClientRect().top < 0) b.scrollIntoView({ block: 'start' });
+  });
 });
 </script>
 </body>

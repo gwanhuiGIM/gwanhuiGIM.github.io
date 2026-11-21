@@ -654,3 +654,7 @@ header .skills-panel p.tools { font-size: 13px; color: #fff; margin: 10px 0 0; }
 /* 링크로 들어온 사례: 제목은 화면 세로 중앙(case-toggle.js), 사례 영역 좌우 막대 + 옅은 배경, 다른 링크로 옮길 때까지 유지(사용자 11-17 q2b) */
 .landing { position: relative; isolation: isolate; }
 .landing::after { content: ""; position: absolute; top: 0; bottom: 0; left: -12px; right: -12px; z-index: -1; pointer-events: none; border-left: 4px solid var(--accent); border-right: 4px solid var(--accent); border-radius: 6px; background: var(--accent-soft); }
+/* 키워드란 "모두 접기"(2026-11-21): "경험 위주로 보기" 줄 높이에 오른쪽 정렬로 하나만 */
+header .skills-panel .kw-root { position: relative; }
+header .skills-panel .kw-collapse { position: absolute; top: 19px; right: 14px; z-index: 1; padding: 3px 10px; font: inherit; font-size: 13px; font-weight: 700; color: #c7d2fe; background: rgba(255,255,255,.06); border: 1px solid rgba(165,180,252,.45); border-radius: 999px; cursor: pointer; }
+header .skills-panel .kw-collapse:hover { color: #fff; background: rgba(165,180,252,.18); }
