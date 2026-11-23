@@ -842,6 +842,6 @@ body.home main, body.home footer { max-width: 1192px; margin: 0 auto; padding-le
 @media (max-width: 520px) { .home .bento .contact-t .contact { grid-template-columns: 1fr; } }
 .home .bento .contact-t .contact > span:last-child:nth-child(odd) { grid-column: span 2; } /* 7칸일 때 빈 칸 없이 */
 @media (max-width: 520px) { .home .bento .contact-t .contact > span:last-child:nth-child(odd) { grid-column: auto; } }
-.home .bento .contact-t .contact > span:nth-child(8)::before { content: "▶"; font-size: 12px; top: 14px; }
+.home .bento .contact-t .contact > span:nth-child(8)::before { content: "✓"; } /* 2026-11-23: 시연 영상(▶) → 증명서 */
 .home .bento .contact-t .contact > span.vids .vl { font-size: 13px; line-height: 1.6; color: rgba(255,255,255,.6); }
 .home .bento .contact-t .contact > span.vids .vl a { font-weight: 500; }
