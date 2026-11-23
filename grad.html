@@ -32,10 +32,13 @@
 </nav>
 
 <main class="case-layout outline">
-<p class="updated">Last modified <time datetime="2026-11-23">2026-11-23</time></p>
+<p class="updated">Last modified <time datetime="2026-11-24">2026-11-24</time></p>
 <section class="overview">
   <h2 id="overview">한눈에 보기</h2>
-  <p class="first-note"><b>문제</b> 상용 수난 구조장비는 비싸고 조작에 숙련이 필요해 비전문가가 바로 쓰기 어려움<br><b>목표(팀)</b> 물에 던지면 열원을 찾아 익수자에게 다가가는 저비용 구명보트와 발사장치</p>
+  <ul class="first-note phase-facts">
+    <li><b>문제</b><span>상용 수난 구조장비는 비싸고 조작에 숙련이 필요해 비전문가가 바로 쓰기 어려움</span></li>
+    <li><b>목표(팀)</b><span>물에 던지면 열원을 찾아 익수자에게 다가가는 저비용 구명보트와 발사장치</span></li>
+  </ul>
   <div class="role-map" id="role-map" role="group" aria-label="회로 구성도·팀 통합 코드 흐름 위에 표시한 제 담당 지점">
     <p class="role-map-title">설계 흐름에서 제가 맡은 지점 <span>상자를 누르면 기술 설명으로, 아래 번호는 진행 과정 사례로 이동합니다</span></p>
     <div class="pipe role-pipe">
@@ -83,8 +86,8 @@
     <li><b>도면(본인)</b><span>구명보트 조립 도면 · 발표 자료의 발사장치 부품 도면 — 부품별 치수 · 재질 · 가공 방법 · 도면 구현 · 규격 · 기입</span></li>
   </ul>
   <div class="fig-pair">
-    <figure class="fig"><img src="images/grad/boat-module-model.jpg" alt="보트 3D 모델 분해도: 노즈콘 및 IR카메라, 센서 케이스, 배터리 및 모터 지지대, 모터, 케이스 상단·하단, 구명튜브 고정장치" width="810" height="720" loading="lazy"><figcaption class="muted">예시: 팀의 보트 3D 모델 분해도</figcaption></figure>
-    <figure class="fig"><img src="images/grad/boat-assembled-model.jpg" alt="조립된 보트 선체 3D 모델" width="1264" height="534" loading="lazy"><figcaption class="muted">예시: 팀의 보트 3D 모델(조립)</figcaption></figure>
+    <figure data-rep class="fig"><img src="images/grad/boat-module-model.jpg" alt="보트 3D 모델 분해도: 노즈콘 및 IR카메라, 센서 케이스, 배터리 및 모터 지지대, 모터, 케이스 상단·하단, 구명튜브 고정장치" width="810" height="720" loading="lazy"><figcaption class="muted">예시: 팀의 보트 3D 모델 분해도</figcaption></figure>
+    <figure data-rep class="fig"><img src="images/grad/boat-assembled-model.jpg" alt="조립된 보트 선체 3D 모델" width="1264" height="534" loading="lazy"><figcaption class="muted">예시: 팀의 보트 3D 모델(조립)</figcaption></figure>
   </div>
   <figure class="fig wide">
     <img src="images/grad/slide_launcher_drawing.jpg" alt="발표 슬라이드의 발사장치 도면: 스프링이 달린 발사장치 평면도와 단면 A-A, 트리거 요소·장전부·부싱 등 부품별 치수도, 부싱·장전부·내외부 바디·트리거 요소·어셈블리의 재질과 가공 방법을 적은 부품표" width="1200" height="846" loading="lazy">
@@ -105,7 +108,7 @@
     <li><b>출력(튜브)</b><span>별도 모터 드라이버(회로도의 L9110H) → 구명튜브용 기어모터(기어모터로 펼치던 방식)</span></li>
     <li><b>전원</b><span>7.4V 리튬폴리머 배터리 · 두 번째 학기에 팀이 On/Off 스위치와 배터리 보온 구조 추가</span></li>
   </ul>
-  <figure class="fig">
+  <figure data-rep class="fig">
     <img src="images/grad/circuit_fritzing.jpg" alt="구명튜브를 기어모터로 펼치던 방식의 회로 구성도: 아두이노 보드에 열화상 센서, RC 수신기, 좌우 DC 모터와 모터 드라이버, 구명튜브용 기어모터와 드라이버, 7.4V 배터리가 연결됨" width="1200" height="752" loading="lazy">
     <figcaption class="muted">회로 구성도(구명튜브를 기어모터로 펼치던 방식 기준)</figcaption>
   </figure>
@@ -123,7 +126,7 @@
     <div class="pipe-arrow" aria-hidden="true">→</div>
     <div class="pipe-col"><span class="pipe-tag">구동(제 담당)</span><div class="pipe-box gpu">좌우 PWM 출력 배분<small>모터 드라이버 · DC 모터 2개 · 크게 꺾기 · 완만히 꺾기 · 직진</small></div></div>
   </div>
-  <figure class="fig wide">
+  <figure data-rep class="fig wide">
     <img src="images/grad/slide_steering_case.jpg" alt="발표 슬라이드: 좌우 1×8 온도값 한 줄 예시 아래에 칸 위치 CASE 0~7이 급격한 우회전, 완만한 우회전, 직진, 완만한 좌회전, 급격한 좌회전으로 나뉜 설계 표와 설명 글" width="1200" height="800" loading="lazy">
     <figcaption class="muted">팀 발표 자료(심화종합설계) p15 — 1×8 온도값의 칸 위치(CASE)별로 크게 꺾기·완만히 꺾기·직진을 정한 설계 표</figcaption>
   </figure>
@@ -169,11 +172,11 @@
       <h4 class="step-title">보드 한 장의 배선</h4>
       <div class="step-body">
         <p>저는 아두이노와 모터를 잇는 회로 구성을 맡아 진행했습니다. 아두이노 보드 한 장에 열화상 센서, 조종 신호 수신기, 모터 드라이버, 7.4V 배터리를 잇고, 선체 내부 공간과 부품 간섭을 고려해 보드와 모터 드라이버가 좁은 선체 안에 들어가도록 배선을 꾸렸습니다.</p>
-        <figure class="fig" id="fig-circuit">
+        <figure data-rep class="fig" id="fig-circuit">
       <img src="images/grad/circuit_fritzing.jpg" alt="구명튜브를 기어모터로 펼치던 방식의 회로 구성도: 아두이노 보드에 열화상 센서, RC 수신기, 좌우 DC 모터와 모터 드라이버, 구명튜브용 기어모터와 드라이버, 7.4V 배터리가 연결됨" width="1200" height="752" loading="lazy">
       <figcaption class="muted">회로 구성도(구명튜브를 기어모터로 펼치던 방식 기준): 아두이노 보드 하나에 열화상 센서, 조종 신호 수신기, 좌우 모터와 모터 드라이버, 구명튜브용 모터, 배터리가 연결됩니다</figcaption>
     </figure>
-        <figure class="fig"><img src="images/grad/hull-wiring-2.jpg" alt="선체 안에 놓인 아두이노 보드와 배터리, 배선" width="686" height="237" loading="lazy"><figcaption class="muted">선체 안에 들어간 아두이노 보드와 배터리 배선</figcaption></figure>
+        <figure data-rep class="fig"><img src="images/grad/hull-wiring-2.jpg" alt="선체 안에 놓인 아두이노 보드와 배터리, 배선" width="686" height="237" loading="lazy"><figcaption class="muted">선체 안에 들어간 아두이노 보드와 배터리 배선</figcaption></figure>
       </div>
     </div>
   </div>
@@ -186,7 +189,7 @@
       <h4 class="step-title">방향타·BLDC·방수 모터 제외</h4>
       <div class="step-body">
         <p>팀은 구동 방식을 토의하며, 프로펠러 하나에 방향타(키)를 다는 방식은 착수 충격에 키가 부서질 위험이 있어 제외했습니다. 고성능 모터(BLDC 모터)는 아두이노로 제어하기 어렵고 구조용 보트에 그 성능까지는 필요 없었으며, 방수 모터는 추진 성능이 떨어져 함께 제외했습니다.</p>
-        <figure class="fig" id="fig-boat-model">
+        <figure data-rep class="fig" id="fig-boat-model">
       <img src="images/grad/boat-module-model.jpg" alt="보트 3D 모델 분해도: 노즈콘 및 IR카메라, 센서 케이스, 배터리 및 모터 지지대, 모터, 케이스 상단·하단, 구명튜브 고정장치" width="810" height="720" loading="lazy">
       <figcaption class="muted">예시: 팀의 보트 3D 모델 분해도(배터리 및 모터 지지대, 모터, 센서 케이스, 노즈콘, 케이스 상단·하단)</figcaption>
     </figure>
@@ -195,7 +198,7 @@
       <figure class="fig"><img src="images/grad/sensor-housing-model.jpg" alt="센서 케이스 3D 모델" width="326" height="385" loading="lazy"><figcaption class="muted">예시: 팀의 센서 케이스 3D 모델</figcaption></figure>
     </div>
         <div class="fig-pair" id="fig-boat-assembled">
-      <figure class="fig"><img src="images/grad/boat-assembled-model.jpg" alt="조립된 보트 선체 3D 모델" width="1264" height="534" loading="lazy"><figcaption class="muted">예시: 팀의 보트 3D 모델(조립)</figcaption></figure>
+      <figure data-rep class="fig"><img src="images/grad/boat-assembled-model.jpg" alt="조립된 보트 선체 3D 모델" width="1264" height="534" loading="lazy"><figcaption class="muted">예시: 팀의 보트 3D 모델(조립)</figcaption></figure>
       <figure class="fig"><img src="images/grad/boat-with-tube-model.jpg" alt="구명튜브가 펼쳐진 상태의 보트 3D 모델" width="1227" height="682" loading="lazy"><figcaption class="muted">예시: 팀의 구명튜브를 단 보트 3D 모델</figcaption></figure>
     </div>
       </div>
@@ -231,7 +234,7 @@
       <h4 class="step-title">시리얼 통신으로 먼저 확인</h4>
       <div class="step-body">
         <p>팀은 코드를 합치다 막히자 문제를 한꺼번에 해결하려 하지 않고 단계를 나누어 점검했고, 모터 제어를 맡은 저는 기존 조종·모터 코드부터 다시 점검했습니다. 팀은 센서 신호를 시리얼 통신(보드의 값을 PC 화면으로 받아 보는 통신)으로 먼저 확인한 뒤 모터 코드와 합쳤습니다.</p>
-        <figure class="fig" id="fig-rc"><img class="narrow" src="images/grad/rc-receiver-output.jpg" alt="무선 조종기 사진 위에 레버·버튼별 수신기 출력값을 적은 도식" width="493" height="367" loading="lazy"><figcaption class="muted">예시: 팀이 정리한 무선 조종기(RC) 레버·버튼별 수신기 출력값</figcaption></figure>
+        <figure data-rep class="fig" id="fig-rc"><img class="narrow" src="images/grad/rc-receiver-output.jpg" alt="무선 조종기 사진 위에 레버·버튼별 수신기 출력값을 적은 도식" width="493" height="367" loading="lazy"><figcaption class="muted">예시: 팀이 정리한 무선 조종기(RC) 레버·버튼별 수신기 출력값</figcaption></figure>
       </div>
     </div>
   </div>
@@ -245,14 +248,14 @@
       <h4 class="step-title">3D 프린팅과 조립</h4>
       <div class="step-body">
         <p>팀은 선체 모델을 필라멘트 3D 프린팅으로 만들어 요소를 조립하고, 선체 상부와 하부를 나사로 고정했습니다. 노즈콘은 착수 충격을 줄이기 위해 실리콘으로 주문 제작했습니다.</p>
-        <figure class="fig"><img class="narrow" src="images/grad/hull_interior.jpg" alt="3D 프린팅한 선체 하부 안쪽: 테두리를 따라 난 나사 구멍과, 흰 지지대 위에 놓인 모터와 아두이노 보드" width="974" height="1314" loading="lazy"><figcaption class="muted">3D 프린팅한 선체 하부 — 테두리의 나사 구멍과 지지대에 올린 모터 · 아두이노 보드</figcaption></figure>
+        <figure data-rep class="fig"><img class="narrow" src="images/grad/hull_interior.jpg" alt="3D 프린팅한 선체 하부 안쪽: 테두리를 따라 난 나사 구멍과, 흰 지지대 위에 놓인 모터와 아두이노 보드" width="974" height="1314" loading="lazy"><figcaption class="muted">3D 프린팅한 선체 하부 — 테두리의 나사 구멍과 지지대에 올린 모터 · 아두이노 보드</figcaption></figure>
       </div>
     </div>
     <div class="step">
       <h4 class="step-title">부위별 방수</h4>
       <div class="step-body">
         <p>팀은 부위마다 방수 방법을 달리했습니다. 모터 부분에는 퍼티가 굳으면서 물 유입을 막고 모터 회전축 변동을 막도록 방수 퍼티를 설치했습니다. 열화상 센서에는 글루건을 썼고, 몸체 측면 틈은 가스켓과 실리콘으로 막았습니다. 실리콘과 함께 카본 봉을 넣어 구조를 보완하고 틈을 더 촘촘히 메워 내부 기밀성을 유지하도록 했습니다. 3D 프린팅한 몸통 전체에는 방수 스프레이를 사용했습니다.</p>
-        <figure class="fig"><img src="images/grad/hull-wiring-1.jpg" alt="선체 테두리를 따라 붉은 실리콘을 바른 모습" width="686" height="237" loading="lazy"><figcaption class="muted">측면 틈을 막으려고 선체 테두리에 바른 붉은 실리콘</figcaption></figure>
+        <figure data-rep class="fig"><img src="images/grad/hull-wiring-1.jpg" alt="선체 테두리를 따라 붉은 실리콘을 바른 모습" width="686" height="237" loading="lazy"><figcaption class="muted">측면 틈을 막으려고 선체 테두리에 바른 붉은 실리콘</figcaption></figure>
       </div>
     </div>
     <div class="step">
@@ -278,7 +281,7 @@
       <h4 class="step-title">기말 발표 개선안과 2학기 시제품 보완</h4>
       <div class="step-body">
         <p>팀은 기말 발표에서 전원 스위치 추가와 스위치부 방수 처리, 고용량 배터리 교체, 배터리 단열 처리를 개선안으로 정리했습니다. 팀은 두 번째 학기에 On/Off 스위치와 배터리 보온 구조를 넣고, 기어모터 메커니즘 대신 수면 착수 시 펼쳐지는 자동 팽창 밸브로 구명튜브 전개 방식을 바꿨습니다.</p>
-        <figure class="fig wide">
+        <figure data-rep class="fig wide">
       <img src="images/grad/slide_improve_points.jpg" alt="발표 슬라이드: 발사체 사진 둘레에 On/Off Switch, 공기역학적 설계, 다양한 크기의 튜브장착 가능, 자동팽창 밸브, 배터리 보온 말풍선과 부품 사진이 달린 발사체 보완점 정리" width="1200" height="865" loading="lazy">
       <figcaption class="muted">팀 발표 자료(심화종합설계) p10 — 두 번째 학기 발사체 보완점(On/Off 스위치, 자동 팽창 밸브, 배터리 보온 등)</figcaption>
     </figure>
@@ -296,12 +299,12 @@
       <div class="step-body">
         <p>팀은 발사체를 발사장치에 장착해 발사하고 착수 후 익수자 쪽으로 자동 이동하며, 거리가 멀면 조종기로 수동 주행으로 전환하고 구조 종료나 돌발 상황 시 정지하는 순서로 작동 과정을 정리했습니다. 팀은 야외 발사 시험에서 실측 약 9m의 비거리를 확인했고, 수상 구동·비거리·자율주행 시험 영상을 남겼습니다.</p>
         <div class="fig-pair">
-      <figure class="fig"><img src="images/grad/projectile-on-water.jpg" alt="물 위에 뜬 발사체와 노란 구명튜브" width="1050" height="547" loading="lazy"><figcaption class="muted">예시: 착수 뒤 물 위에 뜬 발사체와 구명튜브</figcaption></figure>
+      <figure data-env data-rep class="fig"><img src="images/grad/projectile-on-water.jpg" alt="물 위에 뜬 발사체와 노란 구명튜브" width="1050" height="547" loading="lazy"><figcaption class="muted">예시: 착수 뒤 물 위에 뜬 발사체와 구명튜브</figcaption></figure>
       <figure class="fig"><img src="images/grad/rc-controller.jpg" alt="물가에서 두 손으로 잡은 무선 조종기" width="1050" height="537" loading="lazy"><figcaption class="muted">예시: 수동 주행에 쓰는 무선 조종기</figcaption></figure>
     </div>
         <div class="fig-pair">
       <figure class="fig"><img src="images/grad/projectile-before-launch.jpg" alt="구명튜브를 단 발사체를 두 손으로 든 모습(얼굴 안 보임)" width="1050" height="383" loading="lazy"><figcaption class="muted">예시: 착수 전 구명튜브를 단 발사체</figcaption></figure>
-      <figure class="fig"><img src="images/grad/launch-pose.jpg" alt="물가 바위 위에서 발사장치를 겨누는 사람의 뒷모습" width="900" height="1200" loading="lazy"><figcaption class="muted">예시: 발사 직전 발사장치를 든 모습</figcaption></figure>
+      <figure data-rep class="fig"><img src="images/grad/launch-pose.jpg" alt="물가 바위 위에서 발사장치를 겨누는 사람의 뒷모습" width="900" height="1200" loading="lazy"><figcaption class="muted">예시: 발사 직전 발사장치를 든 모습</figcaption></figure>
     </div>
         <figure class="fig">
       <video controls muted loop playsinline preload="none" poster="images/grad/grad_launch_poster.jpg" width="710" height="402" aria-label="야외에서 헬멧을 쓴 사람이 발사장치를 겨누는 비거리 시험 영상">

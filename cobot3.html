@@ -34,7 +34,7 @@
 </nav>
 
 <main class="case-layout outline">
-<p class="updated">Last modified <time datetime="2026-11-17">2026-11-17</time></p>
+<p class="updated">Last modified <time datetime="2026-11-24">2026-11-24</time></p>
 <section class="overview">
   <h2 id="overview">한눈에 보기</h2>
   <div class="role-map" id="role-map" role="group" aria-label="발표 p7 ROS 2 노드 구조 위에 표시한 제 담당 지점">
@@ -74,7 +74,7 @@
 
   <details class="impl" id="impl-sim">
   <summary><h3>가상 수술실·두 로봇·흡착 그리퍼 (Isaac Sim) <span class="badge-team">팀 담당</span></h3></summary>
-  <figure class="fig">
+  <figure data-rep class="fig">
     <img src="images/cobot3/isaac_operating_room_scene.jpg" alt="Isaac Sim 가상 수술실: 수술대 옆 테이블 위 초록 트레이 6칸과 그 양쪽의 흰색 협동로봇 두 대" width="1163" height="642" loading="lazy">
     <figcaption class="muted">가상 수술실(Isaac Sim) 장면: 수술대 옆 테이블의 트레이 6칸과 협동로봇 두 대</figcaption>
   </figure>
@@ -87,7 +87,7 @@
   <summary><h3>카메라 배치와 ROS 2 연결 구조 (ROS 2) <span class="badge-team">본인 주 담당</span></h3><span class="impl-jump">진행 과정 <a href="#case-merge">01 두 로봇 시스템 통합</a><a href="#case-vision">02 카메라·도구 인식 노드</a></span></summary>
   <p>시스템 구조 설계와 ROS 2 환경 구성·연결은 제가 맡았습니다. 카메라 배치를 정하고, 각 프로그램이 어떤 데이터를 전처리해 주고받을지 소통 구조를 설계했습니다.</p>
   <p>Isaac Sim 프로세스 하나가 로봇 제어와 시뮬레이션을 맡고, 나머지 모듈은 별도 프로세스로 돌며 같은 ROS 2 환경에서 토픽으로 연결됩니다.</p>
-  <figure class="fig wide">
+  <figure data-rep class="fig wide">
     <img src="images/cobot3/slide_ros2_nodes.jpg" alt="발표 슬라이드 도식: 왼쪽 입력·인식 노드(카메라·마이크에서 손 추적, 음성 인식, 명령 해석, 도구 인식 노드), 가운데 통합 판단 노드(robot_manager_node), 오른쪽 실행 노드(로봇 A·B마다 집기·놓기와 손 따라가기 제어기, 흡착 그리퍼, Isaac Sim 로봇)가 화살표로 이어지고, 아래에 카메라·마이크에서 그리퍼·Isaac Sim까지의 주요 토픽 흐름" width="1200" height="500" loading="lazy">
     <figcaption class="muted">팀 발표 자료 p7 — 입력·인식 노드가 ROS 2 토픽으로 통합 판단 노드에 모이고, 통합 판단 노드가 로봇 A·B 실행 노드에 작업을 보내는 노드 구조</figcaption>
   </figure>
@@ -96,11 +96,11 @@
   <details class="impl" id="impl-request">
   <summary><h3 id="request">손 동작·음성·화면 클릭으로 요청 (MediaPipe · 음성 인식 · LLM) <span class="badge-team">팀 담당</span></h3></summary>
   <div class="fig-pair">
-    <figure class="fig">
+    <figure data-rep class="fig">
       <img src="images/cobot3/hand_tracking_follow.jpg" alt="손 추적 화면: 웹캠에 비친 주먹 쥔 손 위에 손 관절 선이 그려지고, 손 위치와 로봇 목표 위치 수치가 표시됨" width="1200" height="818" loading="lazy">
       <figcaption class="muted">손 추적 화면: 웹캠 영상에서 손 관절을 찾아 손 위치와 로봇이 따라갈 목표 위치를 계산합니다 (팀 화면)</figcaption>
     </figure>
-    <figure class="fig">
+    <figure data-rep class="fig">
       <img src="images/cobot3/web_dashboard.jpg" alt="웹 대시보드: 손 추적 영상, 트레이별 도구 상태, 로봇 A/B 상태, 음성 명령 로그, 명령 처리 로그" width="1200" height="680" loading="lazy">
       <figcaption class="muted">웹 대시보드: 손 추적 영상, 트레이별 도구 상태, 로봇 A/B 상태, 음성·명령 처리 기록을 한 화면에 보여 줍니다 (팀 화면)</figcaption>
     </figure>
@@ -112,7 +112,7 @@
   <details class="impl" id="impl-vision">
   <summary><h3>도구 인식과 합성 데이터 (YOLO · Replicator) <span class="badge-team">본인 주 담당</span></h3><span class="impl-jump">진행 과정 <a href="#case-vision">02 카메라·도구 인식 노드</a><a href="#case-data">03 학습 데이터 전환</a></span></summary>
   <p>도구 인식 프로그램은 카메라 영상에서 YOLO로 도구를 찾아 트레이 6칸에 배정하고, 어느 칸에 어떤 도구가 있는지를 ROS 2 메시지로 보냅니다. 도구 인식 설계와 인식 노드 구성은 제가 맡았고, 학습 데이터는 제가 제안해 Replicator(시뮬레이터 안에서 학습 이미지를 만드는 도구)로 직접 만들고 라벨을 붙인 합성 데이터입니다.</p>
-  <figure class="fig wide">
+  <figure data-rep class="fig wide">
     <img src="images/cobot3/slide_replicator.jpg" alt="발표 슬라이드의 합성 데이터 생성 파이프라인: USD 모델·장면 구성, Replicator 무작위 변경, 데이터 렌더링, 라벨 자동 생성(영역 마스크·상자), YOLO 데이터셋 저장의 다섯 단계 사진" width="1200" height="569" loading="lazy">
     <figcaption class="muted">팀 발표 자료 p57 — 합성 데이터 생성 순서: 도구 3D 모델과 초록 트레이 장면 구성 → 도구 위치·각도·종류·개수와 조명·카메라 조건을 무작위로 바꿈 → 렌더링 → 영역·상자 라벨 자동 생성 → YOLO 데이터셋 저장</figcaption>
   </figure>
@@ -122,7 +122,7 @@
   <summary><h3>작업 관리와 두 로봇 동작 계획 (Robot Manager · RMPFlow · cuRobo) <span class="badge-team">팀 담당</span></h3></summary>
   <p>요청이 들어오면 작업 관리 프로그램이 도구가 있는 트레이를 찾아 두 로봇 중 하나에 작업을 맡기고, 두 로봇이 함께 쓰는 트레이 구역은 한 번에 한 로봇만 쓰게 합니다.</p>
   <p>트레이에서 도구를 집고 놓는 동작은 RMPFlow로, 도구를 든 로봇이 손을 따라가는 동작은 cuRobo로 움직입니다.</p>
-  <figure class="fig wide">
+  <figure data-rep class="fig wide">
     <img src="images/cobot3/slide_system_flow.jpg" alt="발표 슬라이드 도식: 위쪽 음성 명령(Whisper·Gemini), 핸드 트래킹(MediaPipe·Calibration), 비전 인식(Camera + YOLO)이 가운데 Robot Manager(상태 관리·작업 할당·구역 관리·재고 관리)로 모이고, 아래로 RMPFlow(PICK/PLACE)·cuRobo MPC(TRACKING)를 거쳐 흡착 그리퍼를 단 Robot A·Robot B로 이어지며, 맨 아래 Isaac Sim / ROS2 / 실제 카메라 환경이 로봇 상태·트레이 상태·센서 데이터를 되돌려 주는 구조. 입력 칸을 두른 빨간 테두리는 발표 때의 강조 표시" width="1200" height="543" loading="lazy">
     <figcaption class="muted">팀 발표 자료 p6 — 음성·손 추적·비전 입력이 작업 관리(Robot Manager)로 모이고, 집기·놓기는 RMPFlow, 손 따라가기는 cuRobo로 두 로봇을 움직이는 전체 흐름</figcaption>
   </figure>
@@ -174,11 +174,11 @@
       <div class="step-body">
         <p>팀은 두 로봇이 도구를 전달하는 시나리오까지 시뮬레이터에서 확인했습니다.</p>
         <div class="fig-pair">
-          <figure class="fig">
+          <figure data-rep class="fig">
             <img src="images/cobot3/left-robot-tray-handover.jpg" alt="Isaac Sim 가상 수술실: 테이블 양쪽의 협동로봇 두 대 중 왼쪽 로봇이 초록 트레이 하나를 들어 수술대 위 가상 손 앞에 와 있음" width="1200" height="664" loading="lazy">
             <figcaption class="muted">팀 시연 영상의 한 장면 — 왼쪽 로봇이 트레이 하나를 들어 가상 손 앞으로 옮긴 모습</figcaption>
           </figure>
-          <figure class="fig">
+          <figure data-env data-rep class="fig">
             <img src="images/cobot3/two-robots-tray-handover.jpg" alt="Isaac Sim 가상 수술실: 테이블 양쪽의 협동로봇 두 대 중 오른쪽 로봇이 초록 트레이 하나를 들어 수술대 위 가상 손 앞에 와 있고, 테이블에는 트레이 다섯 개가 남아 있음" width="1200" height="664" loading="lazy">
             <figcaption class="muted">팀 시연 영상의 한 장면 — 오른쪽 로봇이 트레이 하나를 들어 가상 손 앞으로 옮긴 모습</figcaption>
           </figure>
@@ -239,7 +239,7 @@ self.create_timer(1.0 / PUBLISH_RATE_HZ, self.publish_detections)
 tray_id = self.find_tray(cx, cy)
 self.update_stable_states(frame_assignments)</code></pre>
         <p class="muted">팀 최종 코드 <a href="https://github.com/gwanhuiGIM/Rokey_cobot3/blob/main/vision_detection_model/vision_tool_detection_node.py">vision_tool_detection_node.py</a>에서 모델 불러오기, 구독·발행 주기, 트레이 칸 배정·안정화 부분만 옮겼습니다(51·58·61·114·126행).</p>
-        <figure class="fig">
+        <figure data-rep class="fig">
           <img src="images/cobot3/tray-detection-overlay.jpg" alt="시뮬레이터 장면 위에 트레이 6칸 인식 화면이 겹쳐 있음: 칸마다 찾은 도구 이름과 상자가 표시되고, 화면에 '현재 DETECTION 중인 YOLO 상태' 자막" width="1200" height="664" loading="lazy">
           <figcaption class="muted">팀 시연 영상 중 시뮬레이터 장면과 트레이 6칸의 도구 인식 화면</figcaption>
         </figure>
@@ -266,7 +266,7 @@ self.update_stable_states(frame_assignments)</code></pre>
       <h4 class="step-title">배경 차이와 검증 데이터</h4>
       <div class="step-body">
         <p>팀은 흰색·검정 배경 위주의 학습 사진과 초록색 트레이 환경의 차이를 주된 원인으로 정리했습니다. 제가 돌아보면 test 데이터셋도 같은 오픈소스 데이터셋 안에서 나눴고, 시뮬레이터 화면으로 미리 확인하지 않고 적용한 쪽에 가까웠습니다. 실물 수술도구와 시뮬레이터 속 도구 모델이 서로 달랐던 것도 또 하나의 시행착오였습니다.</p>
-        <figure class="fig wide">
+        <figure data-rep class="fig wide">
           <img src="images/cobot3/slide_data_gap.jpg" alt="발표 슬라이드: 실패 요인 네 가지 칸(배경 차이, 작은 도구와 얇은 형상, Bounding Box 한계, 자세 및 환경 다양성 부족)과 각 예시 사진, 아래 핵심 문제 요약 상자" width="1200" height="543" loading="lazy">
           <figcaption class="muted">팀 발표 자료 p56 — 팀이 정리한 실패 요인: 배경 차이(흰색·검정 배경 학습 사진 ↔ 초록색 트레이), 작은 도구와 얇은 형상, 상자에 배경이 함께 들어가는 한계, 자세·환경 다양성 부족</figcaption>
         </figure>
@@ -278,7 +278,7 @@ self.update_stable_states(frame_assignments)</code></pre>
         <p>처음 실물 사진을 쓴 것은 데이터를 모으기 쉬웠기 때문입니다. 그 모델이 시뮬레이터 속 도구를 찾지 못하자, 시뮬레이션 화면을 손으로 일일이 찍는 대신 Isaac Sim의 합성 데이터 도구인 Replicator를 찾아 팀에 제안했습니다. 시뮬레이터의 3D 도구 모델과 트레이 배경을 가상 카메라로 찍어 데이터를 만들었고, 도구의 크기·각도를 바꿔 다양하게 만드는 것은 Replicator 자체 기능을 썼습니다. Replicator가 번호(0, 1, 2…)로만 매긴 라벨은 제가 Roboflow에서 도구 이름으로 지정해 올렸습니다.</p>
         <p id="step-roboflow">이렇게 올린 합성 데이터셋(전체 2,372장)은 버전으로 관리해 Colab 학습에 바로 연결했고, Colab GPU에서 사전학습된 YOLO 모델(yolov8n)을 이 데이터로 파인튜닝한 뒤 학습 끝의 검증 지표로 확인했습니다(mAP50 0.995).</p>
         <p>다만 이 값은 실제 성능을 보여 주는 수치가 아니었습니다. 당시에는 train/valid/test를 장수로만 나눴을 뿐, 학습에 쓸 데이터와 검증·일반화 성능을 확인할 데이터를 제대로 나누지 않았습니다. 데이터를 나누는 기준을 세우지 않고 수치를 확인한 것이 이 과정에서 겪은 시행착오 중 하나입니다.</p>
-        <figure class="fig wide">
+        <figure data-rep class="fig wide">
           <a href="images/cobot3/roboflow_synth_dataset.jpg"><img src="images/cobot3/roboflow_synth_dataset.jpg" alt="Roboflow 데이터셋 화면: 회색 배경의 합성 이미지마다 수술도구를 둘러싼 라벨 상자가 표시돼 있고, 왼쪽 메뉴에 Upload Data·Annotate·Dataset 2372·Versions 항목이 보임" width="1396" height="933" loading="lazy"></a>
           <figcaption class="muted">Roboflow의 합성 데이터셋 화면 — 전체 2,372장을 올려 라벨과 버전으로 관리했습니다(워크스페이스 이름은 가림)</figcaption>
         </figure>

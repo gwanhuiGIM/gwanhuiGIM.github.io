@@ -34,10 +34,14 @@
 </nav>
 
 <main class="case-layout outline">
-<p class="updated">Last modified <time datetime="2026-11-23">2026-11-23</time></p>
+<p class="updated">Last modified <time datetime="2026-11-24">2026-11-24</time></p>
 <section class="overview">
   <h2 id="overview">한눈에 보기</h2>
-  <p class="first-note"><b>출발점</b> 이전 협동로봇 프로젝트에서 좌표를 일일이 교시해야 했던 부담<br><b>목표(팀)</b> 카메라로 물체를 찾아 로봇이 직접 집는 구성<br><b>건의</b> 그리퍼가 집을 자세를 스스로 찾는 GraspGenX 도입을 제가 팀에 건의</p>
+  <ul class="first-note phase-facts">
+    <li><b>출발점</b><span>이전 협동로봇 프로젝트에서 좌표를 일일이 교시해야 했던 부담</span></li>
+    <li><b>목표(팀)</b><span>카메라로 물체를 찾아 로봇이 직접 집는 구성</span></li>
+    <li><b>건의</b><span>그리퍼가 집을 자세를 스스로 찾는 GraspGenX 도입을 제가 팀에 건의</span></li>
+  </ul>
   <div class="role-map" id="role-map" role="group" aria-label="발표 자료 p7 흐름 위에 표시한 제 담당 지점">
     <p class="role-map-title">설계 흐름에서 제가 맡은 지점 <span>상자를 누르면 기술 설명으로, 아래 번호는 진행 과정 사례로 이동합니다</span></p>
     <div class="pipe role-pipe">
@@ -77,11 +81,11 @@
     <div class="pipe-col"><span class="pipe-tag">구동</span><div class="pipe-box">Doosan M0609<small>로봇 팔</small></div><div class="pipe-box">OnRobot RG2<small>그리퍼 · Modbus TCP 직접 제어</small></div></div>
   </div>
   <div class="fig-pair">
-    <figure class="fig">
+    <figure data-rep class="fig">
       <img src="images/cobot2/checkerboard-calibration.jpg" alt="작업대 위 협동로봇 팔 끝에 흑백 격자무늬 체커보드를 붙인 장면" width="466" height="406" loading="lazy">
       <figcaption class="muted">로봇 팔에 체커보드를 붙여 작업대 옆 카메라와 로봇의 좌표를 맞추는 캘리브레이션 데이터를 모으는 장면</figcaption>
     </figure>
-    <figure class="fig">
+    <figure data-rep class="fig">
       <img src="images/cobot2/rg2_grasp.jpg" alt="OnRobot RG2 그리퍼가 작업대 위 오렌지를 집는 근접 사진" width="546" height="580" loading="lazy">
       <figcaption class="muted">로봇 팔 끝의 RG2 그리퍼가 작업대 위 오렌지를 집는 장면</figcaption>
     </figure>
@@ -102,7 +106,7 @@
     <div class="pipe-arrow" aria-hidden="true">→</div>
     <div class="pipe-col"><span class="pipe-tag">실행</span><div class="pipe-box">작업 제어(FSM)<small>로봇 팔 이동</small></div></div>
   </div>
-  <figure class="fig">
+  <figure data-rep class="fig">
     <img src="images/cobot2/slide_vla_action_decision.jpg" alt="발표 슬라이드 도식: 사람이 &quot;사과를 집어서 바구니에 담아줘&quot;라고 말하면, 대화 히스토리·현재 Scene·로봇 상태를 보는 LLM(의사결정)이 pick_and_place, pick_and_hold, release, ask_clarification, cancel_current_action, wait 가운데 고수준 행동을 정하는 흐름" width="1200" height="975" loading="lazy" class="narrow">
     <figcaption class="muted">팀 발표 자료 p15 — 자연어 지시를 LLM이 대화 기록·현재 장면·로봇 상태와 함께 판단해 집어 놓기, 집어 들고 있기, 되묻기 같은 고수준 행동으로 바꿉니다.</figcaption>
   </figure>
@@ -125,12 +129,12 @@
       <img src="images/cobot2/grasp_pick_pose_a.jpg" alt="OnRobot RG2 그리퍼가 작업대 위 오렌지를 향해 한쪽으로 기울어진 채 내려와 있는 모습" width="720" height="994" loading="lazy">
       <figcaption class="muted">같은 오렌지 — GraspGenX 후보에 맞춰 그리퍼가 위에서 한쪽으로 약간 기운 채 내려온 모습</figcaption>
     </figure>
-    <figure class="fig">
+    <figure data-rep class="fig">
       <img src="images/cobot2/grasp_pick_pose_b.jpg" alt="OnRobot RG2 그리퍼가 작업대 위 오렌지를 향해 다른 방향으로 돌아간 채 내려와 있는 모습" width="720" height="994" loading="lazy">
       <figcaption class="muted">동일한 위치의 오렌지에서 다른 파지 후보에 맞춰 그리퍼 방향을 돌려 접근한 모습</figcaption>
     </figure>
   </div>
-  <figure class="fig">
+  <figure data-rep class="fig">
     <video controls muted loop playsinline preload="none" poster="images/cobot2/approach_yolo_clip_poster.jpg" width="960" height="532" aria-label="작업대 위 사과, 오렌지, 컵에 인식 상자와 라벨이 표시되어 있고, 로봇 팔이 관절 자세를 바꾸며 작업대 위 물체 쪽으로 내려가는 10초 영상">
       <source src="images/cobot2/approach_yolo_clip.mp4" type="video/mp4">
     </video>
@@ -176,12 +180,12 @@
     <img src="images/cobot2/slide_world_octomap_nvblox.jpg" alt="발표 슬라이드의 두 화면: 왼쪽은 octomap이 작업대와 주변을 색깔 있는 정육면체 칸으로 채운 모습, 오른쪽은 nvblox가 같은 장면을 촘촘한 점 격자로 나타낸 모습. 두 화면 모두 로봇 팔이 함께 보임" width="1200" height="515" loading="lazy">
     <figcaption class="muted">팀 발표 자료 p48 — 같은 작업대를 octomap(왼쪽, 3차원 칸)과 nvblox(오른쪽, 거리 지도 격자)로 나타낸 화면</figcaption>
   </figure>
-  <figure class="fig wide">
+  <figure data-rep class="fig wide">
     <img src="images/cobot2/slide_planner_ompl_cumotion.jpg" alt="발표 슬라이드 도식: 왼쪽 RRTConnect는 무작위 샘플을 이어 장애물을 돌아가는 꺾인 경로, 오른쪽 cuMotion은 여러 궤적을 동시에 밀어 하나의 매끄러운 곡선 경로로 수렴하는 모습" width="1200" height="471" loading="lazy">
     <figcaption class="muted">팀 발표 자료 p49 — OMPL(RRTConnect)은 무작위 샘플을 이어 경로를 찾고, cuMotion은 여러 궤적을 GPU에서 동시에 다듬어 하나로 모읍니다.</figcaption>
   </figure>
   <p>환경 3D 인식·모션계획의 nvblox·cuMotion은 YOLO-seg·GraspGenX와 노트북 GPU 하나(8GB)를 나눠 써야 했습니다. 연산 자원(CPU·GPU)을 나눠 쓰려고 오픈소스 코드의 octomap 및 센서 파라미터를 파악하고, 프레임 보존과 장애물 감지 사이의 적정선을 찾아 값을 수정하며 진행했습니다. 시스템 구동 중(8월 11일) GPU 메모리는 8,188MiB 중 6,752MiB를 사용 중이었고 CPU 점유율도 대부분 80% 이상이었습니다.</p>
-  <figure class="fig">
+  <figure data-rep class="fig">
     <img src="images/cobot2/octomap_param_table.jpg" alt="파라미터 이름과 계획 값, 실제 적용 값이 정리된 3열 표 화면으로, 감지 거리, 포인트 샘플링 비율, octomap 해상도 등의 수치가 적혀 있다" width="700" height="652" loading="lazy" class="narrow">
     <figcaption class="muted">연산 자원(CPU·GPU) 분배를 위해 오픈소스 코드의 octomap 및 센서 파라미터를 파악하고 수정한 계획·실제 값 비교(8월 10일)</figcaption>
   </figure>
@@ -190,17 +194,17 @@
 
   <details class="impl" id="impl-fsm">
   <summary><h3>단계별로 움직이고 멈추는 작업 제어(FSM) <span class="badge-team">본인 주 담당</span></h3><span class="impl-jump">진행 과정 <a href="#case-fsm-home">05 홈 위치 경유 전이 규칙</a><a href="#case-integrate">11 로봇 제어 일원화와 시스템 통합</a></span></summary>
-  <figure class="fig">
+  <figure data-env class="fig">
     <img src="images/cobot2/demo_path_planning_1200.jpg" alt="시연 장면: 오른쪽은 오렌지를 집어 든 협동로봇, 왼쪽 위는 3차원 칸으로 표시한 장애물 지도 위 경로 계획, 왼쪽 아래는 FSM 상태 LIFT·타겟 ORANGE·위치 BASKET" width="1200" height="676" loading="lazy">
     <figcaption class="muted">오렌지를 들어 올린 로봇(오른쪽)과 함께 띄운 화면(왼쪽) — 위는 주변 장애물을 3차원 칸으로 표시한 지도 위 경로 계획, 아래는 현재 단계(LIFT, 들어 올리기)·대상·목적지</figcaption>
   </figure>
   <p>저는 로봇 구동 파트에서 작업을 인식 → 계획 → 집기 → 옮겨 놓기 단계로 나눠 순서를 정하는 상태머신(FSM)을 맡았습니다.</p>
   <div class="fig-pair">
-    <figure class="fig">
+    <figure data-rep class="fig">
       <img src="images/cobot2/fsm_control_panel.png" alt="상태 표시와 타겟 물체 선택, 속도 조절, 작업 시작·중단·즉시정지 버튼, 안전모드 및 그리퍼 전원 제어 메뉴가 배치된 그래픽 사용자 인터페이스(rqt) 조작 패널 창" width="484" height="765" loading="lazy">
       <figcaption class="muted">작업 단계와 로봇 상태 확인, 대상 물체 선택, 정지와 안전모드 전환을 한 화면에서 하도록 제가 만든 조작 패널</figcaption>
     </figure>
-    <figure class="fig">
+    <figure data-rep class="fig">
       <img src="images/cobot2/fsm_candidate_exhaust_log.jpg" alt="검은 터미널 화면에 역기구학 계산 실패(NO_IK_SOLUTION) 메시지와 함께 남은 후보가 0개가 되자 실패 통보 후 대기(IDLE) 상태로 전환되는 로그 텍스트가 위에서 아래로 출력되어 있다" width="706" height="708" loading="lazy">
       <figcaption class="muted">파지 후보마다 역기구학 계산을 시도하다 모두 실패하면 실패를 알리고 대기 상태로 복귀하는 상태머신 처리 로그(8월 7일)</figcaption>
     </figure>
@@ -224,7 +228,7 @@
     <div class="step">
       <h4 class="step-title">교시 불편과 GraspGenX 시연</h4>
       <div class="step-body">
-        <figure class="fig">
+        <figure data-rep class="fig">
           <img src="images/cobot2/graspgenx_overview.jpg" alt="왼쪽은 초록색 파지 후보가 표시된 합성 물체 모음(350M Simulated Grasps)과 합성 그리퍼 8종 렌더(25 Procedural Synthetic Grippers)이고, 화살표가 가운데 &quot;GraspGen-X Generalist Cross-Embodiment Grasping Model&quot; 상자로 모인다. 오른쪽 위는 산업용 팔, 저가형 로봇, 휴머노이드가 각각 물체를 집은 사진 3장(저가형 로봇과 휴머노이드는 노란 병)(Modular Integration with Diverse Embodiments), 오른쪽 아래는 처음 보는 실제 그리퍼 6종 렌더와 선반 위 대상 물체에 초록색 6자유도 파지 자세 후보를 그린 장면(Zero-Shot Generalization)이다." width="1200" height="561" loading="lazy">
           <figcaption class="muted">합성 데이터(시뮬레이션 파지 3억 5천만 개, 합성 그리퍼 25종)로 학습한 GraspGenX가 산업용 팔·저가형 로봇·휴머노이드에 붙고, 처음 보는 실제 그리퍼와 물체에도 파지 자세를 만든다는 개요 그림 (출처: <a href="https://graspgenx.github.io">GraspGenX 프로젝트 페이지</a>)</figcaption>
         </figure>
@@ -234,7 +238,7 @@
     <div class="step">
       <h4 class="step-title">CAD 모델 대신 카메라 영상</h4>
       <div class="step-body">
-        <figure class="fig wide">
+        <figure data-rep class="fig wide">
           <img src="images/cobot2/graspgenx_example_run.jpg" alt="왼쪽에는 나무 테이블 위 과자 상자·컵·그릇·소스 병 등 여러 물체와 로봇 팔이 찍힌 카메라 사진이, 오른쪽에는 머스터드 병의 3차원 점군과 주황색 경계 상자 및 파란색 그리퍼 파지 모형이 나란히 배치되어 있다" width="994" height="529" loading="lazy">
           <figcaption class="muted">GraspGenX 공개 예제 데이터를 실행한 화면(8월 10일) — 카메라 영상에서 물체 점군을 추출하고 파란 그리퍼 모형으로 파지 자세 후보를 생성합니다.</figcaption>
         </figure>
@@ -262,7 +266,7 @@
     <div class="step">
       <h4 class="step-title">시뮬레이션과 실기의 규격 차이</h4>
       <div class="step-body">
-        <figure class="fig">
+        <figure data-rep class="fig">
       <img src="images/cobot2/rg2_grasp.jpg" alt="OnRobot RG2 그리퍼가 작업대 위 오렌지를 집는 근접 사진" width="546" height="580" loading="lazy" class="narrow">
       <figcaption class="muted">현장의 RG2 그리퍼가 작업대 위 오렌지를 집는 장면</figcaption>
     </figure>
@@ -303,7 +307,7 @@
       <h4 class="step-title">오차 원인 후보 세 가지</h4>
       <div class="step-body">
         <p>물체의 실제 위치와 시뮬레이션 속 위치의 오차가 컸습니다. 원인 후보를 보드 평평함·조명, 데이터의 각도·위치 다양성, 평가 로직 세 가지로 나누고, 보드 평평함을 핵심으로 봤습니다.</p>
-        <figure class="fig">
+        <figure data-rep class="fig">
       <img src="images/cobot2/checkerboard-calibration.jpg" alt="작업대 위 협동로봇 팔 끝에 흑백 격자무늬 체커보드를 붙인 장면" width="466" height="406" loading="lazy" class="narrow">
       <figcaption class="muted">예시: 로봇 팔에 체커보드를 붙여 캘리브레이션 데이터를 모으는 장면</figcaption>
     </figure>
@@ -336,12 +340,12 @@
     <div class="step">
       <h4 class="step-title">파지 후보를 고르는 세 단계 조건</h4>
       <div class="step-body">
-        <figure class="fig wide">
+        <figure data-rep class="fig wide">
           <img src="images/cobot2/grasp_filter_count_log.jpg" alt="터미널 로그 다섯 줄: obj_1은 195개에서 점수 195, 도달 195, 접근축 185개 통과, obj_2 후보 0, obj_3은 35개가 세 단계 모두 통과, obj_4 후보 0" width="834" height="196" loading="lazy">
           <figcaption class="muted">물체마다 파지 후보가 점수 → 도달 범위 → 접근 방향 단계를 거치며 몇 개 남는지 센 로그(8월 7일)</figcaption>
         </figure>
         <p>64개 후보를 점수 → 도달 반경 → 위에서 내려오는 접근 방향 순으로 걸렀습니다. 옆이나 크게 기울어 들어가 테이블과 부딪힐 수 있는 후보는 빼고, 남은 후보 중 점수가 가장 높은 자세를 골랐습니다.</p>
-        <figure class="fig">
+        <figure data-rep class="fig">
           <img src="images/cobot2/graspgenx_lying_grasp.jpg" alt="작업대 위 사과의 3차원 점군과 주황색 경계 상자 옆에, 파란색 그리퍼 모형이 수평에 가깝게 누운 각도로 배치된 시각화 화면" width="740" height="550" loading="lazy" class="narrow">
           <figcaption class="muted">GraspGenX가 생성한 파지 후보 중 그리퍼가 옆으로 누워 접근하는 예시(8월 5일) — 옆면이나 잘못된 자세로 집으면 위험해, 실기 테스트로 조건을 맞춰 나간 계기가 됐습니다.</figcaption>
         </figure>
@@ -369,7 +373,7 @@
       <h4 class="step-title">전이표 반영과 시험 코드 검사</h4>
       <div class="step-body">
         <p>재시도와 안전정지 복구 뒤에는 반드시 홈 위치를 거치도록 FSM 전이표에 반영하고, 시험 코드에 해당 전이가 허용되는지 확인하는 검사를 두었습니다.</p>
-        <figure class="fig wide">
+        <figure data-rep class="fig wide">
           <img src="images/cobot2/slide_fsm_scenario.jpg" alt="발표 슬라이드: 왼쪽은 지시·준비·계획·실행·파지·놓기 6단계 제어 시퀀스, 오른쪽 위는 IDLE에서 물체 인식·Grasp 생성·경로 계획을 거쳐 실행, 안전정지와 재계획으로 이어지는 상태 천이도, 오른쪽 아래는 NEXT_CANDIDATE·RELEASE_RETRY·SPEAK_FAIL·ABORT·SAFE_STOP 예외 처리 경로" width="1200" height="675" loading="lazy">
           <figcaption class="muted">팀 발표 자료 p61 — 작업 제어(FSM)의 정상 흐름과 예외 처리 경로. 파지에 실패하면 그리퍼를 열고 홈 위치를 거쳐 다시 시도합니다(RELEASE_RETRY).</figcaption>
         </figure>
@@ -383,7 +387,7 @@
     <div class="step">
       <h4 class="step-title">노트북 GPU 하나(8GB)</h4>
       <div class="step-body">
-        <figure class="fig wide">
+        <figure data-rep class="fig wide">
       <a href="images/cobot2/resource_usage_0811.jpg"><img src="images/cobot2/resource_usage_0811.jpg" alt="왼쪽에는 높은 CPU 사용률과 메모리 18.0GB 사용 현황 그래프가, 오른쪽에는 8GB GPU 메모리 중 6,752MiB가 사용 중임을 보여주는 터미널 창과 프로세스별 점유량 목록이 분할 표시되어 있다" width="1600" height="483" loading="lazy"></a>
       <figcaption class="muted">시스템 구동 중 자원 사용 실측(8월 11일 녹화의 두 시점을 붙임) — 단일 GPU(8GB)를 여러 프로세스가 나눠 쓰는 상태와 CPU·메모리 부하를 기록한 화면 (누르면 원본 크기)</figcaption>
     </figure>
@@ -438,7 +442,7 @@
       <h4 class="step-title">파지 기준점과 TCP 혼동</h4>
       <div class="step-body">
         <p>파지 자세 기준점과 로봇 공구 끝 기준점(TCP)을 혼동해 생긴 옆 방향 차이(30° 기울면 약 9cm)도 "좌표 오차"와 따로 분리했습니다.</p>
-        <figure class="fig" id="fig-tcp">
+        <figure data-rep class="fig" id="fig-tcp">
       <img src="images/cobot2/grasp_tcp_target.jpg" alt="3차원 격자 칸으로 나타낸 작업대 장애물 지도 위의 협동로봇 모델과, 파지 목표 자세를 나타내는 긴 빨강·초록 좌표축 선이 보이는 화면" width="1192" height="894" loading="lazy">
       <figcaption class="muted">예시: 8월 5일 RViz에서 작업대 장애물 지도 위에 협동로봇 모델을 띄우고, 공구 끝(TCP, 로봇 손끝 제어 기준점) 기준으로 바꾼 파지 목표 자세를 좌표축(빨강·초록 선)으로 표시한 화면</figcaption>
     </figure>
@@ -466,7 +470,7 @@
       <h4 class="step-title">nvblox가 먼저, 더 빨리</h4>
       <div class="step-body">
         <p>nvblox 쪽이 먼저 나타나고, 케이스를 뺀 뒤에도 더 빨리 사라졌습니다. 연산 방식에 따른 반응 차이를 실제 장면에서 확인했습니다.</p>
-        <figure class="fig">
+        <figure data-rep class="fig">
       <video controls muted loop playsinline preload="none" poster="images/cobot2/octomap_nvblox_poster.jpg" width="960" height="776" aria-label="평평한 노트북 케이스를 작업 영역에 넣었다 뺄 때, 큐브 칸으로 표시되는 octomap과 빨간 덩어리로 표시되는 nvblox가 함께 반응하는 화면">
         <source src="images/cobot2/octomap_nvblox.mp4" type="video/mp4">
       </video>
@@ -523,7 +527,7 @@
       <h4 class="step-title">구 모델의 자기충돌 판정</h4>
       <div class="step-body">
         <p>기성 파일이 없어 새로 만든 cuMotion용 구 모델은 기본 자세에서도 자기충돌로 판정됐습니다. 실제 외형을 쓰는 OMPL에서는 같은 자세가 10회 모두 통과해, 구가 실제 단면보다 크다고 판단했습니다.</p>
-        <figure class="fig">
+        <figure data-rep class="fig">
           <img src="images/cobot2/slide_xrdf_sphere_model.jpg" alt="로봇 팔의 각 마디를 반투명한 주황색 구 여러 개로 감싸 근사한 충돌 검사용 모델" width="600" height="1105" loading="lazy" class="narrow">
           <figcaption class="muted">팀 발표 자료 p51 — 로봇 팔을 구로 근사한 cuMotion용 충돌 검사 모델</figcaption>
         </figure>

@@ -34,10 +34,14 @@
 </nav>
 
 <main class="case-layout outline">
-<p class="updated">Last modified <time datetime="2026-11-23">2026-11-23</time></p>
+<p class="updated">Last modified <time datetime="2026-11-24">2026-11-24</time></p>
 <section class="overview">
   <h2 id="overview">한눈에 보기</h2>
-  <p class="first-note"><b>조건</b> 카메라 없음 — 위치는 교시 좌표로 정하고, 물체를 잡았는지와 각 단계의 성공·실패는 힘·접점·통신 신호로만 판정<br><b>핵심</b> 파지 판정 · 신호 이상 감시 · 실패 단계 복구<br><b>담당</b> 이 핵심 부분을 제가 맡음(공동작업)</p>
+  <ul class="first-note phase-facts">
+    <li><b>조건</b><span>카메라 없음 — 위치는 교시 좌표로 정하고, 물체를 잡았는지와 각 단계의 성공·실패는 힘·접점·통신 신호로만 판정</span></li>
+    <li><b>핵심</b><span>파지 판정 · 신호 이상 감시 · 실패 단계 복구</span></li>
+    <li><b>담당</b><span>이 핵심 부분을 제가 맡음(공동작업)</span></li>
+  </ul>
   <div class="role-map" id="role-map" role="group" aria-label="발표 p10 프로젝트 구조 위에 표시한 제 담당 지점">
     <p class="role-map-title">설계 흐름에서 제가 맡은 지점 <span>상자를 누르면 기술 설명으로, 아래 번호는 진행 과정 사례로 이동합니다</span></p>
     <div class="pipe role-pipe">
@@ -88,7 +92,7 @@
     <div class="pipe-col"><span class="pipe-tag">구동</span><div class="pipe-box">Doosan M0609<small>로봇 팔 · 교시 좌표</small></div><div class="pipe-box">OnRobot RG2<small>개폐 DO 1·2 · 상태 감시 Modbus TCP</small></div></div>
   </div>
   <p>저는 공정 구성을 마친 뒤 이 작업 환경을 SOLIDWORKS로 역설계해, 작업대 크기·공정 위치 5곳·로봇 작업 영역·그리퍼 치수와 물체별 벌림 폭을 작업 환경 도면 한 장으로 정리했습니다. 도면 치수는 교시 좌표와 완전히 일치하지 않는, 환경 이해용 문서입니다.</p>
-  <figure class="fig">
+  <figure data-rep class="fig">
     <img src="images/cobot1/workspace_layout.jpg" alt="작업 환경 도면: 작업대 크기, 공정 위치 5곳, 로봇 작업 영역, 그리퍼 치수와 물체별 벌림 폭" width="1200" height="848" loading="lazy">
     <figcaption class="muted">제가 그린 작업 환경 도면. 작업대와 공정 위치, 로봇 작업 영역, RG2 그리퍼 치수도를 한 장에 담았습니다.</figcaption>
   </figure>
@@ -97,7 +101,7 @@
   <details class="impl" id="impl-ui">
   <summary><h3>작업자 입력과 진행 화면 (컨트롤박스 버튼, 웹 화면) <span class="badge-team">팀 담당</span></h3></summary>
   <p>팀은 주문 입력·공정 진행 상태 표시·비상 정지를 담은 웹 화면을 만들었고, 작업자는 컨트롤박스 버튼으로 원두를 고릅니다.</p>
-  <figure class="fig">
+  <figure data-rep class="fig">
     <img src="images/cobot1/order_screen.jpg" alt="웹 화면: 버튼으로 원두 4종 중 하나를 고르라는 안내와 오른쪽의 공정 단계별 진행 표시" width="1200" height="1258" loading="lazy">
     <figcaption class="muted">버튼으로 원두를 고르는 첫 화면과 오른쪽의 공정 진행 표시(팀 화면)</figcaption>
   </figure>
@@ -113,7 +117,7 @@
     <div class="pipe-arrow" aria-hidden="true">→</div>
     <div class="pipe-col"><span class="pipe-tag">대응</span><div class="pipe-box warn">신호 1초 넘게 끊김<small>로봇 정지 요청</small></div><div class="pipe-box gate">파지 실패<small>실패한 단계만 다시 실행 · 작업자가 버튼으로 결정</small></div></div>
   </div>
-  <figure class="fig wide">
+  <figure data-rep class="fig wide">
     <img src="images/cobot1/slide_grip_fallback.jpg" alt="발표 슬라이드: 표준 RG2로도 3단 폴백으로 파지를 확인 — 01 최우선 하드웨어 grip 비트, 02 차선 모터 effort, 03 최후 position 갭(빈손 0.7587 rad, 40N 파지 0.7141 rad). 아래에 놓친 채 다음 동작을 하지 않는다는 문구" width="1200" height="675" loading="lazy">
     <figcaption class="muted">팀 발표 자료 p32 — 하드웨어 잡힘 신호를 먼저 보고, 없으면 모터 힘과 닫힌 위치 차이로 파지를 확인하는 순서</figcaption>
   </figure>
@@ -134,12 +138,12 @@
     <div class="pipe-arrow" aria-hidden="true">→</div>
     <div class="pipe-col"><div class="pipe-box">서빙</div></div>
   </div>
-  <figure class="fig">
+  <figure data-env data-rep class="fig">
     <img src="images/cobot1/system_photo.jpg" alt="실제 작업대: 왼쪽 협동로봇과 티치 펜던트, 가운데 초록 레고 판 위 블록 받침에 올린 수동 그라인더와 그 아래 유리병, 오른쪽 서버 위 드리퍼와 흰 드립 주전자. 로봇 그리퍼는 원두를 담은 스푼을 그라인더 위로 들고 있음" width="1200" height="854" loading="lazy">
     <figcaption class="muted">실제로 구성한 작업대. 로봇이 원두를 담은 스푼을 그라인더에 붓는 단계입니다. 카메라가 없어 팀은 탁자에 레고 블록으로 물체 위치를 표시·고정해 처음 위치를 잡고, 블록으로 환경을 세팅해 위치가 틀어지는 것을 막으려 했습니다.</figcaption>
   </figure>
   <p>작업자가 컨트롤박스(로봇 제어기)의 버튼으로 원두를 고르면 로봇이 스푼으로 원두를 떠 그라인더(원두 분쇄기)에 넣고, 그라인더 손잡이를 잡아 돌려 원두를 갑니다. 진행 상황은 팀이 만든 웹 화면에 단계별로 표시됩니다.</p>
-  <figure class="fig">
+  <figure data-rep class="fig">
     <img src="images/cobot1/spoon_to_grinder.jpg" alt="확대 장면: 로봇 그리퍼가 든 스푼이 블록 받침 위 그라인더 투입구 위에 있고, 왼쪽에 그라인더 손잡이가 보임" width="420" height="580" loading="lazy">
     <figcaption class="muted">위 사진에서 스푼으로 원두를 그라인더에 붓는 부분을 확대한 장면</figcaption>
   </figure>
@@ -152,11 +156,11 @@
   <details class="impl" id="impl-spiral">
   <summary><h3>나선 드립 — 나선 이동과 주전자 기울임을 한 동작으로 (경유점 경로) <span class="badge-team">팀 담당</span></h3></summary>
   <p>팀은 나선 이동과 주전자 기울임을 하나의 연속 동작으로 묶어 로봇이 같은 나선 궤적으로 물을 붓게 했습니다.</p>
-  <figure class="fig wide">
+  <figure data-rep class="fig wide">
     <img src="images/cobot1/slide_spiral_pour.jpg" alt="발표 슬라이드: 왼쪽은 어둡게 찍힌 사진으로 레고 블록 받침 위 그라인더와 앞쪽의 금속 드리퍼, 가운데 상자는 컨트롤러가 한 순간에 하나의 궤적만 따라가 기울임을 따로 명령하면 나선 경로를 벗어난다는 문제, 오른쪽 상자는 위치는 삼각함수로·자세는 회전행렬로 넣고 웨이포인트 100개를 호 길이 등간격으로 배치한 해결 방안" width="1200" height="675" loading="lazy">
     <figcaption class="muted">팀 발표 자료 p18 — 컨트롤러는 한 순간에 하나의 궤적만 따라가 기울임을 따로 명령하면 나선 경로를 벗어나므로, 팀은 위치와 자세를 함께 담은 경유점 100개로 한 경로를 만들었습니다.</figcaption>
   </figure>
-  <figure class="fig">
+  <figure data-rep class="fig">
     <img src="images/cobot1/spiral_pour_run.jpg" alt="위에서 내려다본 장면: 금속 주전자 주둥이에서 아래의 검은 드리퍼로 물줄기가 떨어짐" width="609" height="772" loading="lazy">
     <figcaption class="muted">나선 드립 중 주전자로 드리퍼에 물을 붓는 장면(위에서 본 모습)</figcaption>
   </figure>
@@ -183,7 +187,7 @@
       <h4 class="step-title">손가락 위치와 힘으로 대체 판정</h4>
       <div class="step-body">
         <p>최종 제출본에서는 잡힘 신호를 먼저 확인하고, 신호 데이터가 들어오지 않으면 손가락 위치와 힘으로 대체 판정하게 했습니다. 빈손이면 끝까지 닫히고 물체가 있으면 그 전에 멈추는 차이를 실기 실측값으로 확인해, 빈손 위치를 기준으로 삼았습니다.</p>
-        <figure class="fig wide">
+        <figure data-rep class="fig wide">
     <img src="images/cobot1/grip_detection.jpg" alt="그래프: 그리퍼를 닫을 때 손가락 관절각 변화. 빈손은 끝까지 닫히고 물체를 잡으면 그 전에 멈춤" width="1200" height="676" loading="lazy">
     <figcaption class="muted">그리퍼를 닫을 때 손가락 관절각의 변화. 빈손(파란 점선)은 끝까지 닫히고, 물체를 잡으면(주황 실선) 그 전에 멈춥니다.</figcaption>
   </figure>
@@ -211,7 +215,7 @@
       <h4 class="step-title">이동 명령을 한 곳에서 감싸기</h4>
       <div class="step-body">
         <p>최종 제출본에서는 그리퍼 신호가 1초 넘게 끊기면 로봇 정지를 요청하는 감시를 제가 맡았습니다. 이동 명령마다 확인 코드를 넣으면 빠뜨리는 곳이 생기므로, 이동 명령을 한 곳에서 감싸 앞뒤로 신호 이상을 확인하고 이상 감지 뒤에는 다음 이동을 막았습니다.</p>
-        <figure class="fig wide">
+        <figure data-rep class="fig wide">
     <img src="images/cobot1/gripper-signal-timeline.jpg" alt="도식: 그리퍼 신호 수신이 끊긴 뒤 1.0초가 지나면 감시 타이머가 신호 두절로 판단해 로봇 정지를 요청하는 흐름을 시간 순으로 그린 그림" width="1360" height="570" loading="lazy">
     <figcaption class="muted">최종 제출본에서 그리퍼 신호가 끊긴 뒤 1초가 지나면 로봇 정지를 요청하는 흐름을 시간 순으로 그린 도식입니다.</figcaption>
   </figure>
@@ -233,7 +237,7 @@
       <div class="step-body">
         <p>그래서 저는 현장 정리(그리퍼를 껐다가 다시 켜는 것처럼 사람이 직접 해야 하는 조치)를 사람 책임으로 명시하고, 재시도와 중단은 작업자가 컨트롤박스 버튼으로 결정하게 했습니다.</p>
         <div class="fig-pair">
-    <figure class="fig">
+    <figure data-rep class="fig">
       <img src="images/cobot1/grip-failure-screen.jpg" alt="웹 화면: 그리퍼 파지 실패 안내와 기억된 작업 단계(그라인더), DI 13 관리자 호출·DI 14 단계 재시작 버튼 안내, 오른쪽에 공정 단계 진행 표시" width="1440" height="1509" loading="lazy">
       <figcaption class="muted">팀이 만든 웹 화면에서 그리퍼 파지에 실패했을 때 나오는 복구 화면. 컨트롤박스 버튼 안내(DI 13 관리자 호출, DI 14 단계 재시작)가 보입니다.</figcaption>
     </figure>
@@ -248,7 +252,7 @@
       <h4 class="step-title">실패한 단계만 다시 실행</h4>
       <div class="step-body">
         <p>공정 전체 대신 실패한 단계만 처음부터 다시 실행하도록 구조를 바꿨습니다.</p>
-        <figure class="fig wide">
+        <figure data-rep class="fig wide">
     <img src="images/cobot1/stage_retry.jpg" alt="단계 단위 복구 그림: 앞 세 단계는 완료, 4단계 나선 추출은 실패·재시도, 5단계는 대기" width="1200" height="406" loading="lazy">
     <figcaption class="muted">4단계(나선 드립)에서 실패한 경우의 복구. 앞 세 단계는 완료로 두고 실패한 단계만 처음부터 다시 실행하며, 다시 시작할지는 작업자가 버튼으로 정합니다.</figcaption>
   </figure>
@@ -284,7 +288,7 @@
     <img src="images/cobot1/solidworks_model_iso.png" alt="SOLIDWORKS 창의 3D 모델 등각 보기. 왼쪽 피처 트리에 WorkSpace, Robot_Base, Spoon, WaterCup, Grinder_Support, Drip_Filter, Order_serve 등 작업대와 도구별 바디가 나열되어 있고, 화면에는 작업대 판 위의 상자·원통·깔때기 모양 형상과 위쪽 참조 평면의 원형 작업 가능 영역 스케치가 보임" width="1435" height="804" loading="lazy">
     <figcaption class="muted">도면의 바탕이 된 SOLIDWORKS 3D 모델(등각 보기). 왼쪽 피처 트리에 작업대와 도구별 바디가, 위쪽에 원형 작업 가능 영역 스케치가 보입니다.</figcaption>
   </figure>
-        <figure class="fig" id="fig-sw-side">
+        <figure data-rep class="fig" id="fig-sw-side">
     <img src="images/cobot1/solidworks_model_side.png" alt="같은 3D 모델의 측면 보기. 바닥의 작업대 판과 파란 수평 참조 평면 선을 기준으로 상자·원통·깔때기 모양 형상의 윤곽이 놓여 있고, 위쪽 높이에 작은 부품 하나가 있음" width="985" height="418" loading="lazy">
     <figcaption class="muted">같은 모델의 측면 보기. 작업대 바닥과 수평 참조 평면을 기준으로 각 형상의 높이 배치를 볼 수 있습니다.</figcaption>
   </figure>
@@ -294,7 +298,7 @@
       <h4 class="step-title">작업 환경 도면 한 장</h4>
       <div class="step-body">
         <p>위치가 틀어질 때를 대비해, 이 3D 모델을 바탕으로 로봇 작업 영역과 공정 위치, 그리퍼 벌림 폭 등 위치와 치수를 규격화하는 작업 환경 도면을 7월 28일에 한 장으로 정리했습니다.</p>
-        <figure class="fig" id="fig-layout">
+        <figure data-rep class="fig" id="fig-layout">
     <img src="images/cobot1/workspace_layout.jpg" alt="작업 환경 도면: 작업대 크기, 공정 위치 5곳, 로봇 작업 영역, 그리퍼 치수와 물체별 벌림 폭" width="1200" height="848" loading="lazy">
     <figcaption class="muted">제가 그린 작업 환경 도면. 작업대 크기, 공정 위치 5곳, 로봇 작업 영역, 그리퍼 치수와 물체별 벌림 폭을 한 장에 담았습니다.</figcaption>
   </figure>

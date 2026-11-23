@@ -304,6 +304,8 @@ main.case-layout section > details.tech h3 { font-size: 18px; margin: 24px 0 10p
 main.case-layout .ov-media { margin: 0 0 20px; }
 main.case-layout .ov-media .video { border-radius: 12px; }
 main.case-layout .ov-media > .fig { margin: 0; max-width: none; }
+main.case-layout .ov-media > .video + p.muted + .fig { margin-top: 14px; }
+main.case-layout .ov-media > .fig img { aspect-ratio: auto; } /* 영상 아래 대표 사진(intelli1)은 원래 비율 — 빈 여백 없이 */
 main.case-layout .ov-media > .fig video { width: 100%; aspect-ratio: 16 / 9; object-fit: contain; border-radius: 12px; border: 0; }
 main.case-layout .ov-media > .fig-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 0; }
 main.case-layout .ov-media > .fig-pair img { width: 100%; aspect-ratio: 8 / 9; }
@@ -570,6 +572,7 @@ main.case-layout p.process-note { max-width: var(--text-w); margin: 4px 0 16px; 
 /* erp42 첫 화면 흐름도 여백(2026-11-15 1280×900 맞춤 블록 중 아래 확대 블록에 덮이지 않은 값만 남김 — 덮인 글꼴 선언은 2026-11-16 정리, 사용자 "q2o") */
 main.case-layout.outline section.overview > h2 { margin-top: 28px; margin-bottom: 10px; }
 /* erp42 한눈에 보기 흐름도·첫 안내 글꼴 키우고 폭 넓힘 — 사용자 "글꼴이 너무 작네. 표 범위 넓혀주고 글꼴도 좀 키워줘" (2026-11-15) */
+main.case-layout.outline section.overview ul.first-note { list-style: none; } /* 첫머리 상자 라벨 줄 = 아래 phase-facts 표와 같은 꼴(사용자 2026-11-23 "어색한거 개선") */
 main.case-layout.outline section.overview .first-note { max-width: none; margin-top: 0; margin-bottom: 8px; padding: 8px 14px; font-size: 15.5px; line-height: 1.6; }
 main.case-layout.outline .role-map { max-width: none; margin-top: 0; margin-bottom: 8px; padding: 12px 16px; }
 main.case-layout.outline .role-map-title { margin: 0 0 4px; font-size: 17px; }
@@ -607,12 +610,20 @@ main.case-layout.outline .role-pipe .pipe-box:has(> .rm-main) { display: grid; g
 /* index 키워드 각주(?from=fn)로 들어왔을 때 흐름도에서 해당 진행 과정 번호 강조 — case-toggle.js flowFirst(사용자 2026-11-16 "a") */
 #role-map { scroll-margin-top: 24px; }
 /* 강조는 주황 — 본인 담당 상자의 파란 테두리와 섞이지 않게, 나머지 상자는 흐리게(사용자 2026-11-23 q1o, C안) */
-.role-map a.flow-hl { background: #f59e0b; color: #1d1d1f !important; border-radius: 6px; padding: 1px 6px; text-decoration: none; outline: 3px solid rgba(245,158,11,.35); animation: flowpulse 1s ease-in-out 4; }
-.role-map .pipe-box.flow-hl-box { box-shadow: 0 0 0 3px #f59e0b, 0 6px 18px rgba(245,158,11,.35); }
-.role-pipe .pipe-box.flow-hl-box::before { content: "▼ 여기"; position: absolute; top: -11px; left: 10px; z-index: 2; background: #f59e0b; color: #1d1d1f; font-size: 12px; font-weight: 700; padding: 0 7px; border-radius: 9px; }
-.role-map:has(.flow-hl-box) .pipe-box:not(.flow-hl-box) { opacity: .3; filter: grayscale(1); transition: opacity .4s; }
+.role-map a.flow-hl { position: relative; background: #f59e0b; color: #1d1d1f !important; border-radius: 6px; padding: 1px 6px; text-decoration: none; outline: 3px solid rgba(245,158,11,.35); animation: flowpulse 1s ease-in-out 4; }
+/* 눌러야 할 것은 주황 번호뿐 — 상자 제목(기술 설명으로 감)과 같은 상자의 다른 번호는 흐리게(사용자 2026-11-23 "1번이면 1번을 누르게") */
+.role-map .pipe-box.flow-hl-box .rm-main, .role-map .pipe-box.flow-hl-box .rm-case:not(.flow-hl) { opacity: .65; }
+.role-map:has(.flow-hl-box) .pipe-box:not(.flow-hl-box) { opacity: .7; filter: grayscale(.6); transition: opacity .4s; } /* 흐름은 읽히게 — .3은 너무 흐림(사용자 2026-11-23) */
 @keyframes flowpulse { 50% { outline-width: 8px; } }
 .flow-tip { margin: 8px 0 4px; font-size: 14px; color: var(--fg); background: var(--accent-soft); border-left: 3px solid #f59e0b; padding: 6px 10px; border-radius: 6px; }
+/* 흐름도 강조 때 관련 사진·영상 썸네일 줄 — case-toggle.js flowMedia(사용자 2026-11-23 q1o·q2o). 대표 환경 사진은 초록 테두리 */
+.flow-media { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 4px 0 10px; }
+.flow-media .fm-label { font-size: 13px; color: var(--muted); margin-right: 2px; }
+.flow-media .fm-thumb { width: 112px; height: 72px; padding: 0; overflow: hidden; cursor: pointer; border: 2px solid #f59e0b; border-radius: 8px; background: var(--card); }
+.flow-media .fm-thumb.fm-env { border-color: #2e9d6b; }
+.flow-media .fm-thumb img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.flow-media .fm-thumb:hover, .flow-media .fm-thumb:focus-visible { box-shadow: 0 0 0 3px rgba(245,158,11,.35); }
+@media (max-width: 500px) { .flow-media .fm-thumb { width: 92px; height: 60px; } }
 
 /* 첫머리 세 가지 보기(사용자 2026-11-17): 경험 / 기술 키워드 / 프로젝트. 원본 계획: vault docs/plans/2026-11-17-index-키워드-재구성.md */
 header .skills-panel details.big { margin: 10px 0 0; border: 1px solid rgba(255,255,255,.18); border-radius: 10px; padding: 10px 14px; background: rgba(255,255,255,.04); }

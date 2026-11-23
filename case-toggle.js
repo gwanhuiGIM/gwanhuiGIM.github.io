@@ -64,13 +64,54 @@ function flowFirst() {
     a.setAttribute('href', '#' + id);
   });
   var tip = document.createElement('p'); tip.className = 'flow-tip';
-  tip.textContent = '강조된 항목을 누르면 이동합니다';
+  tip.textContent = '주황 번호를 누르면 해당 진행 과정으로 이동합니다';
   var title = map.querySelector('.role-map-title');
   if (title) title.after(tip); else map.prepend(tip);
+  flowMedia(tip, hits);
   // 로딩이 끝나기 전에 강조 번호를 눌러 사례로 착지했으면(landAnchor) load 때 흐름도로 되돌리지 않는다(Codex 지적 11-17)
   function go() { if (!landAnchor) map.scrollIntoView({ block: 'start' }); }
   go(); addEventListener('load', go);
   return true;
+}
+// 흐름도 강조 때 안내 줄 아래에 관련 사진·영상 썸네일 줄(사용자 2026-11-23 q1o·q2o): 강조된 사례와 그 상자의 기술 설명 칸에서
+// figure[data-rep](칸마다 최대 2장, 실물·장면 먼저 — 고른 목록은 vault _workspace/2026-11-23-site-runon) + 페이지 대표 환경 사진 figure[data-env] 1장.
+// 썸네일은 미리보기라 누르면 그 자리에서 크게만 보여 준다(img-zoom.js의 확대 창 재사용) — 본문 위치로 이동하지 않는다(사용자 2026-11-23).
+function flowMedia(tip, hits) {
+  var secs = [];
+  function add(id) { var t = id && document.getElementById(id); if (t) { var d = t.closest('details') || t; if (secs.indexOf(d) < 0) secs.push(d); } }
+  hits.forEach(function (a) {
+    add(a.getAttribute('href').slice(1));
+    var b = a.closest('.pipe-box'), m = b && b.querySelector('.rm-main');
+    if (m) add(m.getAttribute('href').slice(1));
+  });
+  var figs = [], seen = [];
+  function push(f) {
+    var m = f && f.querySelector('img,video'); if (!m) return;
+    var k = m.getAttribute('src') || m.getAttribute('poster');
+    if (seen.indexOf(k) < 0) { seen.push(k); figs.push(f); }
+  }
+  secs.forEach(function (d) { d.querySelectorAll('figure[data-rep]').forEach(push); });
+  figs = figs.slice(0, 2); push(document.querySelector('figure[data-env]'));
+  if (!figs.length) return;
+  var wrap = document.createElement('div'); wrap.className = 'flow-media';
+  var lab = document.createElement('span'); lab.className = 'fm-label'; lab.textContent = '관련 사진·영상'; wrap.appendChild(lab);
+  figs.forEach(function (f) {
+    var m = f.querySelector('img,video'), b = document.createElement('button'), im = document.createElement('img');
+    b.type = 'button'; b.className = 'fm-thumb' + (f.hasAttribute('data-env') ? ' fm-env' : '');
+    im.src = m.tagName === 'IMG' ? m.getAttribute('src') : (m.getAttribute('poster') || ''); im.alt = '';
+    var cap = f.querySelector('figcaption'); b.title = cap ? cap.textContent.trim() : (m.getAttribute('alt') || '');
+    b.setAttribute('aria-label', '크게 보기: ' + b.title);
+    b.appendChild(im);
+    b.addEventListener('click', function () {
+      var a = m.closest('a'), href = a && a.getAttribute('href');
+      var src = href && /\.(jpe?g|png|gif|webp)$/i.test(href) ? href : im.getAttribute('src');
+      var dlg = document.querySelector('dialog.zoom'), big = dlg && dlg.querySelector('img');
+      if (!big) { window.open(src, '_blank'); return; }
+      big.src = src; big.alt = m.getAttribute('alt') || ''; dlg.showModal();
+    });
+    wrap.appendChild(b);
+  });
+  tip.after(wrap);
 }
 addEventListener('DOMContentLoaded', function () { if (!flowFirst()) openHash(); });
 addEventListener('hashchange', openHash);

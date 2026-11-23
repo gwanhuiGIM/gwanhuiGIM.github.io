@@ -34,7 +34,7 @@
 </nav>
 
 <main class="case-layout outline">
-<p class="updated">Last modified <time datetime="2026-11-17">2026-11-17</time></p>
+<p class="updated">Last modified <time datetime="2026-11-24">2026-11-24</time></p>
 <section class="overview">
   <h2 id="overview">한눈에 보기</h2>
   <div class="role-map" id="role-map" role="group" aria-label="팀 발표 자료 p7 흐름 위에 표시한 제 담당 지점">
@@ -52,6 +52,7 @@
   <div class="ov-media">
   <div class="video"><iframe src="https://www.youtube-nocookie.com/embed/-Q8ITIWgUp4" title="산업안전 AMR 순찰·관제 1분 시연 영상" loading="lazy" allowfullscreen></iframe></div>
   <p class="muted">1분 시연 영상</p>
+  <figure class="fig" data-env><img src="images/intelli1/amr-patrol-arena.jpg" alt="칸막이로 둘러싼 실습장 안을 순찰하는 TurtleBot4와 옆의 공유기, 위쪽에 시연 영상 자막" width="1548" height="704" loading="lazy"><figcaption class="muted">시연 영상 장면 — 순찰 실습장의 TurtleBot4</figcaption></figure>
   </div>
   <ul class="ov-summary">
     <li><b>내 담당</b> — 관제 FSM과 AMR 연동(5인 팀 팀장) <span class="sep">|</span> <a href="#case-status">출동할 수 있는 로봇 가려내기</a> <span class="sep">|</span> <a href="#case-message">지난 명령 걸러내기(공동작업)</a> <span class="sep">|</span> <a href="#case-field">실물 주행 설정 조정</a></li>
@@ -99,7 +100,7 @@
     <div class="pipe-arrow" aria-hidden="true">→</div>
     <div class="pipe-col"><span class="pipe-tag">명령</span><div class="pipe-box">로봇 이동<small>TurtleBot4 · Nav2</small></div></div>
   </div>
-  <figure class="fig">
+  <figure data-rep class="fig">
     <img src="images/intelli1/fleet_monitor_1200.jpg" alt="관제 웹 화면: 지도 위 로봇 두 대와 사람 위치 사이 거리 선, 로봇별 상태, 출동 로봇 선정 근거 표, 테스트 이벤트 버튼" width="1200" height="628" loading="lazy">
     <figcaption class="muted">관제 웹 화면 — 지도 위 로봇·사람 위치와 거리, 로봇별 상태, 출동 로봇 선정 근거(거리·배터리)</figcaption>
   </figure>
@@ -117,7 +118,7 @@
 
   <details class="impl" id="impl-aruco">
   <summary><h3>순찰 중 소화기 표식 점검과 기록 (ArUco · SQLite · Flask 웹) <span class="badge-team">구현 참여</span></h3></summary>
-  <figure class="fig">
+  <figure data-rep class="fig">
     <img src="images/intelli1/flask_inspection_history.jpg" alt="소화기 점검 이력 웹 화면: 점검 번호·마커 번호·로봇 이름·PASS/FAIL 결과·점검 시각 표와, 벽에 붙은 마커를 찍은 스냅샷" width="1200" height="440" loading="lazy">
     <figcaption class="muted">소화기 점검 이력(마커 번호·로봇·결과·시각)과 한 건을 열어 본 스냅샷 (팀 화면)</figcaption>
   </figure>
@@ -138,11 +139,11 @@
       <h4 class="step-title">토픽 수신을 생존 신호로</h4>
       <div class="step-body">
         <p>로봇이 따로 '살아 있다'는 메시지를 보내지는 않아, 관제에서 배터리·도킹·위치 추정·주행 상태 토픽이 들어오는지를 생존 신호(heartbeat)로 삼았습니다. 위치 정보가 들어오지 않거나 주행 프로그램이 떠 있지 않은 로봇은 출동 후보에서 뺐습니다.</p>
-        <figure class="fig wide">
+        <figure data-rep class="fig wide">
           <img src="images/intelli1/slide_status_diagnosis.jpg" alt="발표 슬라이드: 원인 구분 진단·표준 인터페이스 직접 구독·독립적 장애 판단 세 항목, 상태 로그, 그리고 robot02는 LOCALIZED·ACTIVE·DOCKED·NORMAL, robot06은 NO LOCALIZATION·INACTIVE·IDLE·ALARM으로 표시된 로봇 상태 표" width="1200" height="637" loading="lazy">
           <figcaption class="muted">팀 발표 자료 p40 — 도킹·배터리·위치 추정·Nav2 상태를 조합해 OFFLINE·NO_LOCALIZATION·NO_NAV2로 나눠 진단하는 상태 판단</figcaption>
         </figure>
-        <figure class="fig wide">
+        <figure data-rep class="fig wide">
       <img src="images/intelli1/fleet_status_panel.jpg" alt="관제 웹의 로봇 상태 칸: robot2는 이동 중, robot9는 위급 출동 중으로 강조되고 아래에 도킹·주행·위치·마지막 수신 뒤 지난 시간이 표시됨" width="664" height="258" loading="lazy">
       <figcaption class="muted">관제 웹의 로봇 상태 칸 — 로봇별 현재 상태와 마지막 수신 뒤 지난 시간</figcaption>
     </figure>
@@ -174,7 +175,7 @@
       <h4 class="step-title">로봇 반경과 여유 거리 설정</h4>
       <div class="step-body">
         <p>Nav2 설정을 실물 로봇에 맞게 바꾸는 작업 전체는 팀에서 진행했고, 저는 로봇 반경·장애물 주변 여유 거리·지도 갱신 주기 같은 주행 설정을 직접 조정했습니다.</p>
-        <figure class="fig">
+        <figure data-rep class="fig">
           <img src="images/intelli1/practice-map.png" alt="흰 바닥과 검은 벽으로 그린 계단 모양 공간 안에 작은 사각 장애물 세 개가 있는 흑백 2D 지도" width="402" height="482" loading="lazy" class="narrow">
           <figcaption class="muted">프로젝트 환경 2D 지도 원본 — 가로 10 m × 세로 12 m</figcaption>
         </figure>
