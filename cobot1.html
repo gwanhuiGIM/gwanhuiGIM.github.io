@@ -169,18 +169,18 @@
 
 <section>
   <h2 id="process">진행 과정 <span class="h2-hint">각 번호를 펼치면 사진과 함께 자세한 설명이 나옵니다. 진한 글씨는 제 담당 및 주요 과정입니다.</span></h2>
-  <details class="case"><summary><h3 id="case-grip">물체 잡힘 판정</h3><span class="case-phase">구현 · 문제해결</span><span class="badge-team">본인 주 담당</span><span class="case-facts"><span class="cf"><b>계기</b><span>깊게 물면 잡힘 신호가 뜨지 않음 → 실패로 읽으면 물체를 문 채 다시 집으러 감</span></span><span class="cf"><b>방법</b><span>잡힘 신호 우선 · 신호가 없으면 손가락 위치·힘으로 대체 판정</span></span><span class="cf"><b>결과</b><span>실제 로봇 시험에서 잡힘 판정 유지</span></span></span></summary>
+  <details class="case"><summary><h3 id="case-grip">물체 잡힘 판정</h3><span class="case-phase">구현 · 문제해결</span><span class="badge-team">본인 주 담당</span><span class="case-facts"><span class="cf"><b>계기</b><span>깊게 물면 그리퍼가 멈춰 성공도 실패도 아닌 상태 → 실패로 읽으면 물체를 문 채 다시 집으러 감</span></span><span class="cf"><b>방법</b><span>잡힘 신호 우선 · 신호가 없으면 손가락 위치·힘으로 대체 판정</span></span><span class="cf"><b>결과</b><span>실제 로봇 시험에서 잡힘 판정 유지</span></span></span></summary>
   <div class="case-steps">
     <div class="step">
-      <h4 class="step-title">잡힘 신호가 뜨지 않는 경우</h4>
+      <h4 class="step-title">깊게 물면 그리퍼가 멈추는 경우</h4>
       <div class="step-body">
-        <p>카메라가 없어 물체를 잡았는지는 그리퍼 신호로만 판단해야 했습니다. 물체를 손가락 안쪽까지 깊게 물면 잡힘 신호가 뜨지 않았고, 이를 실패로 읽으면 로봇이 물체를 문 채 다시 집으러 갈 위험이 있었습니다.</p>
+        <p>카메라가 없어 물체를 잡았는지는 그리퍼 신호로만 판단해야 했습니다. 물체를 손가락 안쪽까지 깊게 물면 물체는 잡혔는데도 그리퍼가 멈춰 성공도 실패도 아닌 상태가 되었고, 이를 실패로 읽으면 로봇이 물체를 문 채 다시 집으러 갈 위험이 있었습니다.</p>
       </div>
     </div>
     <div class="step">
       <h4 class="step-title">드라이버와 판정 신호</h4>
       <div class="step-body">
-        <p>저는 RG2 그리퍼용 오픈소스 드라이버와 작동 원리를 보며 닫힐 때 하드웨어에서 힘을 측정할 것이라는 가설을 세웠고, 판정에 쓸 신호(잡힘 신호, 손가락 위치, 힘)를 찾았습니다.</p>
+        <p>저는 RG2 그리퍼용 오픈소스 드라이버와 작동 원리를 보며 닫힐 때 하드웨어에서 힘을 측정할 것이라는 가설을 세웠고, 판정에 쓸 신호(잡힘 신호, 손가락 위치, 힘)를 찾았습니다. 그러나 강의에서 받은 오픈소스 드라이버는 물체를 잡아도 잡힘 신호를 내보내지 않았습니다. 이에 비트 정의와 드라이버 코드를 분석해 드라이버를 직접 수정하고, 잡힘 신호와 그리퍼 상태를 따로 내보내게 했습니다.</p>
       </div>
     </div>
     <div class="step">
@@ -202,7 +202,7 @@
     <div class="step">
       <h4 class="step-title">개발본의 판정 불가 구분</h4>
       <div class="step-body">
-        <p>깊게 물어 잡힘 신호가 없는데도 접촉 흔적이 남은 경우는, 제출 뒤 이어 간 개발본에서 '판정 불가'로 따로 떼어 다시 집지 않고 사람이 확인하게 했습니다. 잡았는데도 실패로 잘못 읽는 경우(오탐)를 줄이고, 조치가 필요할 때는 사람의 확인을 기다리게 하려는 의도였습니다.</p>
+        <p>깊게 물어 그리퍼가 멈춘 경우처럼 잡힘 신호는 없는데 접촉 흔적이 남은 경우는, 제출 뒤 이어 간 개발본에서 '판정 불가'로 따로 떼어 다시 집지 않고 사람이 확인하게 했습니다. 잡았는데도 실패로 잘못 읽는 경우(오탐)를 줄이고, 조치가 필요할 때는 사람의 확인을 기다리게 하려는 의도였습니다.</p>
       </div>
     </div>
   </div>
