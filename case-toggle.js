@@ -64,7 +64,7 @@ function flowFirst() {
     a.setAttribute('href', '#' + id);
   });
   var tip = document.createElement('p'); tip.className = 'flow-tip';
-  tip.textContent = '주황 번호를 누르면 해당 진행 과정으로 이동합니다';
+  tip.textContent = '주황으로 표시된 곳을 누르면 해당 내용으로 이동합니다';
   var title = map.querySelector('.role-map-title');
   if (title) title.after(tip); else map.prepend(tip);
   flowMedia(tip, hits);
@@ -74,7 +74,7 @@ function flowFirst() {
   return true;
 }
 // 흐름도 강조 때 안내 줄 아래에 관련 사진·영상 썸네일 줄(사용자 2026-11-23 q1o·q2o): 강조된 사례와 그 상자의 기술 설명 칸에서
-// figure[data-rep](칸마다 최대 2장, 실물·장면 먼저 — 고른 목록은 vault _workspace/2026-11-23-site-runon) + 페이지 대표 환경 사진 figure[data-env] 1장.
+// figure[data-rep](칸마다 최대 2장, 실물·장면 사진 먼저 — 각 페이지 figure에 직접 표시) + 페이지 대표 환경 사진 figure[data-env] 1장(어느 진입에서도 붙음).
 // 썸네일은 미리보기라 누르면 그 자리에서 크게만 보여 준다(img-zoom.js의 확대 창 재사용) — 본문 위치로 이동하지 않는다(사용자 2026-11-23).
 function flowMedia(tip, hits) {
   var secs = [];
@@ -90,8 +90,9 @@ function flowMedia(tip, hits) {
     var k = m.getAttribute('src') || m.getAttribute('poster');
     if (seen.indexOf(k) < 0) { seen.push(k); figs.push(f); }
   }
-  secs.forEach(function (d) { d.querySelectorAll('figure[data-rep]').forEach(push); });
-  figs = figs.slice(0, 2); push(document.querySelector('figure[data-env]'));
+  var env = document.querySelector('figure[data-env]');
+  secs.forEach(function (d) { d.querySelectorAll('figure[data-rep]').forEach(function (f) { if (f !== env) push(f); }); });
+  figs = figs.slice(0, 2); if (env) { seen = figs.map(function (f) { var m = f.querySelector('img,video'); return m.getAttribute('src') || m.getAttribute('poster'); }); push(env); }
   if (!figs.length) return;
   var wrap = document.createElement('div'); wrap.className = 'flow-media';
   var lab = document.createElement('span'); lab.className = 'fm-label'; lab.textContent = '관련 사진·영상'; wrap.appendChild(lab);
@@ -106,7 +107,7 @@ function flowMedia(tip, hits) {
       var a = m.closest('a'), href = a && a.getAttribute('href');
       var src = href && /\.(jpe?g|png|gif|webp)$/i.test(href) ? href : im.getAttribute('src');
       var dlg = document.querySelector('dialog.zoom'), big = dlg && dlg.querySelector('img');
-      if (!big) { window.open(src, '_blank'); return; }
+      if (!big) return; // 확대 창이 없으면 아무것도 하지 않음(이동·새 탭 없음)
       big.src = src; big.alt = m.getAttribute('alt') || ''; dlg.showModal();
     });
     wrap.appendChild(b);
