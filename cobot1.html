@@ -34,7 +34,7 @@
 </nav>
 
 <main class="case-layout outline">
-<p class="updated">Last modified <time datetime="2026-11-24">2026-11-24</time></p>
+<p class="updated">Last modified <time datetime="2026-11-25">2026-11-25</time></p>
 <section class="overview">
   <h2 id="overview">한눈에 보기</h2>
   <ul class="first-note phase-facts">
@@ -180,7 +180,7 @@
     <div class="step">
       <h4 class="step-title">드라이버와 판정 신호</h4>
       <div class="step-body">
-        <p>저는 RG2 그리퍼용 오픈소스 드라이버와 작동 원리를 보며 닫힐 때 하드웨어에서 힘을 측정할 것이라는 가설을 세웠고, 판정에 쓸 신호(잡힘 신호, 손가락 위치, 힘)를 찾았습니다. 그러나 강의에서 받은 오픈소스 드라이버는 물체를 잡아도 잡힘 신호를 내보내지 않았습니다. 이에 비트 정의와 드라이버 코드를 분석해 드라이버를 직접 수정하고, 잡힘 신호와 그리퍼 상태를 따로 내보내게 했습니다.</p>
+        <p>저는 RG2 그리퍼용 오픈소스 드라이버와 작동 원리를 보며 닫힐 때 하드웨어에서 힘을 측정할 것이라는 가설을 세웠고, 판정에 쓸 신호(잡힘 신호, 손가락 위치, 힘)를 찾았습니다. 그러나 강의에서 받은 오픈소스 드라이버는 물체를 잡아도 잡힘 신호를 내보내지 않았습니다. 이에 비트 정의와 드라이버 코드를 분석해 드라이버를 직접 수정하고, 잡힘 신호와 그리퍼 상태를 ROS 2 토픽으로 발행해 공정 제어 노드가 수신할 수 있게 했습니다.</p>
       </div>
     </div>
     <div class="step">
@@ -214,7 +214,7 @@
     <div class="step">
       <h4 class="step-title">이동 명령을 한 곳에서 감싸기</h4>
       <div class="step-body">
-        <p>최종 제출본에서는 그리퍼 신호가 1초 넘게 끊기면 로봇 정지를 요청하는 감시를 제가 맡았습니다. 이동 명령마다 확인 코드를 넣으면 빠뜨리는 곳이 생기므로, 이동 명령을 한 곳에서 감싸 앞뒤로 신호 이상을 확인하고 이상 감지 뒤에는 다음 이동을 막았습니다.</p>
+        <p>최종 제출본에서는 공정 제어 노드에서 그리퍼의 ROS 2 상태 토픽이 1초 넘게 수신되지 않으면 로봇 정지를 요청하는 감시를 제가 맡았습니다. 이동 명령마다 확인 코드를 넣으면 빠뜨리는 곳이 생기므로, 이동 명령을 한 곳에서 감싸 앞뒤로 신호 이상을 확인하고 이상 감지 뒤에는 다음 이동을 막았습니다.</p>
         <figure data-rep class="fig wide">
     <img src="images/cobot1/gripper-signal-timeline.jpg" alt="도식: 그리퍼 신호 수신이 끊긴 뒤 1.0초가 지나면 감시 타이머가 신호 두절로 판단해 로봇 정지를 요청하는 흐름을 시간 순으로 그린 그림" width="1360" height="570" loading="lazy">
     <figcaption class="muted">최종 제출본에서 그리퍼 신호가 끊긴 뒤 1초가 지나면 로봇 정지를 요청하는 흐름을 시간 순으로 그린 도식입니다.</figcaption>
@@ -251,7 +251,7 @@
     <div class="step">
       <h4 class="step-title">실패한 단계만 다시 실행</h4>
       <div class="step-body">
-        <p>공정 전체 대신 실패한 단계만 처음부터 다시 실행하도록 구조를 바꿨습니다.</p>
+        <p>공정 제어 노드가 단계별 예외를 잡아 공정 전체 대신 실패한 단계만 처음부터 다시 실행하도록 복구 구조를 바꿨습니다.</p>
         <figure data-rep class="fig wide">
     <img src="images/cobot1/stage_retry.jpg" alt="단계 단위 복구 그림: 앞 세 단계는 완료, 4단계 나선 추출은 실패·재시도, 5단계는 대기" width="1200" height="406" loading="lazy">
     <figcaption class="muted">4단계(나선 드립)에서 실패한 경우의 복구. 앞 세 단계는 완료로 두고 실패한 단계만 처음부터 다시 실행하며, 다시 시작할지는 작업자가 버튼으로 정합니다.</figcaption>
