@@ -876,3 +876,7 @@ body.home main, body.home footer { max-width: 1192px; margin: 0 auto; padding-le
 .home .core7 li ul li::before { content: ""; position: absolute; left: 0; top: .65em; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
 .home .core7 li ul li:first-child { color: var(--fg); font-weight: 600; }
 .home .core7 > ol > li:last-child:nth-child(odd) { grid-column: 1 / -1; }
+.home .core7 sup.fn { font-size: 10.5px; line-height: 0; margin-left: 2px; vertical-align: super; font-weight: 600; }
+.home .core7 sup.fn a { color: var(--accent); text-decoration: none; }
+.home .core7 sup.fn a + a { margin-left: 4px; }
+.home .core7 sup.fn a:hover { text-decoration: underline; }
