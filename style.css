@@ -842,17 +842,17 @@ body.home main, body.home footer { max-width: 1192px; margin: 0 auto; padding-le
 .home .bento .contact-t .contact > span > .muted:not(:first-child) { font-size: 12.5px; }
 .home .bento .contact-t .contact a { color: #fff; font-weight: 600; }
 .home .bento .contact-t .contact > span::before { position: absolute; left: 16px; top: 12px; width: 20px; text-align: center; font-size: 15px; line-height: 1.4; color: #a5b4fc; }
-.home .bento .contact-t .contact > span:nth-child(1)::before { content: "✉"; }
-.home .bento .contact-t .contact > span:nth-child(2)::before { content: "</>"; font-size: 11px; font-weight: 800; }
-.home .bento .contact-t .contact > span:nth-child(3)::before { content: "⚙"; }
-.home .bento .contact-t .contact > span:nth-child(4)::before { content: "✦"; }
-.home .bento .contact-t .contact > span:nth-child(5)::before { content: "◎"; }
-.home .bento .contact-t .contact > span:nth-child(6)::before { content: "✎"; }
-.home .bento .contact-t .contact > span:nth-child(7)::before { content: "▤"; }
+.home .bento .contact-t .contact > span:nth-child(1)::before { content: "✎"; } /* 로보틱스 용어 정리 */
+.home .bento .contact-t .contact > span:nth-child(2)::before { content: "▤"; } /* 전공 학습 */
+.home .bento .contact-t .contact > span:nth-child(3)::before { content: "⚙"; } /* AI 활용 자동화 */
+.home .bento .contact-t .contact > span:nth-child(4)::before { content: "✦"; } /* AI 활용 방식 */
+.home .bento .contact-t .contact > span:nth-child(5)::before { content: "✉"; } /* 이메일 */
+.home .bento .contact-t .contact > span:nth-child(6)::before { content: "</>"; font-size: 11px; font-weight: 800; } /* GitHub */
+.home .bento .contact-t .contact > span:nth-child(7)::before { content: "◎"; } /* 전시회 관람 */
 @media (max-width: 1000px) { .home .bento .contact-t .contact { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 520px) { .home .bento .contact-t .contact { grid-template-columns: 1fr; } }
 .home .bento .contact-t .contact > span:last-child:nth-child(odd) { grid-column: span 2; } /* 7칸일 때 빈 칸 없이 */
 @media (max-width: 520px) { .home .bento .contact-t .contact > span:last-child:nth-child(odd) { grid-column: auto; } }
-.home .bento .contact-t .contact > span:nth-child(8)::before { content: "✓"; } /* 2026-11-23: 시연 영상(▶) → 증명서 */
+.home .bento .contact-t .contact > span:nth-child(8)::before { content: "✓"; } /* 증명서 (2026-11-25 재배치) */
 .home .bento .contact-t .contact > span.vids .vl { font-size: 13px; line-height: 1.6; color: rgba(255,255,255,.6); }
 .home .bento .contact-t .contact > span.vids .vl a { font-weight: 500; }
