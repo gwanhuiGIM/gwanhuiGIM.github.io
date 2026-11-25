@@ -728,6 +728,14 @@ body.home { display: block; }
 .home .kw-sec .kw-collapse:hover { background: var(--accent-soft); }
 .home .kw-sec .kv { padding: 18px 22px; border: 1px solid var(--line); border-radius: 18px; background: var(--card); }
 .home .kw-sec .kv[hidden] { display: none; }
+/* 키워드 검색(2026-11-25): 검색창·건수, 걸러진 줄 숨김, 일치 강조 */
+.home .kw-sec .kw-find { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin: 0 0 14px; }
+.home .kw-sec .kw-q { flex: 1 1 18em; max-width: 28em; font: inherit; font-size: 16px; padding: 7px 14px; color: var(--fg); background: var(--card); border: 1px solid var(--line); border-radius: 999px; }
+.home .kw-sec .kw-q:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.home .kw-sec .kw-cnt { font-size: 14px; color: var(--muted); }
+.home .kw-sec .kw-cnt button { font: inherit; color: var(--accent); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
+.home .kw-sec .kw-hide { display: none !important; }
+.home .kw-sec mark.kw-m { background: var(--accent-soft); color: inherit; border-radius: 3px; padding: 0 1px; box-shadow: inset 0 -2px 0 var(--accent); }
 .home .kw-sec a.big-link { display: inline-block; margin: 14px 0 0; font-weight: 700; text-decoration: none; }
 @media (max-width: 640px) { .home .kw-sec .kw-collapse { position: static; margin: 0 0 12px; } .home .kw-sec .kv { padding: 14px; } }
 .home .kw-sec .skills-panel { max-width: 62em; margin: 32px 0 28px; padding: 16px 22px 10px; border: 1px solid var(--line); border-radius: 16px; background: var(--card); box-shadow: none; }
