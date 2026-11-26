@@ -895,9 +895,8 @@ body.home main, body.home footer { max-width: 1192px; margin: 0 auto; padding-le
 main.case-layout.outline .fig figcaption { margin-top: 4px; line-height: 1.4; max-width: none; }
 main.case-layout.outline section p.muted { line-height: 1.45; margin-bottom: 8px; }
 main.case-layout.outline .ov-media p.muted, main.case-layout.outline .ov-media figcaption { margin-top: 4px; line-height: 1.4; }
-main.case-layout.outline .first-note { line-height: 1.45; }
 :where(main.case-layout.outline) .pipe-box small { line-height: 1.35; }
-/* 2) 한 줄로: 본문 폭을 그림 폭(820px)에 맞춤 40em → 48em */
+/* 2) 한 줄로: 본문 폭을 그림 폭(820px)에 가깝게 넓힘 40em → 48em(본문 17px 기준 816px) — 첫머리 안내 상자 줄간격은 아래 phase-facts li 규칙이 맡음 */
 main.case-layout.outline { --text-w: 48em; }
 /* 3) 문장 줄간격·목록 간격 */
 main.case-layout.outline section p { line-height: 1.6; margin-bottom: 10px; }
