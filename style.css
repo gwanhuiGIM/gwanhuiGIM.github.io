@@ -917,7 +917,7 @@ main.ai-page section p { line-height: 1.6; margin-bottom: 10px; }
 main.ai-page section p.muted { line-height: 1.45; margin-bottom: 8px; }
 :where(main.ai-page) section li { margin: 4px 0; }
 main.ai-page td { line-height: 1.5; }
-main.ai-page .lc-step p, main.ai-page p.lc-loop { line-height: 1.45; margin-bottom: 8px; } /* ai.html 인라인 의도값(16행 1.45) — 위 case-layout section p 1.75에 밀리던 것 */
+main.ai-page .lc-step p, main.ai-page p.lc-loop { line-height: 1.45; margin-bottom: 8px; } /* .lc-step p는 ai.html 16행 의도값 1.45 복원(case-layout section p 1.75에 밀렸음), .lc-loop는 줄간격 선언이 없어 같은 값을 새로 줌 */
 /* 전공·전시회 페이지(main.major) */
 main.major section p { line-height: 1.6; margin-bottom: 10px; max-width: 48em; }
 main.major section p.muted { line-height: 1.45; margin-bottom: 8px; }
@@ -928,3 +928,11 @@ main.major figcaption { margin-top: 4px; line-height: 1.4; }
 .home main > ul.vt li, .home .vt .bc, .home .vt time { line-height: 1.5; }
 .home .kw-sec .skills-panel details.kw2 > summary { line-height: 1.5; }
 .home .card.row dl.prs { line-height: 1.45; }
+/* 교차검증 반영: 목록 문장 안 줄간격(본문 1.7 상속)과 index 첫 화면 목록·도구 줄 */
+:where(main.case-layout, main.major) section li { line-height: 1.6; }
+.home .bento .t.dark ol { line-height: 1.55; }
+.home .kw-sec .skills-panel p.tools { line-height: 1.5; }
+main.case-layout details > summary > h3 { line-height: 1.4; } /* 두 줄로 넘어가는 사례·구현 토글 제목 */
+main.ai-page summary { line-height: 1.5; }
+main.case-layout td { line-height: 1.5; }
+header p.muted, header p.tags, header .muted > summary, header .muted > p { line-height: 1.5; } /* 머리말 기간·장비 줄, 개발 방식 블록 */
