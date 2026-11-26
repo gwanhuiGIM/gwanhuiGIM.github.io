@@ -936,3 +936,11 @@ main.case-layout details > summary > h3 { line-height: 1.4; } /* 두 줄로 넘�
 main.ai-page summary { line-height: 1.5; }
 main.case-layout td { line-height: 1.5; }
 header p.muted, header p.tags, header .muted > summary, header .muted > p { line-height: 1.5; } /* 머리말 기간·장비 줄, 개발 방식 블록 */
+/* index 첫 화면 핵심역량 타일: 8항목 한 줄씩(좁은 화면 비율·480 이하 전체 폭), 1~5번 왼쪽 [ 괄호 */
+@media (max-width: 860px) { .home .bento { grid-template-columns: 1.35fr 1fr; } }
+@media (max-width: 480px) { .home .bento .t.dark { grid-column: span 2; grid-row: auto; } }
+.home .bento .t.dark ol { padding-left: 2em; }
+.home .bento .t.dark ol li { position: relative; }
+.home .bento .t.dark ol li:nth-child(-n+5)::before { content: ""; position: absolute; left: -2em; top: 0; bottom: 0; width: .45em; border-left: 2px solid #a5b4fc; }
+.home .bento .t.dark ol li:nth-child(1)::before { top: .35em; border-top: 2px solid #a5b4fc; }
+.home .bento .t.dark ol li:nth-child(5)::before { bottom: .35em; border-bottom: 2px solid #a5b4fc; }
