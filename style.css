@@ -865,7 +865,7 @@ body.home main, body.home footer { max-width: 1192px; margin: 0 auto; padding-le
 .home .bento .contact-t .contact > span.vids .vl { font-size: 13px; line-height: 1.6; color: rgba(255,255,255,.6); }
 .home .bento .contact-t .contact > span.vids .vl a { font-weight: 500; }
 /* 대표 핵심역량 7항목: 02 절 머리 카드형(2026-11-26, 사용자 "단순 줄글 말고 카드같은거로") — 번호·제목을 먼저, 근거 문장은 작게 */
-.home .core7 { margin: 4px 0 26px; }
+.home .core7 { margin: 4px 0 52px; }
 .home .core7 h3 { margin: 0 0 12px; font-size: 17px; }
 .home .core7 ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; counter-reset: core7; }
 .home .core7 > ol > li { counter-increment: core7; position: relative; margin: 0; padding: 14px 16px 14px 56px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; line-height: 1.5; }
