@@ -880,3 +880,12 @@ body.home main, body.home footer { max-width: 1192px; margin: 0 auto; padding-le
 .home .core7 sup.fn a { color: var(--accent); text-decoration: none; }
 .home .core7 sup.fn a + a { margin-left: 4px; }
 .home .core7 sup.fn a:hover { text-decoration: underline; }
+/* 대표 핵심역량 카드 접기(2026-11-26): summary = 대표 1줄, ▸로 나머지 펼침 */
+.home .core7 details > summary { list-style: none; cursor: pointer; position: relative; margin: 6px 0 0; padding: 6px 22px 0 12px; border-top: 1px dashed var(--line); color: var(--muted); font-size: 13.5px; line-height: 1.5; }
+.home .core7 details > summary::-webkit-details-marker { display: none; }
+.home .core7 details > summary::before { content: ""; position: absolute; left: 0; top: calc(6px + .65em); width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+.home .core7 details > summary::after { content: "▸"; position: absolute; right: 0; top: 6px; color: var(--accent); transition: transform .15s; }
+.home .core7 details[open] > summary::after { transform: rotate(90deg); }
+.home .core7 details > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+.home .core7 details > summary .pj { display: inline-block; margin-right: 4px; padding: 0 6px; border-radius: 4px; background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent); font-size: 11.5px; font-weight: 600; line-height: 1.6; vertical-align: 1px; }
+.home .core7 details ul { border-top: 0; margin-top: 2px; padding-top: 0; }
