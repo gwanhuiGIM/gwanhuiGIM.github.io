@@ -908,3 +908,23 @@ main.case-layout.outline .step-card > .step-desc { line-height: 1.45; }
 :where(main.case-layout.outline) ul.phase-facts li, :where(main.case-layout.outline) .case-facts .cf { padding: 1px 0; line-height: 1.45; }
 main.case-layout.outline .step { padding-top: 12px; padding-bottom: 6px; }
 main.case-layout.outline .step-body > ul { margin-bottom: 10px; }
+
+/* 나머지 페이지(index·ai·major·exhibition)와 각 페이지 머리말 compact(사용자 2026-11-26 "모든 웹사이트들 탐색 및 적용. 사람이 보는건 모두 가독성 향상해야지") — 프로젝트 6페이지 블록과 같은 기준, 글자 크기는 그대로 */
+header .lead { line-height: 1.55; }
+/* ai 활용 페이지(case-layout이지만 outline 아님) */
+main.ai-page { --text-w: 48em; }
+main.ai-page section p { line-height: 1.6; margin-bottom: 10px; }
+main.ai-page section p.muted { line-height: 1.45; margin-bottom: 8px; }
+:where(main.ai-page) section li { margin: 4px 0; }
+main.ai-page td { line-height: 1.5; }
+main.ai-page .lc-step p, main.ai-page p.lc-loop { line-height: 1.45; margin-bottom: 8px; } /* ai.html 인라인 의도값(16행 1.45) — 위 case-layout section p 1.75에 밀리던 것 */
+/* 전공·전시회 페이지(main.major) */
+main.major section p { line-height: 1.6; margin-bottom: 10px; max-width: 48em; }
+main.major section p.muted { line-height: 1.45; margin-bottom: 8px; }
+:where(main.major) section li { margin: 4px 0; max-width: 48em; }
+main.major figcaption { margin-top: 4px; line-height: 1.4; }
+/* index */
+.home header .one { line-height: 1.55; }
+.home main > ul.vt li, .home .vt .bc, .home .vt time { line-height: 1.5; }
+.home .kw-sec .skills-panel details.kw2 > summary { line-height: 1.5; }
+.home .card.row dl.prs { line-height: 1.45; }
