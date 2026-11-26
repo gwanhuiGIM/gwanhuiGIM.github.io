@@ -72,7 +72,14 @@
 
   <details class="impl" id="impl-hw">
   <summary><h3>로봇 팔·그리퍼·카메라와 연산 장비 (Doosan M0609, OnRobot RG2, RealSense D435i) <span class="badge-team">구현 참여</span></h3><span class="impl-jump">진행 과정 <a href="#case-rg2">02 실물 그리퍼 실측 보정</a><a href="#case-calib">03 체커보드 평평함 보정과 좌표 캘리브레이션</a></span></summary>
-  <p>팀은 Doosan M0609 로봇 팔에 OnRobot RG2 그리퍼를 달고, RealSense D435i RGB-D 카메라 1대를 로봇에 붙이지 않고 작업대 옆에 고정해(eye-to-hand) 고정 작업대에서 물체를 집어 옮기는 작업 환경을 구성했습니다. 그리퍼는 MoveIt 컨트롤러 없이 Modbus TCP로 직접 제어하고, 최종 구성에서는 인식·파지·경로 계획을 GPU(RTX 4060 8GB)가 달린 팀 공유 노트북에서 돌렸습니다.</p>
+  <p><b>팀이 구성한 작업 환경:</b></p>
+  <ul class="phase-facts">
+    <li><b>로봇 팔</b><span>Doosan M0609</span></li>
+    <li><b>그리퍼</b><span>OnRobot RG2 — MoveIt 컨트롤러 없이 Modbus TCP로 직접 제어</span></li>
+    <li><b>카메라</b><span>RealSense D435i RGB-D 카메라 1대 — 로봇에 붙이지 않고 작업대 옆에 고정(eye-to-hand)</span></li>
+    <li><b>작업</b><span>고정 작업대에서 물체를 집어 옮김</span></li>
+    <li><b>연산</b><span>최종 구성에서는 인식·파지·경로 계획을 GPU(RTX 4060 8GB)가 달린 팀 공유 노트북에서 돌림</span></li>
+  </ul>
   <div class="pipe" role="img" aria-label="도식: 작업대 옆에 고정한 RealSense D435i 카메라가 USB로 팀 공유 노트북(RTX 4060 8GB)에 영상을 보내고, 노트북이 Doosan M0609 로봇 팔과 Modbus TCP로 OnRobot RG2 그리퍼를 움직이는 하드웨어 구성">
     <div class="pipe-col"><span class="pipe-tag">센서</span><div class="pipe-box">RealSense D435i<small>RGB-D · 작업대 옆 고정 · USB</small></div></div>
     <div class="pipe-arrow" aria-hidden="true">→</div>
@@ -110,7 +117,12 @@
     <img src="images/cobot2/slide_vla_action_decision.jpg" alt="발표 슬라이드 도식: 사람이 &quot;사과를 집어서 바구니에 담아줘&quot;라고 말하면, 대화 히스토리·현재 Scene·로봇 상태를 보는 LLM(의사결정)이 pick_and_place, pick_and_hold, release, ask_clarification, cancel_current_action, wait 가운데 고수준 행동을 정하는 흐름" width="1200" height="975" loading="lazy" class="narrow">
     <figcaption class="muted">팀 발표 자료 p15 — 자연어 지시를 LLM이 대화 기록·현재 장면·로봇 상태와 함께 판단해 집어 놓기, 집어 들고 있기, 되묻기 같은 고수준 행동으로 바꿉니다.</figcaption>
   </figure>
-  <p>장면 정보에는 물체마다 번호가 붙어 같은 물체가 여러 개여도 번호로 구분하고(발표 자료 p18), 같은 물체가 여러 개라 어느 것인지 모호하면 임의로 고르지 않고 후보를 화면에 띄워 사용자에게 묻습니다(p43). 판단 결과는 JSON 명령으로 바뀌어 작업 제어(FSM)로 넘어가고, 로봇 팔은 작업 제어만 움직입니다. 판단 계층과 작업 제어를 잇는 연결은 제가 팀과 함께 만들었고(공동작업), 진행 과정 <a href="#case-integrate">11</a> 사례와 기술 상세의 <a href="#tech-layers">계층 구조</a>에서 다룹니다.</p>
+  <ul class="phase-facts">
+    <li><b>물체 구분</b><span>장면 정보에는 물체마다 번호가 붙어, 같은 물체가 여러 개여도 번호로 구분(발표 자료 p18)</span></li>
+    <li><b>모호할 때</b><span>같은 물체가 여러 개라 어느 것인지 모호하면 임의로 고르지 않고 후보를 화면에 띄워 사용자에게 물음(p43)</span></li>
+    <li><b>명령 전달</b><span>판단 결과는 JSON 명령으로 바뀌어 작업 제어(FSM)로 넘어감 · 로봇 팔은 작업 제어만 움직임</span></li>
+    <li><b>연결</b><span>판단 계층과 작업 제어를 잇는 연결은 제가 팀과 함께 만듦(공동작업) — 진행 과정 <a href="#case-integrate">11</a> 사례와 기술 상세의 <a href="#tech-layers">계층 구조</a>에서 다룸</span></li>
+  </ul>
   </details>
 
   <details class="impl" id="impl-grasp">
@@ -146,7 +158,10 @@
     </video>
     <figcaption class="muted">왼쪽은 장애물 지도(주변 물체를 3차원 칸으로 표시) 위 로봇 경로 계획, 오른쪽은 카메라 점구름 위 파지 후보 생성 화면 — 파지 계산마다 카메라 프레임 여러 장을 모아, 깊이는 보정해 튀는 값을 줄이고 물체 영역은 가장 잘 잡힌 한 장을 썼습니다.</figcaption>
   </figure>
-  <p>형태가 다른 여러 물체(콜라병, 바나나 등)로 넓혀 보려 했지만, 물체의 3차원 점군 데이터가 바닥과 뭉개져 형상을 구분하기 어려운 물체는 집지 못했습니다. 카메라 해상도를 파지 모델이 요구한 1280×720으로 올려 점군을 촘촘하게 만들면 나아질 수 있었지만, 깊이 영상 해상도를 올리면 프레임이 끊겼고(USB 대역폭 초과로 추정) 장애물 지도 갱신의 CPU 부하도 크게 늘어 노트북 성능상 낮은 해상도를 유지해야 했습니다.</p>
+  <ul class="phase-facts">
+    <li><b>시도와 한계</b><span>형태가 다른 여러 물체(콜라병, 바나나 등)로 넓혀 보려 했지만, 물체의 3차원 점군 데이터가 바닥과 뭉개져 형상을 구분하기 어려운 물체는 집지 못함</span></li>
+    <li><b>해상도 제약</b><span>카메라 해상도를 파지 모델이 요구한 1280×720으로 올려 점군을 촘촘하게 만들면 나아질 수 있었지만, 깊이 영상 해상도를 올리면 프레임이 끊김(USB 대역폭 초과로 추정) · 장애물 지도 갱신의 CPU 부하도 크게 늚 → 노트북 성능상 낮은 해상도를 유지해야 했음</span></li>
+  </ul>
   <div class="fig-pair">
     <figure class="fig">
       <img src="images/cobot2/pointcloud_front.jpg" alt="작업대 장면을 정면에서 본 점구름: 콜라병·오렌지·사과가 사진처럼 보이는 모습" width="606" height="366" loading="lazy">
@@ -166,7 +181,13 @@
 
   <details class="impl" id="impl-plan">
   <summary><h3>환경 3D 인식(Octomap / nvblox)과 모션계획(OMPL / cuMotion) <span class="badge-team">구현 참여</span></h3><span class="impl-jump">진행 과정 <a href="#case-gpu">06 단일 GPU 메모리 조정</a><a href="#case-3dmap">08 3D 장애물 지도 반응 비교</a><a href="#case-emptyworld">09 장애물 지도가 비어도 계획 성공</a><a href="#case-xrdf">10 충돌 검사용 구 모델</a></span></summary>
-  <p>팀은 작업대 옆에 고정한 RGB-D 카메라의 깊이 영상으로 주변 장애물을 3차원 지도로 만드는 환경 인식을 octomap(CPU)과 nvblox(GPU)로, 그 지도를 받아 장애물을 피하는 경로를 만드는 모션계획을 기본 경로인 OMPL(MoveIt 기본 경로계획)과 선택 경로인 cuMotion(cuRobo 기반 GPU 경로계획)으로 구성했습니다. OMPL을 먼저 실기에 도입했고 cuMotion은 그 뒤에 더했습니다. octomap은 OMPL에, nvblox는 cuMotion에 장애물 정보를 넘깁니다.</p>
+  <p><b>팀이 구성한 환경 인식·모션계획:</b></p>
+  <ul class="phase-facts">
+    <li><b>환경 인식</b><span>작업대 옆에 고정한 RGB-D 카메라의 깊이 영상으로 주변 장애물을 3차원 지도로 만듦 — octomap(CPU)과 nvblox(GPU)</span></li>
+    <li><b>모션계획</b><span>그 지도를 받아 장애물을 피하는 경로를 만듦 — 기본 경로인 OMPL(MoveIt 기본 경로계획)과 선택 경로인 cuMotion(cuRobo 기반 GPU 경로계획)</span></li>
+    <li><b>도입 순서</b><span>OMPL을 먼저 실기에 도입했고 cuMotion은 그 뒤에 더함</span></li>
+    <li><b>연결</b><span>octomap은 OMPL에, nvblox는 cuMotion에 장애물 정보를 넘김</span></li>
+  </ul>
   <div class="pipe" role="img" aria-label="도식: RGB-D 깊이 영상이 환경 3D 인식(위: octomap CPU, 아래: nvblox GPU)을 거쳐 모션계획(위: OMPL 기본 경로, 아래: cuMotion 선택 경로)으로, 다시 작업 제어(FSM)로 이어지는 두 갈래 흐름">
     <div class="pipe-col"><span class="pipe-tag">입력</span><div class="pipe-box">RGB-D 깊이 영상<small>RealSense D435i</small></div></div>
     <div class="pipe-arrow" aria-hidden="true">→</div>
@@ -184,7 +205,11 @@
     <img src="images/cobot2/slide_planner_ompl_cumotion.jpg" alt="발표 슬라이드 도식: 왼쪽 RRTConnect는 무작위 샘플을 이어 장애물을 돌아가는 꺾인 경로, 오른쪽 cuMotion은 여러 궤적을 동시에 밀어 하나의 매끄러운 곡선 경로로 수렴하는 모습" width="1200" height="471" loading="lazy">
     <figcaption class="muted">팀 발표 자료 p49 — OMPL(RRTConnect)은 무작위 샘플을 이어 경로를 찾고, cuMotion은 여러 궤적을 GPU에서 동시에 다듬어 하나로 모읍니다.</figcaption>
   </figure>
-  <p>환경 3D 인식·모션계획의 nvblox·cuMotion은 YOLO-seg·GraspGenX와 노트북 GPU 하나(8GB)를 나눠 써야 했습니다. 연산 자원(CPU·GPU)을 나눠 쓰려고 오픈소스 코드의 octomap 및 센서 파라미터를 파악하고, 프레임 보존과 장애물 감지 사이의 적정선을 찾아 값을 수정하며 진행했습니다. 시스템 구동 중(8월 11일) GPU 메모리는 8,188MiB 중 6,752MiB를 사용 중이었고 CPU 점유율도 대부분 80% 이상이었습니다.</p>
+  <ul class="phase-facts">
+    <li><b>GPU 공유</b><span>환경 3D 인식·모션계획의 nvblox·cuMotion은 YOLO-seg·GraspGenX와 노트북 GPU 하나(8GB)를 나눠 써야 했음</span></li>
+    <li><b>조정</b><span>연산 자원(CPU·GPU)을 나눠 쓰려고 오픈소스 코드의 octomap 및 센서 파라미터를 파악 · 프레임 보존과 장애물 감지 사이의 적정선을 찾아 값을 수정하며 진행</span></li>
+    <li><b>구동 중(8월 11일)</b><span>GPU 메모리 8,188MiB 중 6,752MiB 사용 · CPU 점유율 대부분 80% 이상</span></li>
+  </ul>
   <figure data-rep class="fig">
     <img src="images/cobot2/octomap_param_table.jpg" alt="파라미터 이름과 계획 값, 실제 적용 값이 정리된 3열 표 화면으로, 감지 거리, 포인트 샘플링 비율, octomap 해상도 등의 수치가 적혀 있다" width="700" height="652" loading="lazy" class="narrow">
     <figcaption class="muted">연산 자원(CPU·GPU) 분배를 위해 오픈소스 코드의 octomap 및 센서 파라미터를 파악하고 수정한 계획·실제 값 비교(8월 10일)</figcaption>
@@ -416,7 +441,12 @@
     <div class="step">
       <h4 class="step-title" id="step-dds">토픽은 보이는데 오지 않던 데이터</h4>
       <div class="step-body">
-        <p>호스트와 컨테이너로 나눠 돌리자 토픽 목록은 보이는데 데이터는 한 건도 오지 않았습니다. ROS 2 기본 통신(FastDDS)이 둘을 같은 컴퓨터로 보고 공유메모리로 보내려 했는데, 이 전송은 컨테이너 경계를 넘지 못했습니다. 컨테이너가 호스트의 공유메모리·프로세스 공간을 함께 쓰게 하는 두 옵션(ipc=host, pid=host)은 시험해 보니 데이터가 오지 않아 배제했고, 설정 파일로 통신을 UDP 전용으로 강제해 호스트·컨테이너 양쪽에 적용했습니다.</p>
+        <ul class="phase-facts">
+          <li><b>증상</b><span>호스트와 컨테이너로 나눠 돌리자 토픽 목록은 보이는데 데이터는 한 건도 오지 않음</span></li>
+          <li><b>원인</b><span>ROS 2 기본 통신(FastDDS)이 둘을 같은 컴퓨터로 보고 공유메모리로 보내려 했는데, 이 전송은 컨테이너 경계를 넘지 못함</span></li>
+          <li><b>배제</b><span>컨테이너가 호스트의 공유메모리·프로세스 공간을 함께 쓰게 하는 두 옵션(ipc=host, pid=host)은 시험해 보니 데이터가 오지 않아 배제</span></li>
+          <li><b>조치</b><span>설정 파일로 통신을 UDP 전용으로 강제해 호스트·컨테이너 양쪽에 적용</span></li>
+        </ul>
         <p>640×480 영상 한 장(약 921KB)은 UDP에서 쪼개 보내야 하는 크기라 송수신 버퍼도 키웠습니다. 설정 전후를 비교 측정해 보니 10Hz로 보낸 영상이 5~7Hz만 도착하던 것이 10Hz로 도착했고, 공유 노트북이라 시스템 전역 버퍼 값 변경은 팀 합의 사항으로 남겼습니다.</p>
       </div>
     </div>
@@ -481,7 +511,11 @@
     <div class="step">
       <h4 class="step-title" id="step-qos">밀린 옛 depth 프레임 버리기</h4>
       <div class="step-body">
-        <p>depth 영상에서 로봇 몸체를 지우는 노드는 3.7Hz로, 카메라(9.65Hz)보다 느렸습니다. 기본 설정(reliable, 최근 10장 유지)대로 두면 최대 10프레임, 약 1초치 옛 depth 프레임이 쌓여 장애물 지도에 낡은 공간 정보가 반영될 수 있었습니다. 그래서 이 노드의 depth 입력은 밀린 옛 프레임을 버리는 QoS(best_effort, 최근 5장만 유지)로 바꿨습니다.</p>
+        <ul class="phase-facts">
+          <li><b>속도 차이</b><span>depth 영상에서 로봇 몸체를 지우는 노드는 3.7Hz로, 카메라(9.65Hz)보다 느림</span></li>
+          <li><b>위험</b><span>기본 설정(reliable, 최근 10장 유지)대로 두면 최대 10프레임, 약 1초치 옛 depth 프레임이 쌓여 장애물 지도에 낡은 공간 정보가 반영될 수 있었음</span></li>
+          <li><b>조치</b><span>그래서 이 노드의 depth 입력은 밀린 옛 프레임을 버리는 QoS(best_effort, 최근 5장만 유지)로 바꿈</span></li>
+        </ul>
         <p>nvblox로 보내는 출력은 nvblox가 받는 방식(reliable)에 맞춰 그대로 두었습니다. 발행 쪽만 best_effort로 바꾸면 QoS가 맞지 않아 nvblox가 오류 없이 아무것도 받지 못하기 때문입니다.</p>
       </div>
     </div>

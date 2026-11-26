@@ -34,7 +34,7 @@
 </nav>
 
 <main class="case-layout outline">
-<p class="updated">Last modified <time datetime="2026-11-25">2026-11-25</time></p>
+<p class="updated">Last modified <time datetime="2026-11-26">2026-11-26</time></p>
 <section class="overview">
   <h2 id="overview">한눈에 보기</h2>
   <ul class="first-note phase-facts">
@@ -180,7 +180,11 @@
     <div class="step">
       <h4 class="step-title">드라이버와 판정 신호</h4>
       <div class="step-body">
-        <p>저는 RG2 그리퍼용 오픈소스 드라이버와 작동 원리를 보며 닫힐 때 하드웨어에서 힘을 측정할 것이라는 가설을 세웠고, 판정에 쓸 신호(잡힘 신호, 손가락 위치, 힘)를 찾았습니다. 그러나 강의에서 받은 오픈소스 드라이버는 물체를 잡아도 잡힘 신호를 내보내지 않았습니다. 이에 비트 정의와 드라이버 코드를 분석해 드라이버를 직접 수정하고, 잡힘 신호와 그리퍼 상태를 ROS 2 토픽으로 발행해 공정 제어 노드가 수신할 수 있게 했습니다.</p>
+        <p>저는 RG2 그리퍼용 오픈소스 드라이버와 작동 원리를 보며 닫힐 때 하드웨어에서 힘을 측정할 것이라는 가설을 세웠고, 판정에 쓸 신호(잡힘 신호, 손가락 위치, 힘)를 찾았습니다.</p>
+        <ul class="phase-facts">
+          <li><b>문제</b><span>그러나 강의에서 받은 오픈소스 드라이버는 물체를 잡아도 잡힘 신호를 내보내지 않음</span></li>
+          <li><b>제 조치</b><span>비트 정의와 드라이버 코드를 분석해 드라이버를 직접 수정 · 잡힘 신호와 그리퍼 상태를 ROS 2 토픽으로 발행해 공정 제어 노드가 수신할 수 있게 함</span></li>
+        </ul>
       </div>
     </div>
     <div class="step">

@@ -34,7 +34,7 @@
 </nav>
 
 <main class="case-layout outline">
-<p class="updated">Last modified <time datetime="2026-11-24">2026-11-24</time></p>
+<p class="updated">Last modified <time datetime="2026-11-26">2026-11-26</time></p>
 <section class="overview">
   <h2 id="overview">한눈에 보기</h2>
   <div class="role-map" id="role-map" role="group" aria-label="발표 p7 ROS 2 노드 구조 위에 표시한 제 담당 지점">
@@ -275,7 +275,13 @@ self.update_stable_states(frame_assignments)</code></pre>
     <div class="step">
       <h4 class="step-title" id="step-replicator">Replicator 합성 데이터 생성과 파인튜닝</h4>
       <div class="step-body">
-        <p>처음 실물 사진을 쓴 것은 데이터를 모으기 쉬웠기 때문입니다. 그 모델이 시뮬레이터 속 도구를 찾지 못하자, 시뮬레이션 화면을 손으로 일일이 찍는 대신 Isaac Sim의 합성 데이터 도구인 Replicator를 찾아 팀에 제안했습니다. 시뮬레이터의 3D 도구 모델과 트레이 배경을 가상 카메라로 찍어 데이터를 만들었고, 도구의 크기·각도를 바꿔 다양하게 만드는 것은 Replicator 자체 기능을 썼습니다. Replicator가 번호(0, 1, 2…)로만 매긴 라벨은 제가 Roboflow에서 도구 이름으로 지정해 올렸습니다.</p>
+        <ul class="phase-facts">
+          <li><b>처음</b><span>실물 사진을 쓴 것은 데이터를 모으기 쉬웠기 때문</span></li>
+          <li><b>문제</b><span>그 모델이 시뮬레이터 속 도구를 찾지 못함</span></li>
+          <li><b>제안</b><span>시뮬레이션 화면을 손으로 일일이 찍는 대신 Isaac Sim의 합성 데이터 도구인 Replicator를 찾아 팀에 제안</span></li>
+          <li><b>데이터 생성</b><span>시뮬레이터의 3D 도구 모델과 트레이 배경을 가상 카메라로 찍어 데이터를 만듦 · 도구의 크기·각도를 바꿔 다양하게 만드는 것은 Replicator 자체 기능을 씀</span></li>
+          <li><b>라벨</b><span>Replicator가 번호(0, 1, 2…)로만 매긴 라벨은 제가 Roboflow에서 도구 이름으로 지정해 올림</span></li>
+        </ul>
         <p id="step-roboflow">이렇게 올린 합성 데이터셋(전체 2,372장)은 버전으로 관리해 Colab 학습에 바로 연결했고, Colab GPU에서 사전학습된 YOLO 모델(yolov8n)을 이 데이터로 파인튜닝한 뒤 학습 끝의 검증 지표로 확인했습니다(mAP50 0.995).</p>
         <p>다만 이 값은 실제 성능을 보여 주는 수치가 아니었습니다. 당시에는 train/valid/test를 장수로만 나눴을 뿐, 학습에 쓸 데이터와 검증·일반화 성능을 확인할 데이터를 제대로 나누지 않았습니다. 데이터를 나누는 기준을 세우지 않고 수치를 확인한 것이 이 과정에서 겪은 시행착오 중 하나입니다.</p>
         <figure data-rep class="fig wide">
