@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>열감지 추적 구명튜브 전달장치 — 김관희</title>
-<meta name="description" content="물에 던지면 열원을 찾아 익수자에게 다가가는 저비용 구명보트를 목표로 한 3인 졸업 프로젝트에서, 모터 차동 제어·회로 구성·문서화를 맡아 두 학기에 걸쳐 시제품을 개선한 과정을 정리했습니다.">
+<meta name="description" content="물에 던지면 열원을 찾아 익수자에게 다가가는 저비용 구명보트를 목표로 한 3인 졸업 프로젝트에서, 모터 드라이버 회로·문서화를 맡아 두 학기에 걸쳐 시제품을 개선한 과정을 정리했습니다.">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -167,12 +167,12 @@
   </ul>
 
   <details class="case">
-  <summary><h3 id="case-circuit">아두이노 회로 구성</h3><span class="case-phase">구현</span><span class="badge-team">구현 참여</span><span class="case-facts"><span class="cf"><b>무엇</b><span>아두이노 보드 한 장에 열화상 센서 · 조종 신호 수신기 · 모터 드라이버 · 7.4V 배터리 연결</span></span><span class="cf"><b>방법</b><span>3D 모델에서 모터 · 센서 홀더 배치와 부품 간섭 확인 → 좁은 선체 안에 보드와 모터 드라이버 배선</span></span><span class="cf"><b>맡은 일</b><span>회로 구성</span></span></span></summary>
+  <summary><h3 id="case-circuit">아두이노 회로 구성</h3><span class="case-phase">구현</span><span class="badge-team">구현 참여</span><span class="case-facts"><span class="cf"><b>무엇</b><span>아두이노 보드 한 장에 열화상 센서 · 조종 신호 수신기 · 모터 드라이버 · 7.4V 배터리 연결</span></span><span class="cf"><b>방법</b><span>3D 모델에서 모터 · 센서 홀더 배치와 부품 간섭 확인 → 좁은 선체 안에 보드와 모터 드라이버 배선</span></span><span class="cf"><b>맡은 일</b><span>모터 드라이버 회로 구성</span></span></span></summary>
   <div class="case-steps">
     <div class="step">
       <h4 class="step-title">보드 한 장의 배선</h4>
       <div class="step-body">
-        <p>팀은 아두이노 보드 한 장에 열화상 센서, 조종 신호 수신기, 모터 드라이버, 7.4V 배터리를 연결했고, 저는 그중 모터 드라이버 회로 구성을 맡아 진행했습니다. 아두이노 보드 한 장에 열화상 센서, 조종 신호 수신기, 모터 드라이버, 7.4V 배터리를 잇고, 선체 내부 공간과 부품 간섭을 고려해 보드와 모터 드라이버가 좁은 선체 안에 들어가도록 배선을 꾸렸습니다.</p>
+        <p>팀은 아두이노 보드 한 장에 열화상 센서, 조종 신호 수신기, 모터 드라이버, 7.4V 배터리를 연결했고, 저는 그중 모터 드라이버 회로 구성을 맡아 진행했습니다. 선체 내부 공간과 부품 간섭을 고려해 보드와 모터 드라이버가 좁은 선체 안에 들어가도록 배선을 꾸렸습니다.</p>
         <figure data-rep class="fig" id="fig-circuit">
       <img src="images/grad/circuit_fritzing.jpg" alt="구명튜브를 기어모터로 펼치던 방식의 회로 구성도: 아두이노 보드에 열화상 센서, RC 수신기, 좌우 DC 모터와 모터 드라이버, 구명튜브용 기어모터와 드라이버, 7.4V 배터리가 연결됨" width="1200" height="752" loading="lazy">
       <figcaption class="muted">회로 구성도(구명튜브를 기어모터로 펼치던 방식 기준): 아두이노 보드 하나에 열화상 센서, 조종 신호 수신기, 좌우 모터와 모터 드라이버, 구명튜브용 모터, 배터리가 연결됩니다</figcaption>
