@@ -854,18 +854,18 @@ body.home main, body.home footer { max-width: 1192px; margin: 0 auto; padding-le
 .home .bento .contact-t .contact > span > .muted:not(:first-child) { font-size: 12.5px; }
 .home .bento .contact-t .contact a { color: #fff; font-weight: 600; }
 .home .bento .contact-t .contact > span::before { position: absolute; left: 16px; top: 12px; width: 20px; text-align: center; font-size: 15px; line-height: 1.4; color: #a5b4fc; }
-.home .bento .contact-t .contact > span:nth-child(1)::before { content: "✎"; } /* 로보틱스 질문 기록 */
-.home .bento .contact-t .contact > span:nth-child(2)::before { content: "▤"; } /* 전공 학습 */
-.home .bento .contact-t .contact > span:nth-child(3)::before { content: "⚙"; } /* AI 활용 자동화 */
-.home .bento .contact-t .contact > span:nth-child(4)::before { content: "✦"; } /* AI 활용 방식 */
-.home .bento .contact-t .contact > span:nth-child(5)::before { content: "✉"; } /* 이메일 */
-.home .bento .contact-t .contact > span:nth-child(6)::before { content: "</>"; font-size: 11px; font-weight: 800; } /* GitHub */
-.home .bento .contact-t .contact > span:nth-child(7)::before { content: "◎"; } /* 전시회 관람 */
+.home .bento .contact-t .contact > span.i-q::before { content: "✎"; } /* 로보틱스 질문 기록 */
+.home .bento .contact-t .contact > span.i-major::before { content: "▤"; } /* 전공 학습 */
+.home .bento .contact-t .contact > span.i-auto::before { content: "⚙"; } /* AI 활용 자동화 */
+.home .bento .contact-t .contact > span.i-ai::before { content: "✦"; } /* AI 활용 방식 */
+.home .bento .contact-t .contact > span.i-mail::before { content: "✉"; } /* 이메일 */
+.home .bento .contact-t .contact > span.i-gh::before { content: "</>"; font-size: 11px; font-weight: 800; } /* GitHub */
+.home .bento .contact-t .contact > span.i-expo::before { content: "◎"; } /* 전시회 관람 */
 @media (max-width: 1000px) { .home .bento .contact-t .contact { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 520px) { .home .bento .contact-t .contact { grid-template-columns: 1fr; } }
 .home .bento .contact-t .contact > span:last-child:nth-child(odd) { grid-column: span 2; } /* 7칸일 때 빈 칸 없이 */
 @media (max-width: 520px) { .home .bento .contact-t .contact > span:last-child:nth-child(odd) { grid-column: auto; } }
-.home .bento .contact-t .contact > span:nth-child(8)::before { content: "✓"; } /* 증명서 (2026-11-25 재배치) */
+.home .bento .contact-t .contact > span.i-cert::before { content: "✓"; } /* 증명서 (2026-11-25 재배치) */
 .home .bento .contact-t .contact > span.vids .vl { font-size: 13px; line-height: 1.6; color: rgba(255,255,255,.6); }
 .home .bento .contact-t .contact > span.vids .vl a { font-weight: 500; }
 /* 대표 핵심역량 7항목: 02 절 머리 카드형(2026-11-26, 사용자 "단순 줄글 말고 카드같은거로") — 번호·제목을 먼저, 근거 문장은 작게 */
@@ -948,3 +948,24 @@ header p.muted, header p.tags, header .muted > summary, header .muted > p { line
 .home .bento .t.dark ol li:nth-child(-n+5)::before { content: ""; position: absolute; left: -2em; top: 0; bottom: 0; width: .45em; border-left: 2px solid #a5b4fc; }
 .home .bento .t.dark ol li:nth-child(1)::before { top: .35em; border-top: 2px solid #a5b4fc; }
 .home .bento .t.dark ol li:nth-child(5)::before { bottom: .35em; border-bottom: 2px solid #a5b4fc; }
+
+/* 2026-11-28: 관련 링크 6칸(w3 타일, 3열×2행)과 연락처 2칸(별도 타일, 다른 모양) 분리 — 칸 여백을 줄여 compact하게 */
+.home .bento .w3 { grid-column: span 3; }
+.home .bento .contact-t .contact { grid-template-columns: repeat(3, minmax(0, 1fr)); font-size: 14px; }
+.home .bento .contact-t .contact > span { padding: 8px 12px 8px 36px; gap: 1px; }
+.home .bento .contact-t .contact > span::before { left: 12px; top: 8px; }
+.home .bento .contact-t .contact > span:last-child:nth-child(odd) { grid-column: auto; }
+.home .bento .contact-side { justify-content: center; gap: 8px; padding: 14px 18px; background: rgba(15,23,42,.55); }
+.home .bento .contact-side .ct-h { font-size: 12.5px; font-weight: 700; letter-spacing: .04em; color: #a5b4fc; }
+.home .bento .contact-side .contact { display: flex; flex-direction: column; gap: 8px; margin: 0; font-size: 14px; }
+.home .bento .contact-side .contact > span { position: relative; display: flex; flex-direction: column; padding-left: 24px; overflow-wrap: anywhere; }
+.home .bento .contact-side .contact > span > .muted:first-child { font-size: 12px; color: rgba(255,255,255,.65); }
+.home .bento .contact-side .contact > span > .muted:not(:first-child) { font-size: 12px; }
+.home .bento .contact-side .contact a { color: #fff; font-weight: 600; }
+.home .bento .contact-side .contact > span::before { position: absolute; left: 0; top: 0; width: 18px; text-align: center; font-size: 14px; line-height: 1.4; color: #a5b4fc; }
+.home .bento .contact-side .contact > span.i-mail::before { content: "✉"; }
+.home .bento .contact-side .contact > span.i-gh::before { content: "</>"; font-size: 10px; font-weight: 800; }
+@media (max-width: 1000px) { .home .bento .w3, .home .bento .contact-side { grid-column: 1 / -1; } .home .bento .contact-side .contact { flex-direction: row; flex-wrap: wrap; gap: 8px 32px; } }
+@media (max-width: 860px) { .home .bento .contact-t .contact { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .home .bento .contact-t .contact { grid-template-columns: 1fr; } }
+@media (max-width: 1000px) { .home .bento { grid-auto-rows: auto; } .home .bento .t { min-height: 150px; } .home .bento .t.h2 { min-height: 314px; } .home .bento .contact-t, .home .bento .contact-side { min-height: 0; } } /* 좁은 폭에서 연결·연락처 타일이 빈 150px 행을 갖지 않게 */
