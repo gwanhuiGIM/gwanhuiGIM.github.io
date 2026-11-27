@@ -706,6 +706,10 @@ body.home { display: block; }
 .home .bento .bignum { font-size: 40px; font-weight: 800; line-height: 1.15; letter-spacing: -.02em; margin: 6px 0 2px; }
 .home .bento .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
 .home .bento .chips span { padding: 2px 10px; border-radius: 999px; font-size: 13px; background: rgba(255,255,255,.14); }
+/* 기술 키워드 칸 계층 줄(2026-11-27): 줄 머리 라벨, 넘친 칩은 라벨 오른쪽 열에 맞춤 */
+.home .bento .chips + .chips { margin-top: 4px; }
+.home .bento .chips.lv { position: relative; padding-left: 5.6em; }
+.home .bento .chips.lv small { position: absolute; left: 0; top: 3px; font-size: 12px; }
 .home .bento .contact-t { min-height: 0; justify-content: center; }
 .home .bento .contact-t .contact { margin: 0; font-size: 15px; }
 @media (max-width: 860px) {
