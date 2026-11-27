@@ -12,7 +12,7 @@
 <header>
   <p class="muted">그 외 프로젝트 · 두산로보틱스 ROKEY 부트캠프 1차 · 26.06.17~26.06.30 · 3인 팀 · 팀장</p>
   <h1>멀티모달(손 동작·음성 명령) 기반 수술도구 집도의 전달 시뮬레이션 (Isaac Sim)</h1>
-  <p class="muted">부트캠프 과제 · 디지털 트윈 기반 서비스 자동화 시뮬레이션 시스템 구현</p>
+  <p class="muted">부트캠프 과제 · 디지털 트윈 기반 로봇 자동화 시뮬레이션 시스템 구현</p>
   <p class="tags">Dual Doosan M0609(가상) · Isaac Sim · Replicator · YOLO · ROS 2</p>
   <details class="muted" style="border-left:3px solid var(--accent);padding-left:10px;margin:8px 0"><summary>개발 방식 — AI 코딩 에이전트 활용</summary><p><b>맡긴 것</b>: 코드 로직·환경 구성 보조, 구조 제안<br><b>직접 한 것</b>: 작업 흐름(상태·우선순위), 원인 규명<br><b>겪은 한계</b>: 패키지 충돌, 근거 없는 값·지어낸 이유, 부분 확인 후 정상 보고, 세션 간 결정 망각<br><b>그래서</b>: 도구에 모두 의존하지 않고 판단할 일을 나눠 개발(<a href="ai.html">AI 에이전트 활용</a> 참고)</p></details>
 </header>
@@ -34,9 +34,12 @@
 </nav>
 
 <main class="case-layout outline">
-<p class="updated">Last modified <time datetime="2026-11-26">2026-11-26</time></p>
+<p class="updated">Last modified <time datetime="2026-11-27">2026-11-27</time></p>
 <section class="overview">
   <h2 id="overview">한눈에 보기</h2>
+  <ul class="first-note phase-facts">
+    <li><b>과제</b><span>디지털 트윈 기반 로봇 자동화 시뮬레이션 시스템 구현</span></li>
+  </ul>
   <div class="role-map" id="role-map" role="group" aria-label="발표 p7 ROS 2 노드 구조 위에 표시한 제 담당 지점">
     <p class="role-map-title">설계 흐름에서 제가 맡은 지점 <span>상자를 누르면 기술 설명으로, 아래 번호는 진행 과정 사례로 이동합니다</span></p>
     <div class="pipe role-pipe">
@@ -132,7 +135,7 @@
 <section>
   <h2 id="process">진행 과정 <span class="h2-hint">각 번호를 펼치면 사진과 함께 자세한 설명이 나옵니다. 진한 글씨는 제 담당 및 주요 과정입니다.</span></h2>
   <ul class="phase-facts">
-    <li><b>과제</b><span>디지털 트윈 기반 서비스 자동화 시뮬레이션 시스템 구현(디지털 트윈: 실제 설비를 가상 공간에 옮겨 시험하는 방식)</span></li>
+    <li><b>과제</b><span>디지털 트윈 기반 로봇 자동화 시뮬레이션 시스템 구현(디지털 트윈: 실제 설비를 가상 공간에 옮겨 시험하는 방식)</span></li>
     <li><b>계기</b><span>수술 뒤 기구 파편이 체내에 남는 사고 보도</span></li>
     <li><b>주제(팀 회의)</b><span>수술도구 전달 — 수술도구 분실과 교차 오염 줄이기</span></li>
     <li><b>범위</b><span>의료 현장에는 완전 자동화보다 사람을 돕는 협동로봇</span></li>
