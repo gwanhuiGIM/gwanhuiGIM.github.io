@@ -969,28 +969,10 @@ header p.muted, header p.tags, header .muted > summary, header .muted > p { line
 @media (max-width: 860px) { .home .bento .contact-t .contact { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 520px) { .home .bento .contact-t .contact { grid-template-columns: 1fr; } }
 @media (max-width: 1000px) { .home .bento { grid-auto-rows: auto; } .home .bento .t { min-height: 150px; } .home .bento .t.h2 { min-height: 314px; } .home .bento .contact-t, .home .bento .contact-side { min-height: 0; } } /* 좁은 폭에서 연결·연락처 타일이 빈 150px 행을 갖지 않게 */
-/* 2026-11-28: 관련 링크·연락처 타일을 내용 폭으로 좁혀 한 눈에 보이게(사용자 "폭이 너무 넓고 늘려져있는거같아서 … 좁혀달란거") */
-.home .bento .links-row { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 14px; align-items: stretch; }
-.home .bento .links-row > .t { flex: 0 1 auto; width: auto; }
-.home .bento .links-row .contact-t .contact { grid-template-columns: repeat(3, max-content); }
-.home .bento .links-row .contact-t .contact > span { padding-right: 20px; }
-@media (max-width: 860px) { .home .bento .links-row .contact-t .contact { grid-template-columns: repeat(2, max-content); } }
-@media (max-width: 1000px) { .home .bento .links-row .contact-side .contact { flex-direction: column; } }
-@media (max-width: 520px) { .home .bento .links-row > .t { flex: 1 1 100%; } .home .bento .links-row .contact-t .contact { grid-template-columns: 1fr; } }
-.home .bento .links-row { justify-content: center; }
-/* 2026-11-28: 연락처 타일은 맨 오른쪽, 남은 공간 가운데에 관련 링크 6칸(사용자 "연락처칸을 제일 오른쪽으로 빼고, 남은 공간에 6칸짜리를 중앙배치") */
-.home .bento .links-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; }
-.home .bento .links-row > .t { grid-column: auto; }
+/* 2026-11-28: 관련 링크 6칸은 내용 폭·같은 너비로 남은 공간 가운데, 연락처 타일은 맨 오른쪽(사용자 "폭이 너무 넓고 늘려져있는거같아서 … 좁혀달란거", "연락처칸을 제일 오른쪽으로 빼고, 남은 공간에 6칸짜리를 중앙배치", "6칸 각 너비는 동일하게") */
+.home .bento .links-row { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 14px; align-items: stretch; }
+.home .bento .links-row > .t { grid-column: auto; width: auto; }
 .home .bento .links-row > .contact-t { justify-self: center; }
-@media (max-width: 1000px) { .home .bento .links-row { grid-template-columns: minmax(0, 1fr); } .home .bento .links-row > .contact-side { justify-self: end; } }
+.home .bento .links-row .contact-t .contact > span { padding-right: 20px; }
+@media (max-width: 1000px) { .home .bento .links-row { grid-template-columns: minmax(0, 1fr); } .home .bento .links-row > .contact-side { justify-self: end; } .home .bento .links-row .contact-side .contact { flex-direction: column; } }
 @media (max-width: 520px) { .home .bento .links-row > .t { justify-self: stretch; } }
-/* 2026-11-28: 관련 링크 6칸 너비를 같게(가장 긴 칸 기준, 사용자 "6칸 각 너비는 동일하게") */
-.home .bento .links-row .contact-t .contact { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-@media (max-width: 860px) { .home .bento .links-row .contact-t .contact { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 520px) { .home .bento .links-row .contact-t .contact { grid-template-columns: 1fr; } }
-/* 2026-11-28: 전공 페이지 과목 구분 — 과목 제목 앞 사각 글머리, 그 아래 내용(키워드·항목·사진·링크)을 한 단 들여 과목별로 묶어 보이게, 항목 이름 앞 점(사용자 "각 과목이름 앞에 글머리기호 … 하위 내용들도 … 각 과목이 구분되게"). 전시회 페이지도 main.major라 major.html의 main.subjects로만 한정 */
-main.subjects section > h3 { position: relative; padding-left: 20px; margin-top: 32px; }
-main.subjects section > h3::before { content: ""; position: absolute; left: 0; top: .42em; width: 10px; height: 10px; border-radius: 2px; background: var(--accent); }
-main.subjects section > h3 ~ :not(h3) { margin-left: 20px; padding-left: 14px; border-left: 2px solid var(--line); }
-main.subjects section > h3 ~ :not(h3) { margin-top: 0; margin-bottom: 0; padding-top: 6px; padding-bottom: 6px; }
-main.subjects ul.phase-facts li > b::before { content: "•"; margin-right: 6px; color: var(--accent); }
