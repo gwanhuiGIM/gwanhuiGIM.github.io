@@ -29,29 +29,11 @@
 </ul>
 </nav>
 
-<main class="major">
+<main class="major subjects">
 <p class="updated">Last modified <time datetime="2026-11-28">2026-11-28</time></p>
 <section>
   <h2 id="major">주요 과목</h2>
-  <h3>종합설계 <span class="muted">졸업 프로젝트</span></h3>
-  <div class="keywords"><b>키워드</b><ul><li>Arduino</li><li>열화상 센서</li><li>차동 제어</li><li>설계보고서</li><li>캡스톤디자인</li></ul></div>
-  <ul class="phase-facts">
-    <li><b>배운 내용</b><span>마이크로프로세서응용 등 전공 과목에서 배운 제어 지식</span></li>
-    <li><b>활용 도구</b><span>Arduino · 열화상 센서 · 좌우 DC 모터</span></li>
-    <li><b>결과물</b><span>익수자에게 스스로 다가가는 무인 열감지 구명보트(3인 팀)</span></li>
-    <li><b>역할</b><span>열화상 센서 처리·코드 통합, 좌우 모터 차동 제어·회로 구성은 팀원들과 함께 · 설계보고서 작성은 본인</span></li>
-    <li><b>익힌 것</b><span>기획 → 부품 구매 → 제작 → 테스트 → 발표의 전체 개발 주기를 거치며 하드웨어와 제어 회로를 통합하는 과정</span></li>
-  </ul>
-  <p><a href="grad.html">졸업 프로젝트 보기 →</a></p>
-  <h3>재료및역학실험 <span class="muted">24-2학기</span></h3>
-  <div class="keywords"><b>키워드</b><ul><li>Octave</li><li>Matlab</li><li>ASTM</li><li>재료역학</li><li>원시 데이터</li><li>물성 계산</li></ul></div>
-  <ul class="phase-facts">
-    <li><b>배운 내용</b><span>재료역학 이론</span></li>
-    <li><b>활용 도구</b><span>Octave · Matlab · ASTM 규격</span></li>
-    <li><b>결과물</b><span>인장·굽힘·파괴인성·경도·피로 시험의 원시 데이터를 스크립트로 처리해 재료 물성 도출 · ASTM 기준으로 시험 조건과 결과의 유효성 판정</span></li>
-    <li><b>익힌 것</b><span>조건을 충족하지 못한 결과도 버리지 않고 원인과 한계를 보고서에 기록하는 데이터 검증 태도</span></li>
-  </ul>
-  <p><a href="#mechlab">재료및역학실험 보기 ↓</a></p>
+  <div class="keywords"><ul><li><a href="#capstone">종합설계</a></li><li><a href="#mechlab">재료및역학실험</a></li><li><a href="#ai">인공지능</a></li><li><a href="#meas">계측공학</a></li><li><a href="#cad">CAD응용</a></li><li><a href="#micro">마이크로프로세서응용</a></li><li><a href="#prodq">생산품질공학</a></li></ul></div>
 </section>
 
 <section>
@@ -65,11 +47,12 @@
     <li><b>익힌 것</b><span>데이터 수집 → 라벨링 → 학습 → 평가로 이어지는 머신러닝 개발 흐름</span></li>
   </ul>
   <div class="shots">
+    <figure><a href="images/major/major_ai_1_lane_label.png"><img src="images/major/major_ai_1_lane_label.png" alt="차량 앞 도로 영상에 좌우 차선이 노란 선으로 표시된 이미지" width="716" height="721" loading="lazy"></a><figcaption class="muted">차선 라벨링: 교내에서 경진대회 차량을 몰며 녹화한 영상에 차선 영역을 다각형으로 표시한 학습 데이터입니다</figcaption></figure>
     <figure><a href="images/major/major_ai_2_ros2_inference.jpg"><img src="images/major/major_ai_2_ros2_inference.jpg" alt="터미널 창들 아래 도로 영상 두 개, 오른쪽 영상에 초록색 차선이 겹쳐진 화면" width="1600" height="1013" loading="lazy"></a><figcaption class="muted">수업 발표용 비교: 학습한 차선 분할 모델을 ROS 2 위에서 카메라 영상으로 구동한 화면으로, 오른쪽이 차선 출력입니다</figcaption></figure>
   </div>
   <p><a href="erp42.html">주행 데이터를 모은 대회 프로젝트(ERP42) 보기 →</a></p>
 
-  <h3>계측공학 <span class="muted">계측·제어</span></h3>
+  <h3 id="meas">계측공학 <span class="muted">계측·제어</span></h3>
   <div class="keywords"><b>키워드</b><ul><li>LabVIEW</li><li>웨이브폼 차트</li><li>변형률</li><li>응력</li><li>센서</li><li>Simulink</li></ul></div>
   <ul class="phase-facts">
     <li><b>배운 내용</b><span>계측 시스템·센서 동작 원리 · Simulink</span></li>
@@ -77,10 +60,25 @@
     <li><b>결과물</b><span>스위치 상태에 따라 상수와 난수를 골라 웨이브폼 차트에 한 점씩 그리는 연습 VI · 3인 조 발표에서 변형률·응력 계측 파트 발표(재료역학 이론을 계측의 목적과 연결)</span></li>
     <li><b>익힌 것</b><span>물리량을 전기적 신호로 바꾸고 계측 데이터를 시각화하는 기초 원리</span></li>
   </ul>
+  <div class="shots">
+    <figure><a href="images/major/major_measurement_2_labview_panel.png"><img src="images/major/major_measurement_2_labview_panel.png" alt="파형 차트, 숫자 입력 칸, 세로 토글 스위치, 정지 버튼이 배치된 화면 구성도" width="1410" height="1388" loading="lazy"></a><figcaption class="muted">LabVIEW 과제의 화면 구성: 차트·숫자 입력·전환 스위치·정지 버튼(과제 파일의 저장 정보로 다시 그린 그림, 실제 화면 캡처 아님)</figcaption></figure>
+    <figure><a href="images/major/major_measurement_3_labview_diagram.png"><img src="images/major/major_measurement_3_labview_diagram.png" alt="반복 루프 안에 10ms 대기 블록, 스위치에 이어진 조건 분기, 그 안의 숫자 입력에서 차트로 이어진 선, 정지 버튼이 놓인 블록 다이어그램" width="1106" height="675" loading="lazy"></a><figcaption class="muted">같은 과제의 블록 다이어그램(스위치를 켰을 때): 반복 루프가 10ms씩 기다리며 입력값을 차트로 보내고, 정지 버튼으로 끝납니다(과제 파일로 다시 그린 그림)</figcaption></figure>
+  </div>
 </section>
 
 <section>
   <h2 id="s25-1">25-1학기</h2>
+  <h3 id="capstone">종합설계 <span class="muted">졸업 프로젝트</span></h3>
+  <div class="keywords"><b>키워드</b><ul><li>Arduino</li><li>열화상 센서</li><li>차동 제어</li><li>설계보고서</li><li>캡스톤디자인</li></ul></div>
+  <ul class="phase-facts">
+    <li><b>배운 내용</b><span>마이크로프로세서응용 등 전공 과목에서 배운 제어 지식</span></li>
+    <li><b>활용 도구</b><span>Arduino · 열화상 센서 · 좌우 DC 모터</span></li>
+    <li><b>결과물</b><span>익수자에게 스스로 다가가는 무인 열감지 구명보트(3인 팀)</span></li>
+    <li><b>역할</b><span>열화상 센서 처리·코드 통합, 좌우 모터 차동 제어·회로 구성은 팀원들과 함께 · 설계보고서 작성은 본인</span></li>
+    <li><b>익힌 것</b><span>기획 → 부품 구매 → 제작 → 테스트 → 발표의 전체 개발 주기를 거치며 하드웨어와 제어 회로를 통합하는 과정</span></li>
+  </ul>
+  <p><a href="grad.html">졸업 프로젝트 보기 →</a></p>
+
   <h3>기계재료학 <span class="muted">재료·역학</span></h3>
   <div class="keywords"><b>키워드</b><ul><li>S50C</li><li>JIS</li><li>ASTM</li><li>물성표</li><li>열처리</li><li>금속재료</li></ul></div>
   <ul class="phase-facts">
@@ -89,6 +87,10 @@
     <li><b>결과물</b><span>졸업 프로젝트에서 직접 가공한 S50C 탄소강 분석 리포트 — 성분·열처리에 따른 기계적 특성, 가공성·비용 효율성, 낮은 내식성·용접 한계</span></li>
     <li><b>익힌 것</b><span>강도뿐 아니라 가공성·경제성·부식·접합 조건을 함께 따져 재료를 고르는 기준</span></li>
   </ul>
+  <div class="shots">
+    <figure><a href="images/major/major_material_1_s50c_selection.png"><img src="images/major/major_material_1_s50c_selection.png" alt="재료선정 S50C 탄소강 제목의 리포트 쪽, 규격 목록과 강재 사진 두 장" width="1400" height="788" loading="lazy"></a><figcaption class="muted">리포트 2쪽: S50C 탄소강을 주제로 고른 이유와 나라별 규격을 정리했습니다. 위쪽 강봉 사진은 출처를 밝힌 외부 자료이고, 아래쪽은 종합설계 때 쓴 금속블록입니다</figcaption></figure>
+    <figure><a href="images/major/major_material_2_s50c_launcher_part.png"><img src="images/major/major_material_2_s50c_launcher_part.png" alt="재료의 일반적인 장점 제목의 리포트 쪽, 발사장치와 가공한 금속 부품 사진" width="1400" height="788" loading="lazy"></a><figcaption class="muted">리포트 6쪽: 가공성을 설명하며, 졸업 프로젝트 발사장치의 지지 부품에 S50C를 써서 가공한 사진을 함께 실었습니다</figcaption></figure>
+  </div>
 
   <h3>냉동공조 <span class="muted">열·공조</span></h3>
   <div class="keywords"><b>키워드</b><ul><li>열역학</li><li>유체역학</li><li>공기조화</li><li>냉동 사이클</li><li>클린룸</li></ul></div>
@@ -98,7 +100,7 @@
     <li><b>익힌 것</b><span>실생활 에어컨의 작동 원리와 클린룸 등 산업 공조 환경에 쓰이는 냉동·공조 원리 · 열과 유체의 에너지 전달 과정을 시스템 관점에서 해석하는 기본 개념</span></li>
   </ul>
 
-  <h3>생산품질공학 <span class="muted">생산·품질</span></h3>
+  <h3 id="prodq">생산품질공학 <span class="muted">생산·품질</span></h3>
   <div class="keywords"><b>키워드</b><ul><li>관리도</li><li>PDCA</li><li>제조공정</li><li>통계 기초</li><li>가설검정</li><li>품질 활동</li></ul></div>
   <ul class="phase-facts">
     <li><b>배운 내용</b><span>제조공정·생산 시스템 · 공정 관리 통계(가설검정·관리도) · 품질 철학</span></li>
@@ -141,7 +143,11 @@
     <li><b>익힌 것</b><span>좌표계 변환과 매개변수 곡면이 생성되는 원리를 코드로 확인 · 평소 쓰던 SolidWorks 기능이 어떤 원리로 돌아가는지 생각해 봄</span></li>
   </ul>
   <div class="shots">
+    <figure><a href="images/major/major_cad_1_polygon.png"><img src="images/major/major_cad_1_polygon.png" alt="육각형 안에 색칠한 삼각형과 사각형이 맞붙은 도형 그래프" width="545" height="419" loading="lazy"></a><figcaption class="muted">과제 1: 꼭짓점 좌표를 행렬로 두고 Octave로 그린 다각형입니다</figcaption></figure>
+    <figure><a href="images/major/major_cad_2_nanotube.png"><img src="images/major/major_cad_2_nanotube.png" alt="육각형들이 원통 모양으로 이어진 3차원 그래프" width="498" height="370" loading="lazy"></a><figcaption class="muted">과제 2: 정육각형을 회전·이동하는 변환을 되풀이해 탄소나노튜브 모양을 그렸습니다</figcaption></figure>
+    <figure><a href="images/major/major_cad_3_hermite.png"><img src="images/major/major_cad_3_hermite.png" alt="3차원 공간의 타원과, 타원에 이어지는 여러 곡선" width="548" height="410" loading="lazy"></a><figcaption class="muted">과제 3: 타원에 매끄럽게 이어지는 허밋 곡선(양 끝의 점과 접선 방향으로 정하는 곡선)을 그려, 접선 크기에 따라 모양이 바뀌는 것을 확인했습니다</figcaption></figure>
     <figure id="fig-cad"><a href="images/major/major_cad_4_bezier_surface.png"><img src="images/major/major_cad_4_bezier_surface.png" alt="원호 곡선, 도넛 모양 곡면, 조정점이 표시된 곡면 등 그래프 여러 개" width="1219" height="703" loading="lazy"></a><figcaption class="muted">과제 5: 원호를 나타내는 유리 베지어 곡선(점마다 가중치를 둬 원호까지 정확히 그리는 베지어 곡선)과, 조정점으로 모양을 정한 베지어 곡면을 Octave로 그린 결과입니다</figcaption></figure>
+    <figure><a href="images/major/major_cad_5_bezier_code.png"><img src="images/major/major_cad_5_bezier_code.png" alt="조정점과 기저 행렬로 곡면 좌표를 계산하는 Octave 코드" width="302" height="253" loading="lazy"></a><figcaption class="muted">과제 5 코드 일부: 조정점 좌표와 3차 베지어 기저 행렬을 곱해 곡면 좌표를 계산합니다</figcaption></figure>
   </div>
 
   <h3>자동차공학 <span class="muted">설계·형상</span></h3>
@@ -165,7 +171,11 @@
     <li><b>익힌 것</b><span>센서 신호를 받아 구동기를 제어하는 임베디드 제어 기초</span></li>
   </ul>
   <div class="shots">
+    <figure><a href="images/major/major_microprocessor_1_airbag_demo.jpg"><img src="images/major/major_microprocessor_1_airbag_demo.jpg" alt="브레드보드 회로가 PC 모니터 앞에 놓여 있고 화면에 코드 창이 떠 있는 장면" width="1280" height="720" loading="lazy"></a><figcaption class="muted">과제 2 시연: 가속도 센서·LED 회로를 PC에 연결해 충격 방향 표시 장치를 시험하는 장면입니다</figcaption></figure>
+    <figure><a href="images/major/major_microprocessor_2_airbag_circuit.png"><img src="images/major/major_microprocessor_2_airbag_circuit.png" alt="Arduino 보드에 가속도 센서 모듈과 LED 네 개가 배선된 회로 그림" width="960" height="621" loading="lazy"></a><figcaption class="muted">과제 2 회로 구성도: 보드에 가속도 센서와 방향 표시용 LED 4개를 연결했습니다(회로 제작은 팀원, 코드는 제가 맡음)</figcaption></figure>
     <figure><a href="images/major/major_microprocessor_3_angle_hold.jpg"><img src="images/major/major_microprocessor_3_angle_hold.jpg" alt="손에 든 회로판과 노란 날개가 달린 스텝모터 장치" width="720" height="1280" loading="lazy"></a><figcaption class="muted">과제 3 시연: 장치를 기울이면 스텝모터가 돌아 한 면이 계속 위를 향하도록 각도를 맞춥니다</figcaption></figure>
+    <figure><a href="images/major/major_microprocessor_4_encoder_motor.jpg"><img src="images/major/major_microprocessor_4_encoder_motor.jpg" alt="손에 든 DC모터와 막대, 뒤로 숫자가 출력되는 PC 화면" width="720" height="1280" loading="lazy"></a><figcaption class="muted">과제 4: 엔코더가 달린 DC모터를 돌리며 PC 화면으로 회전 값을 확인하는 실습 장면입니다</figcaption></figure>
+    <figure><a href="images/major/major_microprocessor_5_hw3_code.png"><img src="images/major/major_microprocessor_5_hw3_code.png" alt="가속도 센서 값을 읽고 보정해 각도를 구하는 Arduino 코드" width="988" height="808" loading="lazy"></a><figcaption class="muted">과제 3 코드 일부(Arduino): 가속도 센서 값을 읽어 가속도로 바꾸고, 오차를 보정한 뒤 arctan으로 각도를 구합니다(코드 작성은 제가 맡음)</figcaption></figure>
   </div>
 </section>
 
