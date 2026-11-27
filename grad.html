@@ -117,7 +117,7 @@
 
   <details class="impl" id="impl-heat">
   <summary><h3>열원 쪽으로 스스로 방향 틀기 (AMG8833 열화상 센서 · 좌우 DC 모터 PWM) <span class="badge-team">구현 참여</span></h3><span class="impl-jump">진행 과정 <a href="#case-drive">02 구동 방식 결정과 좌우 모터 차동 제어</a></span></summary>
-  <p>팀은 열화상 센서(8×8 격자로 온도를 재는 센서)가 읽은 값에서 가장 뜨거운 쪽이 왼쪽인지 오른쪽인지 찾도록 처리했습니다. 저는 그 방향에 맞춰 좌우 모터 출력을 다르게 주는 제어를 맡았습니다.</p>
+  <p>팀은 열화상 센서(8×8 격자로 온도를 재는 센서)가 읽은 값에서 가장 뜨거운 쪽이 왼쪽인지 오른쪽인지 찾도록 처리했습니다. 팀은 그 방향에 맞춰 좌우 모터 출력을 다르게 주는 제어를 구현했고, 저도 팀원들과 함께 참여했습니다.</p>
   <div class="pipe" role="img" aria-label="도식: 열화상 센서의 8×8 온도값을 열별 최댓값 1×8로 줄이고, 가장 뜨거운 열의 위치로 좌우 방향을 정한 뒤, 좌우 모터 PWM 출력 배분으로 방향을 트는 흐름">
     <div class="pipe-col"><span class="pipe-tag">입력</span><div class="pipe-box">열화상 센서<small>8×8 온도값</small></div></div>
     <div class="pipe-arrow" aria-hidden="true">→</div>
@@ -135,7 +135,7 @@
 
   <details class="impl" id="impl-rc">
   <summary><h3>조종기로 직접 몰기 (RC 송수신기) <span class="badge-team">구현 참여</span></h3><span class="impl-jump">진행 과정 <a href="#case-drive">02 구동 방식 결정과 좌우 모터 차동 제어</a><a href="#case-merge">03 부품별 코드 점검과 단일 보드 통합</a></span></summary>
-  <p>저는 무선 조종기(RC)의 신호로 좌우 모터를 움직여, 사람이 보트를 직접 몰 수 있는 수동 조종 부분을 맡았습니다. 팀이 함께 통합한 코드 기준으로는 조종 신호가 들어오면 수동 조종, 신호가 없으면 열원 자동 추적으로 나뉩니다.</p>
+  <p>팀은 무선 조종기(RC)의 신호로 좌우 모터를 움직여, 사람이 보트를 직접 몰 수 있는 수동 조종을 구현했고 저도 함께 참여했습니다. 팀이 함께 통합한 코드 기준으로는 조종 신호가 들어오면 수동 조종, 신호가 없으면 열원 자동 추적으로 나뉩니다.</p>
   <div class="pipe" role="img" aria-label="도식(팀 통합 코드 기준): 조종 신호 수신기의 신호가 있으면 수동 조종, 없으면 열원 자동 추적으로 나뉘고, 두 경우 모두 좌우 모터를 움직이는 흐름">
     <div class="pipe-col"><span class="pipe-tag">입력</span><div class="pipe-box">조종 신호 수신기<small>무선 조종기(RC)</small></div></div>
     <div class="pipe-arrow" aria-hidden="true">→</div>
@@ -184,7 +184,7 @@
   </details>
 
   <details class="case">
-  <summary><h3 id="case-drive">구동 방식 결정과 좌우 모터 차동 제어</h3><span class="case-phase">환경 준비 · 구현</span><span class="badge-team">구현 참여</span><span class="case-facts"><span class="cf"><b>기준</b><span>착수 충격 · 아두이노 제어 난이도</span></span><span class="cf"><b>선택(팀)</b><span>일반 DC 모터 2개를 좌우에 두는 차동 방식 — 방향타 · BLDC · 방수 모터 제외</span></span><span class="cf"><b>맡은 일</b><span>열원 방향 → 좌우 모터 PWM 출력 배분 · 무선 조종기(RC) 수동 조종</span></span><span class="cf"><b>점검(팀)</b><span>지상에서 켜진 전기히터 쪽으로 향하게 하며 열원 추적 동작 확인</span></span></span></summary>
+  <summary><h3 id="case-drive">구동 방식 결정과 좌우 모터 차동 제어</h3><span class="case-phase">환경 준비 · 구현</span><span class="badge-team">구현 참여</span><span class="case-facts"><span class="cf"><b>기준</b><span>착수 충격 · 아두이노 제어 난이도</span></span><span class="cf"><b>선택(팀)</b><span>일반 DC 모터 2개를 좌우에 두는 차동 방식 — 방향타 · BLDC · 방수 모터 제외</span></span><span class="cf"><b>참여한 일</b><span>열원 방향 → 좌우 모터 PWM 출력 배분 · 무선 조종기(RC) 수동 조종</span></span><span class="cf"><b>점검(팀)</b><span>지상에서 켜진 전기히터 쪽으로 향하게 하며 열원 추적 동작 확인</span></span></span></summary>
   <div class="case-steps">
     <div class="step">
       <h4 class="step-title">방향타·BLDC·방수 모터 제외</h4>
@@ -207,7 +207,7 @@
     <div class="step">
       <h4 class="step-title">열별 최댓값과 PWM 출력 배분</h4>
       <div class="step-body">
-        <p>팀은 열화상 센서의 8×8 온도값을 열별 최댓값 8개로 줄여 가장 뜨거운 열의 위치로 좌우 방향을 정했습니다. 저는 이 방향에 맞춰 좌우 모터 출력을 다르게 주는 제어를 맡아, PWM으로 좌우 출력 배분을 달리해 크게 꺾기, 완만히 꺾기, 직진을 구분했습니다.</p>
+        <p>팀은 열화상 센서의 8×8 온도값을 열별 최댓값 8개로 줄여 가장 뜨거운 열의 위치로 좌우 방향을 정했습니다. 팀은 이 방향에 맞춰 좌우 모터 출력을 다르게 주는 제어를 구현해, PWM으로 좌우 출력 배분을 달리하여 크게 꺾기, 완만히 꺾기, 직진을 구분했고 저도 함께 참여했습니다.</p>
         <figure class="fig wide" id="fig-ir">
       <img src="images/grad/ir_8x8_to_1x8.png" alt="8×8 열화상 격자에서 열마다 가장 높은 온도 칸을 골라 1×8 한 줄로 줄이는 도식" width="1200" height="384" loading="lazy">
       <figcaption class="muted">8×8 온도값에서 열마다 가장 높은 온도 칸(노란 칸)만 남겨 좌우 한 줄(1×8)로 줄이는 과정 (숫자는 칸 번호)</figcaption>
@@ -234,7 +234,7 @@
     <div class="step">
       <h4 class="step-title">시리얼 통신으로 먼저 확인</h4>
       <div class="step-body">
-        <p>팀은 코드를 합치다 막히자 문제를 한꺼번에 해결하려 하지 않고 단계를 나누어 점검했고, 모터 제어를 맡은 저는 기존 조종·모터 코드부터 다시 점검했습니다. 팀은 센서 신호를 시리얼 통신(보드의 값을 PC 화면으로 받아 보는 통신)으로 먼저 확인한 뒤 모터 코드와 합쳤습니다.</p>
+        <p>팀은 코드를 합치다 막히자 문제를 한꺼번에 해결하려 하지 않고 단계를 나누어 점검했고, 저는 기존 조종·모터 코드부터 다시 점검했습니다. 팀은 센서 신호를 시리얼 통신(보드의 값을 PC 화면으로 받아 보는 통신)으로 먼저 확인한 뒤 모터 코드와 합쳤습니다.</p>
         <figure data-rep class="fig" id="fig-rc"><img class="narrow" src="images/grad/rc-receiver-output.jpg" alt="무선 조종기 사진 위에 레버·버튼별 수신기 출력값을 적은 도식" width="493" height="367" loading="lazy"><figcaption class="muted">예시: 팀이 정리한 무선 조종기(RC) 레버·버튼별 수신기 출력값</figcaption></figure>
       </div>
     </div>
