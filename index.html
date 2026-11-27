@@ -162,7 +162,8 @@ document.querySelectorAll('.skills-panel .axes li.rec a[href]').forEach(function
 document.querySelectorAll('.kw-root > .kw-collapse').forEach(function (b) {
   b.addEventListener('click', function () {
     var root = b.parentElement;
-    root.querySelectorAll(':scope > .kv details[open]').forEach(function (d) { d.open = false; });
+    // 2026-11-27(사용자 "한단계 내려야할듯. 최하위 항목들만 접히게"): 안에 토글이 없는 최하위 토글만 닫는다 — 기술 보기는 갈래(그리퍼 등)는 열어 두고 키워드(kw2)만 접힘
+    root.querySelectorAll(':scope > .kv details[open]').forEach(function (d) { if (!d.querySelector('details')) d.open = false; });
     if (b.getBoundingClientRect().top < 0) b.scrollIntoView({ block: 'start' });
   });
 });

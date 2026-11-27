@@ -774,7 +774,7 @@ body.home { display: block; }
 .home .kw-sec .skills-panel details.skill-group.nd { margin: 6px 0 0; border-left: 0; padding-left: 18px; }
 .home .kw-sec .skills-panel details.skill-group.nd:first-child { margin-top: 4px; }
 .home .kw-sec .skills-panel details.kw2 { margin: 4px 0 0; color: var(--fg); font-size: 14.5px; }
-.home .kw-sec .skills-panel details.kw2 > summary { cursor: pointer; font-weight: 700; }
+.home .kw-sec .skills-panel details.kw2 > summary { cursor: pointer; font-weight: 400; } /* 펼친 뒤 하위 키워드는 보통 굵기 — 들여쓰기로 구분(사용자 2026-11-27) */
 .home .kw-sec .skills-panel details.kw2 > summary .n { font-weight: 400; font-size: 12px; opacity: .7; margin-left: 4px; }
 .home .kw-sec .skills-panel .ty { margin-top: 4px; }
 .home .kw-sec .skills-panel .tl { font-size: 12px; font-weight: 700; letter-spacing: .03em; color: var(--muted); line-height: 1.9; }
