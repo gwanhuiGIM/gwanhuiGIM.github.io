@@ -632,16 +632,6 @@ header .skills-panel details.big > summary::marker { color: #a5b4fc; }
 header .skills-panel .big-body { margin-top: 8px; }
 header .skills-panel a.big-link { display: block; margin: 10px 0 0; border: 1px solid rgba(255,255,255,.18); border-radius: 10px; padding: 10px 14px; background: rgba(255,255,255,.04); font-size: 17px; font-weight: 800; color: #fff; text-decoration: none; }
 header .skills-panel a.big-link:hover { background: rgba(255,255,255,.09); }
-header .skills-panel .bring ul { margin: 0; padding-left: 1.2rem; color: #fff; font-size: 14.5px; line-height: 1.6; }
-header .skills-panel .bring li { margin-bottom: 6px; }
-header .skills-panel .bring a { color: #fff; font-weight: 400; text-decoration: underline; text-underline-offset: 2px; }
-header .skills-panel .bring .muted { color: #c7d2fe; }
-/* 경험 위주로 보기: 소주제 토글 + 기술 키워드와 같은 하늘색 ㄴ자 선, 항목마다 설명 한 줄 + 근거 글머리 들여쓰기(사용자 11-17) */
-header .skills-panel .bring.exp ul.br { padding-left: 0; }
-header .skills-panel .bring.exp li.rec { margin-bottom: 6px; }
-header .skills-panel .bring .exp-d { color: #e0e7ff; font-size: 13.5px; }
-header .skills-panel .bring ul.ev, .bring-low ul.ev { list-style: disc; margin: 2px 0 0; padding-left: 1.3rem; }
-.bring-low .exp-g { margin: 18px 0 6px; font-size: 1.05rem; }
 .sep { margin: 0 .35em; opacity: .6; } /* 링크 사이 구분(링크 글자 안의 "·"와 구별, 사용자 11-17) */
 /* 기술 키워드: 장비(HW)/기술(SW) 두 축 → 그룹 → 키워드 → 유형 → 기록, ㄴ자 트리 선(원래 그룹 선 색) */
 header .skills-panel .axes { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
@@ -668,7 +658,7 @@ header .skills-panel p.tools { font-size: 13px; color: #fff; margin: 10px 0 0; }
 /* 링크로 들어온 사례: 제목은 화면 세로 중앙(case-toggle.js), 사례 영역 좌우 막대 + 옅은 배경, 다른 링크로 옮길 때까지 유지(사용자 11-17 q2b) */
 .landing { position: relative; isolation: isolate; }
 .landing::after { content: ""; position: absolute; top: 0; bottom: 0; left: -12px; right: -12px; z-index: -1; pointer-events: none; border-left: 4px solid var(--accent); border-right: 4px solid var(--accent); border-radius: 6px; background: var(--accent-soft); }
-/* 키워드란 "모두 접기"(2026-11-21): "경험 위주로 보기" 줄 높이에 오른쪽 정렬로 하나만 */
+/* 키워드란 "모두 접기"(2026-11-21): "기술 키워드" 제목 줄 높이에 오른쪽 정렬로 하나만(2026-11-28 경험 위주로 보기 삭제 뒤) */
 header .skills-panel .kw-root { position: relative; }
 header .skills-panel .kw-collapse { position: absolute; top: 19px; right: 14px; z-index: 1; padding: 3px 10px; font: inherit; font-size: 13px; font-weight: 700; color: #c7d2fe; background: rgba(255,255,255,.06); border: 1px solid rgba(165,180,252,.45); border-radius: 999px; cursor: pointer; }
 header .skills-panel .kw-collapse:hover { color: #fff; background: rgba(165,180,252,.18); }
@@ -729,13 +719,11 @@ body.home { display: block; }
 .home .kw-sec .kw-collapse { position: absolute; top: 8px; right: 0; padding: 3px 10px; font: inherit; font-size: 13px; font-weight: 700; color: var(--accent); background: none; border: 1px solid var(--line); border-radius: 999px; cursor: pointer; }
 .home .kw-sec .kw-collapse:hover { background: var(--accent-soft); }
 .home .kw-sec .kv { padding: 18px 22px; border: 1px solid var(--line); border-radius: 18px; background: var(--card); }
-.home .kw-sec .kv[hidden] { display: none; }
 /* 키워드 검색(2026-11-25): 검색창·건수, 걸러진 줄 숨김, 일치 강조 */
 .home .kw-sec .kw-find { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin: 0 0 14px; }
 .home .kw-sec .kw-q { flex: 1 1 18em; max-width: 28em; font: inherit; font-size: 16px; padding: 7px 14px; color: var(--fg); background: var(--card); border: 1px solid var(--line); border-radius: 999px; }
 .home .kw-sec .kw-q:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
 .home .kw-sec .kw-cnt { font-size: 14px; color: var(--muted); }
-.home .kw-sec .kw-cnt button { font: inherit; color: var(--accent); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
 .home .kw-sec .kw-hide { display: none !important; }
 .home .kw-sec mark.kw-m { background: var(--accent-soft); color: inherit; border-radius: 3px; padding: 0 1px; box-shadow: inset 0 -2px 0 var(--accent); }
 .home .kw-sec a.big-link { display: inline-block; margin: 14px 0 0; font-weight: 700; text-decoration: none; }
@@ -752,14 +740,6 @@ body.home { display: block; }
 .home .kw-sec .skills-panel .sg-title::marker { color: var(--accent); }
 .home .kw-sec .skills-panel .sg-title:hover { color: var(--muted); }
 .home .kw-sec .skills-panel .big-body { margin-top: 8px; }
-.home .kw-sec .skills-panel .bring ul { margin: 0; padding-left: 1.2rem; color: var(--fg); font-size: 14.5px; line-height: 1.6; }
-.home .kw-sec .skills-panel .bring li { margin-bottom: 6px; }
-.home .kw-sec .skills-panel .bring a { color: var(--fg); font-weight: 400; text-decoration: underline; text-underline-offset: 2px; }
-.home .kw-sec .skills-panel .bring .muted { color: var(--muted); }
-.home .kw-sec .skills-panel .bring.exp ul.br { padding-left: 0; }
-.home .kw-sec .skills-panel .bring.exp li.rec { margin-bottom: 6px; }
-.home .kw-sec .skills-panel .bring .exp-d { color: var(--muted); font-size: 13.5px; }
-.home .kw-sec .skills-panel .bring ul.ev, .home .kw-sec .skills-panel .bring ul.ev { list-style: disc; margin: 2px 0 0; padding-left: 1.3rem; }
 .home .kw-sec .skills-panel .axes { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 @media (max-width: 760px) { .home .kw-sec .skills-panel .axes { grid-template-columns: 1fr; } }
 .home .kw-sec .skills-panel h3.ax { margin: 4px 0 0; font-size: 13px; letter-spacing: .04em; color: var(--muted); }
