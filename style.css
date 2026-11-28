@@ -725,9 +725,7 @@ body.home { display: block; }
 /* 02 경험·기술 키워드: 전환 버튼 + 기존 트리(아래 이동 규칙) */
 .home .kw-sec .skills-panel { max-width: none; margin: 0; padding: 0; border: 0; background: none; }
 .home .kw-sec .kw-root { position: relative; }
-.home .kw-sec .seg { display: inline-flex; flex-wrap: wrap; gap: 4px; margin: 0 0 16px; padding: 4px; border: 1px solid var(--line); border-radius: 999px; background: var(--card); }
-.home .kw-sec .seg button { border: 0; background: none; font: inherit; font-size: 15px; font-weight: 600; padding: 6px 16px; border-radius: 999px; color: var(--muted); cursor: pointer; }
-.home .kw-sec .seg button.on { background: var(--accent); color: #fff; }
+.home .kw-sec .kw-h { margin: 0 0 12px; font-size: 17px; }   /* 2026-11-28: 보기 전환 버튼(.seg) 자리 — 경험 위주로 보기 삭제 */
 .home .kw-sec .kw-collapse { position: absolute; top: 8px; right: 0; padding: 3px 10px; font: inherit; font-size: 13px; font-weight: 700; color: var(--accent); background: none; border: 1px solid var(--line); border-radius: 999px; cursor: pointer; }
 .home .kw-sec .kw-collapse:hover { background: var(--accent-soft); }
 .home .kw-sec .kv { padding: 18px 22px; border: 1px solid var(--line); border-radius: 18px; background: var(--card); }
